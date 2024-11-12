@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_header</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find the header row in a data.frame</h2>
+
+<h3>Description</h3>
+
+<p>Find the header row in a data.frame
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_header(dat, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>The input data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>See details</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>...</code> is missing, then the first row with no missing values is used.
+</p>
+<p>When searching for a specified value or value within a column, the first row
+with a match will be returned, regardless of the completeness of the rest of
+that row.  If <code>...</code> has a single character argument, then the first
+column is searched for that value.  If <code>...</code> has a named numeric
+argument, then the column whose position number matches the value of that
+argument is searched for the name (see the last example below).  If more than one
+row is found matching a value that is searched for, the number of the first
+matching row will be returned (with a warning).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The row number for the header row
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Set names: 
+<code>clean_names()</code>,
+<code>mu_to_u</code>,
+<code>row_to_names()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># the first row
+find_header(data.frame(A="B"))
+# the second row
+find_header(data.frame(A=c(NA, "B")))
+# the second row since the first has an empty value
+find_header(data.frame(A=c(NA, "B"), B=c("C", "D")))
+# The third row because the second column was searched for the text "E"
+find_header(data.frame(A=c(NA, "B", "C", "D"), B=c("C", "D", "E", "F")), "E"=2)
+</code></pre>
+
+
+</div>

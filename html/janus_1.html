@@ -1,0 +1,283 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>janus</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>janus</h2>
+
+<h3>Description</h3>
+
+<p>Coarse-to-fine optimization of a recommending system based on deep neural networks with Tensorflow/Keras back-end
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">janus(
+  data,
+  rating_label,
+  rater_label,
+  rated_label,
+  task,
+  skip_shortcut = FALSE,
+  rater_embedding_size = c(8, 32),
+  rated_embedding_size = c(8, 32),
+  layers = c(1, 5),
+  activations = c("elu", "selu", "relu", "sigmoid", "softmax", "softplus", "softsign",
+    "tanh", "linear", "leaky_relu", "parametric_relu", "thresholded_relu", "swish",
+    "gelu", "mish", "bent"),
+  nodes = c(8, 512),
+  regularization_L1 = c(0, 100),
+  regularization_L2 = c(0, 100),
+  dropout = c(0, 1),
+  batch_size = 64,
+  epochs = 10,
+  optimizer = c("adam", "sgd", "adamax", "adadelta", "adagrad", "nadam", "rmsprop"),
+  opt_metric = "bac",
+  folds = 3,
+  reps = 1,
+  holdout = 0.1,
+  n_steps = 3,
+  n_samp = 10,
+  offset = 0,
+  n_top = 3,
+  seed = 999,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame including at least three features: rating actor, rated item and rating value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rating_label</code></td>
+<td>
+<p>String. Single label for the feature containing the rating values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rater_label</code></td>
+<td>
+<p>String. Single label for the feature containing the rating actors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rated_label</code></td>
+<td>
+<p>String. Single label for the feature containing the rated items.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>task</code></td>
+<td>
+<p>String. Available options are: "regr", for regression (when the rating value is numeric); "classif", for classification (when the rating value is a class or a factor).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skip_shortcut</code></td>
+<td>
+<p>Logical. Option to add a skip shortcut to improve network performance in case of many layers. Default: FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rater_embedding_size</code></td>
+<td>
+<p>Integer. Output dimension for embedding the rating actors. Default: coarse-to-fine search (8 to 32).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rated_embedding_size</code></td>
+<td>
+<p>Integer. Output dimension for embedding the rated items. Default: coarse-to-fine search (8 to 32).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layers</code></td>
+<td>
+<p>Positive integer. Number of layers for DNN. Default: coarse-to-fine search (1 to 5).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>activations</code></td>
+<td>
+<p>String. String vector with the activation functions for each layer. Default: coarse-to-fine search ("elu", "selu", "relu", "sigmoid", "softmax", "softplus", "softsign", "tanh", "linear", "leaky_relu", "parametric_relu", "thresholded_relu", "swish", "gelu", "mish", "bent").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nodes</code></td>
+<td>
+<p>Positive integer. Integer vector with nodes for each layer. Default: coarse-to-fine search (8 to 512).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regularization_L1</code></td>
+<td>
+<p>Positive numeric. Value for L1 regularization of loss function. Default: coarse-to-fine search (0 to 100).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regularization_L2</code></td>
+<td>
+<p>Positive numeric. Value for L2 regularization of loss function. Default: coarse-to-fine search (0 to 100).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropout</code></td>
+<td>
+<p>Positive numeric. Value for dropout parameter at each layer (bounded between 0 and 1). Default: coarse-to-fine search (0 to 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch_size</code></td>
+<td>
+<p>Positive integer. Maximum batch size for training. Default: 64.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epochs</code></td>
+<td>
+<p>Positive integer. Maximum number of forward and backward propagation. Default: 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optimizer</code></td>
+<td>
+<p>String. Standard Tensorflow/Keras Optimization methods are available. Default: coarse-to-fine search ("adam", "sgd", "adamax", "adadelta", "adagrad", "nadam", "rmsprop").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>opt_metric</code></td>
+<td>
+<p>String. Error metric to track for the coarse-to-fine optimization. Different options: for regression, "rmse", "mae", "mdae", "mape", "smape", "rae", "rrse"; for classification, "bac", "avs", "avp", "avf", "kend", "ndcg".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>folds</code></td>
+<td>
+<p>Positive integer. Number of folds for repeated cross-validation. Default: 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reps</code></td>
+<td>
+<p>Positive integer. Number of repetitions for repeated cross-validation. Default: 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>holdout</code></td>
+<td>
+<p>Positive numeric. Percentage of cases for holdout validation. Default: 0.1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_steps</code></td>
+<td>
+<p>Positive integer. Number of phases for the coarse-to-fine optimization process (minimum 2). Default: 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_samp</code></td>
+<td>
+<p>Positive integer. Number of sampled models per coarse-to-fine phase. Default: 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>Positive numeric. Percentage of expansion of numeric boundaries during the coarse-to-fine optimization. Default: 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_top</code></td>
+<td>
+<p>Positive integer. Number of candidates selected during the coarse-to-fine phase. Default: 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Positive integer. Seed value to control random processes. Default: 42.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Printing specific messages. Default: TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns a list including:
+</p>
+
+<ul>
+<li>
+<p> pipeline:
+</p>
+</li>
+<li>
+<p> model:
+</p>
+
+<ul>
+<li>
+<p> configuration: DNN hyper-parameters (layers, activations, regularization_L1, regularization_L2, nodes, dropout)
+</p>
+</li>
+<li>
+<p> model: Keras standard model description
+</p>
+</li>
+<li>
+<p> recommend: function to use to recommend on rating actors
+</p>
+</li>
+<li>
+<p> plot: Keras standard history plot
+</p>
+</li>
+<li>
+<p> training_metrics: tracking of opt_metric across folds and repetitions
+</p>
+</li>
+<li>
+<p> test_frame: testing set with the related predictions, including
+</p>
+</li>
+<li>
+<p> testing_metrics: summary statistics for testing
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p> time_log
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Giancarlo Vercellino <a href="mailto:giancarlo.vercellino@gmail.com">giancarlo.vercellino@gmail.com</a> [copyright holder]
+</p>
+<p>Giancarlo Vercellino <a href="mailto:giancarlo.vercellino@gmail.com">giancarlo.vercellino@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Useful links:
+</p>
+
+<ul><li> <p><a href="https://rpubs.com/giancarlo_vercellino/janus">https://rpubs.com/giancarlo_vercellino/janus</a>
+</p>
+</li></ul>
+</div>

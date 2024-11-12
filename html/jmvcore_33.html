@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>marshalFormula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Marshal a formula into options</h2>
+
+<h3>Description</h3>
+
+<p>Marshal a formula into options
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">marshalFormula(formula, data, from = "rhs", type = "vars",
+  permitted = c("numeric", "factor"), subset = ":", required = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>the formula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame to marshal the data from</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>'rhs' or 'lhs', which side of the formula should be marshalled</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>'vars' or 'terms', the type of the option be marshalled to</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>permitted</code></td>
+<td>
+<p>the types of data the option permits</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>a subset of the formula to marshal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>required</code></td>
+<td>
+<p>whether this marshall is required or not</p>
+</td>
+</tr>
+</table>
+</div>

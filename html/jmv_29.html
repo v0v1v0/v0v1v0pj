@@ -1,0 +1,266 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ttestOneS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>One Sample T-Test</h2>
+
+<h3>Description</h3>
+
+<p>The Student's One-sample t-test is used to test the null hypothesis that
+the true mean is equal to a particular value (typically zero). A low
+p-value suggests that the null hypothesis is not true, and therefore
+the true mean must be different from the test value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ttestOneS(data, vars, students = TRUE, bf = FALSE, bfPrior = 0.707,
+  wilcoxon = FALSE, testValue = 0, hypothesis = "dt", norm = FALSE,
+  qq = FALSE, meanDiff = FALSE, ci = FALSE, ciWidth = 95,
+  effectSize = FALSE, ciES = FALSE, ciWidthES = 95, desc = FALSE,
+  plots = FALSE, miss = "perAnalysis", mann = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>a vector of strings naming the variables of interest in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>students</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, perform Student's
+t-tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bf</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Bayes factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bfPrior</code></td>
+<td>
+<p>a number between 0.5 and 2.0 (default 0.707), the prior
+width to use in calculating Bayes factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wilcoxon</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Wilcoxon
+signed rank tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testValue</code></td>
+<td>
+<p>a number specifying the value of the null hypothesis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hypothesis</code></td>
+<td>
+<p><code>'dt'</code> (default), <code>'gt'</code> or <code>'lt'</code>, the
+alternative hypothesis; different to <code>testValue</code>, greater than
+<code>testValue</code>, and less than <code>testValue</code> respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Shapiro-wilk
+tests of normality</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meanDiff</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide means and
+standard deviations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide confidence
+intervals for the mean difference</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the width of
+confidence intervals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effectSize</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Cohen's d
+effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciES</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide confidence
+intervals for the effect-sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthES</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the width of
+confidence intervals for the effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plots</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>miss</code></td>
+<td>
+<p><code>'perAnalysis'</code> or <code>'listwise'</code>, how to handle
+missing values; <code>'perAnalysis'</code> excludes missing values for individual
+dependent variables, <code>'listwise'</code> excludes a row from all analyses if
+one of its entries is missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mann</code></td>
+<td>
+<p>deprecated</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Student's One-sample t-test assumes that the data are from a normal
+distribution – in the case that one is unwilling to assume this, the
+non-parametric Wilcoxon signed-rank can be used in it's place (However,
+note that the Wilcoxon signed-rank has a slightly different null
+hypothesis; that the *median* is equal to the test value).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$ttest</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the t-test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$normality</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the normality test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$descriptives</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the descriptives </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$plots</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an image of the descriptive plots </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$qq</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of Q-Q plots </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$ttest$asDF</code>
+</p>
+<p><code>as.data.frame(results$ttest)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('ToothGrowth')
+
+ttestOneS(ToothGrowth, vars = vars(len, dose))
+
+#
+#  ONE SAMPLE T-TEST
+#
+#  One Sample T-Test
+#  ------------------------------------------------------
+#                           statistic    df      p
+#  ------------------------------------------------------
+#    len     Student's t         19.1    59.0    &lt; .001
+#    dose    Student's t         14.4    59.0    &lt; .001
+#  ------------------------------------------------------
+#
+
+</code></pre>
+
+
+</div>

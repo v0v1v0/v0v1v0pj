@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_PDF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save a plot as a PDF file.</h2>
+
+<h3>Description</h3>
+
+<p>Save a plot as a PDF file in a (default) folder.
+The present default is determined by the folder structure for the production of the book.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_PDF(
+  fname = "scratch",
+  folder = "../../Graphs",
+  show = T,
+  width = 6,
+  height = 4.5
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fname</code></td>
+<td>
+<p>the file name without the extension PDF (default: <code>scratch</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>folder</code></td>
+<td>
+<p>the folder for saving PDF plots (default <code>../../Graphs)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>a logical parameter; if TRUE the full file name will be displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>figure width in inches (default = 6).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>height</code></td>
+<td>
+<p>figure height in inches (default = 4.5).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>save a plot as a PDF file.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+</div>

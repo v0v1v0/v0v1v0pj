@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>internalcompareIV</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compares the effects of various independent variables</h2>
+
+<h3>Description</h3>
+
+<p>This is an internal function designed to run many models to compare the
+unique predictive effect of different IVs with and without covariates on an
+outcome.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">internalcompareIV(
+  dv,
+  type = c("normal", "binary", "count"),
+  iv,
+  covariates = character(),
+  data,
+  multivariate = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dv</code></td>
+<td>
+<p>A character string of the depentent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character string indicating the type of dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv</code></td>
+<td>
+<p>A character string or vector giving the IV(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariates</code></td>
+<td>
+<p>A character string or vector giving the covariate(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data to be used for analysis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multivariate</code></td>
+<td>
+<p>A logical value whether to have models with all IVs simultaneously.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the internal function, <code>.runIt</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with all the model results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">test1 &lt;- JWileymisc:::internalcompareIV(
+  dv = "mpg", type = "normal",
+  iv = "hp",
+  covariates = "am",
+  data = mtcars, multivariate = FALSE)
+test1$Summary
+rm(test1)
+</code></pre>
+
+
+</div>

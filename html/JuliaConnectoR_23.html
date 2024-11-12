@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>startJuliaServer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Start a Julia server that may serve multiple clients (R processes)</h2>
+
+<h3>Description</h3>
+
+<p>Starting a Julia server allows that different R processes may connect to the
+the same Julia server and share a single session.
+This can be useful for saving start-up/precompilation time when starting
+additional processes or when sharing global variables between processes.
+<em>For the standard way of starting Julia, this function is not needed.
+It is also not needed if child processes should use separate Julia sessions.</em>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">startJuliaServer(port = 11980)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>port</code></td>
+<td>
+<p>a hint for the port that is used by the server.
+If it is not available, a different port is used.
+The final port is returned (invisibly).</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The functions communicates the server address via setting the
+<span class="env">JULIACONNECTOR_SERVER</span> environment variable.
+A possible value for the variable is "localhost:11980".
+The <span class="env">JULIACONNECTOR_SERVER</span> variable is communicated automatically via
+the system environment to child processes that are started after this
+function has been called.
+The child processes will then connect to the same Julia server if the
+variable is set.
+The variable can also be set explicitly in child processes before connecting
+to Julia to connect to a running server.
+Unsetting the variable will result in a normal Julia start-up in the first
+call to Julia, using a single-client Julia session.
+</p>
+<p>For security reasons, the Julia server accepts only connections
+from localhost.
+</p>
+<p>For using Julia with multiple clients, it can be good to advise Julia to
+use multiple threads via setting the <span class="env">JULIA_NUM_THREADS</span> environment
+variable before starting Julia.
+</p>
+
+
+<h3>Value</h3>
+
+<p>the port number (invisibly)
+</p>
+
+
+<h3>Note</h3>
+
+<p>The standard (error) output from Julia (printing and warnings)
+can currently only be forwarded to one client.
+This is currently the last client that has connected but this may be subject
+to change.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>JULIACONNECTOR_SERVER
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+
+   Sys.setenv("JULIA_NUM_THREADS" = parallel::detectCores())
+   startJuliaServer()
+
+   library(future)
+   plan(multisession) # use background R processes on the same machine
+
+   juliaEval("global x = 1")
+
+   # Child processes now use the same Julia session:
+   f1 &lt;- future({juliaEval("x")})
+   value(f1)
+
+   plan(sequential) # close background workers
+
+}
+
+</code></pre>
+
+
+</div>

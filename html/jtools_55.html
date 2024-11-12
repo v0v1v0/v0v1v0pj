@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jtools_colors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Color palettes in <code>jtools</code> functions</h2>
+
+<h3>Description</h3>
+
+<p><code>jtools</code> combines several options into the <code>colors</code>
+argument in plotting functions.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The argument to <code>colors</code> in functions like <code>effect_plot</code>,
+<code>plot_coefs</code>, and others is very flexible but may also
+cause confusion.
+</p>
+<p>If you provide an argument of length 1, it is assumed that you are naming
+a palette. <code>jtools</code> provides 6 color palettes design for qualitative data.
+4 of the 6 are based on Paul Tol's suggestions (see references) and are
+meant to both optimize your ability to quickly differentiate the colors
+and to be distinguishable to colorblind people.
+These are called
+<code>"Qual1"</code>, <code>"Qual2"</code>, <code>"Qual3"</code>, <code>"CUD"</code>, <code>"CUD Bright"</code>, and <code>"Rainbow"</code>.
+Each of the "Qual" schemes comes from Paul Tol.
+"Rainbow" is Paul Tol's compromise rainbow color scheme that is fairly
+differentiable for colorblind people and when rendered in grayscale.
+<code>"CUD Bright"</code> is a brightened and reordered version of Okabe and Ito's
+suggestions for 'Color Universal Design' while <code>"CUD"</code> is their exact
+scheme (see references). <code>"CUD Bright"</code> is the default for qualitative
+scales in <code>jtools</code> functions.
+</p>
+<p>You may also provide any color palette supported by <code>RColorBrewer</code>.
+See all of those options at <code>RColorBrewer::brewer.pal()</code>'s documentation.
+If you provide one of <code>RColorBrewer</code>'s sequential palettes, like "Blues",
+<code>jtools</code> automatically requests one more color than needed from
+<code>brewer.pal</code> and then drops the lightest color. My experience is that
+those scales tend to give one color that is too light to easily
+differentiate against a white background.
+</p>
+<p>For <strong>gradients</strong>, you can use any of the <code>RColorBrewer</code> sequential palette
+names and get comparable results on a continuous scale. There are also some
+<code>jtools</code>-specific gradient schemes: <code>"blue"</code>, <code>"blue2"</code>, <code>"green"</code>,
+<code>"red"</code>, <code>"purple"</code>, <code>"seagreen"</code>.
+If you want something a little non-standard, I'd suggest taking a look
+at <code>"blue2"</code> or <code>"seagreen"</code>.
+</p>
+<p>Lastly, you may provide colors by name. This must be a vector of the
+same length as whatever it is the colors will correspond to. The format
+must be one understood by <code>ggplot2</code>'s manual scale functions. This
+basically means it needs to be in hex format (e.g., "#000000") or
+one of the many names R understands (e.g., "red"; use <code>colors()</code> to
+see all of those options).
+</p>
+
+
+<h3>References</h3>
+
+<p>Paul Tol's site is what is used to derive 4 of the 6 <code>jtools</code>-specific
+qualitative palettes: <a href="https://personal.sron.nl/~pault/">https://personal.sron.nl/~pault/</a>
+</p>
+<p>Okabe and Ito's palette inspired "CUD Bright", though "CUD Bright" is not
+exactly the same. "CUD" is the same.
+See <a href="https://web.archive.org/web/20190216090108/jfly.iam.u-tokyo.ac.jp/color/">https://web.archive.org/web/20190216090108/jfly.iam.u-tokyo.ac.jp/color/</a>
+for more.
+</p>
+
+
+</div>

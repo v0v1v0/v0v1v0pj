@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CalculateTheta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate Relatedness Paramenters from Jacquard Coefficients tA Capitalized Title (ideally limited to 65 characters)
+</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>CalculateTheta</code> calculates five identifiable relatedness parameters from a
+list structure containing nine matrices of Jacquard coefficients.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CalculateTheta(J, ind.sub = 1:nrow(J[[1]]))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>J</code></td>
+<td>
+<p>A list structure with nine matrices of pairwise Jacquard coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind.sub</code></td>
+<td>
+<p>Index for subsetting the individuals</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>CalculateTheta</code> produces four matrices according to the expressions in
+Graffelman et al. (2024).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list object with four fields:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>T1</code></td>
+<td>
+<p>The pairwise coancestry or kinship coefficients (symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T2</code></td>
+<td>
+<p>The pairwise inbreeding coefficients (non-symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T3</code></td>
+<td>
+<p>The pairwise Least one IBD out of three (symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T4</code></td>
+<td>
+<p>T4 (skew-symmetric)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>References</h3>
+
+<p>Csuros, M. (2014) Non-identifiability of identity coefficients at biallelic loci. Theoretical Population
+Biology 92, pp. 22-29. <a href="https://doi.org/10.1016/j.tpb.2013.11.001">doi:10.1016/j.tpb.2013.11.001</a>.
+</p>
+<p>Graffelman, J., Weir, B.S. and Goudet, J. (2024) Estimation of Jacquard's genetic identity coefficients with
+bi-allelic variants by constrained least-squares. Preprint at bioRxiv <a href="https://doi.org/10.1101/2024.03.25.586682">doi:10.1101/2024.03.25.586682</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Jacquard.cls</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(DeltaSimulatedPedigree)
+Theta &lt;- CalculateTheta(DeltaSimulatedPedigree)
+</code></pre>
+
+
+</div>

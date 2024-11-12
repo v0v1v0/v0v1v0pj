@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>setSessionVariables</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adds variables to a session environment</h2>
+
+<h3>Description</h3>
+
+<p>Each client session in <code>jrc</code>, gets its own environment that can be accessed only by this
+session (or from the outside with the <code>getSessionVariable</code> function). General purpose
+of these environments is to store some session-specific information such as state of the app for
+each user. It can also be used to mask variables from the user: if there are two variables with the
+same name in the session environment and outside of it, user will not be able to see the latter one.
+This function adds new variables to a session environment or changes values of some existing ones.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">setSessionVariables(vars, sessionId = NULL, makeDefault = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>Named list of variables to be added to a session environment. Names are required and 
+will be used as variable names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session to which variables should be added. Can also be a vector of
+multiple session IDs. If <code>NULL</code>, then variables will be added to all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>makeDefault</code></td>
+<td>
+<p>If <code>TRUE</code> then, in addition, the specified variables will be added to each
+new opened session as default ones.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around method <code>sessionVariables</code> of class <code>Session</code>.
+If <code>makeDefault = TRUE</code>, it is also a wrapper around method <code>sessionVariables</code> of class
+<code>App</code>. The first one changes the current state of the session environment, while the
+second specifies default variables for each new session.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>getSessionVariable</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage(allowedFunctions = "f", allowedVariables = "res")
+
+m &lt;- 1
+f &lt;- function() {v * m}
+setSessionVariables(list(v = 1:10, m = 2))
+
+sendCommand("jrc.callFunction('f', [], 'res')", wait = 1)
+print(res)
+
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

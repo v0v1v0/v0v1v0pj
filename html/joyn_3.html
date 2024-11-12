@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>arguments_checks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform necessary preliminary checks on arguments that are passed to joyn</h2>
+
+<h3>Description</h3>
+
+<p>Perform necessary preliminary checks on arguments that are passed to joyn
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">arguments_checks(
+  x,
+  y,
+  by,
+  copy,
+  keep,
+  suffix,
+  na_matches,
+  multiple,
+  relationship,
+  reportvar
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data frame: left table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>data frame: right table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>character vector or variables to join by</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>copy</code></td>
+<td>
+<p>If <code>x</code> and <code>y</code> are not from the same data source,
+and <code>copy</code> is <code>TRUE</code>, then <code>y</code> will be copied into the
+same src as <code>x</code>.  This allows you to join tables across srcs, but
+it is a potentially expensive operation so you must opt into it.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep</code></td>
+<td>
+<p>Should the join keys from both <code>x</code> and <code>y</code> be preserved in the
+output?
+</p>
+
+<ul>
+<li>
+<p> If <code>NULL</code>, the default, joins on equality retain only the keys from <code>x</code>,
+while joins on inequality retain the keys from both inputs.
+</p>
+</li>
+<li>
+<p> If <code>TRUE</code>, all keys from both inputs are retained.
+</p>
+</li>
+<li>
+<p> If <code>FALSE</code>, only keys from <code>x</code> are retained. For right and full joins,
+the data in key columns corresponding to rows that only exist in <code>y</code> are
+merged into the key columns from <code>x</code>. Can't be used when joining on
+inequality conditions.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffix</code></td>
+<td>
+<p>If there are non-joined duplicate variables in <code>x</code> and
+<code>y</code>, these suffixes will be added to the output to disambiguate them.
+Should be a character vector of length 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na_matches</code></td>
+<td>
+<p>Should two <code>NA</code> or two <code>NaN</code> values match?
+</p>
+
+<ul>
+<li> <p><code>"na"</code>, the default, treats two <code>NA</code> or two <code>NaN</code> values as equal, like
+<code>%in%</code>, <code>match()</code>, and <code>merge()</code>.
+</p>
+</li>
+<li> <p><code>"never"</code> treats two <code>NA</code> or two <code>NaN</code> values as different, and will
+never match them together or to any other values. This is similar to joins
+for database sources and to <code>base::merge(incomparables = NA)</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multiple</code></td>
+<td>
+<p>Handling of rows in <code>x</code> with multiple matches in <code>y</code>.
+For each row of <code>x</code>:
+</p>
+
+<ul>
+<li> <p><code>"all"</code>, the default, returns every match detected in <code>y</code>. This is the
+same behavior as SQL.
+</p>
+</li>
+<li> <p><code>"any"</code> returns one match detected in <code>y</code>, with no guarantees on which
+match will be returned. It is often faster than <code>"first"</code> and <code>"last"</code>
+if you just need to detect if there is at least one match.
+</p>
+</li>
+<li> <p><code>"first"</code> returns the first match detected in <code>y</code>.
+</p>
+</li>
+<li> <p><code>"last"</code> returns the last match detected in <code>y</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>relationship</code></td>
+<td>
+<p>Handling of the expected relationship between the keys of
+<code>x</code> and <code>y</code>. If the expectations chosen from the list below are
+invalidated, an error is thrown.
+</p>
+
+<ul>
+<li> <p><code>NULL</code>, the default, doesn't expect there to be any relationship between
+<code>x</code> and <code>y</code>. However, for equality joins it will check for a many-to-many
+relationship (which is typically unexpected) and will warn if one occurs,
+encouraging you to either take a closer look at your inputs or make this
+relationship explicit by specifying <code>"many-to-many"</code>.
+</p>
+<p>See the <em>Many-to-many relationships</em> section for more details.
+</p>
+</li>
+<li> <p><code>"one-to-one"</code> expects:
+</p>
+
+<ul>
+<li>
+<p> Each row in <code>x</code> matches at most 1 row in <code>y</code>.
+</p>
+</li>
+<li>
+<p> Each row in <code>y</code> matches at most 1 row in <code>x</code>.
+</p>
+</li>
+</ul>
+</li>
+<li> <p><code>"one-to-many"</code> expects:
+</p>
+
+<ul><li>
+<p> Each row in <code>y</code> matches at most 1 row in <code>x</code>.
+</p>
+</li></ul>
+</li>
+<li> <p><code>"many-to-one"</code> expects:
+</p>
+
+<ul><li>
+<p> Each row in <code>x</code> matches at most 1 row in <code>y</code>.
+</p>
+</li></ul>
+</li>
+<li> <p><code>"many-to-many"</code> doesn't perform any relationship checks, but is provided
+to allow you to be explicit about this relationship if you know it
+exists.
+</p>
+</li>
+</ul>
+<p><code>relationship</code> doesn't handle cases where there are zero matches. For that,
+see <code>unmatched</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reportvar</code></td>
+<td>
+<p>character: Name of reporting variable. Default is ".joyn".
+This is the same as variable "_merge" in Stata after performing a merge. If
+FALSE or NULL, the reporting variable will be excluded from the final
+table, though a summary of the join will be display after concluding.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of checked arguments to pass on to the main joyn function
+</p>
+
+
+</div>

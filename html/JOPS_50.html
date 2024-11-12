@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ps2D_PartialDeriv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Partial derivative two-dimensional smoothing scattered (normal)
+data using P-splines.</h2>
+
+<h3>Description</h3>
+
+<p><code>ps2D_PartialDeriv</code> provides the partial derivative
+P-spline surface along <code>x</code>, with aniosotripic penalization of
+tensor product B-splines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ps2D_PartialDeriv(
+  Data,
+  Pars = rbind(c(min(Data[, 1]), max(Data[, 1]), 10, 3, 1, 2), c(min(Data[, 2]),
+    max(Data[, 2]), 10, 3, 1, 2)),
+  XYpred = cbind(Data[, 1], Data[, 2])
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Data</code></td>
+<td>
+<p>a matrix of 3 columns <code>x, y, z</code> of equal length;
+the response is <code>z</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pars</code></td>
+<td>
+<p>a matrix of 2 rows, where the first and second row
+sets the P-spline paramters for <code>x</code> and <code>y</code>, respectively.
+Each row consists of: <code>min max nseg bdeg lambda pord</code>.
+The <code>min</code> and <code>max</code> set the ranges, <code>nseg</code> (default 10)
+is the number of evenly spaced segments between <code>min</code> and <code>max</code>,
+<code>bdeg</code> is the degree of the basis (default 3 for cubic),
+<code>lambda</code> is the (positive) tuning parameter for the penalty (default 1),
+<code>pord</code> is the number for the order of the difference penalty (default 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XYpred</code></td>
+<td>
+<p>a matrix with two columns <code>(x, y)</code> that give the coordinates
+of (future) prediction; the default is the data locations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is support function for <code>sim_vcpsr</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coef</code></td>
+<td>
+<p>a vector of length <code>(Pars[1, 3] + Pars[1, 4]) * (Pars[1, 3] + Pars[1, 4]).</code>
+of (unfolded) estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>the tensor product B-spline matrix of dimensions <code>m</code> by <code>length(coef)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>a vector of <code>length(y)</code> of smooth estimated means (at the <code>x, y</code> locations).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>a vector of length <code>nrow(XYpred)</code> of (future) predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d_coef</code></td>
+<td>
+<p>a vector of length <code>(Pars[1, 3] + Pars[1,4] - 1) * (Pars[1,3]+Pars[1,4]).</code>
+of (unfolded) partial derivative estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B_d</code></td>
+<td>
+<p>the tensor product B-spline matrix of dimensions <code>m</code> by <code>lengh(d_coef)</code>, associated with
+the partial derivative of the tensor basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d_fit</code></td>
+<td>
+<p>a vector of <code>length(y)</code> of partial derivative (along <code>x</code>)
+of the smooth estimated means (at the <code>x, y</code> locations).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d_pred</code></td>
+<td>
+<p>a vector of length <code>nrow(XYpred)</code> of partial derivative (future) predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pars</code></td>
+<td>
+<p>a matrix of 2 rows, where each the first (second) row
+sets the P-spline paramters for <code>x (y)</code>: <code>min max nseg bdeg lambda pord</code>. See the argument above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>root leave-one-out CV or root average PRESS.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XYpred</code></td>
+<td>
+<p>a matrix with two columns <code>(x, y)</code> that give the coordinates
+of (future) prediction; the default is the data locations.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B. D. (2015). Varying-coefficient single-index signal
+regression. <em>Chemometrics and Intelligent Laboratory Systems</em>, 143, 111–121.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+</div>

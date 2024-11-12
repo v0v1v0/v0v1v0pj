@@ -1,0 +1,363 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cfa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confirmatory Factor Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Confirmatory Factor Analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cfa(data, factors = list(list(label = "Factor 1", vars = list())),
+  resCov, miss = "fiml", constrain = "facVar", estTest = TRUE,
+  ci = FALSE, ciWidth = 95, stdEst = FALSE, factCovEst = TRUE,
+  factInterceptEst = FALSE, resCovEst = FALSE,
+  resInterceptEst = FALSE, fitMeasures = list("cfi", "tli", "rmsea"),
+  modelTest = TRUE, pathDiagram = FALSE, corRes = FALSE,
+  hlCorRes = 0.1, mi = FALSE, hlMI = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>a list containing named lists that define the <code>label</code>
+of the factor and the <code>vars</code> that belong to that factor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resCov</code></td>
+<td>
+<p>a list of lists specifying the residual covariances that need
+to be estimated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>miss</code></td>
+<td>
+<p><code>'listwise'</code> or <code>'fiml'</code>, how to handle missing
+values; <code>'listwise'</code> excludes a row from all analyses if one of its
+entries is missing, <code>'fiml'</code> uses a full information maximum
+likelihood method to estimate the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>constrain</code></td>
+<td>
+<p><code>'facVar'</code> or <code>'facInd'</code>, how to contrain the
+model; <code>'facVar'</code> fixes the factor variances to one, <code>'facInd'</code>
+fixes each factor to the scale of its first indicator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estTest</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide 'Z' and 'p'
+values for the model estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width that is used as <code>'ci'</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stdEst</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a standardized
+estimate for the model estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factCovEst</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimates
+for the factor (co)variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factInterceptEst</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide
+estimates for the factor intercepts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resCovEst</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimates
+for the residual (co)variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resInterceptEst</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide
+estimates for the residual intercepts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fitMeasures</code></td>
+<td>
+<p>one or more of <code>'cfi'</code>, <code>'tli'</code>,
+<code>'srmr'</code>, <code>'rmsea'</code>, <code>'aic'</code>, or <code>'bic'</code>; use CFI, TLI,
+SRMR, RMSEA + 90% confidence interval, adjusted AIC, and BIC model fit
+measures, respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTest</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide a
+chi-square test for exact fit that compares the model with the perfect
+fitting model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pathDiagram</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a path
+diagram of the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corRes</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the residuals
+for the observed correlation matrix (i.e., the difference between the
+expected correlation matrix and the observed correlation matrix)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hlCorRes</code></td>
+<td>
+<p>a number (default: 0.1), highlight values in the
+<code>'corRes'</code> table above this value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mi</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide modification
+indices for the parameters not included in the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hlMI</code></td>
+<td>
+<p>a number (default: 3), highlight values in the
+<code>'modIndices'</code> tables above this value</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$factorLoadings</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the factor loadings </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$factorEst$factorCov</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing factor covariances estimates </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$factorEst$factorIntercept</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing factor intercept estimates </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$resEst$resCov</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing residual covariances estimates </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$resEst$resIntercept</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing residual intercept estimates </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelFit$test</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the chi-square test for exact fit </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelFit$fitMeasures</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing fit measures </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelPerformance$corRes</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing residuals for the observed correlation matrix </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelPerformance$modIndices</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a group </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$pathDiagram</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an image containing the model path diagram </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelSyntax</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> the lavaan syntax used to fit the model </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$factorLoadings$asDF</code>
+</p>
+<p><code>as.data.frame(results$factorLoadings)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- lavaan::HolzingerSwineford1939
+
+jmv::cfa(
+    data = data,
+    factors = list(
+        list(label="Visual", vars=c("x1", "x2", "x3")),
+        list(label="Textual", vars=c("x4", "x5", "x6")),
+        list(label="Speed", vars=c("x7", "x8", "x9"))),
+    resCov = NULL)
+
+#
+#  CONFIRMATORY FACTOR ANALYSIS
+#
+#  Factor Loadings
+#  -----------------------------------------------------------------
+#    Factor     Indicator    Estimate    SE        Z        p
+#  -----------------------------------------------------------------
+#    Visual     x1              0.900    0.0832    10.81    &lt; .001
+#               x2              0.498    0.0808     6.16    &lt; .001
+#               x3              0.656    0.0776     8.46    &lt; .001
+#    Textual    x4              0.990    0.0567    17.46    &lt; .001
+#               x5              1.102    0.0626    17.60    &lt; .001
+#               x6              0.917    0.0538    17.05    &lt; .001
+#    Speed      x7              0.619    0.0743     8.34    &lt; .001
+#               x8              0.731    0.0755     9.68    &lt; .001
+#               x9              0.670    0.0775     8.64    &lt; .001
+#  -----------------------------------------------------------------
+#
+#
+#  FACTOR ESTIMATES
+#
+#  Factor Covariances
+#  --------------------------------------------------------------
+#                          Estimate    SE        Z       p
+#  --------------------------------------------------------------
+#    Visual     Visual      1.000 a
+#               Textual     0.459      0.0635    7.22    &lt; .001
+#               Speed       0.471      0.0862    5.46    &lt; .001
+#    Textual    Textual     1.000 a
+#               Speed       0.283      0.0715    3.96    &lt; .001
+#    Speed      Speed       1.000 a
+#  --------------------------------------------------------------
+#    a fixed parameter
+#
+#
+#  MODEL FIT
+#
+#  Test for Exact Fit
+#  ------------------------
+#    X²      df    p
+#  ------------------------
+#    85.3    24    &lt; .001
+#  ------------------------
+#
+#
+#  Fit Measures
+#  -----------------------------------------------
+#    CFI      TLI      RMSEA     Lower     Upper
+#  -----------------------------------------------
+#    0.931    0.896    0.0921    0.0714    0.114
+#  -----------------------------------------------
+#
+
+</code></pre>
+
+
+</div>

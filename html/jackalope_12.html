@@ -1,0 +1,440 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>illumina</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create and write Illumina reads to FASTQ file(s).</h2>
+
+<h3>Description</h3>
+
+<p>From either a reference genome or set of variant haplotypes, create Illumina reads
+from error profiles and write them to FASTQ output file(s).
+I encourage you to cite the reference below in addition to <code>jackalope</code> if you use
+this function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">illumina(obj,
+         out_prefix,
+         n_reads,
+         read_length,
+         paired,
+         frag_mean = 400,
+         frag_sd = 100,
+         matepair = FALSE,
+         seq_sys = NULL,
+         profile1 = NULL,
+         profile2 = NULL,
+         ins_prob1 = 0.00009,
+         del_prob1 = 0.00011,
+         ins_prob2 = 0.00015,
+         del_prob2 = 0.00023,
+         frag_len_min = NULL,
+         frag_len_max = NULL,
+         haplotype_probs = NULL,
+         barcodes = NULL,
+         prob_dup = 0.02,
+         sep_files = FALSE,
+         compress = FALSE,
+         comp_method = "bgzip",
+         n_threads = 1L,
+         read_pool_size = 1000L,
+         show_progress = FALSE,
+         overwrite = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>Sequencing object of class <code>ref_genome</code> or <code>haplotypes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_prefix</code></td>
+<td>
+<p>Prefix for the output file(s), including entire path except
+for the file extension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_reads</code></td>
+<td>
+<p>Number of reads you want to create.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>read_length</code></td>
+<td>
+<p>Length of reads.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paired</code></td>
+<td>
+<p>Logical for whether to use paired-end reads.
+This argument is changed to <code>TRUE</code> if <code>matepair</code> is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frag_mean</code></td>
+<td>
+<p>Mean of the Gamma distribution that generates fragment sizes.
+Defaults to <code>400</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frag_sd</code></td>
+<td>
+<p>Standard deviation of the Gamma distribution that generates
+fragment sizes.
+Defaults to <code>100</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>matepair</code></td>
+<td>
+<p>Logical for whether to simulate mate-pair reads.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq_sys</code></td>
+<td>
+<p>Full or abbreviated name of sequencing system to use.
+See "Sequencing systems" section for options.
+See "Sequencing profiles" section for more information on how this argument,
+<code>profile1</code>, and <code>profile2</code> are used to specify profiles.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile1</code></td>
+<td>
+<p>Custom profile file for read 1.
+See "Sequencing profiles" section for more information on how this argument,
+<code>profile2</code>, and <code>seq_sys</code> are used to specify profiles.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile2</code></td>
+<td>
+<p>Custom profile file for read 2.
+See "Sequencing profiles" section for more information on how this argument,
+<code>profile1</code>, and <code>seq_sys</code> are used to specify profiles.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ins_prob1</code></td>
+<td>
+<p>Insertion probability for read 1. Defaults to <code>0.00009</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>del_prob1</code></td>
+<td>
+<p>Deletion probability for read 1. Defaults to <code>0.00011</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ins_prob2</code></td>
+<td>
+<p>Insertion probability for read 2. Defaults to <code>0.00015</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>del_prob2</code></td>
+<td>
+<p>Deletion probability for read 2. Defaults to <code>0.00023</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frag_len_min</code></td>
+<td>
+<p>Minimum fragment size. A <code>NULL</code> value results in the read length.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frag_len_max</code></td>
+<td>
+<p>Maximum fragment size.
+A <code>NULL</code> value results in <code>2^32-1</code>, the maximum allowed value.
+Defaults to <code>NULL</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>haplotype_probs</code></td>
+<td>
+<p>Relative probability of sampling each haplotype.
+This is ignored if sequencing a reference genome.
+<code>NULL</code> results in all having the same probability.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>barcodes</code></td>
+<td>
+<p>Character vector of barcodes for each haplotype, or a single barcode
+if sequencing a reference genome. <code>NULL</code> results in no barcodes.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob_dup</code></td>
+<td>
+<p>A single number indicating the probability of duplicates.
+Defaults to <code>0.02</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep_files</code></td>
+<td>
+<p>Logical indicating whether to make separate files for each haplotype.
+This argument is coerced to <code>FALSE</code> if the <code>obj</code> argument is not
+a <code>haplotypes</code> object.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compress</code></td>
+<td>
+<p>Logical specifying whether or not to compress output file, or
+an integer specifying the level of compression, from 1 to 9.
+If <code>TRUE</code>, a compression level of <code>6</code> is used.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comp_method</code></td>
+<td>
+<p>Character specifying which type of compression to use if any
+is desired. Options include <code>"gzip"</code> and <code>"bgzip"</code>.
+This is ignored if <code>compress</code> is <code>FALSE</code>, and it throws an error if
+it's set to <code>"gzip"</code> when <code>n_threads &gt; 1</code> (since I don't have a method to
+do gzip compression in parallel).
+Defaults to <code>"bgzip"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_threads</code></td>
+<td>
+<p>The number of threads to use in processing.
+If <code>compress</code> is <code>TRUE</code> or <code style="white-space: pre;">⁠&gt; 0⁠</code> (indicating compressed output),
+setting <code>n_threads</code> to <code>2</code> or more makes this function first create an
+uncompressed file/files using <code>n_threads</code> threads, then compress that/those
+file/files also using <code>n_threads</code> threads.
+There is no speed increase if you try to use multiple threads to create
+compressed output on the fly, so that option is not included.
+If you want to be conservative with disk space (by not having an uncompressed
+file present even temporarily), set <code>n_threads</code> to <code>1</code>.
+Threads are NOT spread across chromosomes or haplotypes, so you don't need to
+think about these when choosing this argument's value.
+However, all threads write to the same file/files, so there are diminishing
+returns for providing many threads.
+This argument is ignored if the package was not compiled with OpenMP.
+Defaults to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>read_pool_size</code></td>
+<td>
+<p>The number of reads to store before writing to disk.
+Increasing this number should improve speed but take up more memory.
+Defaults to <code>1000</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_progress</code></td>
+<td>
+<p>Logical for whether to show a progress bar.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Logical for whether to overwrite existing FASTQ file(s) of the
+same name, if they exist.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Nothing is returned.
+</p>
+
+
+<h3>Sequencing profiles</h3>
+
+<p>This section outlines how to use the <code>seq_sys</code>, <code>profile1</code>,
+and <code>profile2</code> arguments.
+If all arguments are <code>NULL</code> (their defaults), a sequencing system is chosen
+based on the read length.
+If, however, one or more arguments has been provided, then how they're provided
+should depend on whether you want single- or paired-end reads.
+</p>
+<p><strong>For single-end reads</strong>
+</p>
+
+<ul>
+<li> <p><code>profile2</code> should be <code>NULL</code>.
+</p>
+</li>
+<li>
+<p> Only <code>seq_sys</code> or <code>profile1</code> should be provided, not both.
+</p>
+</li>
+</ul>
+<p><strong>For paired-end reads</strong>
+</p>
+
+<ul>
+<li>
+<p> If providing <code>seq_sys</code>, don't provide either <code>profile1</code> or <code>profile2</code>.
+</p>
+</li>
+<li>
+<p> If providing <code>profile1</code>, you must also provide <code>profile2</code> (they can be the
+same if you want) and you cannot provide <code>seq_sys</code>.
+</p>
+</li>
+</ul>
+<h3>Sequencing systems</h3>
+
+<p>Sequencing system options are the following, where, for each system,
+"name" is the full name, "abbrev" is the abbreviated name,
+"max_len" indicates the maximum allowed read length,
+and
+"paired" indicates whether paired-end sequencing is allowed.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+name                 </td>
+<td style="text-align: left;"> abbrev   </td>
+<td style="text-align: left;"> max_len </td>
+<td style="text-align: left;"> paired </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Genome Analyzer I    </td>
+<td style="text-align: left;"> GA1      </td>
+<td style="text-align: left;"> 44      </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+Genome Analyzer II   </td>
+<td style="text-align: left;"> GA2      </td>
+<td style="text-align: left;"> 75      </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+HiSeq 1000           </td>
+<td style="text-align: left;"> HS10     </td>
+<td style="text-align: left;"> 100     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+HiSeq 2000           </td>
+<td style="text-align: left;"> HS20     </td>
+<td style="text-align: left;"> 100     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+HiSeq 2500           </td>
+<td style="text-align: left;"> HS25     </td>
+<td style="text-align: left;"> 150     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+HiSeqX v2.5 PCR free </td>
+<td style="text-align: left;"> HSXn     </td>
+<td style="text-align: left;"> 150     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+HiSeqX v2.5 TruSeq   </td>
+<td style="text-align: left;"> HSXt     </td>
+<td style="text-align: left;"> 150     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+MiniSeq TruSeq       </td>
+<td style="text-align: left;"> MinS     </td>
+<td style="text-align: left;"> 50      </td>
+<td style="text-align: left;"> No    </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+MiSeq v1             </td>
+<td style="text-align: left;"> MSv1     </td>
+<td style="text-align: left;"> 250     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+MiSeq v3             </td>
+<td style="text-align: left;"> MSv3     </td>
+<td style="text-align: left;"> 250     </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+NextSeq 500 v2       </td>
+<td style="text-align: left;"> NS50     </td>
+<td style="text-align: left;"> 75      </td>
+<td style="text-align: left;"> Yes   </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<h3>ID lines</h3>
+
+<p>The ID lines for FASTQ files are formatted as such:
+</p>
+<p><code style="white-space: pre;">⁠@&lt;genome name&gt;-&lt;chromosome name&gt;-&lt;starting position&gt;-&lt;strand&gt;[/&lt;read#&gt;]⁠</code>
+</p>
+<p>where the part in <code style="white-space: pre;">⁠[]⁠</code> is only for paired-end Illumina reads, and where <code style="white-space: pre;">⁠genome name⁠</code>
+is always <code>REF</code> for reference genomes (as opposed to haplotypes).
+</p>
+
+
+<h3>References</h3>
+
+<p>Huang, W., L. Li, J. R. Myers, and G. T. Marth. 2012. ART: a next-generation
+sequencing read simulator. <em>Bioinformatics</em> <strong>28</strong>:593–594.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+rg &lt;- create_genome(10, 100e3, 100)
+dir &lt;- tempdir(TRUE)
+illumina(rg, paste0(dir, "/illumina_reads"), n_reads = 100,
+         read_length = 100, paired = FALSE)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmetrikRead</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reads a *.jmetrik file into a data frame.</h2>
+
+<h3>Description</h3>
+
+<p>A *.jmetrik file can be created with <code>jmetrikWrite</code> or by the 'jMetrik' program. 
+See <a href="http://www.ItemAnalysis.com">http://www.ItemAnalysis.com</a>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmetrikRead(fileName, maxScan = 500)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fileName</code></td>
+<td>
+<p>The complete path and file name of the *.jmetrik file that is being read.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxScan</code></td>
+<td>
+<p>The maximum number of rows to scan. This number should be at least the number
+of variables int eh data file.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+x&lt;-jmetrikRead(fileName=system.file("extdata", "exam1iparam.jmetrik", package = "jmetrik"))
+
+
+</code></pre>
+
+
+</div>

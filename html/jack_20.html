@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MSF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of monomial symmetric functions</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a monomial symmetric function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MSF(x, lambda)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector or a <code>bigq</code> vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A number if <code>x</code> is numeric, a <code>bigq</code> rational number
+if <code>x</code> is a <code>bigq</code> vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(1, 2, 5/2)
+lambda &lt;- c(3, 1)
+MSF(x, lambda)
+library(gmp)
+x &lt;- c(as.bigq(1), as.bigq(2), as.bigq(5,2))
+MSF(x, lambda)
+</code></pre>
+
+
+</div>

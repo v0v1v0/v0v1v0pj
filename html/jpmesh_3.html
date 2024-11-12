@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>meshcode_vector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Vector of meshcode</h2>
+
+<h3>Description</h3>
+
+<p>Vector of meshcode
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">meshcode_vector(x = character(), size = double(), .type = "standard")
+
+meshcode(x, .type = "standard")
+
+as_meshcode(x, ...)
+
+## S3 method for class 'meshcode'
+format(x, ...)
+
+## S3 method for class 'subdiv_meshcode'
+format(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>input meshcode value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>input meshcode size. Default set to <code>NULL</code>. The decision is
+automatically made based on the <code>meshsize</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.type</code></td>
+<td>
+<p>Specify the <code>subdivision</code> if you want to get a 100m mesh.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>path to another function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>meshcode
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">meshcode("6441")
+meshcode(c("6441", "6442"))
+meshcode(c("6441", "644143"))
+meshcode("6441431552", .type = "subdivision")
+</code></pre>
+
+
+</div>

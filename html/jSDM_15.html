@@ -1,0 +1,713 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jSDM_poisson_log</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Poisson regression with log link function</h2>
+
+<h3>Description</h3>
+
+<p>The <code>jSDM_poisson_log</code> function performs a Poisson regression with log link function in a Bayesian framework. 
+The function calls a Gibbs sampler written in 'C++' code which uses an adaptive Metropolis algorithm to estimate the conditional posterior distribution of model's parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jSDM_poisson_log(
+  burnin = 5000,
+  mcmc = 10000,
+  thin = 10,
+  count_data,
+  site_data,
+  site_formula,
+  trait_data = NULL,
+  trait_formula = NULL,
+  n_latent = 0,
+  site_effect = "none",
+  beta_start = 0,
+  gamma_start = 0,
+  lambda_start = 0,
+  W_start = 0,
+  alpha_start = 0,
+  V_alpha = 1,
+  shape_Valpha = 0.5,
+  rate_Valpha = 5e-04,
+  mu_beta = 0,
+  V_beta = 10,
+  mu_gamma = 0,
+  V_gamma = 10,
+  mu_lambda = 0,
+  V_lambda = 10,
+  ropt = 0.44,
+  seed = 1234,
+  verbose = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>burnin</code></td>
+<td>
+<p>The number of burnin iterations for the sampler.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc</code></td>
+<td>
+<p>The number of Gibbs iterations for the sampler. Total number of Gibbs iterations is equal to <code>burnin+mcmc</code>.<br><code>burnin+mcmc</code> must be divisible by 10 and superior or equal to 100 so that the progress bar can be displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thin</code></td>
+<td>
+<p>The thinning interval used in the simulation. The number of mcmc iterations must be divisible by this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>count_data</code></td>
+<td>
+<p>A matrix <code class="reqn">n_{site} \times n_{species}</code> indicating the abundance of each species on each site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>site_data</code></td>
+<td>
+<p>A data frame containing the model's explanatory variables by site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>site_formula</code></td>
+<td>
+<p>A one-sided formula of the form '~x1+...+xp' specifying the explanatory variables for the suitability process of the model,<br>
+used to form the design matrix <code class="reqn">X</code> of size <code class="reqn">n_{site} \times np</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trait_data</code></td>
+<td>
+<p>A data frame containing the species traits which can be included as part of the model.<br>
+Default to <code>NULL</code> to fit a model without species traits.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trait_formula</code></td>
+<td>
+<p>A one-sided formula of the form '~ t1 + ... + tk + x1:t1 + ... + xp:tk' specifying the interactions between the environmental variables and the species traits to be considered in the model,<br>
+used to form the trait design matrix <code class="reqn">Tr</code> of size <code class="reqn">n_{species} \times nt</code> <br> 
+and to set to <code class="reqn">0</code> the <code class="reqn">\gamma</code> parameters corresponding to interactions not taken into account according to the formula. 
+Default to <code>NULL</code> to fit a model with all possible interactions between species traits found in <code>trait_data</code> and environmental variables defined by <code>site_formula</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_latent</code></td>
+<td>
+<p>An integer which specifies the number of latent variables to generate. Defaults to <code class="reqn">0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>site_effect</code></td>
+<td>
+<p>A string indicating whether row effects are included as fixed effects (<code>"fixed"</code>), as random effects (<code>"random"</code>),<br>
+or not included (<code>"none"</code>) in the model. 
+If fixed effects, then for parameter identifiability the first row effect is set to zero, which analogous to acting as a reference level when dummy variables are used.
+If random effects, they are drawn from a normal distribution with mean zero and unknown variance, analogous to a random intercept in mixed models. Defaults to <code>"none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_start</code></td>
+<td>
+<p>Starting values for <code class="reqn">\beta</code> parameters of the suitability process for each species must be either a scalar or a <code class="reqn">np \times n_{species}</code> matrix. 
+If <code>beta_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\beta</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_start</code></td>
+<td>
+<p>Starting values for <code class="reqn">\gamma</code> parameters that represent the influence of species-specific traits on species' responses <code class="reqn">\beta</code>,
+<code>gamma_start</code> must be either a scalar, a vector of length <code class="reqn">nt</code>, <code class="reqn">np</code> or <code class="reqn">nt.np</code> or a <code class="reqn">nt \times np</code> matrix.
+If <code>gamma_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\gamma</code> parameters.
+If <code>gamma_start</code> is a vector of length <code class="reqn">nt</code> or <code class="reqn">nt.np</code> the resulting <code class="reqn">nt \times np</code> matrix is filled by column with specified values,
+if a <code class="reqn">np</code>-length vector is given, the matrix is filled by row.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda_start</code></td>
+<td>
+<p>Starting values for <code class="reqn">\lambda</code> parameters corresponding to the latent variables for each species must be either a scalar
+or a <code class="reqn">n_{latent} \times n_{species}</code> upper triangular matrix with strictly positive values on the diagonal,
+ignored if <code>n_latent=0</code>.
+If <code>lambda_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\lambda</code> parameters except those concerned by the constraints explained above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W_start</code></td>
+<td>
+<p>Starting values for latent variables must be either a scalar or a <code class="reqn">nsite \times n_latent</code> matrix, ignored if <code>n_latent=0</code>.
+If <code>W_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">W_{il}</code> with <code class="reqn">i=1,\ldots,n_{site}</code> and <code class="reqn">l=1,\ldots,n_{latent}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha_start</code></td>
+<td>
+<p>Starting values for random site effect parameters must be either a scalar or a <code class="reqn">n_{site}</code>-length vector, ignored if <code>site_effect="none"</code>.
+If <code>alpha_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\alpha</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_alpha</code></td>
+<td>
+<p>Starting value for variance of random site effect if <code>site_effect="random"</code> or constant variance of the Gaussian prior distribution for the fixed site effect if 
+<code>site_effect="fixed"</code>. Must be a strictly positive scalar, ignored if <code>site_effect="none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape_Valpha</code></td>
+<td>
+<p>Shape parameter of the Inverse-Gamma prior for the random site effect variance <code>V_alpha</code>, ignored if <code>site_effect="none"</code> or <code>site_effect="fixed"</code>. 
+Must be a strictly positive scalar. Default to 0.5 for weak informative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate_Valpha</code></td>
+<td>
+<p>Rate parameter of the Inverse-Gamma prior for the random site effect variance <code>V_alpha</code>, ignored if <code>site_effect="none"</code> or <code>site_effect="fixed"</code>
+Must be a strictly positive scalar. Default to 0.0005 for weak informative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_beta</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\beta</code> parameters of the suitability process. <code>mu_beta</code> must be either a scalar or a <code class="reqn">np</code>-length vector.
+If <code>mu_beta</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\beta</code> parameters.
+The default value is set to 0 for an uninformative prior, ignored if <code>trait_data</code> is specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_beta</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\beta</code> parameters of the suitability process.
+<code>V_beta</code> must be either a scalar or a <code class="reqn">np \times np</code> symmetric positive semi-definite square matrix.
+If <code>V_beta</code> takes a scalar value, then that value will serve as the prior variance for all of the <code class="reqn">\beta</code> parameters,
+so the variance covariance matrix used in this case is diagonal with the specified value on the diagonal. 
+The default variance is large and set to 10 for an uninformative flat prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_gamma</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\gamma</code> parameters.
+<code>mu_gamma</code> must be either a scalar, a vector of length <code class="reqn">nt</code>, <code class="reqn">np</code> or <code class="reqn">nt.np</code> or a <code class="reqn">nt \times np</code> matrix.
+If <code>mu_gamma</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\gamma</code> parameters.
+If <code>mu_gamma</code> is a vector of length <code class="reqn">nt</code> or <code class="reqn">nt.np</code> the resulting <code class="reqn">nt \times np</code> matrix is filled by column with specified values,
+if a <code class="reqn">np</code>-length vector is given, the matrix is filled by row. 
+The default value is set to 0 for an uninformative prior, ignored if <code>trait_data=NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_gamma</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\gamma</code> parameters.
+<code>V_gamma</code> must be either a scalar, a vector of length <code class="reqn">nt</code>, <code class="reqn">np</code> or <code class="reqn">nt.np</code> or a <code class="reqn">nt \times np</code> positive matrix.
+If <code>V_gamma</code> takes a scalar value, then that value will serve as the prior variance for all of the <code class="reqn">\gamma</code> parameters.
+If <code>V_gamma</code> is a vector of length <code class="reqn">nt</code> or <code class="reqn">nt.np</code> the resulting <code class="reqn">nt \times np</code> matrix is filled by column with specified values,
+if a <code class="reqn">np</code>-length vector is given, the matrix is filled by row. 
+The default variance is large and set to 10 for an uninformative flat prior, ignored if <code>trait_data=NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_lambda</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\lambda</code> parameters corresponding to the latent variables. 
+<code>mu_lambda</code> must be either a scalar or a <code class="reqn">n_{latent}</code>-length vector. 
+If <code>mu_lambda</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\lambda</code> parameters.
+The default value is set to 0 for an uninformative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_lambda</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\lambda</code> parameters corresponding to the latent variables.
+<code>V_lambda</code> must be either a scalar or a <code class="reqn">n_{latent} \times n_{latent}</code> symmetric positive semi-definite square matrix.
+If <code>V_lambda</code> takes a scalar value, then that value will serve as the prior variance for all of <code class="reqn">\lambda</code> parameters,
+so the variance covariance matrix used in this case is diagonal with the specified value on the diagonal.
+The default variance is large and set to 10 for an uninformative flat prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ropt</code></td>
+<td>
+<p>Target acceptance rate for the adaptive Metropolis algorithm. Default to 0.44.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>The seed for the random number generator. Default to 1234.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A switch (0,1) which determines whether or not the progress of the sampler is printed to the screen. Default is 1: a progress bar is printed, indicating the step (in %) reached by the Gibbs sampler.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>We model an ecological process where the presence or absence of species <code class="reqn">j</code> on site <code class="reqn">i</code> is explained by habitat suitability.
+</p>
+<p><b>Ecological process : </b>
+</p>
+<p style="text-align: center;"><code class="reqn">y_{ij} \sim \mathcal{P}oisson(\theta_{ij})</code>
+</p>
+
+<p>where </p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="none"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) =  X_i \beta_j</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="none"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) =  X_i \beta_j + W_i \lambda_j</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="fixed"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) = X_i \beta_j  + \alpha_i</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="fixed"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) = X_i \beta_j + W_i \lambda_j + \alpha_i</code>  </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="random"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) = X_i \beta_j  + \alpha_i</code> and <code class="reqn">\alpha_i \sim \mathcal{N}(0,V_\alpha)</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="random"</code> </td>
+<td style="text-align: left;"> log<code class="reqn">(\theta_{ij}) = X_i \beta_j + W_i \lambda_j + \alpha_i</code> and <code class="reqn">\alpha_i \sim \mathcal{N}(0,V_\alpha)</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>In the absence of data on species traits (<code>trait_data=NULL</code>), the effect of species <code class="reqn">j</code>: <code class="reqn">\beta_j</code>;
+follows the same <em>a priori</em> Gaussian distribution such that <code class="reqn">\beta_j \sim \mathcal{N}_{np}(\mu_{\beta},V_{\beta})</code>,
+for each species. 
+</p>
+<p>If species traits data are provided, the effect of species <code class="reqn">j</code>: <code class="reqn">\beta_j</code>;
+follows an <em>a priori</em> Gaussian distribution such that <code class="reqn">\beta_j \sim \mathcal{N}_{np}(\mu_{\beta_j},V_{\beta})</code>,
+where <code class="reqn">\mu_{\beta_jp} = \sum_{k=1}^{nt} t_{jk}.\gamma_{kp}</code>, takes different values for each species.
+</p>
+<p>We assume that <code class="reqn">\gamma_{kp} \sim \mathcal{N}(\mu_{\gamma_{kp}},V_{\gamma_{kp}})</code> as prior distribution.   
+</p>
+<p>We define the matrix <code class="reqn">\gamma=(\gamma_{kp})_{k=1,...,nt}^{p=1,...,np}</code> such as : 
+</p>
+
+<table>
+<tr>
+<td style="text-align: right;">
+</td>
+<td style="text-align: center;"> <strong><code class="reqn">x_0</code></strong> </td>
+<td style="text-align: center;"> <strong><code class="reqn">x_1</code></strong> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <strong><code class="reqn">x_p</code></strong> </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> <strong><code class="reqn">x_{np}</code></strong> </td>
+<td style="text-align: left;">  </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+</td>
+<td style="text-align: center;">__________</td>
+<td style="text-align: center;">________</td>
+<td style="text-align: center;">________</td>
+<td style="text-align: center;">________</td>
+<td style="text-align: center;">________</td>
+<td style="text-align: center;">________</td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+<strong><code class="reqn">t_0</code></strong> | </td>
+<td style="text-align: center;">  <strong><code class="reqn">\gamma_{0,0}</code></strong> </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{0,1}</code></em> </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{0,p}</code></em> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{0,np}</code></em> </td>
+<td style="text-align: left;"> { <em>effect of </em> </td>
+</tr>
+<tr>
+<td style="text-align: right;">
+  | </td>
+<td style="text-align: center;"> <strong>intercept</strong> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: left;"> <em>environmental</em> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+  | </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: left;"> <em>   variables</em> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+  <strong><code class="reqn">t_1</code></strong> | </td>
+<td style="text-align: center;">  <code class="reqn">\gamma_{1,0}</code> </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{1,1}</code></em> </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{1,p}</code></em> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{1,np}</code></em> </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;">
+  ... | </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+  <strong><code class="reqn">t_k</code></strong> | </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{k,0}</code></em> </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{k,1}</code></em> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <code class="reqn">\gamma_{k,p}</code> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <code class="reqn">\gamma_{k,np}</code> </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;">
+  ... | </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;">  ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+  <strong><code class="reqn">t_{nt}</code></strong> | </td>
+<td style="text-align: center;"> <em><code class="reqn">\gamma_{nt,0}</code></em> </td>
+<td style="text-align: center;"> <code class="reqn">\gamma_{nt,1}</code>
+</td>
+<td style="text-align: center;"> ... </td>
+<td style="text-align: center;"> <code class="reqn">\gamma_{nt,p}</code> </td>
+<td style="text-align: center;">... </td>
+<td style="text-align: center;"> <code class="reqn">\gamma_{nt,np}</code> </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;">
+  </td>
+<td style="text-align: center;"> <em>average</em> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+  </td>
+<td style="text-align: center;"> <em>trait effect</em> </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: center;"> interaction </td>
+<td style="text-align: center;"> traits </td>
+<td style="text-align: center;"> environment </td>
+<td style="text-align: center;"> </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: right;"> 
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>"jSDM"</code> acting like a list including : 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mcmc.alpha</code></td>
+<td>
+<p>An mcmc object that contains the posterior samples for site effects <code class="reqn">\alpha_i</code>, not returned if <code>site_effect="none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.V_alpha</code></td>
+<td>
+<p>An mcmc object that contains the posterior samples for variance of random site effect, not returned if <code>site_effect="none"</code> or  <code>site_effect="fixed"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.latent</code></td>
+<td>
+<p>A list by latent variable of mcmc objects that contains the posterior samples for latent variables <code class="reqn">W_l</code> with <code class="reqn">l=1,\ldots,n_{latent}</code>, not returned if <code>n_latent=0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.sp</code></td>
+<td>
+<p>A list by species of mcmc objects that contains the posterior samples for species effects <code class="reqn">\beta_j</code> and <code class="reqn">\lambda_j</code> if <code>n_latent&gt;0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.gamma</code></td>
+<td>
+<p>A list by covariates of mcmc objects that contains the posterior samples for <code class="reqn">\gamma_p</code> parameters with <code class="reqn">p=1,\ldots,np</code> if <code>trait_data</code> is specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.Deviance</code></td>
+<td>
+<p>The posterior sample of the deviance (<code class="reqn">D</code>) is also provided, with <code class="reqn">D</code> defined as : <code class="reqn">D=-2\log(\prod_{ij} P(y_{ij}|\beta_j,\lambda_j, \alpha_i, W_i))</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log_theta_latent</code></td>
+<td>
+<p>Predictive posterior mean of the probability to each species to be present on each site, transformed by log link function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta_latent</code></td>
+<td>
+<p>Predictive posterior mean of the probability to each species to be present on each site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_spec</code></td>
+<td>
+<p>Various attributes of the model fitted, including the response and model matrix used, distributional assumptions as link function, family and number of latent variables, hyperparameters used in the Bayesian estimation and mcmc, burnin and thin.</p>
+</td>
+</tr>
+</table>
+<p>The <code>mcmc.</code> objects can be summarized by functions provided by the <code>coda</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ghislain Vieilledent &lt;ghislain.vieilledent@cirad.fr&gt;
+</p>
+<p>Jeanne Clément &lt;jeanne.clement16@laposte.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Gelfand, A. E.; Schmidt, A. M.; Wu, S.; Silander, J. A.; Latimer, A. and Rebelo, A. G. (2005) Modelling species diversity through species level hierarchical modelling. <em>Applied Statistics</em>, 54, 1-20.
+</p>
+<p>Latimer, A. M.; Wu, S. S.; Gelfand, A. E. and Silander, J. A. (2006) Building statistical models to analyze species distributions. <em>Ecological Applications</em>, 16, 33-50.
+</p>
+<p>Ovaskainen, O., Tikhonov, G., Norberg, A., Blanchet, F. G., Duan, L., Dunson, D., Roslin, T. and Abrego, N. (2017) How to make more out of community data? A conceptual framework and its implementation as models and software. <em>Ecology Letters</em>, 20, 561-576.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.mcmc</code>, <code>summary.mcmc</code> <code>jSDM_binomial_probit</code>  <code>jSDM_binomial_logit</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#==============================================
+# jSDM_poisson_log()
+# Example with simulated data
+#==============================================
+
+#=================
+#== Load libraries
+library(jSDM)
+
+#==================
+#== Data simulation
+
+#= Number of sites
+nsite &lt;- 50
+#= Number of species
+nsp &lt;- 10
+#= Set seed for repeatability
+seed &lt;- 1234
+
+#= Ecological process (suitability)
+set.seed(seed)
+x1 &lt;- rnorm(nsite,0,1)
+set.seed(2*seed)
+x2 &lt;- rnorm(nsite,0,1)
+X &lt;- cbind(rep(1,nsite),x1,x2)
+np &lt;- ncol(X)
+set.seed(3*seed)
+W &lt;- cbind(rnorm(nsite,0,1),rnorm(nsite,0,1))
+n_latent &lt;- ncol(W)
+l.zero &lt;- 0
+l.diag &lt;- runif(2,0,1)
+l.other &lt;- runif(nsp*2-3,-1,1)
+lambda.target &lt;- matrix(c(l.diag[1],l.zero,l.other[1],
+                          l.diag[2],l.other[-1]),
+                        byrow=TRUE, nrow=nsp)
+beta.target &lt;- matrix(runif(nsp*np,-1,1), byrow=TRUE, nrow=nsp)
+V_alpha.target &lt;- 0.5
+alpha.target &lt;- rnorm(nsite,0,sqrt(V_alpha.target))
+log.theta &lt;- X %*% t(beta.target) + W %*% t(lambda.target) + alpha.target
+theta &lt;- exp(log.theta)
+Y &lt;- apply(theta, 2, rpois, n=nsite)
+
+#= Site-occupancy model
+# Increase number of iterations (burnin and mcmc) to get convergence
+mod &lt;- jSDM_poisson_log(# Chains
+                        burnin=200,
+                        mcmc=200,
+                        thin=1,
+                        # Response variable
+                        count_data=Y,
+                        # Explanatory variables
+                        site_formula=~x1+x2,
+                        site_data=X,
+                        n_latent=n_latent,
+                        site_effect="random",
+                        # Starting values
+                        beta_start=0,
+                        lambda_start=0,
+                        W_start=0,
+                        alpha_start=0,
+                        V_alpha=1,
+                        # Priors
+                        shape_Valpha=0.5,
+                        rate_Valpha=0.0005,
+                        mu_beta=0,
+                        V_beta=10,
+                        mu_lambda=0,
+                        V_lambda=10,
+                        # Various
+                        seed=1234,
+                        ropt=0.44,
+                        verbose=1)
+#==========
+#== Outputs
+
+oldpar &lt;- par(no.readonly = TRUE)
+
+#= Parameter estimates
+
+## beta_j
+mean_beta &lt;- matrix(0,nsp,np)
+pdf(file=file.path(tempdir(), "Posteriors_beta_jSDM_log.pdf"))
+par(mfrow=c(ncol(X),2))
+for (j in 1:nsp) {
+  mean_beta[j,] &lt;- apply(mod$mcmc.sp[[j]][,1:ncol(X)],
+                         2, mean)
+  for (p in 1:ncol(X)) {
+    coda::traceplot(mod$mcmc.sp[[j]][,p])
+    coda::densplot(mod$mcmc.sp[[j]][,p],
+      main = paste(colnames(
+        mod$mcmc.sp[[j]])[p],
+        ", species : ",j))
+    abline(v=beta.target[j,p],col='red')
+  }
+}
+dev.off()
+
+## lambda_j
+mean_lambda &lt;- matrix(0,nsp,n_latent)
+pdf(file=file.path(tempdir(), "Posteriors_lambda_jSDM_log.pdf"))
+par(mfrow=c(n_latent*2,2))
+for (j in 1:nsp) {
+  mean_lambda[j,] &lt;- apply(mod$mcmc.sp[[j]]
+                           [,(ncol(X)+1):(ncol(X)+n_latent)], 2, mean)
+  for (l in 1:n_latent) {
+    coda::traceplot(mod$mcmc.sp[[j]][,ncol(X)+l])
+    coda::densplot(mod$mcmc.sp[[j]][,ncol(X)+l],
+                   main=paste(colnames(mod$mcmc.sp[[j]])
+                              [ncol(X)+l],", species : ",j))
+    abline(v=lambda.target[j,l],col='red')
+  }
+}
+dev.off()
+
+# Species effects beta and factor loadings lambda
+par(mfrow=c(1,2))
+plot(beta.target, mean_beta,
+     main="species effect beta",
+     xlab ="obs", ylab ="fitted")
+abline(a=0,b=1,col='red')
+plot(lambda.target, mean_lambda,
+     main="factor loadings lambda",
+     xlab ="obs", ylab ="fitted")
+abline(a=0,b=1,col='red')
+
+## W latent variables
+par(mfrow=c(1,2))
+for (l in 1:n_latent) {
+  plot(W[,l],
+       summary(mod$mcmc.latent[[paste0("lv_",l)]])[[1]][,"Mean"],
+       main = paste0("Latent variable W_", l),
+       xlab ="obs", ylab ="fitted")
+  abline(a=0,b=1,col='red')
+}
+
+## alpha
+par(mfrow=c(1,3))
+plot(alpha.target, summary(mod$mcmc.alpha)[[1]][,"Mean"],
+     xlab ="obs", ylab ="fitted", main="site effect alpha")
+abline(a=0,b=1,col='red')
+## Valpha
+coda::traceplot(mod$mcmc.V_alpha)
+coda::densplot(mod$mcmc.V_alpha)
+abline(v=V_alpha.target,col='red')
+
+## Deviance
+summary(mod$mcmc.Deviance)
+plot(mod$mcmc.Deviance)
+
+#= Predictions
+par(mfrow=c(1,2))
+plot(log.theta, mod$log_theta_latent,
+     main="log(theta)",
+     xlab="obs", ylab="fitted")
+abline(a=0 ,b=1, col="red")
+plot(theta, mod$theta_latent,
+     main="Expected abundance theta",
+     xlab="obs", ylab="fitted")
+abline(a=0 ,b=1, col="red")
+par(oldpar)
+
+</code></pre>
+
+
+</div>

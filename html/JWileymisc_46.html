@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>egltable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function makes nice tables</h2>
+
+<h3>Description</h3>
+
+<p>Give a dataset and a list of variables, or just the data
+in the vars.  For best results, convert categorical
+variables into factors.  Provides a table of estimated descriptive
+statistics optionally by group levels.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">egltable(
+  vars,
+  g,
+  data,
+  idvar,
+  strict = TRUE,
+  parametric = TRUE,
+  paired = FALSE,
+  simChisq = FALSE,
+  sims = 1000000L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>Either an index (numeric or character) of
+variables to access from the <code>data</code> argument,
+or the data to be described itself.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>A variable used tou group/separate the data prior
+to calculating descriptive statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>optional argument of the dataset containing
+the variables to be described.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idvar</code></td>
+<td>
+<p>A character string indicating the variable name
+of the ID variable.  Not currently used, but will eventually
+support <code>egltable</code> supporting repeated measures data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strict</code></td>
+<td>
+<p>Logical, whether to strictly follow the
+type of each variable, or to assume categorical if
+the number of unique values is less than or equal to 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parametric</code></td>
+<td>
+<p>Logical whether to use parametric tests in the
+case of multiple groups to test for differences.  Only applies to
+continuous variables. If <code>TRUE</code>, the default, uses one-way ANOVA,
+and a F test. If <code>FALSE</code>, uses the Kruskal-Wallis test.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paired</code></td>
+<td>
+<p>Logical whether the data are paired or not. Defaults to
+<code>FALSE</code>. If <code>TRUE</code>, the grouping variable, <code>g</code>,
+must have two levels and <code>idvar</code> must be specified. When used
+a paired t-test is used for parametric, continuous data and a
+Wilcoxon test for paired  non parametric, continuous data and a McNemar
+chi square test is used for categorical data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simChisq</code></td>
+<td>
+<p>Logical whether to estimate p-values for chi-square test
+for categorical data when there are multiple groups, by simulation.
+Defaults to <code>FALSE</code>. Useful when there are small cells as will
+provide a more accurate test in extreme cases, similar to Fisher Exact
+Test but generalizing to large dimension of tables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sims</code></td>
+<td>
+<p>Integer for the number of simulations to be used to estimate
+p-values for the chi-square tests for categorical variables when
+there are multiple groups. Defaults to one million (<code>1e6L</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame of the table.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">egltable(iris)
+egltable(colnames(iris)[1:4], "Species", data = iris)
+egltable(iris, parametric = FALSE)
+egltable(colnames(iris)[1:4], "Species", iris,
+  parametric = FALSE)
+egltable(colnames(iris)[1:4], "Species", iris,
+  parametric = c(TRUE, TRUE, FALSE, FALSE))
+egltable(colnames(iris)[1:4], "Species", iris,
+  parametric = c(TRUE, TRUE, FALSE, FALSE), simChisq=TRUE)
+
+diris &lt;- data.table::as.data.table(iris)
+egltable("Sepal.Length", g = "Species", data = diris)
+
+tmp &lt;- mtcars
+tmp$cyl &lt;- factor(tmp$cyl)
+tmp$am &lt;- factor(tmp$am, levels = 0:1)
+
+egltable(c("mpg", "hp"), "vs", tmp)
+egltable(c("mpg", "hp"), "am", tmp)
+egltable(c("am", "cyl"), "vs", tmp)
+
+tests &lt;- with(sleep,
+    wilcox.test(extra[group == 1],
+           extra[group == 2], paired = TRUE))
+str(tests)
+
+## example with paired data
+egltable(c("extra"), g = "group", data = sleep, idvar = "ID", paired = TRUE)
+
+## what happens when ignoring pairing (p-value off)
+# egltable(c("extra"), g = "group", data = sleep, idvar = "ID")
+
+## paired categorical data example
+## using data on chick weights to create categorical data
+tmp &lt;- subset(ChickWeight, Time %in% c(0, 20))
+tmp$WeightTertile &lt;- cut(tmp$weight,
+  breaks = quantile(tmp$weight, c(0, 1/3, 2/3, 1), na.rm = TRUE),
+  include.lowest = TRUE)
+
+egltable(c("weight", "WeightTertile"), g = "Time",
+  data = tmp,
+  idvar = "Chick", paired = TRUE)
+
+rm(tmp)
+</code></pre>
+
+
+</div>

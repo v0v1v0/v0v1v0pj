@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ZonalPolR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Zonal polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Returns the zonal polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ZonalPolR(n, lambda, algorithm = "DK", basis = "canonical", exact = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables, a positive integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>the algorithm used, either <code>"DK"</code> or <code>"naive"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>basis</code></td>
+<td>
+<p>the polynomial basis for <code>algorithm = "naive"</code>,
+either <code>"canonical"</code> or <code>"MSF"</code> (monomial symmetric functions);
+for <code>algorithm = "DK"</code> the canonical basis is always used and
+this parameter is ignored</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>logical, whether to get rational coefficients</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>mvp</code> multivariate polynomial (see mvp-package),
+or a <code>qspray</code> multivariate polynomial if
+<code>exact = TRUE</code> and <code>algorithm = "DK"</code>, or a
+character string if <code>basis = "MSF"</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ZonalPolR(3, lambda = c(3,1), algorithm = "naive")
+ZonalPolR(3, lambda = c(3,1), algorithm = "DK")
+ZonalPolR(3, lambda = c(3,1), algorithm = "DK", exact = FALSE)
+ZonalPolR(3, lambda = c(3,1), algorithm = "naive", basis = "MSF")
+</code></pre>
+
+
+</div>

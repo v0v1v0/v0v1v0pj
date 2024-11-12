@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jewel_inner</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate Gaussian graphical models from multiple datasets</h2>
+
+<h3>Description</h3>
+
+<p>This function estimates Gaussian graphical models (i.e. networks of conditional dependencies, direct connections between variables) given several datasets. 
+We assume that datasets contain measurements of the same variables collected under different conditions (different equipment, locations, even sub-types of disease).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jewel_inner(
+  X,
+  lambda1,
+  lambda2 = NULL,
+  Theta = NULL,
+  W = NULL,
+  tol = 0.01,
+  maxIter = 10000,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a list of <code>K</code> numeric data matrices of <code>n_k</code> samples and <code>p</code> variables (<code>n_k</code> can be different for each matrix).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda1</code></td>
+<td>
+<p>a number, first regularization parameter (of the common penalty).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda2</code></td>
+<td>
+<p>an optional number, second regularization parameter (of the class-specific penalty). If NULL, set to <code>lambda_2 = lambda_1 * 1.4</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Theta</code></td>
+<td>
+<p>an optional list of <code>K</code> regression coefficient matrices of the size <code>p</code> by <code>p</code>. User-provided initialization can be used for warm-start procedures. If NULL, initialized as all zeros.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>an optional list of <code>K</code> weights matrices of the size <code>p</code> by <code>p</code>. User-provided initialization can be used when some vertices are believed to be hubs. If NULL, initialized as all ones.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>an optional number, convergence threshold controlling the relative error between iterations. The default value is 0.01.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxIter</code></td>
+<td>
+<p>an optional number, maximum allowed number of iterations. The default value is 10 000.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>if verbose = FALSE, tracing information printing is disabled. The default value is TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The following list is returned
+</p>
+
+<ul>
+<li> <p><code>CommonG</code> - an adjacency matrix of the common estimated graph (intersection of <code>K</code> estimated graphs).
+</p>
+</li>
+<li> <p><code>G_list</code> - a list of <code>K</code> adjacency matrices for each estimated graph.
+</p>
+</li>
+<li> <p><code>Theta</code> - a list of <code>K</code> estimated covariance matrices.
+</p>
+</li>
+<li> <p><code>BIC</code> – a number, value of Bayesian information criterion for resulting graphs.
+</p>
+</li>
+</ul>
+</div>

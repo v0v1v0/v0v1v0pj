@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>setLimits</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set security limits</h2>
+
+<h3>Description</h3>
+
+<p>This function allows to control memory usage and limit number of messages processed per
+second or simultaneously active connections to the app. 
+</p>
+<p>If an app is deployed on a server and is publicly available, it may be useful to limit
+resources that are available to each user. There are various things that can be
+controlled by this function: storage size and number of stored messages, 
+maximal variable size, number of messages processed per second and bytes received
+per second.
+</p>
+<p>Messages are all the communication received via web socket from an opened web page.
+Each message contains a command that is to be evaluated in the R session, name
+of a function to call or variable to store. If number or size of messages exceeds
+the preset limit, they are completely ignored by the app.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">setLimits(
+  maxCon = NULL,
+  storageSize = NULL,
+  storedMsg = NULL,
+  varSize = NULL,
+  msgPerSec = NULL,
+  msgSize = NULL,
+  bytesPerSec = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>maxCon</code></td>
+<td>
+<p>Maximal allowed number of web socket connections simultaneously. A new
+connection is established whenever someone requests an HTML page from the server
+or when the <code>openPage</code> method of class <code>App</code> is used. If number of
+the allowed connections is reached the newly opened web socked will be immediately
+closed and the user will see a warning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>storageSize</code></td>
+<td>
+<p>Maximal total size of all stored messages in bytes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>storedMsg</code></td>
+<td>
+<p>Maximal number of messages that can be stored simultaneously.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varSize</code></td>
+<td>
+<p>Maximal size of a variable that can be received from a web page. 
+Attempt to assign data of larger size to a variable will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>msgPerSec</code></td>
+<td>
+<p>Maximal number of messages that can be received per second. 
+All extra messages will be disposed of immediately without any attempt to 
+process their content.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>msgSize</code></td>
+<td>
+<p>Maximal allowed size of a message in bytes. Note, that here a
+size of character string that contains all the received information is estimated.
+All larger messages will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bytesPerSec</code></td>
+<td>
+<p>Number of bytes that can be received per second. After the 
+limit is reached, all the incoming messages will be ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For security reasons, some messages has to be first authorized by the 
+<code>authorize</code> function, before they can be processed. Such messages
+are saved until they are manually removed or authorized. If number or total 
+size of the stored messages exceeds the limits, new messages are still saved, 
+but the older ones are removed from the memory. If storage size is set to zero
+no messages can be stored and every message that requires authorization will 
+be automatically discarded.
+</p>
+<p>Size of variables or messages is estimated in <code>object.size</code>
+and is always measured in byte.
+</p>
+<p>The limits are set for the entire app and are applied for each new connection.
+One can also change security limits for any connection separately by using
+method <code>setLimits</code> of a corresponding object of class <code>Session</code>.
+</p>
+<p>This function is a wrapper for method <code>setLimits</code> of class <code>App</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>allowFunctions</code>, <code>allowVariables</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+setLimits(maxCon = 10)
+setLimits(varSize = 10 * 1024^2)
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

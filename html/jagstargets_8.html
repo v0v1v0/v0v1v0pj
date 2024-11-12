@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tar_jags_rep_data_batch</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a batch of data</h2>
+
+<h3>Description</h3>
+
+<p>Not a user-side function. Do not invoke directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tar_jags_rep_data_batch(reps, batch, command)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>reps</code></td>
+<td>
+<p>Positive integer of length 1, number of reps to run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batch</code></td>
+<td>
+<p>Positive integer of length 1, index of the current batch.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>command</code></td>
+<td>
+<p>R code to run to generate one dataset.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of JAGS datasets containing data and dataset IDs.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tar_jags_rep_data_batch(2, 1, tar_jags_example_data())
+</code></pre>
+
+
+</div>

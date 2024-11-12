@@ -1,0 +1,190 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>replace_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search values in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Search values in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">replace_omv(
+  dtaInp = NULL,
+  fleOut = "",
+  rplLst = list(),
+  whlTrm = TRUE,
+  varInc = c(),
+  varExc = c(),
+  incNum = TRUE,
+  incOrd = TRUE,
+  incNom = TRUE,
+  incID = TRUE,
+  incCmp = TRUE,
+  incRcd = TRUE,
+  psvAnl = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtaInp</code></td>
+<td>
+<p>Either a data frame or the name of a jamovi data file to be read (including the path, if required; "FILENAME.omv"; default: NULL)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fleOut</code></td>
+<td>
+<p>Name of the data file to be written (including the path, if required; "FILE_OUT.omv"; default: ""); if empty, the resulting data frame is
+returned instead</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rplLst</code></td>
+<td>
+<p>A list where each entry is a vector (with length 2) containing the original value and the to-replace-value (default: list())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whlTrm</code></td>
+<td>
+<p>Whether the search term (first entry in the vectors) must be found exactly (TRUE) or whether a partial match is sufficient (FALSE; default:
+TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varInc</code></td>
+<td>
+<p>Names of variables (character vector) to be included in the replacement (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varExc</code></td>
+<td>
+<p>Names of variables (character vector) to be excluded from the replacement (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incNum</code></td>
+<td>
+<p>Whether to include continuous variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incOrd</code></td>
+<td>
+<p>Whether to include ordinal variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incNom</code></td>
+<td>
+<p>Whether to include nominal variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incID</code></td>
+<td>
+<p>Whether to include ID variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incCmp</code></td>
+<td>
+<p>Whether to include Computed variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incRcd</code></td>
+<td>
+<p>Whether to include Recoded variables in the replacement (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psvAnl</code></td>
+<td>
+<p>Whether analyses that are contained in the input file shall be transferred to the output file (default: FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>rplLst</code> is a list. Each list entry contains a vector (with length 2), where the first entry is the original value, and the second entry is the value the
+original value is to be replaced with.
+</p>
+</li>
+<li> <p><code>whlTrm</code> indicates whether partial matches of the original value(s) shall replaced (e.g., for original: 24 and replacement: 34, 241 will be changed into
+341).
+</p>
+</li>
+<li> <p><code>varInc</code> and <code>varExc</code> determine which variables are included or excluded from the replacement. If both are given, a warning is issued and <code>varInc</code> takes
+precedence. <code>varInc</code> makes that only in these variables, the replacement requested by <code>rplLst</code> is carried out, if <code>varExc</code> is given, for all variables of
+the input data set, except those defined in <code>varExc</code>, the replacement is carried out.
+</p>
+</li>
+<li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the function that is used for reading and writing the data. Clicking on the
+respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take. The functions are:
+<code>read_omv</code> and <code>write_omv</code> (for jamovi-files).
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>a data frame (only returned if <code>fleOut</code> is empty) with the replaced values
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>replace_omv</code> uses <code>read_omv()</code> and <code>write_omv()</code> for reading and writing jamovi-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+bfi_sample &lt;- jmvReadWrite::bfi_sample
+# the gender in the original data file is plural...
+table(bfi_sample$gender)
+# and shall be converted to singular
+rplDF &lt;- jmvReadWrite::replace_omv(dtaInp = bfi_sample,
+           rplLst = list(c("Females", "Female"), c("Males", "Male")))
+table(rplDF$gender)
+# with giving an output file name, the data set is written
+nmeOut &lt;- tempfile(fileext = ".omv")
+jmvReadWrite::replace_omv(bfi_sample, fleOut = nmeOut,
+  rplLst = list(c("Females", "Female"), c("Males", "Male")))
+file.exists(nmeOut)
+rplDF &lt;- jmvReadWrite::read_omv(nmeOut)
+table(rplDF$gender)
+unlink(nmeOut)
+# it is sensible to check / search for the original values before running replace_omv
+jmvReadWrite::search_omv(bfi_sample, 24, whlTrm = TRUE)
+rplDF &lt;- jmvReadWrite::replace_omv(bfi_sample, rplLst = list(c(24, NA)))
+table(rplDF$age)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

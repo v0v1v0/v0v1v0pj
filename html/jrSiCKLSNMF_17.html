@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SetWandHfromWHinitials</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set <code class="reqn">\mathbf{W}</code> matrices and <code class="reqn">\mathbf{H}</code> matrix from pre-calculated values</h2>
+
+<h3>Description</h3>
+
+<p>Use values calculated in the step to determine number of latent factors in the initial
+steps for the jrSiCKLSNMF algorithm. If only a subset was calculated, this produces an error.
+In this case, please use <code>GenerateWmatricesandHmatrix</code> to generate new
+<code class="reqn">\mathbf{W}^v</code> matrices and a new <code class="reqn">\mathbf{H}</code> matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SetWandHfromWHinitials(SickleJr, d)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>The number of desired latent factors</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with the <code>Wlist</code> slot and the <code>H</code> slot filled from pre-calculated values.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-SetWandHfromWHinitials(SimSickleJrSmall,d=5)
+</code></pre>
+
+
+</div>

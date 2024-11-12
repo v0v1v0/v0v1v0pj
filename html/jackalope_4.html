@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>evo_rates</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Table of evolutionary rates.</h2>
+
+<h3>Description</h3>
+
+<p>From Table 1 in Sung et al. (2016).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">evo_rates
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 15 rows and 8 variables:
+</p>
+
+<dl>
+<dt><code>domain</code></dt>
+<dd>
+<p>Either <code>Bacteria</code> or <code>Eukarya</code> for what type of organism
+the species is.</p>
+</dd>
+<dt><code>species</code></dt>
+<dd>
+<p>Species name.</p>
+</dd>
+<dt><code>Ge</code></dt>
+<dd>
+<p>Effective genome size using only coding DNA.</p>
+</dd>
+<dt><code>Gc_Gnc</code></dt>
+<dd>
+<p>Effective genome size using coding DNA and non-coding DNA that is
+under purifying selection.</p>
+</dd>
+<dt><code>indels</code></dt>
+<dd>
+<p>Rate of insertions and deletions (<code class="reqn">10^{-10}</code>
+events per site per generation).</p>
+</dd>
+<dt><code>subs</code></dt>
+<dd>
+<p>Base-substitution mutation rate (<code class="reqn">10^{-10}</code>
+events per site per generation).</p>
+</dd>
+<dt><code>Ne</code></dt>
+<dd>
+<p>Effective population size (<code class="reqn">\times 10^{6}</code>).</p>
+</dd>
+<dt><code>theta_s</code></dt>
+<dd>
+<p>Population mutation rate estimated using <code class="reqn">\theta_s</code>.</p>
+</dd>
+<dt><code>pi_s</code></dt>
+<dd>
+<p>Population mutation rate estimated using <code class="reqn">\pi_s</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://doi.org/10.1534/g3.116.030890">doi:10.1534/g3.116.030890</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Sung, W., M. S. Ackerman, M. M. Dillon, T. G. Platt, C. Fuqua, V. S. Cooper, and
+M. Lynch. 2016. Evolution of the insertion-deletion mutation rate across the
+tree of life. <em>G3: Genes | Genomes | Genetics</em> <strong>6</strong>:2583–2591.
+</p>
+
+
+</div>

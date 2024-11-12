@@ -1,0 +1,156 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstraw_kmeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Non-Parametric Jackstraw for K-means Clustering</h2>
+
+<h3>Description</h3>
+
+<p>Test the cluster membership for K-means clustering
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstraw_kmeans(
+  dat,
+  kmeans.dat,
+  s = NULL,
+  B = NULL,
+  center = FALSE,
+  covariate = NULL,
+  match = TRUE,
+  pool = TRUE,
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a matrix with <code>m</code> rows as variables and <code>n</code> columns as observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kmeans.dat</code></td>
+<td>
+<p>an output from applying <code>kmeans()</code> onto <code>dat</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>a number of “synthetic” null variables. Out of <code>m</code> variables, <code>s</code> variables are independently permuted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a number of resampling iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>a logical specifying to center the rows of the null samples. By default, <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariate</code></td>
+<td>
+<p>a model matrix of covariates with <code>n</code> observations. Must include an intercept in the first column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>match</code></td>
+<td>
+<p>a logical specifying to match the observed clusters and jackstraw clusters using minimum Euclidean distances.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pool</code></td>
+<td>
+<p>a logical specifying to pool the null statistics across all clusters. By default, <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical specifying to print the computational progress. By default, <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments to control the k-means clustering algorithm (refers to <code>kmeans</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>K-means clustering assign <code>m</code> rows into <code>K</code> clusters. This function enable statistical
+evaluation if the cluster membership is correctly assigned. Each of <code>m</code> p-values refers to
+the statistical test of that row with regard to its assigned cluster.
+Its resampling strategy accounts for the over-fitting characteristics due to direct computation of clusters from the observed data
+and protects against an anti-conservative bias.
+</p>
+<p>The input data (<code>dat</code>) must be of a class 'matrix'.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>jackstraw_kmeans</code> returns a list consisting of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>F.obs</code></td>
+<td>
+<p><code>m</code> observed F statistics between variables and cluster centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F.null</code></td>
+<td>
+<p>F null statistics between null variables and cluster centers, from the jackstraw method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.F</code></td>
+<td>
+<p><code>m</code> p-values of membership.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Neo Christopher Chung <a href="mailto:nchchung@gmail.com">nchchung@gmail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Chung (2020) Statistical significance of cluster membership for unsupervised evaluation of cell identities. Bioinformatics, 36(10): 3107–3114 <a href="https://doi.org/10.1093/bioinformatics/btaa087">doi:10.1093/bioinformatics/btaa087</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+dat = t(scale(t(Jurkat293T), center=TRUE, scale=FALSE))
+kmeans.dat &lt;- kmeans(dat, centers=2, nstart = 10, iter.max = 100)
+jackstraw.out &lt;- jackstraw_kmeans(dat, kmeans.dat)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>centerDataTwoGroupsByIndices</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Center Each Column by Subtracting Group Means</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a data matrix and returns a centered
+data matrix.  For each column, centering is performed by
+subtracting the corresponding group mean from each entry
+(i.e. for entries in group one, the group one mean is
+subtracted, and for entries in group two, the group two
+mean is subtracted).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">centerDataTwoGroupsByIndices(X, group.one.indices, group.two.indices)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.one.indices</code></td>
+<td>
+<p>indices of observations in group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.two.indices</code></td>
+<td>
+<p>indices of observations in group two.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><b>Example</b>
+</p>
+<pre>X &lt;- matrix(1:12, nrow=4, ncol=3)
+X.cen &lt;- centerDataTwoGroupsByIndices(
+  X, group.one.indices=1:2, group.two.indices=3:4)
+</pre>
+
+
+<h3>Value</h3>
+
+<p>Returns a centered data matrix of the same dimensions
+as the original data matrix.
+</p>
+
+
+</div>

@@ -1,0 +1,39 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>useQueryBuilder</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>useQueryBuilder</h2>
+
+<h3>Description</h3>
+
+<p>Make a call to <code>useQueryBuilder</code> in your ui code to load the
+required dependencies for the queryBuilder and optionally specify the
+bootstrap version to use.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">useQueryBuilder(bs_version = c("3", "4", "5"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>bs_version</code></td>
+<td>
+<p>The version of bootstrap to use with the builder.
+Possible values are "3", "4" or "5"</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>list. html dependency for queryBuilderBinding.
+See <code>htmltools::htmlDependency()</code> for further information.
+</p>
+
+
+</div>

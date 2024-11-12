@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve jetset mapped probe sets</h2>
+
+<h3>Description</h3>
+
+<p>This function retrieves probe sets corresponding to the queried genes</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmap(chip, eg, symbol, alias, ensembl)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>chip</code></td>
+<td>
+<p> Chip name </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eg</code></td>
+<td>
+<p> A vector of Entrez GeneIDs (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p> A vector of gene symbols (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alias</code></td>
+<td>
+<p> A vector of gene aliases (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ensembl</code></td>
+<td>
+<p> A vector of Ensembl IDs (optional) </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Currently, <code>chip</code> can be <code>"hgu95av2"</code>, <code>"hgu133a"</code>, <code>"hgu133plus2"</code>, or <code>"u133x3p"</code>.  
+</p>
+<p>Queried genes must be specified by either <code>eg</code>, <code>symbol</code>, <code>alias</code>, or <code>ensembl</code>.
+</p>
+<p>If the query is not recognized, or is ambiguous, or corresponds to a gene
+that is not detected by the array, <code>NA</code> will be returned.
+</p>
+<p>Details about the jetset algorithm are available in the vignette.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A character vector of probe set IDs</p>
+
+
+<h3>References</h3>
+
+<p>Qiyuan Li, Nicolai J. Birkbak, Balazs Gyorffy, Zoltan Szallasi and Aron C. Eklund. (2011) Jetset: selecting the optimal microarray probe set to represent a gene. BMC Bioinformatics. 12:474.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The underlying Entrez ID to probeset data is available in (e.g.) <code>scores.hgu95av2</code>.
+Symbol, alias, and ensembl lookups are generated from e.g.
+<code>org.Hs.egSYMBOL2EG</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  genes &lt;- c('MKI67', 'CHD5', 'ESR1', 'FGF19', 'ERBB2', 'NoSuchGene')
+
+  # This generates several informative warnings
+  jmap('hgu133a', symbol = genes)
+
+</code></pre>
+
+
+</div>

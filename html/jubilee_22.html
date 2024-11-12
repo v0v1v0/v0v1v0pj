@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.repo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Constructor of <code>jubilee.repo</code> class</h2>
+
+<h3>Description</h3>
+
+<p>Construct a <code>jubilee.repo</code> class by combining data from that of Robert Shiller
+since 1871, historical stock market data from 1802 to 1987 by William Schwert,
+3-month Treasury bill rate, gold price, and several other economic time series from FRED.
+Optionally, this function can fetch more recent data from the website of Robert Shiller and
+Federal Reserve FRED website if the R session has connection to the internet.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.repo(online = TRUE, force = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>online</code></td>
+<td>
+<p>logical, indicating whether to fetch data from online resource or not. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>logical, if FALSE, allowed to retrieve previous object stored in option.
+The FALSE setting overrides the online=TRUE setting. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of <code>jubilee.repo</code> class
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  repo &lt;- jubilee.repo(online=FALSE)
+  dtb &lt;- repo@ie
+  tail(dtb,1)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>aravo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Distribution of Alpine plants in Aravo (Valloire, France)</h2>
+
+<h3>Description</h3>
+
+<p>This dataset describe the distribution of 82 species of Alpine plants in 75 sites. Species traits and environmental variables are also measured.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("aravo")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>aravo is a list containing the following objects :
+</p>
+
+<dl>
+<dt><code>spe</code></dt>
+<dd>
+<p>is a data.frame with the abundance values of 82 species (columns) in 75 sites (rows).</p>
+</dd>
+<dt><code>env</code></dt>
+<dd>
+<p>is a data.frame with the measurements of 6 environmental variables for the sites.</p>
+</dd>
+<dt><code>traits</code></dt>
+<dd>
+<p>is data.frame with the measurements of 8 traits for the species.</p>
+</dd>
+<dt><code>spe.names</code></dt>
+<dd>
+<p>is a vector with full species names.</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+
+<p>The environmental variables are : 
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+ <code>Aspect</code> </td>
+<td style="text-align: left;"> Relative south aspect (opposite of the sine of aspect with flat coded 0) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ <code>Slope</code> </td>
+<td style="text-align: left;"> Slope inclination (degrees) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Form</code> </td>
+<td style="text-align: left;"> Microtopographic landform index: 1 (convexity); 2 (convex slope); 3 (right slope); </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    </td>
+<td style="text-align: left;"> 4 (concave slope); 5 (concavity) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Snow</code> </td>
+<td style="text-align: left;"> Mean snowmelt date (Julian day) averaged over 1997-1999 </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>PhysD</code> </td>
+<td style="text-align: left;"> Physical disturbance, i.e., percentage of unvegetated soil due to physical processes </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>ZoogD</code> </td>
+<td style="text-align: left;"> Zoogenic disturbance, i.e., quantity of unvegetated soil due to marmot activity: no; some; high </td>
+</tr>
+<tr>
+<td style="text-align: left;"> </td>
+</tr>
+</table>
+<p>The species traits for the plants are:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+    <code>Height</code> </td>
+<td style="text-align: left;"> Vegetative height (cm) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Spread</code> </td>
+<td style="text-align: left;"> Maximum lateral spread of clonal plants (cm) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Angle</code> </td>
+<td style="text-align: left;"> Leaf elevation angle estimated at the middle of the lamina </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Area</code> </td>
+<td style="text-align: left;"> Area of a single leaf </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Thick</code> </td>
+<td style="text-align: left;"> Maximum thickness of a leaf cross section (avoiding the midrib) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>SLA</code> </td>
+<td style="text-align: left;"> Specific leaf area </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Nmass</code> </td>
+<td style="text-align: left;"> Mass-based leaf nitrogen content </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <code>Seed</code> </td>
+<td style="text-align: left;"> Seed mass </td>
+</tr>
+<tr>
+<td style="text-align: left;"> </td>
+</tr>
+</table>
+<h3>Source</h3>
+
+<p>Choler, P. (2005) Consistent shifts in Alpine plant traits along a mesotopographical gradient. Arctic, Antarctic, and Alpine Research 37,444-453.
+</p>
+<p>Dray S, Dufour A (2007). The ade4 Package: Implementing the Duality Diagram for Ecologists. <em>Journal of Statistical Software</em>, 22(4), 1-20. <a href="https://doi.org/10.18637/jss.v022.i04">doi:10.18637/jss.v022.i04</a>. 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(aravo, package="jSDM")
+summary(aravo)
+</code></pre>
+
+
+</div>

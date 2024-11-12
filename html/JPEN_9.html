@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Trace of matrix
+</h2>
+
+<h3>Description</h3>
+
+<p>Returns the trace of a matrix</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tr(A)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+
+<p>A is the input matrix.
+</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Returns the trace (sum of diagonal elements )of input matrix).</p>
+
+
+<h3>Value</h3>
+
+<p>Trace of input matrix.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ashwini Maurya, Email: mauryaas@msu.edu
+</p>
+
+
+<h3>References</h3>
+
+<p>A Well Conditioned and Sparse Estimate of Covariance and Inverse Covariance Matrix Using Joint Penalty. Submitted.
+http://arxiv.org/pdf/1412.7907v2.pdf
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p=10;n=100;Sig=diag(p);
+y=rmvnorm(n,mean=rep(0,p),sigma=Sig);
+S=var(y);
+tr(S);
+</code></pre>
+
+
+</div>

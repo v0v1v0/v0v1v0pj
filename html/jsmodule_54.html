@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>regressModuleUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>regressModuleUI: shiny modulde UI for linear regression.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny modulde UI for linear regression.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">regressModuleUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Shiny modulde UI for linear regression.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny modulde UI for linear regression.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      regressModuleUI("linear")
+    ),
+    mainPanel(
+      DTOutput("lineartable")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_linear &lt;- callModule(regressModule2, "linear",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$lineartable &lt;- renderDT({
+    datatable(out_linear()$table, rownames = T, caption = out_linear()$caption)
+  })
+}
+</code></pre>
+
+
+</div>

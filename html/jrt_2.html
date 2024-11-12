@@ -1,0 +1,240 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>info.plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the information function for a judge or for the entire set of judges.</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the Judge Information Function plot from a <code>jrt</code> object and the judge number. Information can be plotted as such, as reliability or as standard error. The function may also be used for the information of the entire set of judges. This is a wrapper function and adaptation of the <code>itemplot</code> function in the package <code>mirt</code> (Chalmers, 2012). It also uses the plotting functions of the packages <code>directlabels</code> and <code>ggplot2</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">info.plot(
+  jrt.object,
+  judge = "all",
+  type = "information",
+  title = "auto",
+  column.names = "auto",
+  theta.span = 3.5,
+  y.limits = NULL,
+  y.line = NULL,
+  name.for.y.line = "Threshold",
+  y.line.refers.to.secondary.axis = TRUE,
+  greyscale = FALSE,
+  color.palette = "D3",
+  line.type = 1,
+  line.width = 1,
+  key.width = 3,
+  legend.position = "right",
+  legend.columns = "",
+  theme = "bw",
+  text.size = 10,
+  title.size = text.size + 4,
+  remove.gridlines = TRUE,
+  font.family = "sans",
+  precision = 20,
+  mirt.object.input = F,
+  item = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jrt.object</code></td>
+<td>
+<p>A object of the <code>jrt</code> class (created by the function <code>jrt</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>judge</code></td>
+<td>
+<p>A numerical to indicate which judge to plot. Be careful : If a (Generalized) Rating Scale Model was used, then judges may have been removed for the model to be fitted. Provide <code>"all"</code> to get the information plot for all judges.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character to indicate what to plot on the y axis, <code>"information"</code> for Information, <code>"reliability"</code> for Reliability, or <code>"SE"</code> for standard errors. Alternatively, use <code>"infose"</code> (or <code>ise</code>) to plot information and standard error of measurement in the same plot. Use <code>"inforxx"</code> (or <code>ir</code>) to plot information and reliability in the same plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>A character title for the plot. By default it is created automatically based on the judge number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>column.names</code></td>
+<td>
+<p>A character to indicate how a judge should be called (Defaults to <code>"auto"</code>, which uses what was set in the estimation function <code>jrt</code>, whose default is <code>"judge"</code>, but you may use <code>"Rater"</code>, <code>"Expert"</code>, etc.). This is used to create automatic titles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta.span</code></td>
+<td>
+<p>A numeric indicating the maximum <code class="reqn">\theta</code>. The minimum is automatically adjusted to <code>-theta.span</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.limits</code></td>
+<td>
+<p>A numeric vector to manually adjust the minimum and maximum of the y axis (may notably be useful if using reliability). Set to <code>NULL</code> (default) to automatically set with <code>ggplot2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.line</code></td>
+<td>
+<p>A numeric to add a (dashed) horizontal line on the plot at the y value indicated (for example for a threshold of acceptable reliability). Defaults to <code>NULL</code>, which does not plot the line. Note that the y level is in reference to the primary axis, if there are two y axes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name.for.y.line</code></td>
+<td>
+<p>A character to indicate how to call the y line in the legend. Default is <code>"Threshold"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.line.refers.to.secondary.axis</code></td>
+<td>
+<p>A logical to indicate if the y.line should refer to a value on the secondary axis (<code>TRUE</code>, default) or the primary (<code>FALSE</code>). Only used if there is a secondary axis. The default is <code>TRUE</code> because threshold values for interpretation are more often used for reliability or standard error than information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>greyscale</code></td>
+<td>
+<p>A logical (default is <code>FALSE</code>) to indicate whether to use greyscale graphics (useful for publication). Uses variations in linetype as opposed to variations in line colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color.palette</code></td>
+<td>
+<p>A character value to indicate the colour palette to use. Defaults to <code>"D3"</code> from "ggsci". Use <code>""</code> for the default of <code>ggplot2</code>. The palettes are supplied as arguments in the <code>scale_fill_brewer()</code> function of <code>ggplot2</code>. In addition, most palettes from the package <code>ggsci</code> are available (e.g., <code>"npg"</code>, <code>"aas"</code>, <code>"nejm"</code>, <code>"lancet"</code>, <code>"jama"</code>, <code>"d3"</code>). Use <code>vignette("ggsci")</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line.type</code></td>
+<td>
+<p>A numeric indicating the line type for the information function curve (default is <code>1</code> for a plain line. This would be used if overlaying multiple plots.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line.width</code></td>
+<td>
+<p>A numeric indicating the width for the information function curve (default is <code>2.5</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>key.width</code></td>
+<td>
+<p>A numeric to indicate the width of the legend key (default is <code>3</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.position</code></td>
+<td>
+<p>A character string or vector of coordinates to position the legend key. Defaults to <code>"right"</code>. Other possibilities include notably <code>"bottom"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.columns</code></td>
+<td>
+<p>A numeric to indicate after how many legend key elements to add a line break. Especially useful if using <code>legend.position = "bottom"</code> if you want line breaks between each key. Defaults to <code>""</code>, which automatically saves space based on the legend position (line breaks are used if the legend in positioned on the side of the graph).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theme</code></td>
+<td>
+<p>A character value to indicate the background color theme used by <code>ggplot2</code>. Defaults to <code>"bw"</code>. Can be <code>"light"</code>, <code>"dark"</code>, <code>"minimal"</code>, <code>"classic"</code>, <code>"gray"</code>, <code>"bw"</code> or <code>"linedraw"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text.size</code></td>
+<td>
+<p>A numeric value to control the size of the text on the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title.size</code></td>
+<td>
+<p>A numeric value to control the size of the plot title (defaults to <code>text.size+4</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.gridlines</code></td>
+<td>
+<p>A logical value to remove the gridlines (default is <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font.family</code></td>
+<td>
+<p>A character value to control the font family used on the graph. Defaults to <code>"sans"</code>. Other possible values include <code>"serif"</code> or <code>"mono"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precision</code></td>
+<td>
+<p>A numeric to indicate the degree of precision used to plot the curves. Higher values will increase the accuracy of the graph and make the curves look smoother, but the data generated to plot the graph will be bigger, which will slow down the function. Lower values will do the opposite. Values between <code>10</code> and <code>100</code> are recommended, <code>20</code> is the default and sufficient for most uses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mirt.object.input</code></td>
+<td>
+<p>A logical allowing to input directly an <code>mirt</code> object as a <code>jrt.object</code> argument, even though this should be detected automatically. See <code>mirt</code> package documentation, and note that this is a secondary use that may lead to inconsistent results at this point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>item</code></td>
+<td>
+<p>For convenience, this argument, more standard to IRT packages, can be used instead of the <code>judge</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot of the information, reliability or standard error function.
+</p>
+
+
+<h3>References</h3>
+
+<p>Chalmers, R., P. (2012). mirt: A Multidimensional Item Response Theory Package for the R Environment. <em>Journal of Statistical Software, 48</em>(6), 1-29. <a href="https://doi.org/10.18637/jss.v048.i06">doi:10.18637/jss.v048.i06</a>
+</p>
+<p>Myszkowski, N., &amp; Storme, M. (2019). Judge Response Theory? A call to upgrade our psychometrical account of creativity judgments. <em>Psychology of Aesthetics, Creativity and the Arts, 13</em>(2), 167-175. <a href="https://doi.org/10.1037/aca0000225">doi:10.1037/aca0000225</a>
+</p>
+<p>Myszkowski, N. (2021). Development of the R library “jrt”: Automated item response theory procedures for judgment data and their application with the consensual assessment techniques. <em>Psychology of Aesthetics, Creativity and the Arts, 15</em>(3), 426-438. <a href="https://doi.org/10.1037/aca0000287">doi:10.1037/aca0000287</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Load dataset
+data &lt;- jrt::ratings
+
+# Fit model
+fit &lt;- jrt(data, irt.model = "PCM")
+
+# Information function of the first judge
+info.plot(fit, 1)
+
+# Reliability function of the second judge
+info.plot(fit, 2, type = "reliability")
+
+# Standard error function of the entire set of judges
+info.plot(fit, "all", type = "SE")
+
+# See vignette for more options
+
+</code></pre>
+
+
+</div>

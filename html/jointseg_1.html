@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anotherBkp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get best candidate change point</h2>
+
+<h3>Description</h3>
+
+<p>Get best candidate change point according to binary segmentation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anotherBkp(Y, weightFUN = defaultWeights, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A <code>n*p</code> matrix, <code>p</code> signals of length <code>n</code> to be
+segmented (centered by column)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weightFUN</code></td>
+<td>
+<p>A <code>function</code> returning a <code>(n-1)*1</code> vector of
+weights for the candidate change point positions. Default weights yield the
+likelihood ratio test (LRT) statistic for the identification of a single
+change point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Contrary to <code>oneBkp</code>, <code>anotherBkp</code> handles missing values (NA:s).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numerical value, a candidate breakpoint position
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+p &lt;- 2
+n &lt;- 100
+
+sim &lt;- randomProfile(n, 1, 1, p)
+Y &lt;- sim$profile
+bkp &lt;- anotherBkp(Y)
+print(bkp)
+print(oneBkp(Y))
+##  stopifnot(identical(oneBkp(Y), bkp))
+plotSeg(Y, list(sim$bkp, bkp))
+
+## robustness to NA:s
+h &lt;- 2
+idxs &lt;- seq(from=max(sim$bkp[1]-h, 1), min(sim$bkp[1]+h, n))
+Y[idxs, p] &lt;- NA
+oneBkp(Y)  ## does not work
+bkp &lt;- anotherBkp(Y)  ## works
+bkp-sim$bkp
+
+</code></pre>
+
+
+</div>

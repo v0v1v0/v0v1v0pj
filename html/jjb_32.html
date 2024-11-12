@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mkdir</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make Directory</h2>
+
+<h3>Description</h3>
+
+<p>Create a directory using either a relative path or an absolute path.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mkdir(dir, r = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dir</code></td>
+<td>
+<p>A <code>string</code> indicating the directory to make.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>A <code>boolean</code> that indicates whether the directories should be
+made recursively</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>New directory on file system
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>James Balamuta
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Make directory from working directory
+mkdir("toad")
+
+## This assumes the computer is on Windows and the C drive exists.
+# Make directory from absolute path
+mkdir("C:/path/to/dir/toad")
+
+</code></pre>
+
+
+</div>

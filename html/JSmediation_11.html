@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compute_indirect_effect_for</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the indirect effect index for a specific value of the moderator</h2>
+
+<h3>Description</h3>
+
+<p>When computing a moderated mediation, one assesses whether an indirect
+effect changes according a moderator value (Muller et al., 2005).
+<code>mdt_moderated</code> makes it easy to assess moderated mediation, but it does
+not allow accessing the indirect effect for a specific moderator values.
+<code>compute_indirect_effect_for</code> fills this gap.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compute_indirect_effect_for(
+  mediation_model,
+  Mod = 0,
+  times = 5000,
+  level = 0.05
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mediation_model</code></td>
+<td>
+<p>A moderated mediation model fitted with
+<code>mdt_moderated</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mod</code></td>
+<td>
+<p>The moderator value for which to compute the indirect effect. Must
+be a numeric value, defaults to <code>0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Number of simulations to use to compute the Monte Carlo indirect
+effect confidence interval. Must be numeric, defaults to <code>5000</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Alpha threshold to use for the indirect effect's confidence
+interval. Defaults to <code>.05</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The approach used by <code>compute_indirect_effect_for</code> is similar to the
+approach used for simple slope analyses. Specifically, it will fit a new
+moderated mediation model, but with a data set with a different variable
+coding. Behind the scenes, <code>compute_indirect_effect_for</code> adjusts the
+moderator variable coding, so that the value we want to compute the
+indirect effect for is now <code>0</code>.
+</p>
+<p>Once done, a new moderated mediation model is applied using the new data
+set. Because of the new coding, and because of how one interprets
+coefficients in a linear regression, <code class="reqn">a \times b</code> is now the
+indirect effect we wanted to compute (see the Models section).
+</p>
+<p>Thanks to the returned values of <code class="reqn">a</code> and <code class="reqn">b</code>
+(<code class="reqn">b_51</code> and <code class="reqn">b_64</code>, see the Models section), it is now
+easy to compute <code class="reqn">a \times b</code>. <code>compute_indirect_effect_for</code> uses
+the same approach than the <code>add_index</code> function. A Monte Carlo simulation
+is used to compute the indirect effect index (MacKinnon et al., 2004).
+</p>
+
+
+<h3>Models</h3>
+
+<p>In a moderated mediation model, three models are used.
+<code>compute_indirect_effect_for</code> uses the same model specification as
+<code>mdt_moderated</code>:
+</p>
+
+<ul>
+<li> <p><code class="reqn">Y_i = b_{40} + \mathbf{b_{41}} X_i + b_{42} Mo_i + \mathbf{b_{43}}
+  XMo_i </code>
+</p>
+</li>
+<li> <p><code class="reqn">M_i = b_{50} + \mathbf{b_{51}} X_i + b_{52} Mo_i + \mathbf{b_{53}
+  XMo_i}</code>
+</p>
+</li>
+<li> <p><code class="reqn">Y_i = b_{60} + \mathbf{c'_{61}} X_i + b_{62} Mo_i + \mathbf{b_{63}
+  Xmo_i} + \mathbf{b_{64} Me_i} + \mathbf{b_{65} MeMo_i}</code>
+</p>
+</li>
+</ul>
+<p>with <code class="reqn">Y_i</code>, the outcome value for the <em>i</em>th observation,
+<code class="reqn">X_i</code>, the predictor value for the <em>i</em>th observation,
+<code class="reqn">Mo_i</code>, the moderator value for the <em>i</em>th observation, and
+<code class="reqn">M_i</code>, the mediator value for the <em>i</em>th observation.
+</p>
+<p>Coefficients associated with <code class="reqn">a</code>, <code class="reqn">a \times Mod</code>, <code class="reqn">b</code>,
+<code class="reqn">b \times Mod</code>, <code class="reqn">c</code>, <code class="reqn">c \times Mod</code>,
+<code class="reqn">c'</code>, and <code class="reqn">c' \times Mod</code>, paths are respectively
+<code class="reqn">b_{51}</code>, <code class="reqn">b_{53}</code>, <code class="reqn">b_{64}</code>,
+<code class="reqn">b_{65}</code>, <code class="reqn">b_{41}</code>, <code class="reqn">b_{43}</code>,
+<code class="reqn">b_{61}</code>, and <code class="reqn">b_{63}</code> (see Muller et al., 2005).
+</p>
+
+
+<h3>References</h3>
+
+<p>MacKinnon, D. P., Lockwood, C. M., &amp; Williams, J. (2004). Confidence Limits
+for the Indirect Effect: Distribution of the Product and Resampling
+Methods. <em>Multivariate Behavioral Research</em>, <em>39</em>(1), 99-128. doi:
+10.1207/s15327906mbr3901_4
+</p>
+<p>Muller, D., Judd, C. M., &amp; Yzerbyt, V. Y. (2005). When moderation
+is mediated and mediation is moderated. <em>Journal of Personality and
+Social Psychology</em>, <em>89</em>(6), 852-863. doi: 10.1037/0022-3514.89.6.852
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># compute an indirect effect index for a specific value in a moderated
+# mediation.
+data(ho_et_al)
+ho_et_al$condition_c &lt;- build_contrast(ho_et_al$condition,
+                                       "Low discrimination",
+                                       "High discrimination")
+ho_et_al &lt;- standardize_variable(ho_et_al, c(linkedfate, sdo))
+moderated_mediation_model &lt;- mdt_moderated(data = ho_et_al,
+                                           DV = hypodescent,
+                                           IV = condition_c,
+                                           M = linkedfate,
+                                           Mod = sdo)
+compute_indirect_effect_for(moderated_mediation_model, Mod = 0)
+
+</code></pre>
+
+
+</div>

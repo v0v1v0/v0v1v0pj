@@ -1,0 +1,135 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jordan-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+A Suite of Routines for Working with Jordan Algebras
+</h2>
+
+<h3>Description</h3>
+
+<p>A Jordan algebra is an algebraic object originally
+   designed to study observables in quantum mechanics.  Jordan
+   algebras are commutative but non-associative; they satisfy the
+   Jordan identity.  The package follows the ideas and notation of
+   K. McCrimmon (2004, ISBN:0-387-95447-3) "A Taste of Jordan
+   Algebras".  To cite the package in publications, please use
+   Hankin (2023) &lt;doi:10.48550/arXiv.2303.06062&gt;.
+</p>
+
+
+<h3>Details</h3>
+
+<p>A <dfn>Jordan algebra</dfn> is a non-associative algebra over the reals
+with a multiplication that satisfies the following identities:
+</p>
+<p style="text-align: center;"><code class="reqn">xy=yx</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">(xy)(xx) = x(y(xx))</code>
+</p>
+
+<p>(the second identity is known as the Jordan identity).  In literature
+one usually indicates multiplication by juxtaposition but one
+sometimes sees <code class="reqn">x\circ y</code>.  Package idiom is to use an
+asterisk, as in <code>x*y</code>.  There are five types of Jordan algebras:
+</p>
+
+<ol>
+<li>
+<p> Real symmetric matrices, class <code>real_symmetric_matrix</code>,
+abbreviated in the package to <code>rsm</code>
+</p>
+</li>
+<li>
+<p> Complex Hermitian matrices, class <code>complex_herm_matrix</code>,
+abbreviated to <code>chm</code>
+</p>
+</li>
+<li>
+<p> Quaternionic Hermitian matrices, class
+<code>quaternion_herm_matrix</code>, abbreviated to <code>qhm</code>
+</p>
+</li>
+<li>
+<p> Albert algebras, the space of <code class="reqn">3\times 3</code>
+octonionic matrices, class <code>albert</code>
+</p>
+</li>
+<li>
+<p> Spin factors, class <code>spin</code>
+</p>
+</li>
+</ol>
+<p>(of course, the first two are special cases of the next).  The
+<code>jordan</code> package provides functionality to manipulate jordan
+objects using natural <span style="font-family: Courier New, Courier; color: #666666;"><b>R</b></span> idiom.
+</p>
+<p>Objects of all these classes are stored in dataframe (technically, a
+matrix) form with columns being elements of the jordan algebra.
+</p>
+<p>The first four classes are matrix-based in the sense that the
+algebraic objects are symmetric or Hermitian matrices (the <code>S4</code>
+class is “<code>jordan_matrix</code>”).  The fifth class, spin
+factors, is not matrix based.
+</p>
+<p>One can extract the symmetric or Hermitian matrix from objects of
+class <code>jordan_matrix</code> using <code>as.list()</code>, which will return a
+list of symmetric or Hermitian matrices.  A function name preceded by
+a “1” (for example <code>as.1matrix()</code> or <code>vec_to_qhm1()</code>)
+means that it deals with a single (symmetric or Hermitian) matrix.
+</p>
+<p>Algebraically, the matrix form of <code>jordan_matrix</code> objects is
+redundant (for example, a <code>real_symmetric_matrix</code> of size
+<code class="reqn">n\times n</code> has only <code class="reqn">n(n+1)/2</code> independent entries,
+corresponding to the upper triangular elements).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin [aut, cre] (&lt;https://orcid.org/0000-0001-5982-0415&gt;)
+</p>
+<p>Maintainer: Robin K. S. Hankin &lt;hankin.robin@gmail.com&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>K. McCrimmon 1978. “Jordan algebras and their applications”.
+<em>Bulletin of the American Mathematical Society</em>, Volume 84, Number 4.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+rrsm()     # Random Real Symmetric matrices
+rchm()     # Random Complex Hermitian matrices
+rqhm()     # Random Quaternionic Hermitian matrices
+ralbert()  # Random Albert algebra
+rspin()    # Random spin factor
+
+x &lt;- rqhm(n=1)  
+y &lt;- rqhm(n=1)  
+z &lt;- rqhm(n=1)  
+
+x/1.2 + 0.3*x*y     # Arithmetic works as expected ...
+x*(y*z) -(x*y)*z    # ... but '*' is not associative
+
+
+## Verify the Jordan identity for  type 3 algebras:
+
+LHS &lt;- (x*y)*(x*x)
+RHS &lt;- x*(y*(x*x))
+
+diff &lt;- LHS-RHS  # zero to numerical precision
+
+diff[1,drop=TRUE]  # result in matrix form
+
+</code></pre>
+
+
+</div>

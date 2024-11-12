@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Nmix-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Methods for Nmix objects</h2>
+
+<h3>Description</h3>
+
+<p>AIC, anova, coef, and logLik methods for univariate and joint N-mixture models</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'Nmix'
+AIC(object, ...)
+## S3 method for class 'Nmix'
+anova(object, object2, ...)
+## S3 method for class 'Nmix'
+coef(object, ...)
+## S3 method for class 'Nmix'
+logLik(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object2</code></td>
+<td>
+<p>second model object for the <code>anova</code> method</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>not used</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>AIC.Nmix</code> provides the Akaike Information Criterion for the model fit; <code>anova.Nmix</code> performs a likelihood-ratio test between two nested model fits; <code>coef.Nmix</code> prints the estimates of the model fit; <code>logLik.Nmix</code> prints the log-likelihood of the model fit.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Nmix</code>
+<code>jointNmix</code>
+</p>
+
+
+</div>

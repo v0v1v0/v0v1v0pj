@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>comparecat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compare Caterpillar Plots</h2>
+
+<h3>Description</h3>
+
+<p>Interleaved caterpillar plots for all parameters (or a specified subset) from a list of <code>jagsUI</code>
+output objects or <code>data.frame</code>s.  The intent of this function is easy comparison of inferences from multiple comparable models.
+</p>
+<p>Here a caterpillar plot is defined as a set of overlayed interval bars (default values are 50 percent and 95 percent),
+with overlayed median markings, for each of a vector of parameter nodes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">comparecat(
+  x,
+  p = NULL,
+  ci = c(0.5, 0.95),
+  ylim = NULL,
+  col = NULL,
+  xlab = "",
+  ylab = "",
+  transform = c("none", "exp", "expit"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>List of output objects returned from <code>jagsUI</code> or <code>data.frame</code>s</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Optional vector of parameters to subset.  All parameters with names matching the beginning of the
+string supplied will be returned.  If the default (<code>NULL</code>) is accepted, all parameters will be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>Credible intervals widths to plot.  Defaults to 50% and 95%.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p>Y-axis limits for plotting.  If the default (<code>NULL</code>) is accepted, limits will be automatically determined.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Vector of colors for plotting.  If the default (<code>NULL</code>) is accepted, colors will be automatically drawn.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>X-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Y-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>Should the y-axis be (back)transformed?  Options are <code>"exp"</code>,
+indicating exponential, or <code>"expit"</code>, indicating inverse-logit. Defaults to
+<code>"none"</code>, indicating no transformation.  Note: if <code>transform="exp"</code>is used, consider
+adding additional plotting argument <code>log="y"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>caterpillar, crossplot, comparedens, comparepriors
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## This is the same output object three times, but shows functionality.
+comparecat(x=list(asdf_jags_out, asdf_jags_out, asdf_jags_out),
+           p=c("a","b","sig"))
+
+## Transformed
+comparecat(x=list(asdf_jags_out, asdf_jags_out, asdf_jags_out),
+           p=c("sig"), transform="exp")
+comparecat(x=list(asdf_jags_out, asdf_jags_out, asdf_jags_out),
+           p=c("sig"), transform="exp", log="y")
+</code></pre>
+
+
+</div>

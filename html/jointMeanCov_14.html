@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>twoGroupDesignMatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Design Matrix for Two-Group Mean Estimation</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the design matrix for two-group mean
+estimation.  The first column contains indicators for
+membership in the first group, and the second column contains
+indicators for memebership in the second group.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">twoGroupDesignMatrix(group.one.indices, group.two.indices)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>group.one.indices</code></td>
+<td>
+<p>indices of observations in group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.two.indices</code></td>
+<td>
+<p>indices of observations in group two.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><b>Example</b>
+</p>
+<pre>D &lt;- twoGroupDesignMatrix(1:2, 3:5)
+# print(D) displays the following:
+     [,1] [,2]
+[1,]    1    0
+[2,]    1    0
+[3,]    0    1
+[4,]    0    1
+[5,]    0    1
+</pre>
+
+
+<h3>Value</h3>
+
+<p>Returns a design matrix of size n by 2, where n is
+the sample size.
+</p>
+
+
+</div>

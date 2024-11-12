@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ranef.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract random effects estimates from an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Extract random effects estimates from an <code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+ranef(object, postVar = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postVar</code></td>
+<td>
+<p>logical: if <code>TRUE</code> the variance of the posterior
+distribution is also returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> (also of class <code>ranef.mjoint</code>) with rows
+denoting the individuals and columns the random effects (e.g., intercepts,
+slopes, etc.). If <code>postVar=TRUE</code>, the numeric matrix has an extra
+attribute, <code>postVar</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Pinheiro JC, Bates DM. <em>Mixed-Effects Models in S and S-PLUS.</em> New York:
+Springer Verlag; 2000.
+</p>
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ranef</code> for the generic method description, and
+<code>fixef.mjoint</code>. To plot <code>ranef.mjoint</code> objects, see
+<code>plot.ranef.mjoint</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+
+ranef(fit2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

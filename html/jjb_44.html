@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tint an RGB value</h2>
+
+<h3>Description</h3>
+
+<p>The function tints or lightens an RGB value by adding white to the values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tint(rgb_value, tint_factor = 0.2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rgb_value</code></td>
+<td>
+<p>A <code>vector</code> with length <code class="reqn">3 \times 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tint_factor</code></td>
+<td>
+<p>A <code>double</code> that ranges between <code class="reqn">[0, 1]</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>matrix</code> with dimensions <code class="reqn">3 \times 1</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tint(c(22, 150, 230), tint_factor = 0.5)
+</code></pre>
+
+
+</div>

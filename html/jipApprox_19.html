@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>save_output</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Save partial results</h2>
+
+<h3>Description</h3>
+
+<p>Write joint inclusion probability estimates on a file every <code>by</code> replications
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">save_output(
+  iteration,
+  design_name,
+  counts,
+  units,
+  filename,
+  path,
+  status,
+  as_data_frame
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>iteration</code></td>
+<td>
+<p>integer indicating the iterations the simulation is at</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design_name</code></td>
+<td>
+<p>string indicating the name of the sampling design to include
+in the filename</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>counts</code></td>
+<td>
+<p>matrix with number of occurrences of couple of units up to
+current replication</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>id of units for which output should be saved</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>name of the file to write on disk</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>path to the directory where the file should be saved</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>status</code></td>
+<td>
+<p><code>1</code> if partial results are written before the maximum number
+of replications is reached, <code>0</code> otherwise</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as_data_frame</code></td>
+<td>
+<p>logical, should output be in form of a data frame?</p>
+</td>
+</tr>
+</table>
+</div>

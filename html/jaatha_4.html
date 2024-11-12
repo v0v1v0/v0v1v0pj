@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jaatha_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prepare the observed data for Jaatha</h2>
+
+<h3>Description</h3>
+
+<p>By default, this function assumes that the observed data is in a format 
+identical to the format of the simulation results, before the summary
+statistics are calculated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_jaatha_data(data, model, ...)
+
+## Default S3 method:
+create_jaatha_data(data, model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data to be analysed with Jaatha. 
+It should be in a format identical to the 
+simulation results (see <code>create_jaatha_model</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The jaatha model, see <code>create_jaatha_model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Methods (by class)</h3>
+
+
+<ul><li> <p><code>create_jaatha_data(default)</code>: The data's format is identicial to the 
+simulated data.
+</p>
+</li></ul>
+<h3>Demographic Inference</h3>
+
+<p>When used with <span class="pkg">coala</span>, <code>coala::calc_sumstats_from_data()</code> should
+create output that is compatible with this function.
+</p>
+
+
+</div>

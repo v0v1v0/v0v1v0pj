@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jags_plist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plist</h2>
+
+<h3>Description</h3>
+
+<p>Extracts a list of matrices, one for each saved parameter node.  Each
+list element will be all posterior samples from that parameter node, arranged in
+a matrix with a column associated with each MCMC chain and a row for
+each MCMC iteration.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jags_plist(x, p = NULL, exact = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>jagsUI</code> output object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>String to subset parameter names, if a subset is desired</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether <code>p</code> should be an exact match (<code>TRUE</code>) or just match the
+beginning of the string (<code>FALSE</code>).  Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>list</code> with an element associated with each parameter.  Each element
+will be a matrix with a column associated with each MCMC chain and a row for
+each MCMC iteration.
+</p>
+
+
+<h3>Note</h3>
+
+<p>It is unlikely that a user will need this function; it is included
+primarily as a helper function used by other functions in this package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">out_plist &lt;- jags_plist(asdf_jags_out)
+str(out_plist)
+
+a_plist &lt;- jags_plist(asdf_jags_out, p=c("a","sig_a"))
+str(a_plist)
+</code></pre>
+
+
+</div>

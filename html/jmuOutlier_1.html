@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>abbreviation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Allows Abbreviations of Character Data</h2>
+
+<h3>Description</h3>
+
+<p>Determines if one character variable is an abbreviation among a section of other character variables.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">abbreviation(x, choices)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+
+<p>A character string, and consists of some or all letters in a value in <code>choices</code> or may equal <code>choices</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>choices</code></td>
+<td>
+<p>A vector of character strings.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function <code>abbreviation</code> returns a value in <code>choices</code> specified by <code>x</code>, 
+which may be an abbreviation.  If no such abbreviation exists, then the original value of <code>x</code> is returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The value in <code>choices</code>, which can be abbreviated by <code>x</code>.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">choices = c("two.sided", "less", "greater")
+
+abbreviation( "two", choices ) 
+
+abbreviation( "l", choices ) 
+
+abbreviation( "gr", choices ) 
+
+abbreviation( "greater", choices ) 
+
+abbreviation( "Not in choices", choices )
+</code></pre>
+
+
+</div>

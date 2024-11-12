@@ -1,0 +1,173 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mosquitos</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>mosquitos dataset</h2>
+
+<h3>Description</h3>
+
+<p>Presence or absence at 167 sites of 16 species that constitute the aquatic faunal community studied, 13 covariates collected at these sites and their coordinates.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("mosquitos")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 167 observations on the following 31 variables : 
+</p>
+
+<p><b>16 aquatic species</b> including larvae of four mosquito species (all potential vectors of human disease), which presence on sites is indicated by a 1 and absence by a 0 : 
+</p>
+<dl>
+<dt><code>Culex_pipiens_sl</code></dt>
+<dd>
+<p>a binary vector (mosquito species)</p>
+</dd>
+<dt><code>Culex_modestus</code></dt>
+<dd>
+<p>a binary vector (mosquito species)</p>
+</dd>
+<dt><code>Culiseta_annulata</code></dt>
+<dd>
+<p>a binary vector (mosquito species)</p>
+</dd>
+<dt><code>Anopheles_maculipennis_sl</code></dt>
+<dd>
+<p>a binary vector (mosquito species)</p>
+</dd>
+<dt><code>waterboatmen__Corixidae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>diving_beetles__Dysticidae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>damselflies__Zygoptera</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>swimming_beetles__Haliplidae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>opossum_shrimps__Mysidae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>ditch_shrimp__Gammarus</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>beetle_larvae__Coleoptera</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>dragonflies__Anisoptera</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>mayflies__Ephemeroptera</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>newts__Pleurodelinae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>fish</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>saucer_bugs__Ilyocoris</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>  
+</dl>
+<p><b>13 covariates</b> collected on the 167 sites and their coordinates : 
+</p>
+<dl>
+<dt><code>depth__cm</code></dt>
+<dd>
+<p>a numeric vector corresponding to the water depth in cm recorded as the mean of the depth at the edge and the centre of each dip site</p>
+</dd>
+<dt><code>temperature__C</code></dt>
+<dd>
+<p>a numeric vector corresponding to the temperature in °C</p>
+</dd>
+<dt><code>oxidation_reduction_potential__Mv</code></dt>
+<dd>
+<p>a numeric vector corresponding to the redox potential of the water in millivolts (mV)</p>
+</dd>
+<dt><code>salinity__ppt</code></dt>
+<dd>
+<p>a numeric vector corresponding to the salinity of the water in parts per thousand (ppt)</p>
+</dd> 
+</dl>
+<p>High-resolution digital photographs were taken of vegetation at the edge and centre dip points and the presence or absence of different vegetation types at each dipsite was determined from these photographs using field guides :  
+</p>
+<dl>
+<dt><code>water_crowfoot__Ranunculus</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of the plant species Ranunculus aquatilis which common name is water-crowfoot</p>
+</dd>
+<dt><code>rushes__Juncus_or_Scirpus</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of rushes from the Juncus or Scirpus genus</p>
+</dd>
+<dt><code>filamentous_algae</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of filamentous algae</p>
+</dd>
+<dt><code>emergent_grass</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of emergent grass</p>
+</dd>
+<dt><code>ivy_leafed_duckweed__Lemna_trisulca</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of ivy leafed duckweed of species Lemna trisulca</p>
+</dd>
+<dt><code>bulrushes__Typha</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of bulrushes from the Typha genus</p>
+</dd>
+<dt><code>reeds_Phragmites</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of reeds from the Phragmites genus</p>
+</dd>
+<dt><code>marestail__Hippuris</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of plants from the Hippuris genus known as mare's-tail</p>
+</dd>
+<dt><code>common_duckweed__Lemna_minor</code></dt>
+<dd>
+<p>a binary vector indicating presence on sites by a 1 and absence by a 0 of common duckweed of species Lemna minor</p>
+</dd>
+<dt><code>x</code></dt>
+<dd>
+<p>a numeric vector of first coordinates corresponding to each site</p>
+</dd>
+<dt><code>y</code></dt>
+<dd>
+<p>a numeric vector of second coordinates corresponding to each site</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Wilkinson, D. P.; Golding, N.; Guillera-Arroita, G.; Tingley, R. and McCarthy, M. A. (2018) A comparison of joint species distribution models for presence-absence data. <em>Methods in Ecology and Evolution</em>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(mosquitos, package="jSDM")
+head(mosquitos)
+</code></pre>
+
+
+</div>

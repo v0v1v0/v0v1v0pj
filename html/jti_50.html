@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pot_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A check and extraction of clique potentials from a Markov random field
+to be used in the junction tree algorithm</h2>
+
+<h3>Description</h3>
+
+<p>A check and extraction of clique potentials from a Markov random field
+to be used in the junction tree algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pot_list(x, g)
+
+## S3 method for class 'data.frame'
+pot_list(x, g)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Character <code>data.frame</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>A decomposable Markov random field as an igraph object.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Typically one would use the ess package:
+# library(ess)
+# g  &lt;- ess::fit_graph(derma)
+# pl &lt;- pot_list(derma, ess::as_igraph(g))
+# pl
+
+# Another example
+g &lt;- igraph::sample_gnm(ncol(asia), 12)
+while(!igraph::is.chordal(g)$chordal) g &lt;- igraph::sample_gnm(ncol(asia), 12, FALSE)
+igraph::V(g)$name &lt;- colnames(asia)
+plot(g)
+pot_list(asia, g)
+
+</code></pre>
+
+
+</div>

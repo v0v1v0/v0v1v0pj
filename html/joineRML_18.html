@@ -1,0 +1,485 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit a joint model to time-to-event data and multivariate longitudinal data</h2>
+
+<h3>Description</h3>
+
+<p>This function fits the joint model proposed by Henderson et al.
+(2000), but extended to the case of multiple continuous longitudinal
+measures. The time-to-event data is modelled using a Cox proportional
+hazards regression model with time-varying covariates. The multiple
+longitudinal outcomes are modelled using a multivariate version of the
+Laird and Ware linear mixed model. The association is captured by a
+multivariate latent Gaussian process. The model is estimated using a
+(quasi-) Monte Carlo Expectation Maximization (MCEM) algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mjoint(
+  formLongFixed,
+  formLongRandom,
+  formSurv,
+  data,
+  survData = NULL,
+  timeVar,
+  inits = NULL,
+  verbose = FALSE,
+  pfs = TRUE,
+  control = list(),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formLongFixed</code></td>
+<td>
+<p>a list of formulae for the fixed effects component of
+each longitudinal outcome. The left hand-hand side defines the response,
+and the right-hand side specifies the fixed effect terms. If a single
+formula is given (either as a list of length 1 or a formula), then it is
+assumed that a standard univariate joint model is being fitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formLongRandom</code></td>
+<td>
+<p>a list of one-sided formulae specifying the model for
+the random effects effects of each longitudinal outcome. The length of the
+list must be equal to <code>formLongFixed</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formSurv</code></td>
+<td>
+<p>a formula specifying the proportional hazards regression
+model (not including the latent association structure). See
+<code>coxph</code> for examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a list of <code>data.frame</code> objects for each longitudinal outcome
+in which to interpret the variables named in the <code>formLongFixed</code> and
+<code>formLongRandom</code>. The <code>list</code> structure enables one to include
+multiple longitudinal outcomes with different measurement protocols. If the
+multiple longitudinal outcomes are measured at the same time points for
+each patient, then a <code>data.frame</code> object can be given instead of a
+<code>list</code>. It is assumed that each data frame is in long format. <code>tibble</code>
+objects are automatically converted to plain <code>data.frame</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survData</code></td>
+<td>
+<p>a <code>data.frame</code> in which to interpret the variables named
+in the <code>formSurv</code>. This is optional, and if not given, the required
+data is searched for in <code>data</code>. Default is <code>survData=NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVar</code></td>
+<td>
+<p>a character string indicating the time variable in the linear
+mixed effects model. If there are multiple longitudinal outcomes and the
+time variable is labelled differently in each model, then a character
+string vector can be given instead.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inits</code></td>
+<td>
+<p>a list of initial values for some or all of the parameters
+estimated in the model. Default is <code>NULL</code>, with initial values
+estimated using separate multivariate linear mixed effects and Cox
+proportional hazard regression models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical: if <code>TRUE</code>, the parameter estimates and other
+convergence statistics are value are printed at each iteration of the MCEM
+algorithm. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pfs</code></td>
+<td>
+<p>logical: if <code>TRUE</code>, then assuming the MCEM algorithm has
+converged, post-fit statistics including the posterior means and variances
+of the random effects, and the approximate standard errors are calculated
+and returned as part of the model object. Default is <code>TRUE</code>. If
+<code>FALSE</code>, then these additional calculations are not performed, which
+can reduce the overall computational time. This option is intended to be
+used with computationally intensive routines such as simulation and
+bootstrap standard error estimation where these calculations are not
+required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values with components: </p>
+
+<dl>
+<dt><code>nMC</code></dt>
+<dd>
+<p>integer: the initial number of Monte Carlo samples to be
+used for integration in the burn-in phase of the MCEM. Default is
+<code>nMC=</code>100<em>K</em>.</p>
+</dd>
+<dt><code>nMCscale</code></dt>
+<dd>
+<p>integer: the scale factor for the increase in Monte
+Carlo size when Monte Carlo has not reduced from the previous iteration.
+Default is <code>nMCscale=5</code>.</p>
+</dd>
+<dt><code>nMCmax</code></dt>
+<dd>
+<p>integer: the maximum number of Monte Carlo samples
+that the algorithm is allowed to reach. Default is <code>nMCmax=20000</code>.</p>
+</dd>
+<dt><code>burnin</code></dt>
+<dd>
+<p>integer: the number of iterations for 'burn-in' phase
+of the optimization algorithm. It is computationally inefficient to use a
+large number of Monte Carlo samples early on until one is approximately
+near the maximum likelihood estimate. Default is <code>burnin=</code>100<em>K</em>
+for <code>type='antithetic'</code> or <code>type='montecarlo'</code> and
+<code>burnin=</code>5 for <code>type='sobol'</code> or <code>type='halton'</code>. For
+standard methods, such a large burn-in will generally be unnecessary and
+can be reduced on an application-specific basis.</p>
+</dd>
+<dt><code>mcmaxIter</code></dt>
+<dd>
+<p>integer: the maximum number of MCEM algorithm
+iterations allowed. Default is <code>mcmaxIter=burnin+200</code>.</p>
+</dd>
+<dt><code>convCrit</code></dt>
+<dd>
+<p>character string: the convergence criterion to be
+used. See <strong>Details</strong>.</p>
+</dd>
+<dt><code>gammaOpt</code></dt>
+<dd>
+<p>character string: by default (<code>gammaOpt='NR'</code>),
+<code class="reqn">\gamma</code> is updated using a one-step Newton-Raphson iteration, with the
+Hessian matrix calculated exactly. If <code>gammaOpt='GN'</code>, a Gauss-Newton
+algorithm-type iteration is implemented, where the Hessian matrix is
+approximated based on calculations similar to those used for calculating
+the empirical information matrix? If it is used, then the step-length is
+adjusted by a nominal scaling parameter of 0.5 in order to reduce the
+chance of over-shooting the maximizer.</p>
+</dd>
+<dt><code>tol0</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol0=1e-03</code>.</p>
+</dd>
+<dt><code>tol1</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol1=1e-03</code>.</p>
+</dd>
+<dt><code>tol2</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol2=5e-03</code> for
+<code>type='antithetic'</code> or <code>type='montecarlo'</code> and <code>tol2=1e-03</code>
+for <code>type='sobol'</code> or <code>type='halton'</code>.</p>
+</dd>
+<dt><code>tol.em</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+multivariate linear mixed model (MV-LMM). When <code class="reqn">K &gt; 1</code>, the optimal
+initial parameters are those from the MV-LMM, which is estimated using a
+separate EM algorithm. Since both the E- and M-steps are available in
+closed-form, this algorithm convergences relatively rapidly with a high
+precision. Default is min(<code>1e-04</code>, <code>tol2</code>).</p>
+</dd>
+<dt><code>rav</code></dt>
+<dd>
+<p>numeric: threshold when using <code>convCrit='sas'</code> that
+applies absolute change (when <code class="reqn">&lt;</code><code>rav</code>) or relative change (when
+<code class="reqn">\ge</code><code>rav</code>) criterion; see <strong>Details</strong>. Default is
+<code>0.1</code>, which is an order of magnitude higher than the SAS
+implementation.</p>
+</dd>
+<dt><code>type</code></dt>
+<dd>
+<p>character: type of Monte Carlo integration method to
+use. Options are </p>
+
+<dl>
+<dt><code>type='montecarlo'</code></dt>
+<dd>
+<p>Vanilla Monte Carlo sampling.</p>
+</dd>
+<dt><code>type='antithetic'</code></dt>
+<dd>
+<p>Variance reduction method using antithetic
+simulation. This is the default option.</p>
+</dd>
+<dt><code>type='sobol'</code></dt>
+<dd>
+<p>Quasi-Monte Carlo with a low
+deterministic Sobol sequence with Owen-type scrambling.</p>
+</dd>
+<dt><code>type='halton'</code></dt>
+<dd>
+<p>Quasi-Monte Carlo with a low deterministic
+Halton sequence.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>options passed to the <code>control</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>mjoint</code> fits joint models for time-to-event and
+multivariate longitudinal data. A review of relevant statistical
+methodology for joint models of multivariate data is given in Hickey et al.
+(2016). This is a direct extension of the models developed in the seminal
+works of Wulfsohn and Tsiatis (1997) and Henderson et al. (2000), with the
+calculations based largely on Lin et al. (2002) who also extended the model
+to multivariate joint data. A more detailed explanation of the model
+formulation is given in the technical vignette. Each longitudinal outcome
+is modelled according to a linear mixed model (LMM), akin to the models fit
+by <code>lme</code>, with independent and identically distributed
+Gaussian errors. The latent term in each model (specified by
+<code>formLongRandom</code>) is a linear combination of subject-specific
+zero-mean Gaussian random effects with outcome-specific variance
+components. We denote these as <code class="reqn">W_{i1}(t, b_{i1})</code>, <code class="reqn">W_{i2}(t,
+  b_{i2})</code>, <code class="reqn">\dots</code>, <code class="reqn">W_{iK}(t, b_{iK})</code>, for the <em>K</em>-outcomes.
+Usually, <code class="reqn">W(t, b)</code> will be specified as either <code class="reqn">b_0</code> (a
+random-intercepts model) or <code class="reqn">b_0 + b_1t</code> (a random-intercepts and
+random-slopes model); however, more general structures are allowed The
+time-to-event model is modelled as per the usual Cox model formulation,
+with an additional (possibly) time-varying term given by
+</p>
+<p style="text-align: center;"><code class="reqn">\gamma_{y1} W_{i1}(t, b_{i1}) + \gamma_{y2} W_{i2}(t, b_{i2}) + \dots
+  + \gamma_{yK} W_{iK}(t, b_{iK}),</code>
+</p>
+
+<p>where <code class="reqn">\gamma_y</code> is a parameter vector of proportional latent
+association parameters of length <em>K</em> for estimation.
+</p>
+<p>The optimization routine is based on a Monte Carlo Expectation Maximization
+algorithm (MCEM) algorithm, as described by Wei and Tanner (1990). With
+options for using antithetic simulation for variance reduction in the Monte
+Carlo integration, or quasi-Monte Carlo based on low order deterministic
+sequences.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>mjoint</code>. See <code>mjoint.object</code> for
+details.
+</p>
+
+
+<h3>Convergence criteria</h3>
+
+<p>The routine internally scales and centers data to avoid overflow in the
+argument to the exponential function. These actions do not change the
+result, but lead to more numerical stability. Several convergence criteria
+are available: </p>
+
+<dl>
+<dt><code>abs</code></dt>
+<dd>
+<p>the maximum absolute parameter change is
+<code class="reqn">&lt;</code><code>tol0</code>. The baseline hazard parameters are not included in this
+convergence statistic.</p>
+</dd>
+<dt><code>rel</code></dt>
+<dd>
+<p>the maximum (absolute) relative parameter change is
+<code class="reqn">&lt;</code><code>tol2</code>. A small value (<code>tol1</code>) is added to the denominator
+of the relative change statistic to avoid numerical problems when the
+parameters are close to zero.</p>
+</dd>
+<dt><code>either</code></dt>
+<dd>
+<p><em>either</em> the <code>abs</code> or <code>rel</code> criteria
+are satisfied.</p>
+</dd>
+<dt><code>sas</code></dt>
+<dd>
+<p>if <code class="reqn">| \theta_p | &lt; </code><code>rav</code>, then the <code>abs</code>
+criteria is applied for the <em>l</em>-th parameter; otherwise, <code>rel</code> is
+applied. This is the approach used in the SAS EM algorithm program for
+missing data.</p>
+</dd>
+</dl>
+<p>Due to the Monte Caro error, the algorithm could spuriously declare
+convergence. Therefore, we require convergence to be satisfied for 3
+consecutive iterations. The algorithm starts with a low number of Monte
+Carlo samples in the 'burn-in' phase, as it would be computationally
+inefficient to use a large sample whilst far away from the true maximizer.
+After the algorithm moves out of this adaptive phase, it uses an automated
+criterion based on the coefficient of variation of the relative parameter
+change of the last 3 iterations to decide whether to increase the Monte
+Carlo sample size. See the technical vignette and Ripatti et al. (2002) for
+further details.
+</p>
+
+
+<h3>Standard error estimation</h3>
+
+<p>Approximate standard errors (SEs) are calculated (if <code>pfs=TRUE</code>).
+These are based on the empirical observed information function (McLachlan &amp;
+Krishnan, 2008). Through simulation studies, we have found that this
+approximation does not work particularly well for <code class="reqn">n &lt; 100</code> (where
+<em>n</em> is the number of subjects). In these cases, one would need to
+appeal to the bootstrap SE estimation approach. However, in practice, the
+reliability of the approximate SEs will depend of a multitude of factors,
+including but not limited to, the average number of repeated measurements
+per subject, the total number of events, and the convergence of the MCEM
+algorithm.
+</p>
+<p>Bootstrap SEs are also available, however they are not calculated using the
+<code>mjoint</code> function due to the intense computational time. Instead, a
+separate function is available: <code>bootSE</code>, which takes the fitted joint
+model as its main argument. Given a fitted joint model (of class
+<code>mjoint</code>) and a bootstrap fit object (of class <code>bootSE</code>), the SEs
+reported in the model can be updated by running
+<code>summary(fit_obj,boot_obj)</code>. For details, consult the
+<code>bootSE</code> documentation.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>:
+465-480.
+</p>
+<p>Hickey GL, Philipson P, Jorgensen A, Kolamunnage-Dona R. Joint modelling of
+time-to-event and multivariate longitudinal outcomes: recent developments and
+issues. <em>BMC Med Res Methodol.</em> 2016; <strong>16(1)</strong>: 117.
+</p>
+<p>Lin H, McCulloch CE, Mayne ST. Maximum likelihood estimation in the joint
+analysis of time-to-event and multiple longitudinal variables. <em>Stat
+Med.</em> 2002; <strong>21</strong>: 2369-2382.
+</p>
+<p>McLachlan GJ, Krishnan T. <em>The EM Algorithm and Extensions.</em> Second
+Edition. Wiley-Interscience; 2008.
+</p>
+<p>Ripatti S, Larsen K, Palmgren J. Maximum likelihood inference for
+multivariate frailty models using an automated Monte Carlo EM algorithm.
+<em>Lifetime Data Anal.</em> 2002; <strong>8</strong>: 349-360.
+</p>
+<p>Wei GC, Tanner MA. A Monte Carlo implementation of the EM algorithm and the
+poor man's data augmentation algorithms. <em>J Am Stat Assoc.</em> 1990;
+<strong>85(411)</strong>: 699-704.
+</p>
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mjoint.object</code>, <code>bootSE</code>,
+<code>plot.mjoint</code>, <code>summary.mjoint</code>,
+<code>getVarCov.mjoint</code>, <code>simData</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Fit a classical univariate joint model with a single longitudinal outcome
+# and a single time-to-event outcome
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+set.seed(1)
+fit1 &lt;- mjoint(formLongFixed = log.lvmi ~ time + age,
+    formLongRandom = ~ time | num,
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = hvd,
+    timeVar = "time",
+    control = list(nMCscale = 2, burnin = 5)) # controls for illustration only
+summary(fit1)
+
+## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+summary(fit2)
+
+## End(Not run)
+
+## Not run: 
+# Fit a univariate joint model and compare to the joineR package
+
+data(pbc2)
+pbc2$log.b &lt;- log(pbc2$serBilir)
+
+# joineRML package
+fit.joineRML &lt;- mjoint(
+    formLongFixed = list("log.bil" = log.b ~ year),
+    formLongRandom = list("log.bil" = ~ 1 | id),
+    formSurv = Surv(years, status2) ~ age,
+    data = pbc2,
+    timeVar = "year")
+summary(fit.joineRML)
+
+# joineR package
+pbc.surv &lt;- UniqueVariables(pbc2, var.col = c("years", "status2"),
+                            id.col = "id")
+pbc.long &lt;- pbc2[, c("id", "year", "log.b")]
+pbc.cov &lt;- UniqueVariables(pbc2, "age", id.col = "id")
+pbc.jd &lt;- jointdata(longitudinal = pbc.long, baseline = pbc.cov,
+                    survival = pbc.surv, id.col = "id", time.col = "year")
+fit.joineR &lt;- joint(data = pbc.jd,
+    long.formula = log.b ~ 1 + year,
+    surv.formula = Surv(years, status2) ~ age,
+    model = "int")
+summary(fit.joineR)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

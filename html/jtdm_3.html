@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getB</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get the inferred regression coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Get the samples from the posterior distribution of the regression coefficient matrix B, together with the posterior mean and quantiles. The regression coefficient matrix B is a matrix where the number of rows is defined by the number of traits that are modeled, and the number of columns is the number of columns of the matrix m$X (the number of explanatory variables after transformation via formula)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getB(m)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>a model fitted with <code>jtdm_fit</code></p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Bsamples</code></td>
+<td>
+<p>Sample from the posterior distribution of the regression coefficient matrix. It is an array where the first dimension is the number of traits, the second the number of columns in m$X (the number of variables after transformation via formula) and the third the number of MCMC samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Bmean</code></td>
+<td>
+<p>Posterior mean of the regression coefficient matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Bq975,Bq025</code></td>
+<td>
+<p>97.5% and 0.25% posterior quantiles of the regression coefficient matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Y)  
+data(X)
+m = jtdm_fit(Y=Y, X=X, formula=as.formula("~GDD+FDD+forest"), sample = 1000) 
+# get the inferred regression coefficients
+B=getB(m)
+</code></pre>
+
+
+</div>

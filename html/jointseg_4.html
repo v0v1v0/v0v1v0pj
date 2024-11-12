@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doCBS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run CBS segmentation</h2>
+
+<h3>Description</h3>
+
+<p>This function is a wrapper for convenient use of the <code>CBS</code> segmentation
+method by <code>PSSeg</code>.  It applies the
+<code>segment</code> function and reshapes the results
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doCBS(y, ..., verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A numeric vector, the signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to be passed to <code>segment</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with a single element: </p>
+ <dl>
+<dt>bkp</dt>
+<dd>
+<p>breakpoint positions </p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>segment</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=1)
+
+## generate a synthetic CN profile
+K &lt;- 10
+len &lt;- 1e4
+sim &lt;- getCopyNumberDataByResampling(len, K, minLength=100, regData=affyDat)
+datS &lt;- sim$profile
+
+## run CBS segmentation
+res &lt;- doCBS(datS[["c"]])
+getTpFp(res$bkp, sim$bkp, tol=5, relax = -1)   ## true and false positives
+plotSeg(datS, breakpoints=list(sim$bkp, res$bkp))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weights_tests</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test whether sampling weights are needed</h2>
+
+<h3>Description</h3>
+
+<p>Use the tests proposed in Pfeffermann and Sverchkov (1999)
+and DuMouchel and Duncan (1983) to check whether
+a regression model is specified correctly without weights.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weights_tests(
+  model,
+  weights,
+  data,
+  model_output = TRUE,
+  test = NULL,
+  sims = 1000,
+  digits = getOption("jtools-digits", default = 2)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The fitted model, without weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>The name of the weights column in <code>model</code>'s data frame
+or a vector of weights equal in length to the number of observations
+included in <code>model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data frame with the data fed to the fitted model and the
+weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_output</code></td>
+<td>
+<p>Should a summary of the model with weights as predictor
+be printed? Default is TRUE, but you may not want it if you are trying to
+declutter a document.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>Which type of test should be used in the ANOVA? The default,
+<code>NULL</code>, chooses based on the model type ("F" for linear models).
+This argument is passed to <code>anova</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sims</code></td>
+<td>
+<p>The number of bootstrap simulations to use in estimating the
+variance of the residual correlation. Default is 1000, but for publications
+or when computing power/time is sufficient, a higher number is better.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer specifying the number of digits past the decimal to
+report in the output. Default is 3. You can change the default number of
+digits for all jtools functions with
+<code>options("jtools-digits" = digits)</code> where digits is the desired number.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a wrapper for the two tests implemented in this package that
+test whether your regression model is correctly specified. The first is
+<code>wgttest</code>, an R adaptation of the Stata macro of the same name.
+This test can otherwise be referred to as the DuMouchel-Duncan test. The
+other test is the Pfeffermann-Sverchkov test, which can be accessed directly
+with <code>pf_sv_test</code>.
+</p>
+<p>For more details on each, visit the documentation on the respective functions.
+This function just runs each of them for you.
+</p>
+
+
+<h3>References</h3>
+
+<p>DuMouchel, W. H. &amp; Duncan, D.J. (1983). Using sample survey weights in
+multiple regression analyses of stratified samples. <em>Journal of the
+American Statistical Association</em>, <em>78</em>. 535-543.
+</p>
+<p>Nordberg, L. (1989). Generalized linear modeling of sample survey data.
+<em>Journal of Official Statistics; Stockholm</em>, <em>5</em>, 223-239.
+</p>
+<p>Pfeffermann, D., &amp; Sverchkov, M. (1999). Parametric and semi-parametric
+estimation of regression models fitted to survey data.
+<em>Sankhya: The Indian Journal of Statistics</em>, <em>61</em>. 166-186.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other survey tools: 
+<code>pf_sv_test()</code>,
+<code>svycor()</code>,
+<code>svysd()</code>,
+<code>wgttest()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Note: This is a contrived example to show how the function works,
+# not a case with actual sammpling weights from a survey vendor
+if (requireNamespace("boot")) {
+  states &lt;- as.data.frame(state.x77)
+  set.seed(100)
+  states$wts &lt;- runif(50, 0, 3)
+  fit &lt;- lm(Murder ~ Illiteracy + Frost, data = states)
+  weights_tests(model = fit, data = states, weights = wts, sims = 100)
+}
+
+</code></pre>
+
+
+</div>

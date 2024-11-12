@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logistic.display2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>logistic.display2: Modified epiDisplay's logistic.display function.</h2>
+
+<h3>Description</h3>
+
+<p>Modified epiDisplay's logistic.display function for reactive data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logistic.display2(
+  logistic.model,
+  alpha = 0.05,
+  crude = TRUE,
+  crude.p.value = FALSE,
+  decimal = 2,
+  simplified = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>logistic.model</code></td>
+<td>
+<p>glm object(binomial)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>alpha, Default: 0.05</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crude</code></td>
+<td>
+<p>crude, Default: TRUE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crude.p.value</code></td>
+<td>
+<p>crude.p.value, Default: FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal</code></td>
+<td>
+<p>decimal, Default: 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplified</code></td>
+<td>
+<p>simplified, Default: FALSE</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Modified epiDisplay's logistic.display function for reactive data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>logistic table
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">model1 &lt;- glm(am ~ cyl + disp, data = mtcars, family = binomial)
+logistic.display2(model1, crude = TRUE, crude.p.value = TRUE, decimal = 3)
+</code></pre>
+
+
+</div>

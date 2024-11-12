@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmstanBig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint model for BIG data using rstanarm</h2>
+
+<h3>Description</h3>
+
+<p>function for joint model in BIG DATA using <code>rstanarm</code> package
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmstanBig(
+  dtlong,
+  dtsurv,
+  longm,
+  survm,
+  samplesize = 50,
+  time_var,
+  id,
+  nchain = 1,
+  refresh = 2000
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtlong</code></td>
+<td>
+<p>longitudinal dataset, which contains id,visit time,longitudinal measurements along with various covariates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtsurv</code></td>
+<td>
+<p>survival dataset corresponding to the longitudinal dataset, with survival status and survival time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longm</code></td>
+<td>
+<p>model for longitudinal response</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survm</code></td>
+<td>
+<p>survival model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplesize</code></td>
+<td>
+<p>sample size to divide the Big data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time_var</code></td>
+<td>
+<p>time variable in longitudinal model, included in the longitudinal data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>name of id column in longitudinal dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nchain</code></td>
+<td>
+<p>number of chain for MCMC</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refresh</code></td>
+<td>
+<p>refresh rate for MCMC chain</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a list containing various output which are useful for prediction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Atanu Bhattacharjee, Bhrigu Kumar Rajbongshi and Gajendra Kumar Vishwakarma
+</p>
+
+
+<h3>References</h3>
+
+<p>Goodrich, B., et al. "rstanarm: Bayesian applied regression modeling via Stan. R package version 2.17. 4." Online&lt; http://mc-stan. org (2018).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jmbayesBig,jmcsBig,joinRMLBig
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ 
+##
+library(survival)
+library(dplyr)
+fit3&lt;-jmstanBig(dtlong=long2,dtsurv = surv2,longm=y~ x7+visit+(1|id),
+survm=Surv(time,status)~x1+visit,samplesize=200,time_var='visit',id='id')
+P2&lt;-postTraj(model&lt;-fit3,m&lt;-1,ids&lt;-c(1,2,100))
+pp1&lt;-plot(P2$p1[[1]],plot_observed = TRUE)
+pp2&lt;-plot(P2$p1[[2]],plot_observed = TRUE)
+pp3&lt;-plot(P2$p1[[3]],plot_observed = TRUE)
+##
+
+
+</code></pre>
+
+
+</div>

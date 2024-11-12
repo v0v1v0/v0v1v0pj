@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>symbolicSkewKostkaJackNumbers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Kostka-Jack numbers with symbolic Jack parameter</h2>
+
+<h3>Description</h3>
+
+<p>Skew Kostka-Jack numbers associated to a given skew partition
+with a symbolic Jack parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">symbolicSkewKostkaJackNumbers(lambda, mu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The function returns a list. Each element of this
+list is a named list with two elements: an integer partition <code class="reqn">\nu</code>
+in the field named <code>"nu"</code>, and the corresponding skew Kostka number
+<code class="reqn">K_{\lambda/\mu,\nu}(\alpha)</code> in the field named <code>"value"</code>, a
+<code>ratioOfQsprays</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">symbolicSkewKostkaJackNumbers(c(4,2,2), c(2,2))
+</code></pre>
+
+
+</div>

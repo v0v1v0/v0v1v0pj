@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jma_collect</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Collect JMA Historical Weather Data</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="../help/figures/lifecycle-stable.svg" alt="[Stable]"></a>
+</p>
+<p>Refer to the data available in the JMA Historical Weather Data Search.
+Executed by specifying the target location and date.
+Currently, not all types of data acquisition are supported.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jma_collect(
+  item = NULL,
+  block_no,
+  year,
+  month,
+  day,
+  cache = TRUE,
+  pack = TRUE,
+  quiet = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>item</code></td>
+<td>
+<p>Type of weather data to be acquired. Mainly specifies
+the interval between records (e.g. <code>daily</code> or <code>hourly</code>).
+See NOTE for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>block_no</code></td>
+<td>
+<p>Block number of the location to be observed. It is assumed that
+block_no is input as a string consisting of a 4- or 5-digit number. If a
+numeric value is specified, it is processed as a string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>select year</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>month</code></td>
+<td>
+<p>select month</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>day</code></td>
+<td>
+<p>select date (default <code>NULL</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cache</code></td>
+<td>
+<p>use cash and save to cache.  (<code>TRUE</code>, the default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pack</code></td>
+<td>
+<p>Whether to packing common variables or not.  (<code>TRUE</code>, the default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Whether to output information on variable and
+row combinations that were treated as missing values
+for some reason. (<code>TRUE</code>, the default)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>tbl</code> object
+</p>
+
+
+<h3>Note</h3>
+
+<p>The parameter <code>item</code> chooses one from these:
+</p>
+
+<ul>
+<li>
+<p> annually: Annual value. Please specify a location by <code>block_no</code>.
+</p>
+</li>
+<li>
+<p> monthly: Monthly value. Please specify location and year.
+</p>
+</li>
+<li>
+<p> 3monthly: Value every 3 months. Please specify location and year.
+</p>
+</li>
+<li>
+<p> 10daily: Seasonal value. Please specify location and year.
+</p>
+</li>
+<li>
+<p> mb5daily: Semi-seasonal value. Please specify location and year.
+</p>
+</li>
+<li>
+<p> daily: Daily value. Please specify location, year and month.
+</p>
+</li>
+<li>
+<p> hourly: Hourly value. Please specify location, year, month and day.
+</p>
+</li>
+<li>
+<p> rank: Values of the largest in the history of observations
+for each location.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Annually
+jma_collect(item = "annually", "1284", year = 2017, month = 11, cache = FALSE)
+# Daily
+jma_collect(item = "daily", block_no = "0010", year = 2017, month = 11, cache = FALSE)
+jma_collect(item = "daily", "0422", year = 2017, month = 11, cache = FALSE)
+# Hourly
+jma_collect("hourly", "0010", 2018, 7, 30, cache = FALSE)
+# Historical Ranking
+jma_collect("rank", block_no = "47646", year = 2020, cache = FALSE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,285 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pacbio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create and write PacBio reads to FASTQ file(s).</h2>
+
+<h3>Description</h3>
+
+<p>From either a reference genome or set of variant haplotypes, create PacBio reads
+and write them to FASTQ output file(s).
+I encourage you to cite the reference below in addition to <code>jackalope</code> if you use
+this function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pacbio(obj,
+       out_prefix,
+       n_reads,
+       chi2_params_s = c(0.01214, -5.12, 675, 48303.0732881,
+                         1.4691051212330266),
+       chi2_params_n = c(0.00189237136, 2.53944970, 5500),
+       max_passes = 40,
+       sqrt_params = c(0.5, 0.2247),
+       norm_params = c(0, 0.2),
+       prob_thresh = 0.2,
+       ins_prob = 0.11,
+       del_prob = 0.04,
+       sub_prob = 0.01,
+       min_read_length = 50,
+       lognorm_read_length = c(0.200110276521, -10075.4363813,
+                               17922.611306),
+       custom_read_lengths = NULL,
+       prob_dup = 0.0,
+       haplotype_probs = NULL,
+       sep_files = FALSE,
+       compress = FALSE,
+       comp_method = "bgzip",
+       n_threads = 1L,
+       read_pool_size = 100L,
+       show_progress = FALSE,
+       overwrite = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>Sequencing object of class <code>ref_genome</code> or <code>haplotypes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_prefix</code></td>
+<td>
+<p>Prefix for the output file(s), including entire path except
+for the file extension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_reads</code></td>
+<td>
+<p>Number of reads you want to create.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>chi2_params_s</code></td>
+<td>
+<p>Vector containing the 5 parameters for the curve determining
+the scale parameter for the chi^2 distribution.
+Defaults to <code>c(0.01214, -5.12, 675, 48303.0732881, 1.4691051212330266)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>chi2_params_n</code></td>
+<td>
+<p>Vector containing the 3 parameters for the function
+determining the n parameter for the chi^2 distribution.
+Defaults to <code>c(0.00189237136, 2.53944970, 5500)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_passes</code></td>
+<td>
+<p>Maximal number of passes for one molecule.
+Defaults to <code>40</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sqrt_params</code></td>
+<td>
+<p>Vector containing the 2 parameters for the square root
+function for the quality increase.
+Defaults to <code>c(0.5, 0.2247)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm_params</code></td>
+<td>
+<p>Vector containing the 2 parameters for normal distributed
+noise added to quality increase square root function
+Defaults to <code>c(0, 0.2)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob_thresh</code></td>
+<td>
+<p>Upper bound for the modified total error probability.
+Defaults to <code>0.2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ins_prob</code></td>
+<td>
+<p>Probability for insertions for reads with one pass.
+Defaults to <code>0.11</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>del_prob</code></td>
+<td>
+<p>Probability for deletions for reads with one pass.
+Defaults to <code>0.04</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub_prob</code></td>
+<td>
+<p>Probability for substitutions for reads with one pass.
+Defaults to <code>0.01</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min_read_length</code></td>
+<td>
+<p>Minium read length for lognormal distribution.
+Defaults to <code>50</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lognorm_read_length</code></td>
+<td>
+<p>Vector containing the 3 parameters for lognormal
+read length distribution.
+Defaults to <code>c(0.200110276521, -10075.4363813, 17922.611306)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_read_lengths</code></td>
+<td>
+<p>Sample read lengths from a vector or column in a
+matrix; if a matrix, the second column specifies the sampling weights.
+If <code>NULL</code>, it samples read lengths from the lognormal distribution
+using parameters in <code>lognorm_read_length</code>.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob_dup</code></td>
+<td>
+<p>A single number indicating the probability of duplicates.
+Defaults to <code>0.0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>haplotype_probs</code></td>
+<td>
+<p>Relative probability of sampling each haplotype.
+This is ignored if sequencing a reference genome.
+<code>NULL</code> results in all having the same probability.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep_files</code></td>
+<td>
+<p>Logical indicating whether to make separate files for each haplotype.
+This argument is coerced to <code>FALSE</code> if the <code>obj</code> argument is not
+a <code>haplotypes</code> object.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compress</code></td>
+<td>
+<p>Logical specifying whether or not to compress output file, or
+an integer specifying the level of compression, from 1 to 9.
+If <code>TRUE</code>, a compression level of <code>6</code> is used.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comp_method</code></td>
+<td>
+<p>Character specifying which type of compression to use if any
+is desired. Options include <code>"gzip"</code> and <code>"bgzip"</code>.
+This is ignored if <code>compress</code> is <code>FALSE</code>, and it throws an error if
+it's set to <code>"gzip"</code> when <code>n_threads &gt; 1</code> (since I don't have a method to
+do gzip compression in parallel).
+Defaults to <code>"bgzip"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_threads</code></td>
+<td>
+<p>The number of threads to use in processing.
+If <code>compress</code> is <code>TRUE</code> or <code style="white-space: pre;">⁠&gt; 0⁠</code> (indicating compressed output),
+setting <code>n_threads</code> to <code>2</code> or more makes this function first create an
+uncompressed file/files using <code>n_threads</code> threads, then compress that/those
+file/files also using <code>n_threads</code> threads.
+There is no speed increase if you try to use multiple threads to create
+compressed output on the fly, so that option is not included.
+If you want to be conservative with disk space (by not having an uncompressed
+file present even temporarily), set <code>n_threads</code> to <code>1</code>.
+Threads are NOT spread across chromosomes or haplotypes, so you don't need to
+think about these when choosing this argument's value.
+However, all threads write to the same file/files, so there are diminishing
+returns for providing many threads.
+This argument is ignored if the package was not compiled with OpenMP.
+Defaults to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>read_pool_size</code></td>
+<td>
+<p>The number of reads to store before writing to disk.
+Increasing this number should improve speed but take up more memory.
+Defaults to <code>100</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_progress</code></td>
+<td>
+<p>Logical for whether to show a progress bar.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Logical for whether to overwrite existing FASTQ file(s) of the
+same name, if they exist.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Nothing is returned.
+</p>
+
+
+<h3>ID lines</h3>
+
+<p>The ID lines for FASTQ files are formatted as such:
+</p>
+<p><code style="white-space: pre;">⁠@&lt;genome name&gt;-&lt;chromosome name&gt;-&lt;starting position&gt;-&lt;strand&gt;⁠</code>
+</p>
+<p>where <code style="white-space: pre;">⁠genome name⁠</code> is always <code>REF</code> for reference genomes (as opposed to haplotypes).
+</p>
+
+
+<h3>References</h3>
+
+<p>Stöcker, B. K., J. Köster, and S. Rahmann. 2016. SimLoRD: simulation of long
+read data. <em>Bioinformatics</em> <strong>32</strong>:2704–2706.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+rg &lt;- create_genome(10, 100e3, 100)
+dir &lt;- tempdir(TRUE)
+pacbio(rg, paste0(dir, "/pacbio_reads"), n_reads = 100)
+
+
+</code></pre>
+
+
+</div>

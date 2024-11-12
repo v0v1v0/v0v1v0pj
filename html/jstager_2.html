@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_jstage_volumes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get J-Stage Volumes and Issues List</h2>
+
+<h3>Description</h3>
+
+<p>Retrieves a list of volumes and issues published on J-STAGE.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_jstage_volumes(
+  pubyearfrom = NA,
+  pubyearto = NA,
+  material = "",
+  issn = "",
+  cdjournal = "",
+  volorder = NA,
+  lang = "ja"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pubyearfrom</code></td>
+<td>
+<p>An integer specifying the starting publication year (in YYYY format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pubyearto</code></td>
+<td>
+<p>An integer specifying the ending publication year (in YYYY format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>material</code></td>
+<td>
+<p>A character string specifying the material name (exact match search).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>issn</code></td>
+<td>
+<p>A character string specifying the ISSN (exact match search in XXXX-XXXX
+format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cdjournal</code></td>
+<td>
+<p>A character string specifying the journal code.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>volorder</code></td>
+<td>
+<p>An integer specifying the order of volumes: 1 for ascending, 2 for
+descending (default is 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A character string specifying the language for column names: "ja" for
+Japanese (default is "ja").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing metadata and entry data frames with the search
+results.
+</p>
+
+
+</div>

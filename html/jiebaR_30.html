@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>segment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Chinese text segmentation function</h2>
+
+<h3>Description</h3>
+
+<p>The function uses initialized engines for words segmentation. You 
+can initialize multiple engines simultaneously using <code>worker()</code>.
+Public settings of workers can be got and modified using <code>$</code>, 
+such as <code> WorkerName$symbol = T </code>. Some private settings are fixed 
+when engine is initialized, and you can get then by 
+<code>WorkerName$PrivateVarible</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">segment(code, jiebar, mod = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>A Chinese sentence or the path of a text file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jiebar</code></td>
+<td>
+<p>jiebaR Worker.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mod</code></td>
+<td>
+<p>change default result type, value can be "mix","hmm","query","full" or "mp"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There are four kinds of models:
+</p>
+<p>Maximum probability segmentation model uses Trie tree to construct
+a directed acyclic graph and uses dynamic programming algorithm. It
+is the core segmentation algorithm. <code>dict</code> and <code>user</code>
+should be provided when initializing jiebaR worker.
+</p>
+<p>Hidden Markov Model uses HMM model to determine status set and 
+observed set of words. The default HMM model is based on People's Daily 
+language library. <code>hmm</code> should be provided when initializing 
+jiebaR worker.
+</p>
+<p>MixSegment model uses both Maximum probability segmentation model 
+and Hidden Markov Model to construct segmentation.  <code>dict</code>, 
+<code>hmm</code> and <code>user</code> should be provided when initializing 
+jiebaR worker.
+</p>
+<p>QuerySegment model uses MixSegment to construct segmentation and then 
+enumerates all the possible long words in the dictionary.  <code>dict</code>, 
+<code>hmm</code> and <code>qmax</code> should be provided when initializing 
+jiebaR worker.
+</p>
+<p>There is a symbol <code>&lt;=</code> for this function.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>&lt;=.segment</code> <code>worker</code>
+</p>
+
+
+</div>

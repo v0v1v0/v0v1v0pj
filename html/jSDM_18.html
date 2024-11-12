@@ -1,0 +1,238 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mites</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>mites dataset</h2>
+
+<h3>Description</h3>
+
+<p>This example data set is composed of 70 cores of mostly Sphagnum mosses collected on the territory of the Station de biologie des Laurentides of University of  Montreal, Quebec, Canada in June 1989.   
+</p>
+<p>The whole sampling area was 2.5 m x 10 m in size and thirty-five taxa were recognized as species, though many were not given a species name, owing to the incomplete stage of systematic knowledge of the North American Oribatid fauna.
+</p>
+<p>The data set comprises the abundances of 35 morphospecies, 5 substrate and micritopographic variables, and the x-y Cartesian coordinates of the 70 sampling sites. 
+</p>
+<p>See Borcard et al. (1992, 1994) for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("mites")</code></pre>
+
+
+<h3>Format</h3>
+
+<p> A data frame with 70 observations on the following 42 variables.
+</p>
+
+<p>Abundance of <b>35 Oribatid mites morphospecies</b> named : 
+</p>
+<dl>
+<dt><code>Brachy</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>PHTH</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>HPAV</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>RARD</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>SSTR</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Protopl</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>MEGR</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>MPRO</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>TVIE</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>HMIN</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>HMIN2</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>NPRA</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>TVEL</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>ONOV</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>SUCT</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>LCIL</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Oribatul1</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Ceratoz1</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>PWIL</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Galumna1</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Steganacarus2</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>HRUF</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Trhypochth1</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>PPEL</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>NCOR</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>SLAT</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>FSET</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Lepidozetes</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Eupelops</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Minigalumna</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>LRUG</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>PLAG2</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Ceratoz3</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Oppia.minus</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>
+<dt><code>Trimalaco2</code></dt>
+<dd>
+<p>a vector of integers</p>
+</dd>  
+</dl>
+<p><b>5 covariates</b> collected on the 70 sites and their coordinates :  
+</p>
+<dl>
+<dt><code>substrate</code></dt>
+<dd>
+<p>a categorical vector indicating substrate type using a 7-level unordered factor :  <code>sph1</code>, <code>sph2</code>, <code>sph3</code>, <code>sph4</code>, <code>litter</code>, <code>peat</code> and <code>inter</code> for interface.</p>
+</dd>
+<dt><code>shrubs</code></dt>
+<dd>
+<p>a categorical vector indicating shrub density using a 3-level ordered factor : <code>None</code>, <code>Few</code> and <code>Many</code></p>
+</dd>
+<dt><code>topo</code></dt>
+<dd>
+<p>a categorical vector indicating microtopography using a 2-level factor: <code>blanket</code> or <code>hummock</code></p>
+</dd>
+<dt><code>density</code></dt>
+<dd>
+<p>a numeric vector indicating the substrate density (g/L)</p>
+</dd>
+<dt><code>water</code></dt>
+<dd>
+<p>a numeric vector indicating the water content of the substrate (g/L)</p>
+</dd>
+<dt><code>x</code></dt>
+<dd>
+<p>a numeric vector indicating first coordinates of sampling sites</p>
+</dd>
+<dt><code>y</code></dt>
+<dd>
+<p>a numeric vector indicating second coordinates of sampling sites</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+ 
+<p>Oribatid mites (Acari: Oribatida) are a very diversified group of small (0.2-1.2 mm) soil-dwelling, mostly microphytophagous and detritivorous arthropods. A well aerated soil or a complex substrate like Sphagnum mosses present in bogs and wet forests can harbour up to several hundred thousand individuals per square metre.   
+</p>
+<p>Local assemblages are sometimes composed of over a hundred species, including many rare ones. This diversity makes oribatid mites an interesting target group to study community-environment relationships at very local scales.
+</p>
+
+
+<h3>Source</h3>
+
+<p> Pierre Legendre  </p>
+
+
+<h3>References</h3>
+
+<p>Borcard, D.; Legendre, P. and Drapeau, P. (1992) Partialling out the spatial component of ecological variation. <em>Ecology</em> 73: 1045-1055.
+</p>
+<p>Borcard, D. and Legendre, P. (1994) Environmental control and spatial structure in ecological communities: an example using Oribatid mites (Acari, Oribatei). <em>Environmental and Ecological Statistics</em> 1: 37-61. 
+</p>
+<p>Borcard, D. and Legendre, P. (2002) All-scale spatial analysis of ecological data by means of principal coordinates of neighbour matrices. <em>Ecological Modelling</em> 153: 51-68.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(mites, package="jSDM")
+head(mites)
+</code></pre>
+
+
+</div>

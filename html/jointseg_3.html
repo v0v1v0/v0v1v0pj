@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>defaultWeights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute default weights for the weighted group fused Lasso</h2>
+
+<h3>Description</h3>
+
+<p>Compute default weights for the weighted group fused Lasso
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">defaultWeights(n)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of observations</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Vector of default weights in the reference article.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This implementation is derived from the MATLAB code by Vert and
+Bleakley: <a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+defaultWeights(10)
+
+</code></pre>
+
+
+</div>

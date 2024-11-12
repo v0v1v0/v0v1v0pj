@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>BoxplotTheta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Boxplots of Relateness parameters
+</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>BoxplotTheta</code> makes boxplots of relatedess parameters from a
+list object containing estimates of pairwise relatedness parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">BoxplotTheta(KS, ind.sub = 1:nrow(KS[[1]]), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>KS</code></td>
+<td>
+<p>A list object with four fields of matrices: kinship, inbreeding, T3 and T4.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind.sub</code></td>
+<td>
+<p>Index for subsetting the individuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the function <code>boxplot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For individual inbreeding coefficients, two boxplots are made, the first based on the diagonal of T2,
+the second on the row means of T2. The remaining boxplots (kinship, T3 and T4) are all pairwise, and
+exclude self-pairs.
+</p>
+
+
+<h3>Value</h3>
+
+<p>NULL</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>References</h3>
+
+<p>Csuros, M. (2014) Non-identifiability of identity coefficients at biallelic loci. Theoretical Population
+Biology 92, pp. 22-29. <a href="https://doi.org/10.1016/j.tpb.2013.11.001">doi:10.1016/j.tpb.2013.11.001</a>.
+</p>
+<p>Graffelman, J., Weir, B.S. and Goudet, J. (2024) Estimation of Jacquard's genetic identity coefficients with
+bi-allelic variants by constrained least-squares. Preprint at bioRxiv <a href="https://doi.org/10.1101/2024.03.25.586682">doi:10.1101/2024.03.25.586682</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>CalculateTheta</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(DeltaSimulatedPedigree)
+Theta &lt;- CalculateTheta(DeltaSimulatedPedigree)
+BoxplotTheta(Theta)
+</code></pre>
+
+
+</div>

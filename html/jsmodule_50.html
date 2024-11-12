@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>optionUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>optionUI: Option UI with icon</h2>
+
+<h3>Description</h3>
+
+<p>Option UI with icon
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">optionUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Option UI with icon
+</p>
+
+
+<h3>Value</h3>
+
+<p>Option UI with icon
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dropdownButton</code>,<code>tooltipOptions</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+library(ggplot2)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      kaplanUI("kaplan")
+    ),
+    mainPanel(
+      optionUI("kaplan"),
+      plotOutput("kaplan_plot"),
+      ggplotdownUI("kaplan")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_kaplan &lt;- callModule(kaplanModule, "kaplan",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$kaplan_plot &lt;- renderPlot({
+    print(out_kaplan())
+  })
+}
+</code></pre>
+
+
+</div>

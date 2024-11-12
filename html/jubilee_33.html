@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>triangle</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Methods of triangular wave model</h2>
+
+<h3>Description</h3>
+
+<p>Methods of triangular wave model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">triangle(t, p)
+
+tri.wave.s(object, t)
+
+tri.wave.a(object, t)
+
+tri.wave.y(object, t)
+
+tri.wave.x(object, t)
+
+tri.wave.logr.y(object, t, p)
+
+tri.wave.logr(object, t, p)
+
+tri.wave.logr.semi(object, t)
+
+tri.wave.logr.quarter(object, t)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>the time vector in fraction</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>the period of the triangle wave</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>the object of <code>tri.wave</code> class</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>References</h3>
+
+<p>See Section 4 of Stephen H.T. Lihn, "Jubilee Tectonic Model:
+Forecasting Long-Term Growth and Mean Reversion in the U.S. Stock Market."
+Available at <a href="http://dx.doi.org/10.2139/ssrn.3156574">http://dx.doi.org/10.2139/ssrn.3156574</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  w &lt;- tri.wave()
+  t &lt;- seq(1900, 2000, by=1)
+  tri.wave.y(w, t)
+
+</code></pre>
+
+
+</div>

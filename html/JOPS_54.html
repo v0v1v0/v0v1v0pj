@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pspline2d_checker</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>P-spline 2D tensor product checking algorithm for the GLM.</h2>
+
+<h3>Description</h3>
+
+<p><code>pspline_2dchecker</code> checks to see if all the 2D tensor inputs associated
+for P-spines are properly defined.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pspline2d_checker(
+  family,
+  link,
+  bdeg1,
+  bdeg2,
+  pord1,
+  pord2,
+  nseg1,
+  nseg2,
+  lambda1,
+  lambda2,
+  ridge_adj,
+  wts
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the response distribution, e.g. <code>"gaussian", "binomial", "poisson", "Gamma"</code> distribution. Quotes are needed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function, one of <code>"identity"</code>, <code>"log"</code>, <code>"sqrt"</code>,
+<code>"logit"</code>, <code>"probit"</code>, <code>"cloglog"</code>, <code>"loglog"</code>, <code>"reciprocal"</code>;
+quotes are needed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg1</code></td>
+<td>
+<p>the degree of B-splines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg2</code></td>
+<td>
+<p>the degree of B-splines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord1</code></td>
+<td>
+<p>the order of the penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord2</code></td>
+<td>
+<p>the order of the penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg1</code></td>
+<td>
+<p>the number of evenly spaced B-spline segmements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg2</code></td>
+<td>
+<p>the number of evenly spaced B-spline segmements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda1</code></td>
+<td>
+<p>the positive tuning parameter for the difference penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda2</code></td>
+<td>
+<p>the positive tuning parameter for the difference penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ridge_adj</code></td>
+<td>
+<p>the positive tuning parameter for the ridge penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>the weight vector, separate from GLM weights.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>list</code></td>
+<td>
+<p>same as inputs, with warnings if required.</p>
+</td>
+</tr></table>
+</div>

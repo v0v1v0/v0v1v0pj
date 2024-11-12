@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_footnotes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract all footnotes</h2>
+
+<h3>Description</h3>
+
+<p>This function extracts the content of <code>fn-group</code> from journal-articles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_footnotes(file_path)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file_path</code></td>
+<td>
+<p>The path to the <code>.xml</code>-file from which footnotes should be
+extracted.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The <code>fn-group</code> usually contains footnotes corresponding to the article.
+However, since footnotes are currently not fully supported by DfR,
+there is no comprehensive documentation on the different variants. <code>jstor</code>
+therefore extracts the content of <code>fn-group</code> exactly as it appears in the
+data. Because of this, there might be other content present than footnotes.
+</p>
+<p>In order to get all available information on citation data, you might need to
+combine <code>jst_get_footnotes()</code> with <code>jst_get_references()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble</code> containing the content from <code>fn-group</code> (usually the
+footnotes). If there were no footnotes, <code>NA_character</code> is returned for the
+column <code>footnotes</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_get_footnotes(jst_example("article_with_footnotes.xml"))
+</code></pre>
+
+
+</div>

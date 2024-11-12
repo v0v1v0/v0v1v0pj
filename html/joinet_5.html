@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.joinet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make Predictions</h2>
+
+<h3>Description</h3>
+
+<p>Predicts outcome from features with stacked model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'joinet'
+predict(object, newx, type = "response", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>joinet object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newx</code></td>
+<td>
+<p>covariates<strong>:</strong>
+numeric matrix with <code class="reqn">n</code> rows (samples)
+and <code class="reqn">p</code> columns (variables)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>character "link" or "response"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments (not applicable)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns predictions from base and meta learners.
+The slots <code>base</code> and <code>meta</code> each contain a matrix
+with <code class="reqn">n</code> rows (samples) and <code class="reqn">q</code> columns (variables).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=rowSums(X[,1:5])))
+Y[,1] &lt;- 1*(Y[,1]&gt;median(Y[,1]))
+object &lt;- joinet(Y=Y,X=X,family=c("binomial","gaussian","gaussian"))
+predict(object,newx=X)
+## End(Not run)
+
+</code></pre>
+
+
+</div>

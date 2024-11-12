@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ranef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Random Effects for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p><code>ranef</code> is a generic function which extracts random effects from objects returned by <code>jmodelTM()</code> or <code>jmodelMult()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmodelTM'
+ranef(object, ...)
+## S3 method for class 'jmodelMult'
+ranef(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jmodelTM</code> or <code>jmodelMult</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments required. None is used in this method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric matrix with rows denoting the subjects and columns the random effects. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(proth ~ Trt * obstime, random = ~ 1 | ID, data = liver)
+fitCOX &lt;- coxph(Surv(start, stop, event) ~ Trt, data = liver, x = TRUE)
+fitJT.ph &lt;- jmodelTM(fitLME, fitCOX, liver, timeVarY = 'obstime')
+
+# random effect for the joint model
+ranef(fitJT.ph)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

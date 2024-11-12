@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>APAStyler.SEMSummary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A generic function for pretty printing in (semi) APA Style</h2>
+
+<h3>Description</h3>
+
+<p>A generic function for pretty printing in (semi) APA Style
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'SEMSummary'
+APAStyler(
+  object,
+  digits = 2,
+  type = c("cov", "cor", "both"),
+  stars = FALSE,
+  file = ifelse(.Platform$OS.type == "windows", "clipboard", FALSE),
+  sep = "\t",
+  print = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p><code>SEMSummary</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>The number of digits to round results to. Defaults to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character vector giving what to print. Defaults to ‘cov’,
+the covariances. Other options are ‘cor’ and ‘both’.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stars</code></td>
+<td>
+<p>A logical value whether to include significance values as
+stars (*** p &lt; .001, ** p &lt; .01, * p &lt; .05).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>An optional argument indicating whether the output should be written to a file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>Character what the separator for the table should be. Defaults to tabs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print</code></td>
+<td>
+<p>A logical argument, whether or not to print results to screen.
+This is distinct from saving them to a file. Defaults to <code>TRUE</code> for back compatibility.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional argiuments passed on to <code>write.table</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">m &lt;- SEMSummary(~., data = mtcars)
+APAStyler(m, type = "cor", stars = FALSE, file = FALSE)
+APAStyler(m, type = "cov", stars = FALSE, file = FALSE)
+APAStyler(m, type = "both", stars = FALSE, file = FALSE)
+APAStyler(m, type = "cor", stars = TRUE, file = FALSE)
+APAStyler(m, type = "cov", stars = TRUE, file = FALSE)
+APAStyler(m, type = "both", stars = TRUE, file = FALSE)
+</code></pre>
+
+
+</div>

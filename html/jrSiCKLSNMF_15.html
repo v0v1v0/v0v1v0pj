@@ -1,0 +1,177 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>RunjrSiCKLSNMF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run jrSiCKLSNMF on an object of class SickleJr</h2>
+
+<h3>Description</h3>
+
+<p>Wrapper function to run jrSiCKLSNMF on an object of class SickleJr. Performs jrSiCKLSNMF on
+the given SickleJr
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">RunjrSiCKLSNMF(
+  SickleJr,
+  rounds = 30000,
+  differr = 1e-06,
+  display_progress = TRUE,
+  lossonsubset = FALSE,
+  losssubsetsize = dim(SickleJr@H)[1],
+  minibatch = FALSE,
+  batchsize = 1000,
+  random_W_updates = FALSE,
+  seed = NULL,
+  minrounds = 200,
+  suppress_warnings = FALSE,
+  subsample = 1:dim(SickleJr@normalized.count.matrices[[1]])[2]
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rounds</code></td>
+<td>
+<p>Number of rounds: defaults to 2000</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>differr</code></td>
+<td>
+<p>Tolerance for percentage change in loss between updates: defaults to 1e-6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display_progress</code></td>
+<td>
+<p>Boolean indicating whether to display the progress bar for jrSiCKLSNMF</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lossonsubset</code></td>
+<td>
+<p>Boolean indicating whether to use a subset to calculate the loss function
+rather than the whole dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>losssubsetsize</code></td>
+<td>
+<p>Size of the subset of data on which to calculate the loss</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minibatch</code></td>
+<td>
+<p>Boolean indicating whether to use mini-batch updates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>Size of batch for mini-batch updates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random_W_updates</code></td>
+<td>
+<p>Boolean indicating whether or not to use random_W_updates updates
+(i.e. only update <code class="reqn">\mathbf{W}^v</code> once per mini-batch epoch)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Number specifying desired random seed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minrounds</code></td>
+<td>
+<p>Minimum number of rounds: most helpful for the mini-batch algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suppress_warnings</code></td>
+<td>
+<p>Boolean indicating whether to suppress warnings</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subsample</code></td>
+<td>
+<p>A numeric used primarily when finding an appropriate number of
+latent factors: defaults to total number of cells</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with updated <code class="reqn">\mathbf{W}^v</code> matrices, updated <code class="reqn">\mathbf{H}</code> matrix, and a vector of values for
+the loss function added to the <code>Wlist</code>, <code>H</code>, and <code>loss</code> slots, respectively
+</p>
+
+
+<h3>References</h3>
+
+<p>Cai D, He X, Wu X, Han J (2008).
+“Non-negative matrix factorization on manifold.”
+<em>Proceedings - IEEE International Conference on Data Mining, ICDM</em>, 63–72.
+ISSN 15504786, <a href="https://doi.org/10.1109/ICDM.2008.57">doi:10.1109/ICDM.2008.57</a>.
+</p>
+<p>Greene D, Cunningham P (2009).
+“A matrix factorization approach for integrating multiple data views.”
+<em>Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)</em>, <b>5781 LNAI</b>(PART 1), 423–438.
+ISSN 03029743, <a href="https://doi.org/10.1007/978-3-642-04180-8_45/COVER">doi:10.1007/978-3-642-04180-8_45/COVER</a>, <a href="https://link.springer.com/chapter/10.1007/978-3-642-04180-8_45">https://link.springer.com/chapter/10.1007/978-3-642-04180-8_45</a>.
+</p>
+<p>Eddelbuettel D, François R (2011).
+“Rcpp: Seamless R and C++ Integration.”
+<em>Journal of Statistical Software</em>, <b>40</b>(8), 1–18.
+<a href="https://doi.org/10.18637/jss.v040.i08">doi:10.18637/jss.v040.i08</a>.
+</p>
+<p>Eddelbuettel D, Sanderson C (2014).
+“RcppArmadillo: Accelerating R with high-performance C++ linear algebra.”
+<em>Computational	Statistics and Data Analysis</em>, <b>71</b>, 1054–1063.
+<a href="http://dx.doi.org/10.1016/j.csda.2013.02.005">http://dx.doi.org/10.1016/j.csda.2013.02.005</a>.
+</p>
+<p>Elyanow R, Dumitrascu B, Engelhardt BE, Raphael BJ (2020).
+“NetNMF-SC: Leveraging gene-gene interactions for imputation and dimensionality reduction in single-cell expression analysis.”
+<em>Genome Research</em>, <b>30</b>(2), 195–204.
+ISSN 15495469, <a href="https://doi.org/10.1101/gr.251603.119">doi:10.1101/gr.251603.119</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/31992614/">https://pubmed.ncbi.nlm.nih.gov/31992614/</a>.
+</p>
+<p>Le Roux J, Weniger F, Hershey JR (2015).
+“Sparse NMF: half-baked or well done?”
+Mitsubishi Electric Research Laboratories (MERL), Cambridge.
+</p>
+<p>Lee DD, Seung HS (2000).
+“Algorithms for Non-negative Matrix Factorization.”
+In Leen T, Dietterich T, Tresp V (eds.), <em>Advances in Neural Information Processing Systems</em>, volume 13.
+<a href="https://proceedings.neurips.cc/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf">https://proceedings.neurips.cc/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf</a>.
+</p>
+<p>Liu J, Wang C, Gao J, Han J (2013).
+“Multi-view clustering via joint nonnegative matrix factorization.”
+<em>Proceedings of the 2013 SIAM International Conference on Data Mining</em>, 252–260.
+<a href="https://doi.org/10.1137/1.9781611972832.28">doi:10.1137/1.9781611972832.28</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-RunjrSiCKLSNMF(SimSickleJrSmall,rounds=5)
+</code></pre>
+
+
+</div>

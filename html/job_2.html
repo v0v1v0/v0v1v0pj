@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>What to return from a job</h2>
+
+<h3>Description</h3>
+
+<p>Call this function as the last line in <code>job::job()</code> to select what is exported
+back into <code>globalenv()</code>. <code>export()</code> does nothing if called in any other context.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">export(value = "changed", file = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>What to return. One of:
+</p>
+
+<ul>
+<li> <p><code>"all"</code>: Return everything, including imports
+</p>
+</li>
+<li> <p><code>"changed"</code> (default): Return all variables that are not identical to import.
+</p>
+</li>
+<li> <p><code>"new"</code>: Return only new variable names.
+</p>
+</li>
+<li> <p><code>c(var1, var2, ...)</code>: Return these variable names.
+</p>
+</li>
+<li> <p><code>NULL</code> or <code>"none"</code>: Return nothing. This is particularly useful for unnamed code chunks.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>Name of <code>.RData</code> file to export to. If not <code>NULL</code>, nothing will be returned
+to the main session (corresponding to <code>export("none")</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Under the hood, this function merely <code>rm()</code> variables that does not match <code>value</code>.
+Because <code>job::job()</code> returns everything at the end of the script, this defines
+what is returned.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>NULL</code> invisibly.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jonas Kristoffer Lindeløv, <a href="mailto:jonas@lindeloev.dk">jonas@lindeloev.dk</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (rstudioapi::isAvailable()) {
+  a = 55
+  b = 77
+  d = 88
+  job::job({n = 11; a = 55; job::export("all")})  # export a, b, d, n
+  job::job({n = 11; a = 11; job::export("changed")})  # export a, n
+  job::job({n = 11; a = 11; job::export("new")})  # export n
+  job::job({n = 11; a = 55; job::export(c(a, d, b))})  # export a, d, b
+  job::job({n = 11; a = 55; job::export("none")})  # export nothing
+
+  # To file
+  job::job({n = 11; a = 11; job::export("changed", file = "jobresult.RData")})  # save a, n
+  jobresult = new.env()  # import to this env instead of global
+  load("jobresult.RData", envir = jobresult)
+  print(jobresult$n)
+}
+</code></pre>
+
+
+</div>

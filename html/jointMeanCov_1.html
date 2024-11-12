@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>centerDataGLSModelSelection</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Center Each Column By Subtracting Group or Global GLS Mean</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a data matrix, an inverse row covariance
+matrix, group indices (i.e. row indices for membership in
+groups one and two), and a subset of column indices indicating
+which columns should be group centered.  It returns
+a centered data matrix.  For each group centered column,
+the two group means are estimated using GLS; then the group
+one mean is subtracted from entries in group one, and the group
+two mean is subtracted from entries in group two.  For each
+globally centered column, a single global mean is estimated
+using GLS and subtracted from each entry in the column.
+In addition to returning the centered data matrix, this
+function also returns the means estimated using GLS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">centerDataGLSModelSelection(X, B.inv, group.one.indices, group.two.indices,
+  group.cen.indices)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.inv</code></td>
+<td>
+<p>an inverse row covariance matrix used in GLS</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.one.indices</code></td>
+<td>
+<p>indices of observations in group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.two.indices</code></td>
+<td>
+<p>indices of observations in group two.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.cen.indices</code></td>
+<td>
+<p>indices of columns to be group centered</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><b>Example</b>
+</p>
+<pre>n &lt;- 4
+m &lt;- 3
+X &lt;- matrix(1:12, nrow=n, ncol=m)
+# Group center the first two columns, globally center
+# the last column.
+out &lt;- centerDataGLSModelSelection(
+  X, B.inv=diag(n), group.one.indices=1:2,
+  group.two.indices=3:4,
+  group.cen.indices=1:2)
+# Display the centered data matrix
+print(out$X.cen)
+</pre>
+
+
+<h3>Value</h3>
+
+<p>Returns a centered data matrix of the same dimensions
+as the original data matrix.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>X.cen</code></td>
+<td>
+<p>Centered data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.means.gls</code></td>
+<td>
+<p>Group means estimated using GLS;
+if all columns are globally centered, then <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>global.means.gls</code></td>
+<td>
+<p>Global means estimated using GLS;
+if all columns are group centered, then <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jscore</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jscore</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the j-score between two clustering assignment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jscore(truth, pred)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>truth</code></td>
+<td>
+<p>A numeric vector of truth class labels.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>A numeric vector of predicted class labels.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns the j-score of the clustering assignment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">truth=c(1,1,1,1,1,2,2,2,2,2,3,3,3,3,3)
+pred= c(1,1,1,2,2,2,3,3,3,4,4,4,5,5,5)
+jscore(truth, pred)
+</code></pre>
+
+
+</div>

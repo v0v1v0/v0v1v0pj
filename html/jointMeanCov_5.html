@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GeminiBPath</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate Row-Row Covariance Using Gemini for a Sequence of Penalties</h2>
+
+<h3>Description</h3>
+
+<p>GeminiBPath estimates the row-row covariance, inverse
+covariance, correlation, and inverse correlation matrices
+using Gemini with a sequence of penalty parameters.
+For identifiability, the covariance factors A and B are
+scaled so that A has trace m, where m is the number of
+columns of X, A is the column-column covariance matrix,
+and B is the row-row covariance matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GeminiBPath(X, rowpen.list, penalize.diagonal = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix, of dimensions n by m.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowpen.list</code></td>
+<td>
+<p>Vector of penalty parameters, should be
+increasing (analogous to the <code>glassopath</code>
+function of the <code>glasso</code> package).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>penalize.diagonal</code></td>
+<td>
+<p>Logical indicating whether to penalize the
+off-diagonal entries of the correlation matrix.  Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>corr.B.hat</code></td>
+<td>
+<p>array of estimated correlation matrices, of
+dimension (nrow(X), nrow(X), length(rowpen.list)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corr.B.hat.inv</code></td>
+<td>
+<p>array of estimated inverse correlation
+matrices, of dimension (nrow(X), nrow(X), length(rowpen.list)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.hat</code></td>
+<td>
+<p>array of estimated covariance matrices, of
+dimension (nrow(X), nrow(X), length(rowpen.list)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.hat.inv</code></td>
+<td>
+<p>array of estimated inverse covariance
+matrices, of dimension (nrow(X), nrow(X), length(rowpen.list)).</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate a data matrix.
+n1 &lt;- 5
+n2 &lt;- 5
+n &lt;- n1 + n2
+m &lt;- 20
+X &lt;- matrix(rnorm(n * m), nrow=n, ncol=m)
+
+# Apply GeminiBPath for a sequence of penalty parameters.
+rowpen.list &lt;- sqrt(log(m) / n) * c(1, 0.5, 0.1)
+out &lt;- GeminiBPath(X, rowpen.list, penalize.diagonal=FALSE)
+
+# Display the estimated correlation matrix corresponding
+# to penalty 0.1, rounded to two decimal places.
+print(round(out$corr.B.hat[, , 3], 2))
+</code></pre>
+
+
+</div>

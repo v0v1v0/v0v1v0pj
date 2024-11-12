@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bisection.root</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find zero of a function by bracketing the zero and then using
+bisection.</h2>
+
+<h3>Description</h3>
+
+<p>Tries to find the zero of a function by using the bisection method
+(<code>uniroot</code>). To call
+<code>uniroot</code>, the zero must be bracketed by
+finding two points at which the function value has opposite
+signs. The main code in this function is a grid search to find
+such a pair of points. A geometric grid of points between
+<code>lower</code> and <code>guess</code> and also between <code>guess</code> and
+<code>upper</code>. This grid is searched for two neighbouring points
+across which the function changes sign. This brackets the root,
+and then we try to locate the root by calling
+<code>uniroot</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bisection.root(f, guess, lower, upper, nstep = 100, toler = 1e-06)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>The function whose zero is to be found. An R function
+object that takes one numeric argument and returns a numeric
+value. In an IRR application, this will be the NPV
+function. In an implied volatility application, the value will
+be the option price.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>guess</code></td>
+<td>
+<p>The starting value (guess) from which the solver
+starts searching for the root. Must be positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>The lower end of the interval within which to search
+for the root. Must be positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>The upper end of the interval within which to search
+for the root. Must be positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nstep</code></td>
+<td>
+<p>The number of steps in the grid search to bracket the
+zero. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toler</code></td>
+<td>
+<p>The criterion to determine whether a zero has been
+found. This is passed on to <code>uniroot</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The root (or NA if the method fails)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Prof. Jayanth R. Varma
+</p>
+
+
+</div>

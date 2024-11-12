@@ -1,0 +1,200 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jip_MonteCarlo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Approximate inclusion probabilities by Monte Carlo simulation</h2>
+
+<h3>Description</h3>
+
+<p>Approximate first and second-order inclusion probabilities by means of
+Monte Carlo simulation.
+Estimates are obtained as proportion of the number of occurrences of each unit or
+couple of units over the total number of replications. One unit is added to both
+numerator and  denominator to assure strict positivity of estimates (Fattorini, 2006).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jip_MonteCarlo(
+  x,
+  n,
+  replications = 1e+06,
+  design,
+  units,
+  seed = NULL,
+  as_data_frame = FALSE,
+  design_pars,
+  write_on_file = FALSE,
+  filename,
+  path,
+  by = NULL,
+  progress_bar = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>size measure or first-order inclusion probabilities, a vector or single-column data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>sample size (for fixed-size designs), or expected sample size (for Poisson sampling)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replications</code></td>
+<td>
+<p>numeric value, number of independent Monte Carlo replications</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design</code></td>
+<td>
+<p>sampling procedure to be used for sample selection.
+Either a string indicating the name of the sampling design or a function;
+see section "Details" for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>indices of units for which probabilities have to be estimated.
+Optional, if missing, estimates are produced for the whole population</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>a valid seed value for reproducibility</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>as_data_frame</code></td>
+<td>
+<p>logical, should output be in a data.frame form? if FALSE,
+a matrix is returned</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design_pars</code></td>
+<td>
+<p>only used when a function is passed to argument <code>design</code>,
+named list of parameters to pass to the sampling design function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write_on_file</code></td>
+<td>
+<p>logical, should output be written on a text file?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+<p>string indicating the name of the file to create on disk,
+must include the <code>.txt</code> extension; only applies if <code>write_on_file = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>string indicating the path to the directory where the output file
+should be created; only applies if <code>write_on_file = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>optional; integer scalar indicating every how many replications a partial output
+should be saved</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress_bar</code></td>
+<td>
+<p>logical, indicating whether a progress bar is desired</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Argument <code>design</code> accepts either a string indicating the sampling design
+to use to draw samples or a function.
+Accepted designs are "brewer", "tille", "maxEntropy", "poisson",
+"sampford", "systematic", "randomSystematic".
+The user may also pass a function as argument; such function should take as input
+the parameters passed to argument <code>design_pars</code> and return either a logical
+vector or a vector of 0s and 1s,  where <code>TRUE</code> or <code>1</code> indicate sampled
+units and <code>FALSE</code> or <code>0</code> indicate non-sample units.
+The length of such vector must be equal to the length of <code>x</code>
+if <code>units</code> is not specified, otherwise it must have the same length of <code>units</code>.
+</p>
+<p>When <code>write_on_file = TRUE</code>, specifying a value for aurgument <code>by</code>
+will produce intermediate files with approximate inclusion probabilities every
+<code>by</code> number of replications. E.g., if <code>replications=1e06</code> and <code>by=5e05</code>,
+two output files will be created: one with estimates at <code>5e05</code>
+and one at <code>1e06</code> replications.
+This option is particularly useful to assess convergence of the estimates.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix of estimated inclusion probabilities if <code>as_data_frame=FALSE</code>,
+otherwise a data.frame with three columns: the first two indicate the ids of the
+the couple of units, while the third one contains the joint-inclusion probability
+values. Please, note that when <code>as_data_frame=TRUE</code>, first-order
+inclusion probabilities are not returned.
+</p>
+
+
+<h3>References</h3>
+
+<p>Fattorini, L. 2006.
+Applying the Horvitz-Thompson criterion in complex designs: A computer-intensive
+perspective for estimating inclusion probabilities.
+Biometrika 93 (2), 269–278
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Generate population data ---
+N &lt;- 20; n&lt;-5
+
+set.seed(0)
+x &lt;- rgamma(N, scale=10, shape=5)
+y &lt;- abs( 2*x + 3.7*sqrt(x) * rnorm(N) )
+
+pik  &lt;- n * x/sum(x)
+
+### Approximate joint-inclusion probabilities
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "brewer")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "tille")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "maxEntropy")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "randomSystematic")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "systematic")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "sampford")
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "poisson")
+
+#Use an external function to draw samples
+pikl &lt;- jip_MonteCarlo(x=pik, n=n, replications=100,
+                       design = sampling::UPmidzuno, design_pars = list(pik=pik))
+#Write output on file after 50 and 100 replications
+pikl &lt;- jip_MonteCarlo(x=pik, n = n, replications = 100, design = "brewer",
+                       write_on_file = TRUE, filename="test.txt", path=tempdir(), by = 50 )
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jlmerclusterperm_setup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Initial setup for the jlmerclusterperm package</h2>
+
+<h3>Description</h3>
+
+<p>Initial setup for the jlmerclusterperm package
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jlmerclusterperm_setup(..., cache_dir = NULL, restart = TRUE, verbose = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cache_dir</code></td>
+<td>
+<p>The location to write out package cache files (namely, Manifest.toml).
+If <code>NULL</code> (default), attempts to write to the package's cache directory discovered via
+<code>R_user_dir()</code> and falls back to <code>tempdir()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>restart</code></td>
+<td>
+<p>Whether to set up a fresh Julia session, given that one is already running.
+If <code>FALSE</code> and <code>jlmerclusterperm_setup()</code> has already been called, nothing happens.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Whether to print progress and messages from Julia in the console</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>TRUE
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+options("jlmerclusterperm.nthreads" = 2)
+jlmerclusterperm_setup(cache_dir = tempdir(), verbose = FALSE)
+
+
+
+
+</code></pre>
+
+
+</div>

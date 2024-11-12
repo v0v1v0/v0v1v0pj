@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>idRef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a reference to one or more justifier objects</h2>
+
+<h3>Description</h3>
+
+<p>Create a reference to one or more justifier objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'singleJustifierElement'
+idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'multipleJustifierElements'
+idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'justifierIdRef'
+idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'character'
+idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'justifierStructured'
+idRef(x, what = NULL, silent = justifier::opts$get("silent"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The identifier(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>what</code></td>
+<td>
+<p>Optionally, what <code>x</code> is (<code>decision</code>, <code>justification</code>,
+<code>assertion</code>, or <code>source</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be silent or chatty.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The justifier id reference object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">exampleSource &lt;-
+  justifier::source("This is a book about R.");
+
+exampleAssertion &lt;- justifier::assert(
+  "R is a functional language",
+  source = justifier::idRef(exampleSource)
+);
+
+### Get and show the reference
+(sourceId &lt;- exampleAssertion$source);
+
+sourceId &lt;- as.character(sourceId);
+
+### Manually assign an identifier
+justifier::idRef(sourceId);
+
+### Repeat while specifying what we're passing
+justifier::idRef(sourceId, what="source");
+</code></pre>
+
+
+</div>

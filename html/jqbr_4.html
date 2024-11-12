@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>updateQueryBuilder</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>updateQueryBuilder</h2>
+
+<h3>Description</h3>
+
+<p>Update a queryBuilder with available methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">updateQueryBuilder(
+  inputId,
+  setFilters = NULL,
+  addFilter = NULL,
+  setRules = NULL,
+  destroy = FALSE,
+  reset = FALSE,
+  session = shiny::getDefaultReactiveDomain()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>inputId</code></td>
+<td>
+<p>inputId of builder to update.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>setFilters</code></td>
+<td>
+<p>list of lists container new filters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>addFilter</code></td>
+<td>
+<p>Named list containing <code>filter</code> and <code>position</code> elements.
+<code>filter</code> should be a list contianing a list which has the new filter to add.
+<code>position</code> can be a string of either "start" or "end" or a integer specifying the position
+to insert the rule. If position if ommited, filter will be inserted at the end.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>setRules</code></td>
+<td>
+<p>List of rules apply to the builder.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>destroy</code></td>
+<td>
+<p>bool. <code>TRUE</code> to destory filter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reset</code></td>
+<td>
+<p>bool. <code>TRUE</code> to reset filter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>The session object passed to function given
+to shinyServer. Default is getDefaultReactiveDomain().</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An updated <code>queryBuilderInput()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(jqbr)
+
+# Button to reset the build an remove all rules
+ui &lt;- fluidPage(
+  useQueryBuilder(),
+  queryBuilderInput(
+    inputId = "qb",
+    filters = list(
+      list(
+        id = "name",
+        type = "string"
+      )
+    )
+  ),
+  actionButton("reset", "Reset")
+)
+
+server &lt;- function(input, output) {
+  observeEvent(input$reset, {
+    updateQueryBuilder(
+      inputId = "qb",
+      reset = TRUE
+    )
+  })
+}
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+</code></pre>
+
+
+</div>

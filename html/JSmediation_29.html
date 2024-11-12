@@ -1,0 +1,223 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mdt_simple</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint-significance test for simple mediation</h2>
+
+<h3>Description</h3>
+
+<p>Given a data frame, a predictor (<code>IV</code>), an outcome
+(<code>DV</code>), and a mediator (<code>M</code>), conducts a joint-significant test
+for simple mediation (see Yzerbyt, Muller, Batailler, &amp; Judd, 2018).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mdt_simple(data, IV, DV, M)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame containing the variables to be used in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>IV</code></td>
+<td>
+<p>An unquoted numeric variable in the data frame which will be used
+as independent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DV</code></td>
+<td>
+<p>An unquoted numeric variable in the data frame which will be used
+as dependent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>An unquoted numeric variable in the data frame which will be used as
+mediator.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>With simple mediation analysis, one is interested in finding if the
+effect of <code class="reqn">X</code> on <code class="reqn">Y</code> goes through a third variable <code class="reqn">M</code>. The
+hypothesis behind this test is that <code class="reqn">X</code> has an effect on <code class="reqn">M</code>
+(<code class="reqn">a</code>) that has an effect on <code class="reqn">Y</code> (<code class="reqn">b</code>), meaning that <code class="reqn">X</code>
+has an indirect effect on <code class="reqn">Y</code> through <code class="reqn">M</code>.
+</p>
+<p>The total effect of <code class="reqn">X</code> on <code class="reqn">Y</code> can be described as follows:
+</p>
+<p style="text-align: center;"><code class="reqn">c = c' + ab</code>
+</p>
+
+<p>with <code class="reqn">c</code> the total effect of <code class="reqn">X</code> on <code class="reqn">Y</code>, <code class="reqn">c'</code> the direct of
+<code class="reqn">X</code> on <code class="reqn">Y</code>, and <code class="reqn">ab</code> the indirect effect of <code class="reqn">X</code> on <code class="reqn">Y</code>
+through <code class="reqn">M</code> (see Models section).
+</p>
+<p>To assess whether the indirect effect is different from the null, one has
+to assess the significance against the null for both <code class="reqn">a</code> (the effect of
+<code class="reqn">X</code> on <code class="reqn">M</code>) and <code class="reqn">b</code> (effect of <code class="reqn">M</code> on <code class="reqn">Y</code>
+controlling for the effect of <code class="reqn">X</code>). Both <code class="reqn">a</code> and <code class="reqn">b</code> need to
+be simultaneously significant for an indirect effect to be claimed (Cohen &amp;
+Cohen, 1983; Yzerbyt, Muller, Batailler, &amp; Judd, 2018).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns an object of class "<code>mediation_model</code>".
+</p>
+<p>An object of class "<code>mediation_model</code>" is a list containing at least
+the components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character string containing the type of model that has been
+conducted (e.g., <code>"simple mediation"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string containing the approach that has been
+used to conduct the mediation analysis (usually
+<code>"joint significance"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>params</code></td>
+<td>
+<p>A named list of character
+strings describing the variables used in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paths</code></td>
+<td>
+<p>A named list containing information on each relevant path of
+the mediation model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indirect_index</code></td>
+<td>
+<p>A boolean indicating whether an indirect effect index
+has been computed or not. Defaults to <code>FALSE</code>. See
+<code>add_index</code> to compute mediation index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indirect_index_infos</code></td>
+<td>
+<p>(Optional) An object of class
+<code>"indirect_index"</code>. Appears when one applies <code>add_index</code>
+to an object of class <code>"mediation_model"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>js_models</code></td>
+<td>
+<p>A list of objects of class <code>"lm"</code>. Contains every
+model relevant to joint-significance testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The original data frame that has been passed through
+<code>data</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Models</h3>
+
+<p>In a simple mediation model, three models will be fitted:
+</p>
+
+<ul>
+<li> <p><code class="reqn">Y_i = b_{10} + \mathbf{c_{11}} X_i</code>
+</p>
+</li>
+<li> <p><code class="reqn">M_i = b_{20} + \mathbf{a_{21}} X_i</code>
+</p>
+</li>
+<li> <p><code class="reqn">Y_i = b_{30} + \mathbf{c'_{31}} X_i + \mathbf{b_{32}} M_i</code>
+</p>
+</li>
+</ul>
+<p>with <code class="reqn">Y_i</code>, the outcome value for the <em>i</em>th observation,
+<code class="reqn">X_i</code>, the predictor value for the <em>i</em>th observation, and
+<code class="reqn">M_i</code>, the mediator value for the <em>i</em>th observation (Cohen &amp;
+Cohen, 1983; Yzerbyt, Muller, Batailler, &amp; Judd, 2018).
+</p>
+<p>Coefficients associated with <code class="reqn">a</code>, <code class="reqn">b</code>, <code class="reqn">c</code>, and <code class="reqn">c'</code> paths
+are respectively <code class="reqn">a_{21}</code>, <code class="reqn">b_{32}</code>,
+<code class="reqn">c_{11}</code>, and <code class="reqn">c'_{31}</code>.
+</p>
+
+
+<h3>Variable coding</h3>
+
+<p>Because joint-significance tests uses linear models
+behind the scenes, variables involved in the model have to be numeric.
+<code>mdt_simple</code> will give an error if non-numeric variables are
+specified in the model.
+</p>
+<p>To convert a dichotomous categorical variable to a numeric one, please
+refer to the <code>build_contrast</code> function.
+</p>
+
+
+<h3>References</h3>
+
+<p>Cohen, J., &amp; Cohen, P. (1983). <em>Applied multiple
+regression/correlation analysis for the behavioral sciences</em> (2nd ed).
+Hillsdale, N.J: L. Erlbaum Associates.
+</p>
+<p>Yzerbyt, V., Muller, D., Batailler, C., &amp; Judd, C. M. (2018). New
+recommendations for testing indirect effects in mediational models: The
+need to report and test component paths. <em>Journal of Personality and
+Social Psychology</em>, <em>115</em>(6), 929–943. doi: 10.1037/pspa0000132
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other mediation models: 
+<code>mdt_moderated()</code>,
+<code>mdt_within()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## fit a simple mediation model
+data(ho_et_al)
+ho_et_al$condition_c &lt;- build_contrast(ho_et_al$condition,
+                                       "Low discrimination",
+                                       "High discrimination")
+mdt_simple(data = ho_et_al,
+           IV = condition_c,
+           DV = hypodescent,
+           M = linkedfate)
+
+</code></pre>
+
+
+</div>

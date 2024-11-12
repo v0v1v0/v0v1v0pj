@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>flatten</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Flatten a justifier tree</h2>
+
+<h3>Description</h3>
+
+<p>Flattening takes all justifications, assertions, and sources from their
+parents and returns a structured justifier object containing these
+elements in separate lists, with each occurrence replaced with a reference
+to the corresponding identifier.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">flatten(x, ..., recursionLevel = 0, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'multipleJustifierElements'
+flatten(x, ..., recursionLevel = 0, silent = justifier::opts$get("silent"))
+
+## S3 method for class 'singleJustifierElement'
+flatten(x, ..., recursionLevel = 0, silent = justifier::opts$get("silent"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The justifier object or objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments are passed to the methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recursionLevel</code></td>
+<td>
+<p>The depth of the recursion</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be silent or chatty</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A flattened justifier object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Programmatically create a justification with two assertions
+### but without sources
+justifierJustification &lt;-
+  justifier::justify(
+    "Icecream will make me feel less fit",
+    assertion = c(
+      justifier::assert('Icecream is rich in energy'),
+      justifier::assert('Consuming high-energy foods makes me feel less fit')
+    ),
+    weight = -.5
+  );
+
+### Flatten it into a structures justifier object
+structuredJustification &lt;-
+  justifier::flatten(
+    justifierJustification
+  );
+
+### Check it
+str(structuredJustification, 1);
+</code></pre>
+
+
+</div>

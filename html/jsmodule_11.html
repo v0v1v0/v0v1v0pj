@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>FileRepeated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>FileRepeated: File upload server module for repeated measure analysis.</h2>
+
+<h3>Description</h3>
+
+<p>File upload server module for repeated measure analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">FileRepeated(input, output, session, nfactor.limit = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nfactor limit to include, Default: 20</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>File upload server module for repeated measure analysis.
+</p>
+
+
+<h3>Value</h3>
+
+<p>File upload server module for repeated measure analysis.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(readxl)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      FileRepeatedInput("datafile")
+    ),
+    mainPanel(
+      tabsetPanel(
+        type = "pills",
+        tabPanel("Data", DTOutput("data")),
+        tabPanel("Label", DTOutput("data_label", width = "100%"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- callModule(FileRepeated, "datafile")
+
+  output$data &lt;- renderDT({
+    data()$data
+  })
+
+  output$label &lt;- renderDT({
+    data()$label
+  })
+}
+</code></pre>
+
+
+</div>

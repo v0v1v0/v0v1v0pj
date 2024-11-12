@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MD</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Minimum Distance index MD</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Minimum Distance index MD to evaluate the performance of an ICA algorithm.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MD(W.hat, A)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>W.hat</code></td>
+<td>
+<p>The estimated square unmixing matrix W.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>The true square mixing matrix A.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p style="text-align: center;"><code class="reqn">MD(\hat{W},A)=\frac{1}{\sqrt{p-1}} \inf_{P D}{||PD \hat{W} A-I||,}</code>
+</p>
+
+<p>where <code class="reqn">P</code> is a permutation matrix and <code class="reqn">D</code> a diagonal matrix with nonzero diagonal entries.
+</p>
+<p>The step that minimizes the index of the set over all permutation matrix can be expressed as a linear sum assignment problem (LSAP)
+for which we use as solver the Hungarian method implemented as <code>solve_LASP</code> in the <span class="pkg">clue</span> package.
+</p>
+<p>Note that this function assumes the ICA model is <code class="reqn">X = S A'</code>, as is assumed by <code>JADE</code> and <code>ics</code>. However <code>fastICA</code> and 
+<code>PearsonICA</code> assume <code class="reqn">X = S A</code>. Therefore matrices from those functions have to be transposed first.
+</p>
+<p>The MD index is scaled in such a way, that it takes a value between 0 and 1. And 0 corresponds to an optimal separation.  
+</p>
+
+
+<h3>Value</h3>
+
+<p>The value of the MD index.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Ilmonen, P., Nordhausen, K., Oja, H. and Ollila, E. (2010), A New Performance Index for ICA: Properties, Computation and Asymptotic Analysis. 
+In Vigneron, V., Zarzoso, V., Moreau, E., Gribonval, R. and Vincent, E. (editors) <em>Latent Variable Analysis and Signal Separation</em>, 229–236, Springer.</cite>
+</p>
+<p><cite>Nordhausen, K., Ollila, E. and Oja, H. (2011), On the Performance Indices of ICA and Blind Source Separation. In the Proceedings of <em>2011 IEEE 12th International Workshop on Signal Processing Advances in Wireless Communications (SPAWC 2011)</em>, 486–490.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ComonGAP</code>, <code>SIR</code>, <code>amari.error</code>, <code>solve_LSAP</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">S &lt;- cbind(rt(1000, 4), rnorm(1000), runif(1000))
+A &lt;- matrix(rnorm(9), ncol = 3)
+X &lt;- S %*% t(A)
+
+W.hat &lt;- JADE(X, 3)$W
+MD(W.hat, A)
+</code></pre>
+
+
+</div>

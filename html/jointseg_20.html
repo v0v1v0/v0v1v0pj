@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modelSelection</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Model selection</h2>
+
+<h3>Description</h3>
+
+<p>Select the best number of breakpoints
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">modelSelection(rse, n, c = 2.5, lambdas = NULL, method = c("Birge",
+  "Lebarbier"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rse</code></td>
+<td>
+<p>RSE as output by <code>pruneByDP</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Length of the profile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+<p>Parameter for the model selection</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdas</code></td>
+<td>
+<p>A list of candidate values for the calibration of the penalty</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Method to calibrate the constant in the penalty for model
+selection</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is not intended to be called directly, but implicitly through
+<code>jointSeg</code> or <code>PSSeg</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements </p>
+<dl>
+<dt>kbest</dt>
+<dd>
+<p>the best number of breakpoints</p>
+</dd> <dt>lambda</dt>
+<dd>
+<p>A numerical value, the result of an internal model selection function</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Lebarbier, E. (2005). Detecting multiple change-points in the
+mean of Gaussian process by model selection. Signal processing, 85(4),
+717-736
+</p>
+<p>Birg\'e, L. (2001). Gaussian model selection. J.Eur Math. Soc, 3(3):203-268
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointSeg</code>
+</p>
+<p><code>PSSeg</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=1)
+sim &lt;- getCopyNumberDataByResampling(1e4, 5, minLength=100, regData=affyDat)
+Y &lt;- as.matrix(sim$profile[, "c"])
+
+## Find candidate breakpoints
+K &lt;- 50
+resRBS &lt;- segmentByRBS(Y, K=K)
+## Prune candidate breakpoints
+resDP &lt;- pruneByDP(Y, candCP=resRBS$bkp)
+selectedModel &lt;- modelSelection(rse=resDP$rse, n=nrow(Y), method="Lebarbier")
+str(selectedModel)
+
+## breakpoints of the best model
+bestBkp &lt;- resDP$bkp[[selectedModel$kbest]]
+print(bestBkp)
+
+## truth
+print(sim$bkp)
+
+## Note that all of the above can be done directly using 'PSSeg'
+res &lt;- PSSeg(sim$profile, method="RBS", stat="c", K=K)
+##  stopifnot(identical(res$bestBkp, bestBkp))
+</code></pre>
+
+
+</div>

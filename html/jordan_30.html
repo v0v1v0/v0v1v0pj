@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>id</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multiplicative identities</h2>
+
+<h3>Description</h3>
+
+<p>Multiplying a jordan object by the <dfn>identity</dfn> leaves it unchanged.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">as.identity(x)
+rsm_id(n,d)
+chm_id(n,d)
+qhm_id(n,d)
+albert_id(n)
+spin_id(n=3,d=5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Length of vector to be created</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Dimensionality</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>In function <code>as.identity()</code>, a jordan object.  Return
+value will be a jordan object of the same dimensionality but entries
+equal to the identity</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The identity object in the matrix-based classes (<code>jordan_matrix</code>)
+is simply the identity matrix.  Function <code>as.identity()</code> takes an
+object of any of the five types (<code>rsm</code>, <code>chm</code>, <code>qhm</code>,
+<code>spin</code>, or <code>albert</code>) and returns a vector of the same length
+and type, but comprising identity elements.
+</p>
+<p>Class <code>spin</code> has identity
+<code class="reqn">\left(1,\mathbf{0}\right)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A jordan object is returned.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+x &lt;- as.albert(matrix(sample(1:99,81,replace=TRUE),nrow=27))
+I &lt;- as.identity(x)
+x == x*I  # should be TRUE
+
+
+rsm_id(6,3)
+
+
+
+
+</code></pre>
+
+
+</div>

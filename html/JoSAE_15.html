@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sae.al.f</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Area-level small area estimation under heteroscedasticity or homoscedasticity.
+</h2>
+
+<h3>Description</h3>
+
+<p>Area-level small area estimation, possibly under
+heteroscedasticity. Assumes SRS within domains. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sae.al.f(domain.id, n.i, psi.i, formula, data, b.i, type = "RE", verbose
+= F, iter = 100, a.conv = 0.001,...) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>domain.id</code></td>
+<td>
+
+<p>Vector of unique domain IDs corresponding to data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.i</code></td>
+<td>
+
+<p>Vector of number of samples within each domain i, corresponding to data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psi.i</code></td>
+<td>
+
+<p>Vector of variances of the direct estimator within each domain i, corresponding to data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>Formula for fixed effects.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>Domain-level data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b.i</code></td>
+<td>
+
+<p>Parameter for modeling heteroscedasticity.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Method for estimating variance parameters. Currently, only option is
+"RE" for REML.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+
+<p>Boolean. Should more info be printed?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+
+<p>Max number of iterations. Default is 100.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a.conv</code></td>
+<td>
+
+<p>Threshold for accepting convergency. Default is 0.001
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Parameters forwarded to other functions.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>SRS (simple random sampling) is assumed within each domain. If the
+direct estimator is not based on SRS, RV components of the results do
+not make sense.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>results </code></td>
+<td>
+<p>Area-level estimates and associated standard errors
+(SE). <code>FH</code> Fay-Harriot estimate (the standard area-level
+estimator), <code>RV</code> Rivest-Vandal estimate, considering uncertainty
+in variance parameters. <code>bias.sig.sq.v</code> Bias in random effect
+variance. <code>synth</code> Synthetic estimate. <code>trans.resid.v.i</code>
+Transformed residuals. The other parameters are details and are named
+as in the reference.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta.hat </code></td>
+<td>
+<p>Estimated fixed-effects parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>des.mat </code></td>
+<td>
+<p>Design matrix.</p>
+</td>
+</tr>
+</table>
+<p>Other list elements have descriptive names.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Johannes Breidenbach
+</p>
+
+
+<h3>References</h3>
+
+<p>Breidenbach et al. (2018) Unit-level and area-level small area
+estimation under heteroscedasticity using digital aerial photogrammetry
+data. Remote Sensing of Environment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(nlme)
+#sample data
+data(ulal.sub.samp.dat)
+#domain means of x
+data(ulal.sub.dom.dat)
+
+#The easiest way of getting the data into the right format
+#is to fit a unit-level model first.
+res &lt;-
+    sae.ul.f(samp.data=ulal.sub.samp.dat,
+             population.data=ulal.sub.dom.dat,
+             k.ij=ulal.sub.samp.dat[,"k.ij.one"],
+             formula=w.VMPRHA ~ elev.mean + elev.mean.sq,
+             domain.col="stand.ID",
+             sample.id.col="plot.ID",
+             neg.sfrac=TRUE)
+
+#data for AL
+dat.al &lt;- merge(res$data$samp.agg.X.pop[,c("domain.id","n.i","w.VMPRHA.ybar.i","elev.mean.X.pop")],
+                res$est$se[,c("domain.id","se.srs")])
+
+#area-level SAE under homoscedasticity
+res &lt;- sae.al.f(
+    domain.id=dat.al$domain.id , n.i=dat.al$n.i , psi.i=dat.al$se.srs^2
+    , formula=w.VMPRHA.ybar.i ~ elev.mean.X.pop , data=dat.al
+    , b.i=rep(1, nrow(dat.al))
+    , type="RE")
+
+#area-level SAE heteroskedasticity
+bi.par &lt;- 0.39#select b.i parameter
+#helper function
+range01 &lt;- function(x, ...){(x - min(x, ...)) /
+                                (max(x, ...) - min(x, ...))}
+res &lt;- sae.al.f(
+    domain.id=dat.al$domain.id , n.i=dat.al$n.i , psi.i=dat.al$se.srs^2
+    , formula=w.VMPRHA.ybar.i ~ elev.mean.X.pop, data=dat.al
+    , b.i=range01(dat.al$elev.mean.X.pop)+bi.par
+    , type="RE")
+
+</code></pre>
+
+
+</div>

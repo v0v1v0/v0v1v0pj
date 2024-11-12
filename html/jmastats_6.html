@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nearest_station</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find out neighborhood stations</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="../help/figures/lifecycle-stable.svg" alt="[Stable]"></a>
+</p>
+<p>Return the nearest stations information to the given coordinates.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nearest_station(longitude, latitude, geometry = NULL)
+
+pick_neighbor_stations(
+  longitude,
+  latitude,
+  distance = 1,
+  .unit = "m",
+  geometry = NULL
+)
+
+pick_neighbor_tide_stations(
+  year,
+  longitude,
+  latitude,
+  distance = 100,
+  .unit = "km",
+  geometry = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>longitude</code></td>
+<td>
+<p>Longitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>latitude</code></td>
+<td>
+<p>Latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>geometry</code></td>
+<td>
+<p>XY sf::sf object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distance</code></td>
+<td>
+<p>Distance from station to station to adjustment.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.unit</code></td>
+<td>
+<p>Unit used for extraction from the point of interest. Default <em>m</em> (meters).
+This value is passed to units::as_units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>For tide level data. Restricted to the observation points in the target year.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>nearest_station()</code>: Return single station data.
+</p>
+</li>
+<li> <p><code>pick_neighbor_stations()</code>: Pick-up neighbourhood stations.
+</p>
+</li>
+<li> <p><code>pick_neighbor_tide_stations()</code>: Pick-up neighbourhood tidal observation stations.
+Filter by distance from target point.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>an object of class <code>sf</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">nearest_station(142.9313, 43.70417)
+
+pick_neighbor_stations(140.10, 36.08, 300000)
+
+d &lt;-
+  pick_neighbor_stations(140.10, 36.08, 30, "km")
+pick_neighbor_stations(geometry = sf::st_point(c(140.1833, 36.23333)),
+                       distance = 100)
+
+pick_neighbor_tide_stations(longitude = 133.4375, latitude = 34.45833,
+                            year = 2020,
+                            distance = 100, .unit = "km")
+</code></pre>
+
+
+</div>

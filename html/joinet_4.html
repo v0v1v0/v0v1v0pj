@@ -1,0 +1,214 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joinet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multivariate Elastic Net Regression</h2>
+
+<h3>Description</h3>
+
+<p>Implements multivariate elastic net regression.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joinet(
+  Y,
+  X,
+  family = "gaussian",
+  nfolds = 10,
+  foldid = NULL,
+  type.measure = "deviance",
+  alpha.base = 1,
+  alpha.meta = 1,
+  weight = NULL,
+  sign = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>outputs<strong>:</strong>
+numeric matrix with <code class="reqn">n</code> rows (samples)
+and <code class="reqn">q</code> columns (outputs)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>inputs<strong>:</strong>
+numeric matrix with <code class="reqn">n</code> rows (samples)
+and <code class="reqn">p</code> columns (inputs)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>distribution<strong>:</strong>
+vector of length <code class="reqn">1</code> or <code class="reqn">q</code> with entries
+<code>"gaussian"</code>, <code>"binomial"</code> or <code>"poisson"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfolds</code></td>
+<td>
+<p>number of folds</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foldid</code></td>
+<td>
+<p>fold identifiers<strong>:</strong>
+vector of length <code class="reqn">n</code> with entries between <code class="reqn">1</code> and <code>nfolds</code>;
+or <code>NULL</code> (balance)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type.measure</code></td>
+<td>
+<p>loss function<strong>:</strong>
+vector of length <code class="reqn">1</code> or <code class="reqn">q</code> with entries
+<code>"deviance"</code>, <code>"class"</code>, <code>"mse"</code> or <code>"mae"</code>
+(see <code>cv.glmnet</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha.base</code></td>
+<td>
+<p>elastic net mixing parameter for base learners<strong>:</strong>
+numeric between <code class="reqn">0</code> (ridge) and <code class="reqn">1</code> (lasso)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha.meta</code></td>
+<td>
+<p>elastic net mixing parameter for meta learners<strong>:</strong>
+numeric between <code class="reqn">0</code> (ridge) and <code class="reqn">1</code> (lasso)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+<p>input-output relations<strong>:</strong>
+matrix with <code class="reqn">p</code> rows (inputs) and <code class="reqn">q</code> columns (outputs)
+with entries <code class="reqn">0</code> (exclude) and <code class="reqn">1</code> (include),
+or <code>NULL</code> (see details)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sign</code></td>
+<td>
+<p>output-output relations<strong>:</strong>
+matrix with <code class="reqn">q</code> rows ("meta-inputs") and <code class="reqn">q</code> columns (outputs), 
+with entries <code class="reqn">-1</code> (negative), <code class="reqn">0</code> (none),
+<code class="reqn">1</code> (positive) and <code class="reqn">NA</code> (any),
+or <code>NULL</code> (see details)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to <code>glmnet</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><strong>input-output relations:</strong>
+In this matrix with <code class="reqn">p</code> rows and <code class="reqn">q</code> columns,
+the entry in the <code class="reqn">j</code>th row and the <code class="reqn">k</code>th column
+indicates whether the <code class="reqn">j</code>th input may be used for 
+modelling the <code class="reqn">k</code>th output
+(where <code class="reqn">0</code> means "exclude" and
+<code class="reqn">1</code> means "include").
+By default (<code>sign=NULL</code>),
+all entries are set to <code class="reqn">1</code>.
+</p>
+<p><strong>output-output relations:</strong>
+In this matrix with <code class="reqn">q</code> rows and <code class="reqn">q</code> columns,
+the entry in the <code class="reqn">l</code>th row and the <code class="reqn">k</code>th column
+indicates how the <code class="reqn">l</code>th output may be used for
+modelling the <code class="reqn">k</code>th output
+(where <code class="reqn">-1</code> means negative effect,
+<code class="reqn">0</code> means no effect,
+<code class="reqn">1</code> means positive effect,
+and <code class="reqn">NA</code> means any effect).
+</p>
+<p>There are three short-cuts for filling up this matrix:
+(1) <code>sign=1</code> sets all entries to <code class="reqn">1</code> (non-negativity constraints).
+This is useful if all pairs of outcomes
+are assumed to be <em>positively</em> correlated
+(potentially after changing the sign of some outcomes).
+(2) <code>code=NA</code> sets all diagonal entries to <code class="reqn">1</code>
+and all off-diagonal entries to <code>NA</code> (no constraints).
+(3) <code>sign=NULL</code> uses Spearman correlation to determine the entries,
+with <code class="reqn">-1</code> for significant negative, <code class="reqn">0</code> for insignificant,
+<code class="reqn">1</code> for significant positive correlations.
+</p>
+<p><strong>elastic net:</strong>
+<code>alpha.base</code> controls input-output effects,
+<code>alpha.meta</code> controls output-output effects;
+lasso renders sparse models (<code>alpha</code><code class="reqn">=1</code>),
+ridge renders dense models (<code>alpha</code><code class="reqn">=0</code>)
+</p>
+
+
+<h3>Value</h3>
+
+<p>This function returns an object of class <code>joinet</code>.
+Available methods include
+<code>predict</code>,
+<code>coef</code>,
+and <code>weights</code>.
+The slots <code>base</code> and <code>meta</code> each contain
+<code class="reqn">q</code> <code>cv.glmnet</code>-like objects.
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://orcid.org/0000-0001-6498-4801">Armin Rauschenberger</a>
+and
+<a href="https://orcid.org/0000-0003-3977-7469">Enrico Glaab</a>
+(2021)
+"Predicting correlated outcomes from molecular data".
+<em>Bioinformatics</em> 37(21):3889–3895.
+<a href="https://doi.org/10.1093/bioinformatics/btab576">doi:10.1093/bioinformatics/btab576</a>.
+(Click
+<a href="https://orbilu.uni.lu/bitstream/10993/47788/1/joinet.pdf">here</a>
+to access PDF.)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cv.joinet</code>, vignette
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=rowSums(X[,1:5])))
+object &lt;- joinet(Y=Y,X=X)
+## End(Not run)
+
+## Not run: 
+browseVignettes("joinet") # further examples
+## End(Not run)
+
+</code></pre>
+
+
+</div>

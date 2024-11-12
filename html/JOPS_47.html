@@ -1,0 +1,280 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ps2DGLM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Two-dimensional smoothing of scattered normal or non-normal (GLM)
+responses using tensor product P-splines.</h2>
+
+<h3>Description</h3>
+
+<p><code>ps2DGLM</code> is used to smooth scattered
+normal or non-normal responses, with aniosotripic
+penalization of tensor product P-splines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ps2DGLM(
+  Data,
+  Pars = rbind(c(min(Data[, 1]), max(Data[, 1]), 10, 3, 1, 2), c(min(Data[, 2]),
+    max(Data[, 2]), 10, 3, 1, 2)),
+  ridge_adj = 0,
+  XYpred = Data[, 1:2],
+  z_predicted = NULL,
+  se_pred = 2,
+  family = "gaussian",
+  link = "default",
+  m_binomial = rep(1, nrow(Data)),
+  wts = rep(1, nrow(Data)),
+  r_gamma = rep(1, nrow(Data))
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Data</code></td>
+<td>
+<p>a matrix of 3 columns <code>x, y, z</code> of equal length;
+the response is <code>z</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pars</code></td>
+<td>
+<p>a matrix of 2 rows, where the first and second row
+sets the P-spline paramters for <code>x</code> and <code>y</code>, respectively.
+Each row consists of: <code>min max nseg bdeg lambda pord</code>.
+The <code>min</code> and <code>max</code> set the ranges, <code>nseg</code> (default 10)
+is the number of evenly spaced segments between <code>min</code> and <code>max</code>,
+<code>bdeg</code> is the degree of the basis (default 3 for cubic),
+<code>lambda</code> is the (positive) tuning parameter for the penalty (default 1),
+<code>pord</code> is the number for the order of the difference penalty (default 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ridge_adj</code></td>
+<td>
+<p>a ridge penalty tuning parameter, usually set to small value, e.g. <code>1e-8</code> to stabilize estimation (default 0).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XYpred</code></td>
+<td>
+<p>a matrix with two columns <code>(x, y)</code> that give the coordinates
+of (future) prediction; the default is the data locations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>z_predicted</code></td>
+<td>
+<p>a vector of responses associated with <code>XYpred</code>, useful for external validation with <code>family = "gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se_pred</code></td>
+<td>
+<p>a scalar, default <code>se_pred = 2</code> to produce se surfaces,
+set <code>se_pred</code> &gt; 0. Used for CIs for <code>XYpred</code> locations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p><code>"gaussian", "binomial", "poisson", "Gamma"</code> (quotes needed). Default is "gaussian".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function, one of <code>"identity"</code>, <code>"log"</code>, <code>"sqrt"</code>,
+<code>"logit"</code>, <code>"probit"</code>, <code>"cloglog"</code>, <code>"loglog"</code>, <code>"reciprocal"</code>;
+quotes are needed (default <code>"identity"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m_binomial</code></td>
+<td>
+<p>vector of binomial trials, default is vector of ones with <code>family = "binomial"</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>non-negative weights, which can be zero (default ones).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_gamma</code></td>
+<td>
+<p>gamma scale parameter, default is vector ones with <code>family = "Gamma"</code>, NULL otherwise.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Support functions needed: <code>pspline_fitter</code>, <code>bbase</code>, and <code>pspline_2dchecker</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pcoef</code></td>
+<td>
+<p>a vector of length <code>(Pars[1,3]+Pars[1,4])*(Pars[2,3]+Pars[2,4])</code>
+of (unfolded) estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>a vector of <code>length(z)</code> of smooth estimated means (at the <code>x,y</code> locations).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p>the deviance of fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff_df</code></td>
+<td>
+<p>the approximate effective dimension of fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p>AIC.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_resid</code></td>
+<td>
+<p>approximate df residual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>leave-one-out standard error prediction, when <code>family = 'gaussian'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv_predicted</code></td>
+<td>
+<p>standard error prediction for <code>y_predict</code>, when <code>family = 'gaussian'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>avediff_pred</code></td>
+<td>
+<p>mean absolute difference prediction, when <code>family = 'gaussian'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pars</code></td>
+<td>
+<p>the design and tuning parameters (see arguments above).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dispersion_parm</code></td>
+<td>
+<p>estimate of dispersion, <code>dev/df_resid</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>summary_predicted</code></td>
+<td>
+<p>inverse link prediction vectors, and <code>se_pred</code> bands.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta_predicted</code></td>
+<td>
+<p>estimated linear predictor of <code>length(z)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>press_mu</code></td>
+<td>
+<p>leave-one-out prediction of mean, when <code>family = 'gaussian'</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_percent_correct</code></td>
+<td>
+<p>percent correct classification based on 0.5 cut-off (when <code>family = "binomial"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Data</code></td>
+<td>
+<p>a matrix of 3 columns <code>x, y, z</code> of equal length;
+the response is <code>z</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>the tensor product B-spline basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qr</code></td>
+<td>
+<p>the Q-R of the model.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>ps2DNormal
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(fields)
+library(JOPS)
+# Extract data
+library(rpart)
+Kyphosis &lt;- kyphosis$Kyphosis
+Age &lt;- kyphosis$Age
+Start &lt;- kyphosis$Start
+y &lt;- 1 * (Kyphosis == "present") # make y 0/1
+fit &lt;- ps2DGLM(
+  Data = cbind(Start, Age, y),
+  Pars = rbind(c(1, 18, 10, 3, .1, 2), c(1, 206, 10, 3, .1, 2)),
+  family = "binomial", link = "logit")
+plot(fit, xlab = "Start", ylab = "Age")
+#title(main = "Probability of Kyphosis")
+</code></pre>
+
+
+</div>

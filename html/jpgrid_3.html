@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coords</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conversion between grid square codes and coordinates (longitude and latitude)</h2>
+
+<h3>Description</h3>
+
+<p>Conversion between grid square codes and coordinates (longitude and latitude)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coords_to_grid(X, Y, grid_size)
+
+grid_to_coords(grid, center = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A numeric vector of longitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A numeric vector of latitude.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_size</code></td>
+<td>
+<p>A grid size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>A <code>grid</code> class vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Should the center point of the grid be returned? Otherwise the
+end points will be returned. <code>TRUE</code> by default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>coords_to_grid()</code> returns a <code>grid</code> vector.
+</p>
+<p><code>grid_to_coords()</code> returns a <code>tbl_df</code>.
+</p>
+
+
+</div>

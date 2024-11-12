@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitted.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract <code>mjoint</code> fitted values</h2>
+
+<h3>Description</h3>
+
+<p>The fitted values at level <em>i</em> are obtained by adding
+together the population fitted values (based only on the fixed effects
+estimates) and the estimated contributions of the random effects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+fitted(object, level = 0, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>an optional integer giving the level of grouping to be used in
+extracting the fitted values from object. Level values increase from outermost
+to innermost grouping, with level 0 corresponding to the population
+fitted values and level 1 corresponding to subject-specific fitted values Defaults
+to level 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>list</code> of length <em>K</em> with each element a vector of
+fitted values for the <em>k</em>-th longitudinal outcome.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Pinheiro JC, Bates DM. <em>Mixed-Effects Models in S and S-PLUS.</em> New York:
+Springer Verlag; 2000.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mjoint</code>, <code>residuals.mjoint</code>
+</p>
+
+
+</div>

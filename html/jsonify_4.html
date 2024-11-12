@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>minify_json</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Minify Json</h2>
+
+<h3>Description</h3>
+
+<p>Removes indentiation from a JSON string
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">minify_json(json, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>json</code></td>
+<td>
+<p>string of JSON</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other argments passed to to_json</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+df &lt;- data.frame(id = 1:10, val = rnorm(10))
+js &lt;- to_json( df )
+jsp &lt;- pretty_json(js)
+minify_json( jsp )
+
+</code></pre>
+
+
+</div>

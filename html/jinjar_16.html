@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>render</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Render a template</h2>
+
+<h3>Description</h3>
+
+<p>Data is passed to a template to render the final document.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">render(.x, ...)
+
+## S3 method for class 'character'
+render(.x, ..., .config = default_config())
+
+## S3 method for class 'fs_path'
+render(.x, ..., .config = default_config())
+
+## S3 method for class 'jinjar_template'
+render(.x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.x</code></td>
+<td>
+<p>The template. Choices:
+</p>
+
+<ul>
+<li>
+<p> A template string.
+</p>
+</li>
+<li>
+<p> A path to a template file (use <code>fs::path()</code>).
+</p>
+</li>
+<li>
+<p> A parsed template (use <code>parse_template()</code>).
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>&lt;<code>dynamic-dots</code>&gt; Data passed to the template.
+</p>
+<p>By default, a length-1 vector is passed as a scalar variable. Use <code>I()</code> to
+declare that a vector should be passed as an array variable. This preserves
+a length-1 vector as an array.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.config</code></td>
+<td>
+<p>The engine configuration. The default matches Jinja defaults,
+but you can use <code>jinjar_config()</code> to customize things like syntax delimiters,
+whitespace control, and loading auxiliary templates.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>String containing rendered template.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>parse_template()</code> supports parsing a template once and rendering multiple
+times with different data variables.
+</p>
+</li>
+<li> <p><code>vignette("template-syntax")</code> describes how to write templates.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># pass data as arguments
+render("Hello {{ name }}!", name = "world")
+
+# pass length-1 vector as array
+render("Hello {{ name.0 }}!", name = I("world"))
+
+# pass data programmatically
+params &lt;- list(name = "world")
+render("Hello {{ name }}!", !!!params)
+
+# render template file
+## Not run: 
+render(fs::path("template.txt"), name = "world")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

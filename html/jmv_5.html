@@ -1,0 +1,379 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anovaRM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Repeated Measures ANOVA</h2>
+
+<h3>Description</h3>
+
+<p>The Repeated Measures ANOVA is used to explore the relationship
+between a continuous dependent variable and one or more categorical
+explanatory variables, where one or more of the explanatory variables
+are 'within subjects' (where multiple measurements are from the same
+subject). Additionally, this analysis allows the inclusion of
+covariates, allowing for repeated measures ANCOVAs as well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anovaRM(data, rm = list(list(label = "RM Factor 1", levels =
+  list("Level 1", "Level 2"))), rmCells = NULL, bs = NULL,
+  cov = NULL, effectSize = NULL, depLabel = "Dependent",
+  rmTerms = NULL, bsTerms = NULL, ss = "3", spherTests = FALSE,
+  spherCorr = list("none"), leveneTest = FALSE, qq = FALSE,
+  contrasts = NULL, postHoc = NULL, postHocCorr = list("tukey"),
+  emMeans = list(list()), emmPlots = TRUE, emmTables = FALSE,
+  emmWeights = TRUE, ciWidthEmm = 95, emmPlotData = FALSE,
+  emmPlotError = "ci", groupSumm = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rm</code></td>
+<td>
+<p>a list of lists, where each list describes the <code>label</code> (as a
+string) and the <code>levels</code> (as vector of strings) of a particular
+repeated measures factor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmCells</code></td>
+<td>
+<p>a list of lists, where each list decribes a repeated measure
+(as a string) from <code>data</code> defined as <code>measure</code> and the particular
+combination of levels from <code>rm</code> that it belongs to (as a vector of
+strings) defined as <code>cell</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bs</code></td>
+<td>
+<p>a vector of strings naming the between subjects factors from
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+<p>a vector of strings naming the covariates from <code>data</code>.
+Variables must be numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effectSize</code></td>
+<td>
+<p>one or more of <code>'eta'</code>, <code>'partEta'</code>, or
+<code>'omega'</code>; use eta², partial eta², and omega² effect sizes,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depLabel</code></td>
+<td>
+<p>a string (default: 'Dependent') describing the label used
+for the dependent variable throughout the analysis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmTerms</code></td>
+<td>
+<p>a list of character vectors describing the repeated measures
+terms to go into the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bsTerms</code></td>
+<td>
+<p>a list of character vectors describing the between subjects
+terms to go into the model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ss</code></td>
+<td>
+<p><code>'2'</code> or <code>'3'</code> (default), the sum of squares to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spherTests</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform sphericity
+tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spherCorr</code></td>
+<td>
+<p>one or more of <code>'none'</code> (default), <code>'GG'</code>, or
+HF; use no p-value correction, the Greenhouse-Geisser p-value
+correction, and the Huynh-Feldt p-value correction for shericity,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>leveneTest</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), test for
+homogeneity of variances (i.e., Levene's test)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+<p>in development</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHoc</code></td>
+<td>
+<p>a list of character vectors describing the post-hoc tests
+that need to be computed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHocCorr</code></td>
+<td>
+<p>one or more of <code>'none'</code>, <code>'tukey'</code> (default),
+<code>'scheffe'</code>, <code>'bonf'</code>, or <code>'holm'</code>; use no, Tukey, Scheffe,
+Bonferroni and Holm posthoc corrections, respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emMeans</code></td>
+<td>
+<p>a list of lists specifying the variables for which the
+estimated marginal means need to be calculate. Supports up to three
+variables per term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlots</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimated
+marginal means plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmTables</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide estimated
+marginal means tables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmWeights</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, weigh each cell
+equally or weigh them according to the cell frequency</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthEmm</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlotData</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), plot the data on
+top of the marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlotError</code></td>
+<td>
+<p><code>'none'</code>, <code>'ci'</code> (default), or <code>'se'</code>.
+Use no error bars, use confidence intervals, or use standard errors on the
+marginal mean plots, respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>groupSumm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), report a summary of
+the different groups</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This analysis requires that the data be in 'wide format', where each
+row represents a subject (as opposed to long format, where each
+measurement of the dependent variable is represented as a row).
+</p>
+<p>A non-parametric equivalent of the repeated measures ANOVA also exists;
+the Friedman test. However, it has the limitation of only being able to
+test a single factor.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$rmTable</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$bsTable</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$spherTable</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$leveneTable</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$qq</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a q-q plot </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$contrasts</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$postHoc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$emm</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of the estimated marginal means plots + tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$groupSummary</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a summary of the groups </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$rmTable$asDF</code>
+</p>
+<p><code>as.data.frame(results$rmTable)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+data('bugs', package = 'jmv')
+
+anovaRM(
+    data = bugs,
+    rm = list(
+        list(
+            label = 'Frightening',
+            levels = c('Low', 'High'))),
+    rmCells = list(
+        list(
+            measure = 'LDLF',
+            cell = 'Low'),
+        list(
+            measure = 'LDHF',
+            cell = 'High')),
+    rmTerms = list(
+        'Frightening'))
+
+#
+#  REPEATED MEASURES ANOVA
+#
+#  Within Subjects Effects
+#  -----------------------------------------------------------------------
+#                  Sum of Squares    df    Mean Square    F       p
+#  -----------------------------------------------------------------------
+#    Frightening              126     1         126.11    44.2    &lt; .001
+#    Residual                 257    90           2.85
+#  -----------------------------------------------------------------------
+#    Note. Type 3 Sums of Squares
+#
+#
+#
+#  Between Subjects Effects
+#  -----------------------------------------------------------------
+#                Sum of Squares    df    Mean Square    F    p
+#  -----------------------------------------------------------------
+#    Residual               954    90           10.6
+#  -----------------------------------------------------------------
+#    Note. Type 3 Sums of Squares
+#
+
+</code></pre>
+
+
+</div>

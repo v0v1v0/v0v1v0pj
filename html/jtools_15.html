@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>%not%</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subsetting operators</h2>
+
+<h3>Description</h3>
+
+<p><code style="white-space: pre;">⁠%just%⁠</code> and <code style="white-space: pre;">⁠%not%⁠</code> are subsetting convenience functions
+for situations when you would do <code>x[x %in% y]</code> or <code>x[x %nin% y]</code>. See
+details for behavior when <code>x</code> is a data frame or matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">x %not% y
+
+x %not% y &lt;- value
+
+x %just% y
+
+x %just% y &lt;- value
+
+## Default S3 method:
+x %not% y
+
+## Default S3 method:
+x %not% y &lt;- value
+
+## S3 method for class 'data.frame'
+x %not% y
+
+## S3 method for class 'data.frame'
+x %not% y &lt;- value
+
+## S3 method for class 'matrix'
+x %not% y
+
+## S3 method for class 'matrix'
+x %not% y &lt;- value
+
+## S3 method for class 'list'
+x %not% y
+
+## S3 method for class 'list'
+x %not% y &lt;- value
+
+## Default S3 method:
+x %just% y
+
+## Default S3 method:
+x %just% y &lt;- value
+
+## S3 method for class 'data.frame'
+x %just% y
+
+## S3 method for class 'data.frame'
+x %just% y &lt;- value
+
+## S3 method for class 'matrix'
+x %just% y
+
+## S3 method for class 'matrix'
+x %just% y &lt;- value
+
+## S3 method for class 'list'
+x %just% y
+
+## S3 method for class 'list'
+x %just% y &lt;- value
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Object to subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>List of items to include if they are/aren't in <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>The object(s) to assign to the subsetted <code>x</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The behavior of <code style="white-space: pre;">⁠%not%⁠</code> and <code style="white-space: pre;">⁠%just%⁠</code> are different when you're subsetting
+data frames or matrices. The subset <code>y</code> in this case is interpreted as
+<strong>column</strong> names or indices.
+</p>
+<p>You can also make assignments to the subset in the same way you could if
+subsetting with brackets.
+</p>
+
+
+<h3>Value</h3>
+
+<p>All of <code>x</code> that are in <code>y</code> (<code style="white-space: pre;">⁠%just%⁠</code>) or all of <code>x</code> that are not in
+<code>y</code> (<code style="white-space: pre;">⁠%not%⁠</code>).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+<p>Other subsetters: 
+<code>%nin%()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ x &lt;- 1:5
+ y &lt;- 3:8
+ 
+ x %just% y # 3 4 5
+ x %not% y # 1 2
+
+ # Assignment works too
+ x %just% y &lt;- NA # 1 2 NA NA NA
+ x %not% y &lt;- NA # NA NA 3 4 5
+ 
+ mtcars %just% c("mpg", "qsec", "cyl") # keeps only columns with those names
+ mtcars %not% 1:5 # drops columns 1 through 5
+
+ # Assignment works for data frames as well
+ mtcars %just% c("mpg", "qsec") &lt;- gscale(mtcars, c("mpg", "qsec"))
+ mtcars %not% c("mpg", "qsec") &lt;- gscale(mtcars %not% c("mpg", "qsec"))
+ 
+ 
+</code></pre>
+
+
+</div>

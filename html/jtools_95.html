@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>svysd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate standard deviations with complex survey data</h2>
+
+<h3>Description</h3>
+
+<p><code>svysd</code> extends the <code>survey</code> package by calculating standard
+deviations with syntax similar to the original package, which provides
+only a <code>svyvar()</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">svysd(
+  formula,
+  design,
+  na.rm = FALSE,
+  digits = getOption("jtools-digits", default = 3),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula (e.g., ~var1+var2) specifying the term(s) of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design</code></td>
+<td>
+<p>The <code>survey.design</code> or <code>svyrep.design</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical. Should cases with missing values be dropped?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer specifying the number of digits past the decimal to
+report in the output. Default is 3. You can change the default number of
+digits for all jtools functions with
+<code>options("jtools-digits" = digits)</code> where digits is the desired number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>svyvar()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>An alternative is to simply do <code>sqrt(svyvar(~term, design = design))</code>.
+However, if printing and sharing the output, this may be misleading since
+the output will say "variance."
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function was designed independent of the <span class="pkg">survey</span> package and
+is neither endorsed nor known to its authors.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>svyvar()</code>
+</p>
+<p>Other survey package extensions: 
+<code>svycor()</code>
+</p>
+<p>Other survey tools: 
+<code>pf_sv_test()</code>,
+<code>svycor()</code>,
+<code>weights_tests()</code>,
+<code>wgttest()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (requireNamespace("survey")) {
+ library(survey)
+ data(api)
+ # Create survey design object
+ dstrat &lt;- svydesign(id = ~1,strata = ~stype, weights = ~pw, data = apistrat,
+                     fpc=~fpc)
+
+ # Print the standard deviation of some variables
+ svysd(~api00+ell+meals, design = dstrat)
+}
+
+</code></pre>
+
+
+</div>

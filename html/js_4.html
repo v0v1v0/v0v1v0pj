@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>esprima</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>JavaScrip Syntax Tree</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://www.npmjs.com/package/esprima">Esprima</a> is a high performance, standard-compliant
+ECMAScript parser. It has full support for ECMAScript 2017 and returns a sensible syntax tree
+format as standardized by ESTree project.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">esprima_tokenize(text, range = FALSE, loc = FALSE, comment = FALSE)
+
+esprima_parse(text, jsx = FALSE, range = FALSE, loc = FALSE,
+  tolerant = FALSE, tokens = FALSE, comment = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>a character vector with JavaScript code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p>Annotate each token with its zero-based start and end location</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loc</code></td>
+<td>
+<p>Annotate each token with its column and row-based location</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comment</code></td>
+<td>
+<p>Include every line and block comment in the output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jsx</code></td>
+<td>
+<p>Support JSX syntax</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tolerant</code></td>
+<td>
+<p>Tolerate a few cases of syntax errors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tokens</code></td>
+<td>
+<p>Collect every token</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>esprima_tokenize</code> function returns a data frame with JavaScript tokens. The
+<code>esprima_parse</code> function returns the Syntax Tree in JSON format. This can be parsed to R
+using e.g. <code>jsonlite::fromJSON</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Esprima documentation: <a href="http://esprima.readthedocs.io/en/4.0/">http://esprima.readthedocs.io/en/4.0/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">code &lt;- "function test(x, y){ x = x || 1; y = y || 1; return x*y;}"
+esprima_tokenize(code)
+esprima_parse(code)
+</code></pre>
+
+
+</div>

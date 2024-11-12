@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pspline_fitter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>P-spline fitting algorithm for the GLM.</h2>
+
+<h3>Description</h3>
+
+<p><code>pspline_fitter</code> appies the method of scoring
+to a variety of response distributions and link functions within
+for P-spline fitting within the GLM framework.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pspline_fitter(
+  y,
+  B,
+  family = "gaussian",
+  link = "identity",
+  P,
+  P_ridge = 0 * diag(ncol(B)),
+  wts = 0 * y + 1,
+  m_binomial = 0 * y + 1,
+  r_gamma = 0 * y + 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the glm response vector of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>The effective P-spline regressors, e.g. <code>B</code> for B-splines, <code>Q=X %*% B</code> for PSR.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the response distribution, e.g. <code>"gaussian", "binomial", "poisson", "Gamma"</code> distribution; quotes are needed
+(default <code>family = "gaussian"</code>.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function, one of <code>"identity"</code>, <code>"log"</code>, <code>"sqrt"</code>,
+<code>"logit"</code>, <code>"probit"</code>, <code>"cloglog"</code>, <code>"loglog"</code>, <code>"reciprocal"</code>;
+quotes are needed (default <code>link = "identity"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>P-spline ("half") penalty matrix for data augmentation, such that <code>P'P = lambda D'D</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P_ridge</code></td>
+<td>
+<p>ridge ("half") penalty for data augmentation, usually <code>sqrt(lambda_r)*I</code> (default 0).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>the weight vector of <code>length(y)</code>, separate from GLM weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m_binomial</code></td>
+<td>
+<p>a vector of binomial trials having <code>length(y)</code>, when <code>family = "binomial"</code>.
+Default is 1 vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_gamma</code></td>
+<td>
+<p>a vector of gamma shape parameters, when <code>family = "Gamma"</code>. Default is 1 vector.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coef</code></td>
+<td>
+<p>the estimated P-spline coefficient regressor, using the effective regressors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p><code>wts*w</code>, GLM weight vector times input weights of length m.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>the <code>lsfit</code> object using data augmentation to get P-spline coefficient estimates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>the linear predictor from <code>f</code>.</p>
+</td>
+</tr>
+</table>
+</div>

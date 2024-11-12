@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>removeMessage</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Removes a stored message</h2>
+
+<h3>Description</h3>
+
+<p>Removes a message from the storage of a session. This function is a wrapper around
+method <code>removeMessage</code> of class <code>Session</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">removeMessage(sessionId = NULL, messageId = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session from where to remove a message. If there is only one active session, this argument
+becomes optional.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>messageId</code></td>
+<td>
+<p>ID of the message to remove. If there is only one stored message, this argument becomes optional.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>getMessageIds</code>.
+</p>
+
+
+</div>

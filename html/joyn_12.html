@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_y_vars_to_keep</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check variables in y that will be kept in returning table</h2>
+
+<h3>Description</h3>
+
+<p>check and return variable names in y to keep in returning table, excluding those that are keys of the merge
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_y_vars_to_keep(y_vars_to_keep, y, by)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y_vars_to_keep</code></td>
+<td>
+<p>either TRUE, if keep all vars in <code>y</code>;
+FALSE or NULL, if keep no vars; or character vector specifying which variables in <code>y</code> to keep</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>A vector of shared column names in <code>x</code> and <code>y</code> to merge on.
+This defaults to the shared key columns between the two tables.
+If <code>y</code> has no key columns, this defaults to the key of <code>x</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character vector with variable names from <code>y</code> table
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+y1 = data.table(id = 1:2,
+               y  = c(11L, 15L))
+# With y_vars_to_keep TRUE
+joyn:::check_y_vars_to_keep(TRUE, y1, by = "id")
+# With y_vars_to_keep FALSE
+joyn:::check_y_vars_to_keep(FALSE, y1, by = "id")
+# Specifying which y vars to keep
+joyn:::check_y_vars_to_keep("y", y1, by = "id")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

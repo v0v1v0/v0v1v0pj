@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>inverse_link</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Inverse link function, used for GLM fitting.</h2>
+
+<h3>Description</h3>
+
+<p>Inverse link function, used for GLM fitting.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">inverse_link(x, link)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>scalar, vector, or matrix input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function, one of <code>"identity"</code>, <code>"log"</code>, <code>"sqrt"</code>,
+<code>"logit"</code>, <code>"probit"</code>, <code>"cloglog"</code>, <code>"loglog"</code>, <code>"reciprocal"</code>;
+quotes are needed (default <code>"identity"</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The inverse link function applied to <code>x</code>.
+If <code>link</code> is not in the above list of allowed  names, <code>NULL</code> will be returned.
+</p>
+
+
+</div>

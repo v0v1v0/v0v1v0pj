@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GEEModuleLogistic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>GEEModuleLogistic: shiny modulde server for binomial gaussian generalized estimating equation(GEE) using reactive data.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny modulde server for binomial gaussian generalized estimating equation(GEE) using reactive data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GEEModuleLogistic(
+  input,
+  output,
+  session,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 10,
+  id.gee
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>reactive data, ordered by id.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>List of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit in factor variable, Default: 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.gee</code></td>
+<td>
+<p>reactive repeated measure variable</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny modulde server for binomial gaussian generalized estimating equation(GEE) using reactive data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny modulde server for binomial gaussian generalized estimating equation(GEE).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      GEEModuleUI("logistic")
+    ),
+    mainPanel(
+      DTOutput("logistictable")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+  id.gee &lt;- reactive("mpg")
+
+  out_logistic &lt;- callModule(GEEModuleLogistic, "logistic",
+    data = data, data_label = data.label,
+    data_varStruct = NULL, id.gee = id.gee
+  )
+
+  output$logistictable &lt;- renderDT({
+    hide &lt;- which(colnames(out_logistic()$table) == "sig")
+    datatable(out_logistic()$table,
+      rownames = T, extension = "Buttons",
+      caption = out_logistic()$caption,
+      options = c(
+        opt.tbreg(out_logistic()$caption),
+        list(columnDefs = list(list(visible = FALSE, targets = hide))),
+        list(scrollX = TRUE)
+      )
+    ) %&gt;% formatStyle("sig", target = "row", backgroundColor = styleEqual("**", "yellow"))
+  })
+}
+</code></pre>
+
+
+</div>

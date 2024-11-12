@@ -1,0 +1,193 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predictions for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Calculates predicted values for the longitudinal part of a joint model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointModel'
+predict(object, newdata, type = c("Marginal", "Subject"),
+    interval = c("none", "confidence", "prediction"), level = 0.95, idVar = "id", 
+    FtTimes = NULL, M = 300, returnData = FALSE, scale = 1.6, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data frame in which to look for variables with which to predict.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>a character string indicating the type of predictions to compute,
+marginal or subject-specific. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interval</code></td>
+<td>
+<p>a character string indicating what type of intervals should be computed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>a numeric scalar denoting the tolerance/confidence level.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idVar</code></td>
+<td>
+<p>a character string indicating the name of the variable in 
+<code>newdata</code> that corresponds to the subject identifier; required 
+when <code>type = "Subject"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FtTimes</code></td>
+<td>
+<p>a list with components numeric vectors denoting the time points 
+for which we wish to compute subject-specific predictions after the last
+available measurement provided in <code>newdata</code>. For each subject in
+<code>newdata</code> the default is a sequence of 25 equally spaced time points 
+from the last available measurement to the maximum follow-up time of all 
+subjects (plus a small quantity). This argument is only used when 
+<code>type = "Subject"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>numeric scalar denoting the number of Monte Carlo samples. 
+See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>returnData</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the data frame supplied in
+<code>newdata</code> is returned augmented with the outputs of the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>a numeric value setting the scaling of the covariance matrix
+of the empirical Bayes estimates in the Metropolis step during the 
+Monte Carlo sampling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When <code>type = "Marginal"</code>, this function computes predicted values for the 
+fixed-effects part of the longitudinal submodel. In particular,
+let <code class="reqn">X</code> denote the fixed-effects design matrix calculated using
+<code>newdata</code>. The <code>predict()</code> calculates <code class="reqn">\hat{y} = X \hat{\beta}</code>,
+and if <code>interval = "confidence"</code>, <code class="reqn">var(\hat{y}) = X V X^t</code>, with <code class="reqn">V</code>
+denoting the covariance matrix of <code class="reqn">\hat{\beta}</code>. Confidence intervals are constructed under 
+the normal approximation.
+</p>
+<p>When <code>type = "Subject"</code>, this functions computes subject-specific 
+predictions for the longitudinal outcome based on the joint model. 
+This accomplished with a Monte Carlo simulation scheme, similar to the one
+described in <code>survfitJM</code>. The only difference is in Step 3, where
+for <code>interval = "confidence"</code> <code class="reqn">y_i^* = X_i \beta^* + Z_i b_i^*</code>, whereas
+for <code>interval = "prediction"</code> <code class="reqn">y_i^*</code> is a random vector from a normal 
+distribution with mean <code class="reqn">X_i \beta^* + Z_i b_i^*</code> and standard deviation 
+<code class="reqn">\sigma^*</code>. Based on this Monte Carlo simulation scheme we take as 
+estimate of <code class="reqn">\hat{y}_i</code> the average of the <code>M</code> estimates <code class="reqn">y_i^*</code> 
+from each Monte Carlo sample. Confidence intervals are constructed using the 
+percentiles of <code class="reqn">y_i^*</code> from the Monte Carlo samples.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>se.fit = FALSE</code> a numeric vector of predicted values, otherwise a
+list with components <code>pred</code> the predicted values, <code>se.fit</code> the
+standard error for the fitted values, and <code>low</code> and <code>upp</code> the lower
+and upper limits of the confidence interval. If <code>returnData = TRUE</code>, it
+returns the data frame <code>newdata</code> with the previously mentioned components
+added.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit
+fitLME &lt;- lme(log(serBilir) ~ drug * year, 
+    random = ~ year | id, data = pbc2)
+# survival regression fit
+fitSURV &lt;- survreg(Surv(years, status2) ~ drug, 
+    data = pbc2.id, x = TRUE)
+# joint model fit, under the (default) Weibull model
+fitJOINT &lt;- jointModel(fitLME, fitSURV, timeVar = "year")
+
+DF &lt;- with(pbc2, expand.grid(drug = levels(drug),
+    year = seq(min(year), max(year), len = 100)))
+Ps &lt;- predict(fitJOINT, DF, interval = "confidence", return = TRUE)
+require(lattice)
+xyplot(pred + low + upp ~ year | drug, data = Ps,
+    type = "l", col = c(2,1,1), lty = c(1,2,2), lwd = 2,
+    ylab = "Average log serum Bilirubin")
+
+
+# Subject-specific predictions
+ND &lt;- pbc2[pbc2$id == 2, ]
+Ps.ss &lt;- predict(fitJOINT, ND, type = "Subject",
+  interval = "confidence", return = TRUE)
+require(lattice)
+xyplot(pred + low + upp ~ year | id, data = Ps.ss,
+    type = "l", col = c(2,1,1), lty = c(1,2,2), lwd = 2,
+    ylab = "Average log serum Bilirubin")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

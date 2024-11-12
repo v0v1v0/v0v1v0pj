@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DeltaPair</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract estimates of Jacquard coefficients for a given pair</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>DeltaPair</code> extracts from the list object of all pairwise Jacquard coefficients the
+set of coefficients of a given pair (i,j).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">DeltaPair(Delta, i, j, digits = 7)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Delta</code></td>
+<td>
+<p>A list with nine matrices of pairswise coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i</code></td>
+<td>
+<p>Index of the first individual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>j</code></td>
+<td>
+<p>Index of the second individual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Number of digits to which the coefficients are rounded.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A vector with nine elements</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>See Also</h3>
+
+<p><code>PairwiseList</code>,<code>Jacquard.cls</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> data(DeltaSimulatedPedigree)
+ DeltaPair(DeltaSimulatedPedigree,1,2)
+</code></pre>
+
+
+</div>

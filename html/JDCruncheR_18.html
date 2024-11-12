@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Objets bilan qualité</h2>
+
+<h3>Description</h3>
+
+<p><code>QR_matrix()</code> permet de créer un objet de type <code>QR_matrix</code>
+contenant un bilan qualité.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>modalities</code></td>
+<td>
+<p>un <code>data.frame</code> contenant les modalités (Good, Bad,
+etc.) associées aux variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>un <code>data.frame</code> contenant les valeurs (p-valeurs des
+tests, statistiques, etc.) associées aux variables. Peut donc contenir plus
+de variables que le data.frame <code>modalities</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score_formula</code></td>
+<td>
+<p>formule utilisée pour calculer le score global (s'il
+existe).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>un objet de type <code>QR_matrix</code>, <code>mQR_matrix</code>
+ou une liste d'objets <code>QR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>des objets du même type que <code>x</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>mQR_matrix()</code> permet de créer un objet de type <code>mQR_matrix</code>
+qui est une liste de bilans qualité (donc d'objets <code>QR_matrix</code>).
+</p>
+<p><code>is.QR_matrix()</code> et <code>is.mQR_matrix()</code> permettent de tester si un
+objet est un bilan qualité ou une liste de bilans qualité.
+</p>
+<p>Un objet  de type <code>QR_matrix</code> est une liste de trois
+paramètres :
+</p>
+
+<ul>
+<li>
+<p> le paramètre <code>modalities</code> est un <code>data.frame</code> contenant un
+ensemble de variables sous forme catégorielle (par défaut : Good,
+Uncertain, Bad, Severe).
+</p>
+</li>
+<li>
+<p> le paramètre <code>values</code>  est un <code>data.frame</code> contenant les valeurs
+associées aux indicateurs présents dans <code>modalities</code> (i.e. :
+p-valeurs, statistiques, etc.), ainsi que des variables qui n'ont pas de
+modalité (i.e. : fréquence de la série, modèle ARIMA, etc).
+</p>
+</li>
+<li>
+<p> le paramètre <code>score_formula</code> contient la formule utilisée pour
+calculer le score (une fois le calcul réalisé).
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p><code>QR_matrix()</code> crée et renvoie un objet <code>QR_matrix</code>.
+<code>mQR_matrix()</code> crée et renvoie un objet <code>mQR_matrix</code>
+(c'est-à-dire une liste d'objets <code>QR_matrix</code>).
+<code>is.QR_matrix()</code> et <code>is.mQR_matrix()</code> renvoient des valeurs
+booléennes (<code>TRUE</code> ou <code>FALSE</code>).
+</p>
+
+
+</div>

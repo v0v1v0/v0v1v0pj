@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>control_calib</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>control parameters</h2>
+
+<h3>Description</h3>
+
+<p><code>control_calib</code> is function that contains control parameters for <code>joint_calib_create_matrix</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">control_calib(
+  interpolation = c("logit", "linear"),
+  logit_const = -1000,
+  survey_sparse = FALSE,
+  ebal_constraint_tolerance = 1,
+  ebal_print_level = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>interpolation</code></td>
+<td>
+<p>type of interpolation: <code>logit</code> or <code>linear</code>,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logit_const</code></td>
+<td>
+<p>constant for <code>logit</code> interpolation,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survey_sparse</code></td>
+<td>
+<p>whether to use sparse matrices via <code>Matrix</code> package in <code>survey::grake()</code> (currently not supported),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ebal_constraint_tolerance</code></td>
+<td>
+<p>This is the tolerance level used by ebalance to decide if the moments in the reweighted data are equal to the target moments (see <code>ebal::ebalance()</code>),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ebal_print_level</code></td>
+<td>
+<p>Controls the level of printing: 0 (normal printing), 2 (detailed), and 3 (very detailed) (see <code>ebal::ebalance()</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a list with parameters
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Maciej Beręsewicz
+</p>
+
+
+</div>

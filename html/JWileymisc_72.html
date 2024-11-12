@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modelDiagnostics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Model Diagnostics Functions</h2>
+
+<h3>Description</h3>
+
+<p>A set of functions to calculate
+model diagnostics on models, including constructors,
+a generic function, a test of whether an object is of the
+<code>modelDiagnostics</code> class, and methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">modelDiagnostics(object, ...)
+
+as.modelDiagnostics(x)
+
+is.modelDiagnostics(x)
+
+## S3 method for class 'lm'
+modelDiagnostics(
+  object,
+  ev.perc = 0.001,
+  robust = FALSE,
+  distr = "normal",
+  standardized = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted model object, with methods for
+<code>model.frame</code>, <code>resid</code> and <code>fitted</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments, passed to <code>residualDiagnostics</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object to test or a list to coerce to a
+<code>modelDiagnostics</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ev.perc</code></td>
+<td>
+<p>A real number between 0 and 1 indicating the
+proportion of the theoretical distribution beyond which
+values are considered extreme values (possible outliers).
+Defaults to .001.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>Whether to use robust mean and standard deviation estimates
+for normal distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distr</code></td>
+<td>
+<p>A character string given the assumed distribution.
+Passed on to <code>testDistribution</code>.
+Defaults to “normal”.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>standardized</code></td>
+<td>
+<p>A logical whether to use standardized residuals.
+Defaults to <code>TRUE</code> generally where possible but may depend on
+method.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical (<code>is.modelDiagnostics</code>) or
+a modelDiagnostics object (list) for
+<code>as.modelDiagnostics</code> and <code>modelDiagnostics</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">testm &lt;- stats::lm(mpg ~ hp * factor(cyl), data = mtcars)
+
+md &lt;- modelDiagnostics(testm)
+plot(md$residualDiagnostics$testDistribution)
+md$extremeValues
+
+plot(md)
+
+md &lt;- modelDiagnostics(testm, ev.perc = .1)
+md$extremeValues
+plot(md, ncol = 2)
+
+testdat &lt;- data.frame(
+  y = c(1, 2, 2, 3, 3, NA, 9000000, 2, 2, 1),
+  x = c(1, 2, 3, 4, 5, 6, 5, 4, 3, 2))
+
+modelDiagnostics(
+  lm(y ~ x, data = testdat, na.action = "na.omit"),
+  ev.perc = .1)$extremeValues
+
+modelDiagnostics(
+  lm(y ~ x, data = testdat, na.action = "na.exclude"),
+  ev.perc = .1)$extremeValues
+
+## clean up
+rm(testm, md, testdat)
+</code></pre>
+
+
+</div>

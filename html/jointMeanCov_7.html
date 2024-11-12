@@ -1,0 +1,145 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointMeanCovGroupCen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate Mean and Row-Row Correlation Matrix Using Group Centering</h2>
+
+<h3>Description</h3>
+
+<p>This function implements Algorithm 1 from Hornstein, Fan,
+Shedden, and Zhou (2018), doi: 10.1080/01621459.2018.1429275.
+Given an n by m data matrix, with a vector of indices denoting
+group membership,this function estimates the row-row inverse
+covariance matrix after a preliminary group centering step,
+then uses the estimated inverse covariance estimate to perform
+GLS mean estimation. The function also returns test statistics
+comparing the group means for each column, with standard
+errors accounting for row-row correlation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jointMeanCovGroupCen(X, group.one.indices, rowpen, B.inv = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group.one.indices</code></td>
+<td>
+<p>Vector of indices denoting rows in group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowpen</code></td>
+<td>
+<p>Glasso penalty for estimating B, the row correlation
+matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.inv</code></td>
+<td>
+<p>Optional row-row covariance matrix to be used in GLS.
+If this argument is passed, then it is used instead of estimating
+the inverse row-row covariance.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>B.hat.inv</code></td>
+<td>
+<p>Estimated row-row inverse covariance matrix.  For identifiability,
+A and B are scaled so that A has trace m, where m is the
+number of columns of X.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corr.B.hat.inv</code></td>
+<td>
+<p>Estimated row-row inverse correlation matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gls.group.means</code></td>
+<td>
+<p>Matrix with two rows and m columns, where m is
+the number of columns of X.  Entry (i, j) contains the estimated mean
+of the jth column for an individual in group i, with i = 1,2, and
+j = 1, ..., m.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma.hat</code></td>
+<td>
+<p>Estimated group mean differences.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test.stats</code></td>
+<td>
+<p>Vector of test statistics of length m.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.vals</code></td>
+<td>
+<p>Vector of two-sided p-values, calculated using the
+standard normal distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.vals.adjusted</code></td>
+<td>
+<p>Vector of p-values, adjusted using the
+Benjamini-Hochberg fdr adjustment.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Define sample sizes
+n1 &lt;- 5
+n2 &lt;- 5
+n &lt;- n1 + n2
+m &lt;- 200
+
+# Generate data with row and column covariance
+# matrices each autorogressive of order one with
+# parameter 0.2.  The mean is defined so the first
+# three columns have true differences in group means
+# equal to four.
+Z &lt;- matrix(rnorm(m * n), nrow=n, ncol=m)
+A &lt;- outer(1:m, 1:m, function(i, j) 0.2^abs(i - j))
+B &lt;- outer(1:n, 1:n, function(i, j) 0.2^abs(i - j))
+M &lt;- matrix(0, nrow=nrow(Z), ncol=ncol(Z))
+group.one.indices &lt;- 1:5
+group.two.indices &lt;- 6:10
+M[group.one.indices, 1:3] &lt;- 2
+M[group.two.indices, 1:3] &lt;- -2
+X &lt;- t(chol(B)) %*% Z %*% chol(A) + M
+
+# Apply Algorithm 1 (jointMeanCovGroupCen) and
+# plot the test statistics.
+rowpen &lt;- sqrt(log(m) / n)
+out &lt;- jointMeanCovGroupCen(X, group.one.indices, rowpen)
+plot(out)
+summary(out)
+</code></pre>
+
+
+</div>

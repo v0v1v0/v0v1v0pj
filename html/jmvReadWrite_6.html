@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_to_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert data files (CSV, R, other statistics packages) into .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Convert data files (CSV, R, other statistics packages) into .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_to_omv(
+  fleInp = "",
+  fleOut = "",
+  varSrt = c(),
+  usePkg = c("foreign", "haven"),
+  selSet = "",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fleInp</code></td>
+<td>
+<p>Name (including the path, if required) of the data file to be read ("FILENAME.ext"; default: ""); supports CSV and R-files natively, or other
+file types if "foreign" or "haven" are installed, see Details below</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fleOut</code></td>
+<td>
+<p>Name (including the path, if required) of the data file to be written ("FILENAME.omv"; default: ""); if empty, the extension of fleInp is
+replaced with ".omv"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varSrt</code></td>
+<td>
+<p>Variable(s) that are used to sort the data frame (see Details; if empty, the row order of the input file is kept; default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>usePkg</code></td>
+<td>
+<p>Name of the package: "foreign" or "haven" that shall be used to read SPSS, Stata and SAS files; "foreign" is the default (it comes with base
+R), but "haven" is newer and more comprehensive</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selSet</code></td>
+<td>
+<p>Name of the data set that is to be selected from the workspace (only applies when reading .RData-files)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> In difference to the remaining helper functions, <code>convert_to_omv</code> doesn't accept a data frame as input and it neither does return a data frame if <code>fleOut</code>
+is left empty: If you want to write a data frame, use <code>write_omv</code>. If you want to have a data frame returned use <code>read_omv</code> for jamovi-files or any of the
+functions listed in the bullet point below for any other file type.
+</p>
+</li>
+<li> <p><code>varSrt</code> can be either a character or a character vector (with one or more variables respectively). The sorting order for a particular variable can be
+inverted with preceding the variable name with "-". Please note that this doesn't make sense and hence throws a warning for certain variable types (e.g.,
+factors).
+</p>
+</li>
+<li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the functions that are used for reading and writing the data. By clicking
+on the respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take. The functions are:
+<code>read_omv</code> and <code>write_omv</code> (for jamovi-files), <code>read.table</code> (for CSV / TSV files; using similar defaults as <code>read.csv</code> for CSV and <code>read.delim</code> for TSV
+which both are based upon <code>read.table</code>), <code>load</code> (for .RData-files), <code>readRDS</code> (for .rds-files), <code>read_sav</code> (needs the R-package <code>haven</code>) or <code>read.spss</code>
+(needs the R-package <code>foreign</code>) for SPSS-files, <code>read_dta</code> (<code>haven</code>) / <code>read.dta</code> (<code>foreign</code>) for Stata-files, <code>read_sas</code> (<code>haven</code>) for SAS-data-files,
+and <code>read_xpt</code> (<code>haven</code>) / <code>read.xport</code> (<code>foreign</code>) for SAS-transport-files. If you would like to use <code>haven</code>, you may need to install it using
+<code>install.packages("haven", dep = TRUE)</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>the function doesn't have a return value (it returns NULL)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>convert_to_omv</code> internally uses the following functions for reading and writing data files in different formats: <code>read_omv()</code> and
+<code>write_omv()</code> for jamovi-files, <code>utils::read.table()</code> for CSV / TSV files, <code>load()</code> for reading .RData-files, <code>readRDS()</code> for .rds-files,
+<code>haven::read_sav()</code> or <code>foreign::read.spss()</code> for SPSS-files, <code>haven::read_dta()</code> or <code>foreign::read.dta()</code> for Stata-files, <code>haven::read_sas()</code> for
+SAS-data-files, and <code>haven::read_xpt()</code> or <code>foreign::read.xport()</code> for SAS-transport-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Example 1: Convert from RDS
+# (use ToothGrowth as example, save it as RDS)
+nmeInp &lt;- tempfile(fileext = ".rds")
+nmeOut &lt;- tempfile(fileext = ".omv")
+saveRDS(jmvReadWrite::ToothGrowth, nmeInp)
+jmvReadWrite::convert_to_omv(fleInp = nmeInp, fleOut = nmeOut)
+cat(list.files(dirname(nmeOut), basename(nmeOut)))
+# -&gt; "file[...].omv" ([...] contains a random combination of numbers / characters
+cat(file.info(nmeOut)$size)
+# -&gt; 2448 (size may differ on different OSes)
+cat(str(jmvReadWrite::read_omv(nmeOut, sveAtt = FALSE)))
+# gives a overview of the dataframe (all columns and some attributes,
+# sveAtt is intentionally set to FALSE to make the output not too overwhelming)
+unlink(nmeInp)
+unlink(nmeOut)
+
+# Example 2: Convert from CSV
+# (use ToothGrowth again as example, this time save it as CSV)
+nmeInp &lt;- tempfile(fileext = ".csv")
+nmeOut &lt;- tempfile(fileext = ".omv")
+write.csv(jmvReadWrite::ToothGrowth, nmeInp)
+jmvReadWrite::convert_to_omv(fleInp = nmeInp, fleOut = nmeOut)
+cat(list.files(dirname(nmeOut), basename(nmeOut)))
+cat(file.info(nmeOut)$size)
+# -&gt; 2104 (size may differ acc. to OS; the size is smaller than for the RDS-file
+# because CSV can store fewer attributes, e.g., labels)
+cat(str(jmvReadWrite::read_omv(nmeOut, sveAtt = FALSE)))
+# gives a overview of the dataframe (all columns and some attributes)
+unlink(nmeInp)
+unlink(nmeOut)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

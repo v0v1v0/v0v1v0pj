@@ -1,0 +1,378 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>linReg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Linear Regression</h2>
+
+<h3>Description</h3>
+
+<p>Linear regression is used to explore the relationship between a continuous 
+dependent variable, and one or more continuous and/or categorical 
+explanatory variables. Other statistical methods, such as ANOVA and ANCOVA, 
+are in reality just forms of linear regression.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">linReg(data, dep, covs = NULL, factors = NULL, weights = NULL,
+  blocks = list(list()), refLevels = NULL, intercept = "refLevel",
+  r = TRUE, r2 = TRUE, r2Adj = FALSE, aic = FALSE, bic = FALSE,
+  rmse = FALSE, modelTest = FALSE, anova = FALSE, ci = FALSE,
+  ciWidth = 95, stdEst = FALSE, ciStdEst = FALSE,
+  ciWidthStdEst = 95, norm = FALSE, qqPlot = FALSE,
+  resPlots = FALSE, durbin = FALSE, collin = FALSE, cooks = FALSE,
+  emMeans = list(list()), ciEmm = TRUE, ciWidthEmm = 95,
+  emmPlots = TRUE, emmTables = FALSE, emmWeights = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+<p>the dependent variable from <code>data</code>, variable must be
+numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covs</code></td>
+<td>
+<p>the covariates from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>the fixed factors from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>the (optional) weights from <code>data</code> to be used in the
+fitting process</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>blocks</code></td>
+<td>
+<p>a list containing vectors of strings that name the predictors
+that are added to the model. The elements are added to the model according
+to their order in the list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refLevels</code></td>
+<td>
+<p>a list of lists specifying reference levels of the
+dependent variable and all the factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>intercept</code></td>
+<td>
+<p><code>'refLevel'</code> (default) or <code>'grandMean'</code>, coding
+of the intercept. Either creates contrast so that the intercept represents
+the reference level or the grand mean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the statistical
+measure <code>R</code> for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the statistical
+measure <code>R-squared</code> for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2Adj</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the statistical
+measure <code>adjusted R-squared</code> for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Aikaike's
+Information Criterion (AIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bic</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Bayesian
+Information Criterion (BIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmse</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide RMSE for the
+models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTest</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the model
+comparison between the models and the NULL model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>anova</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the omnibus
+ANOVA test for the predictors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stdEst</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a standardized
+estimate for the model coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciStdEst</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficient standardized estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthStdEst</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying
+the confidence interval width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform a Shapiro-Wilk
+test on the residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qqPlot</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resPlots</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide residual
+plots where the dependent variable and each covariate is plotted against
+the standardized residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>durbin</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide results of the
+Durbin- Watson test for autocorrelation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>collin</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide VIF and
+tolerence collinearity statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cooks</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide summary
+statistics for the Cook's distance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emMeans</code></td>
+<td>
+<p>a formula containing the terms to estimate marginal means
+for, supports up to three variables per term</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciEmm</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide a confidence
+interval for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthEmm</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlots</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimated
+marginal means plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmTables</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide estimated
+marginal means tables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmWeights</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, weigh each cell
+equally or weigh them according to the cell frequency</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelFit</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelComp</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$models</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of model specific results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$predictOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$residsOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$cooksOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$modelFit$asDF</code>
+</p>
+<p><code>as.data.frame(results$modelFit)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('Prestige', package='carData')
+
+linReg(data = Prestige, dep = income,
+       covs = vars(education, prestige, women),
+       blocks = list(list('education', 'prestige', 'women')))
+
+#
+#  LINEAR REGRESSION
+#
+#  Model Fit Measures
+#  ---------------------------
+#    Model    R        R²
+#  ---------------------------
+#        1    0.802    0.643
+#  ---------------------------
+#
+#
+#  MODEL SPECIFIC RESULTS
+#
+#  MODEL 1
+#
+#
+#  Model Coefficients
+#  --------------------------------------------------------
+#    Predictor    Estimate    SE         t         p
+#  --------------------------------------------------------
+#    Intercept      -253.8    1086.16    -0.234     0.816
+#    women           -50.9       8.56    -5.948    &lt; .001
+#    prestige        141.4      29.91     4.729    &lt; .001
+#    education       177.2     187.63     0.944     0.347
+#  --------------------------------------------------------
+#
+
+</code></pre>
+
+
+</div>

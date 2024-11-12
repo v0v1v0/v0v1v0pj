@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>leftMultiplyByXt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>leftMultiplyByXt</h2>
+
+<h3>Description</h3>
+
+<p>Compute X'*Y where X is the n*(n-1) design matrix for the weighted group
+fused Lasso, with weights defined by the vector w, and Y is any n*p matrix.
+The computation is done in O(np).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">leftMultiplyByXt(Y, w = defaultWeights(nrow(Y)), verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A n*p matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p>(n-1)*1 vector of weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This implementation is derived from the MATLAB code of Vert and Bleakley:
+<a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.\
+</p>
+<p>Contrary to <code>getUnivStat</code> it does not handle missing values.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The (n-1)*p matrix equal to X'*Y
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.\ Vert, J.
+P., &amp; Bleakley, K. (2010). Fast detection of multiple change-points shared
+by many signals using group LARS. Advances in Neural Information Processing
+Systems, 23, 2343-2351.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+Y &lt;- matrix(rnorm(20), ncol=2)
+C &lt;- leftMultiplyByXt(Y)
+
+</code></pre>
+
+
+</div>

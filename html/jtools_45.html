@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_offset_name</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Utility functions for generating model predictions</h2>
+
+<h3>Description</h3>
+
+<p>These functions get information and data from regression models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_offset_name(model)
+
+get_weights(model, data)
+
+get_data(model, formula = NULL, warn = TRUE, ...)
+
+get_response_name(model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The model (e.g., <code>lm</code>, <code>glm</code>, <code>merMod</code>, <code>svyglm</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>For <code>get_weights()</code>, the data used to fit the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>The formula for <code>model</code>, if desired. Otherwise <code>get_formula()</code>
+is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn</code></td>
+<td>
+<p>For <code>get_data()</code>, should there be a warning when <code>model.frame()</code>
+won't work because of variable transformations? Default is TRUE but this
+may not be desired when <code>get_data()</code> is used inside of another function or
+used multiple times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed to <code>get_formula()</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+<ul>
+<li> <p><code>get_data()</code>: The data used to fit the model.
+</p>
+</li>
+<li> <p><code>get_response_name()</code>: The name of the response variable.
+</p>
+</li>
+<li> <p><code>get_offset_name()</code>: The name of the offset variable.
+</p>
+</li>
+<li> <p><code>get_weights()</code>: A list with <code>weights_name</code>, the name of the weighting
+variable, and <code>weights</code>, the weights themselves (or all 1 when there are
+no weights).
+</p>
+</li>
+</ul>
+</div>

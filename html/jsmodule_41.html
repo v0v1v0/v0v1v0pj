@@ -1,0 +1,157 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>kaplanModule</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>kaplanModule: shiny module server for kaplan-meier plot.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module server for kaplan-meier plot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">kaplanModule(
+  input,
+  output,
+  session,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 10,
+  design.survey = NULL,
+  id.cluster = NULL,
+  timeby = NULL,
+  range.x = NULL,
+  range.y = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>Reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>Reactive List of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit in factor variable, Default: 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design.survey</code></td>
+<td>
+<p>Reactive survey data. default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.cluster</code></td>
+<td>
+<p>Reactive cluster variable if marginal model, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeby</code></td>
+<td>
+<p>timeby, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range.x</code></td>
+<td>
+<p>range of x axis, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range.y</code></td>
+<td>
+<p>range of y axis, Default: NULL</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module server for kaplan-meier plot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module server for kaplan-meier plot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+library(ggplot2)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      kaplanUI("kaplan")
+    ),
+    mainPanel(
+      plotOutput("kaplan_plot"),
+      ggplotdownUI("kaplan")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_kaplan &lt;- callModule(kaplanModule, "kaplan",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$kaplan_plot &lt;- renderPlot({
+    print(out_kaplan())
+  })
+}
+</code></pre>
+
+
+</div>

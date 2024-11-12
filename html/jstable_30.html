@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>svycox.display</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>svycoxph.display: table for svycoxph.object in survey package.</h2>
+
+<h3>Description</h3>
+
+<p>Table for complex design cox model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">svycox.display(svycoxph.obj, decimal = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>svycoxph.obj</code></td>
+<td>
+<p>svycoxph.object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal</code></td>
+<td>
+<p>digit, Default: 2</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>List including table, metric, caption
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>svycoxph</code>
+<code>AIC</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+data(pbc)
+pbc$sex &lt;- factor(pbc$sex)
+pbc$stage &lt;- factor(pbc$stage)
+pbc$randomized &lt;- with(pbc, !is.na(trt) &amp; trt &gt; 0)
+biasmodel &lt;- glm(randomized ~ age * edema, data = pbc, family = binomial)
+pbc$randprob &lt;- fitted(biasmodel)
+
+if (is.null(pbc$albumin)) pbc$albumin &lt;- pbc$alb ## pre2.9.0
+
+dpbc &lt;- survey::svydesign(
+  id = ~1, prob = ~randprob, strata = ~edema,
+  data = subset(pbc, randomized)
+)
+
+model &lt;- survey::svycoxph(Surv(time, status &gt; 0) ~ sex + protime + albumin + stage,
+  design = dpbc
+)
+svycox.display(model)
+</code></pre>
+
+
+</div>

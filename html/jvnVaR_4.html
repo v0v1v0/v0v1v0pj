@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jMCPri</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Monte-Carlo Price Simulation
+</h2>
+
+<h3>Description</h3>
+
+<p>Using when you need a series of price to do back-testing.
+</p>
+<p>This function using normal return model to simulate price.
+</p>
+<p>Related report: Value at Risk.&lt;researchgate.net&gt;
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jMCPri(s0, mu, sigma, m)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>s0</code></td>
+<td>
+
+<p>The initial price or the price at the first day.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+
+<p>Expected (or drift) of return.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+
+<p>Standard deviation (or volatility) of return.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+
+<p>Number of observations.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An array of price.
+</p>
+
+
+<h3>Note</h3>
+
+<p>viet-hung.vu@jvn.edu.vn
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Hung Vu
+</p>
+
+
+<h3>References</h3>
+
+<p>Value at Risk.(reserchgate.net)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>https://www.researchgate.net/profile/Vu_Hung4
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">s0 &lt;- 100
+mu &lt;- 0.02
+sigma &lt;- 0.1
+m &lt;- 1000
+jMCPri (s0, mu, sigma, m) 
+</code></pre>
+
+
+</div>

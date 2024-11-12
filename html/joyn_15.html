@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>freq_table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tabulate simple frequencies</h2>
+
+<h3>Description</h3>
+
+<p>tabulate one variable frequencies
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">freq_table(x, byvar, digits = 1, na.rm = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>byvar</code></td>
+<td>
+<p>character: name of variable to tabulate. Use Standard evaluation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>numeric: number of decimal places to display. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>logical: report NA values in frequencies. Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.table with frequencies.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(data.table)
+x4 = data.table(id1 = c(1, 1, 2, 3, 3),
+                id2 = c(1, 1, 2, 3, 4),
+                t   = c(1L, 2L, 1L, 2L, NA_integer_),
+                x   = c(16, 12, NA, NA, 15))
+freq_table(x4, "id1")
+</code></pre>
+
+
+</div>

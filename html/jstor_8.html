@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_article</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract meta information for articles</h2>
+
+<h3>Description</h3>
+
+<p><code>jst_get_article()</code> extracts meta-data from JSTOR-XML files for journal
+articles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_article(file_path)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file_path</code></td>
+<td>
+<p>A <code>.xml</code>-file for a journal-article.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>tibble</code> containing the extracted meta-data with the following
+columns:
+</p>
+
+<ul>
+<li>
+<p> file_name <em>(chr)</em>: The file_name of the original .xml-file. Can be used
+for joining with other parts (authors, references, footnotes, full-texts).
+</p>
+</li>
+<li>
+<p> journal_doi <em>(chr)</em>: A registered identifier for the journal.
+</p>
+</li>
+<li>
+<p> journal_jcode <em>(chr)</em>: A identifier for the journal like "amerjsoci" for
+the "American Journal of Sociology".
+</p>
+</li>
+<li>
+<p> journal_pub_id <em>(chr)</em>: Similar to journal_jcode. Most of the time either
+one is present.
+</p>
+</li>
+<li>
+<p> journal_title <em>(chr)</em>: The title of the journal.
+</p>
+</li>
+<li>
+<p> article_doi <em>(chr)</em>: A registered unique identifier for the article.
+</p>
+</li>
+<li>
+<p> article_jcode <em>(chr)</em>: A unique identifier for the article (not a DOI).
+</p>
+</li>
+<li>
+<p> article_pub_id <em>(chr)</em>: Infrequent, either part of the DOI or the
+article_jcode.
+</p>
+</li>
+<li>
+<p> article_type <em>(chr)</em>: The type of article (research-article, book-review,
+etc.).
+</p>
+</li>
+<li>
+<p> article_title <em>(chr)</em>: The title of the article.
+</p>
+</li>
+<li>
+<p> volume <em>(chr)</em>: The volume the article was published in.
+</p>
+</li>
+<li>
+<p> issue <em>(chr)</em>: The issue the article was published in.
+</p>
+</li>
+<li>
+<p> language <em>(chr)</em>: The language of the article.
+</p>
+</li>
+<li>
+<p> pub_day <em>(chr)</em>: Publication day, if specified.
+</p>
+</li>
+<li>
+<p> pub_month <em>(chr)</em>: Publication month, if specified.
+</p>
+</li>
+<li>
+<p> pub_year <em>(int)</em>: Year of publication.
+</p>
+</li>
+<li>
+<p> first_page <em>(int)</em>: Page number for the first page of the article.
+</p>
+</li>
+<li>
+<p> last_page <em>(int)</em>: Page number for the last page of the article.
+</p>
+</li>
+<li>
+<p> page_range <em>(chr)</em>: The range of pages for the article.
+</p>
+</li>
+</ul>
+<p>A note about publication dates: always the first entry is being extracted,
+which should correspond to the oldest date, in case there is more than one
+date.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_get_article(jst_example("article_with_references.xml"))
+</code></pre>
+
+
+</div>

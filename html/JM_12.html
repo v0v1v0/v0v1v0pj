@@ -1,0 +1,235 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dynCJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A Dynamic Discrimination Index for Joint Models</h2>
+
+<h3>Description</h3>
+
+ 
+<p>This function computes a dynamic discrimination index for joint models based on a weighted average of time-dependent AUCs.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dynCJM(object, newdata, Dt, ...)
+
+## S3 method for class 'jointModel'
+dynCJM(object, newdata, Dt, idVar = "id", t.max = NULL, 
+    simulate = FALSE, M = 100, weightFun = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data frame that contains the longitudinal and covariate information for the subjects for which prediction 
+of survival probabilities is required. The names of the variables in this data frame must be the same as in the data frames that
+were used to fit the linear mixed effects model (using <code>lme()</code>) and the survival model (using <code>coxph()</code>)
+that were supplied as the two first argument of <code>jointModel</code>. In addition, this data frame should contain a variable 
+that identifies the different subjects (see also argument <code>idVar</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Dt</code></td>
+<td>
+<p>a numeric scalar denoting the time frame within which the occurrence of events is of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idVar</code></td>
+<td>
+<p>the name of the variable in <code>newdata</code> that identifies the different subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.max</code></td>
+<td>
+<p>a numeric scalar denoting the time maximum follow-up time up to which the dynamic discrimination index is to be calculated.
+If <code>NULL</code>, it is set equal to <code>max(Time) + 1e-05</code> where <code>Time</code> denotes the observed event times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simulate</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a Monte Carlo approach is used to estimate survival probabilities. If <code>FALSE</code>,
+a first order estimator is used instead. See <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>a numeric scalar denoting the number of Monte Carlo samples; see <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weightFun</code></td>
+<td>
+<p>a function of two arguments the first denoting time and the second the length of the time frame of interest, i.e., <code>Dt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>(<b>Note:</b> The following contain some math formulas, which are better viewed in the pdf version 
+of the manual accessible at <a href="https://cran.r-project.org/package=JM">https://cran.r-project.org/package=JM</a>.)
+</p>
+<p>Function <code>dynC</code> computes the following discrimination index
+</p>
+<p style="text-align: center;"><code class="reqn">\mbox{C}_{dyn}^{\Delta t} = \int_0^{t_{max}} \mbox{AUC}(t, \Delta t) \, 
+\mbox{Pr} \{ {\cal E}(t, \Delta t) \} \; dt \Big / \int_0^{t_{max}} \mbox{Pr} \{ {\cal E}(t, \Delta t) \} \; dt,</code>
+</p>
+
+<p>where </p>
+<p style="text-align: center;"><code class="reqn">\mbox{AUC}(t, \Delta t) = \mbox{Pr} \bigl [ \pi_i(t + \Delta t \mid t) &lt; 
+\pi_j(t + \Delta t \mid t) \mid \{ T_i^* \in (t, t + \Delta t] \} \cap \{ T_j^* &gt; t + \Delta t \} \bigr ],</code>
+</p>
+
+<p>and </p>
+<p style="text-align: center;"><code class="reqn">{\cal E}(t, \Delta t) = \bigl [ \{ T_i^* \in (t, t + \Delta t] \} \cap \{ T_j^* &gt; t + 
+\Delta t \} \bigr ],</code>
+</p>
+<p> with <code class="reqn">i</code> and <code class="reqn">j</code> denote a randomly selected pair subjects, and
+<code class="reqn">\pi_i(t + \Delta t \mid t)</code> and <code class="reqn">\pi_j(t + \Delta t \mid t)</code> denote the conditional survival probabilities calculated by
+<code>survfitJM</code> for these two subjects, for different time windows <code class="reqn">\Delta t</code> specified by argument <code>Dt</code>. 
+The upper limit of integral in specified by argument <code>t.max</code>. The integrals in the numerator and denominator 
+are approximated using a 15-point Gauss-Kronrod quadrature rule.
+</p>
+<p>Index <code class="reqn">\mbox{C}_{dyn}^{\Delta t}</code> is in the spirit of Harrell's <code class="reqn">c</code>-index, that is for the comparable 
+subjects (i.e., the ones whose observed event times can be ordered), we compare their dynamic survival
+probabilities calculated by <code>survfitJM</code>. As with Harrell's <code class="reqn">c</code>-index, 
+<code class="reqn">\mbox{C}_{dyn}^{\Delta t}</code> does not take into account censoring, and therefore is expected to mask the 
+true discriminative capability of the joint model under heavy censoring.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>dynCJM</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>dynC</code></td>
+<td>
+<p>a numeric scalar denoting the dynamic discrimination index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>a numeric vector of time points at which the AUC was calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AUCs</code></td>
+<td>
+<p>a numeric vector of the estimated AUCs at the aforementioned time points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>a numeric vector of the estimated weights at the aforementioned time points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.max</code></td>
+<td>
+<p>a copy of the <code>t.max</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Dt</code></td>
+<td>
+<p>a copy of the <code>Dt</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classObject</code></td>
+<td>
+<p>the class of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameObject</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Antolini, L., Boracchi, P., and Biganzoli, E. (2005). A time-dependent discrimination index
+for survival data. <em>Statistics in Medicine</em> <b>24</b>, 3927–3944.
+</p>
+<p>Harrell, F., Kerry, L. and Mark, D. (1996). Multivariable prognostic models: issues in 
+developing models, evaluating assumptions and adequacy, and measuring and reducing errors.
+<em>Statistics in Medicine</em> <b>15</b>, 361–387.
+</p>
+<p>Heagerty, P. and Zheng, Y. (2005). Survival model predictive accuracy and ROC curves. 
+<em>Biometrics</em> <b>61</b>, 92–105.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for 
+longitudinal and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+<p>Rizopoulos, D., Murawska, M., Andrinopoulou, E.-R., Lesaffre, E. and Takkenberg, J. (2013). 
+Dynamic predictions with time-dependent covariates in survival analysis: A comparison between 
+joint modeling and landmarking. <em>under preparation</em>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfitJM</code>, <code>aucJM</code>, <code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# we construct the composite event indicator (transplantation or death)
+pbc2$status2 &lt;- as.numeric(pbc2$status != "alive")
+pbc2.id$status2 &lt;- as.numeric(pbc2.id$status != "alive")
+
+# we fit the joint model using splines for the subject-specific 
+# longitudinal trajectories and a spline-approximated baseline
+# risk function
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 3),
+    random = list(id = pdDiag(form = ~ ns(year, 3))), data = pbc2)
+survFit &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+jointFit &lt;- jointModel(lmeFit, survFit, timeVar = "year", 
+    method = "piecewise-PH-aGH")
+
+# dynamic discrimination index up to year 10 using a two-year interval 
+dynCJM(jointFit, pbc2, Dt = 2, t.max = 10)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

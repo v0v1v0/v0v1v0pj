@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Nmix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Univariate N-mixture models
+</h2>
+
+<h3>Description</h3>
+
+<p>Fits univariate N-mixture models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Nmix(sp1, start, method = "BFGS", K, mixture, Xp, Xl)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sp1</code></td>
+<td>
+<p>observation matrix for the species</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>initial values for the optimization process</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>optimization method passed to <code>optim</code>. Defaults to <code>"BFGS"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>truncation number of the infinite summations in the log-likelihood. Defaults to <code>max(sp1, sp2) + 100</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>latent abundance distribution specification. <code>"P"</code> for Poisson, <code>"NB"</code> for negative binomial and <code>"NeymanA"</code> for Neyman-A distributions are available. Defaults to <code>"P"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xp</code></td>
+<td>
+<p>model matrix for detection probabilities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xl</code></td>
+<td>
+<p>model matrix for abundance parameter</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function fits Royle's (2004) N-mixture model to data on species abundance collected at R sites over T time occasions. The model for observation on site i at time t can be specified as </p>
+<p style="text-align: center;"><code class="reqn">Y_{it}|N_i ~ Bin(N_i,p_{it})</code>
+</p>
+<p style="text-align: center;"><code class="reqn">N_i ~ a count distribution with mean \lambda_i.</code>
+</p>
+<p> Here, users may define a Poisson, negative binomial or Neyman-A distributions for the latent abundances N_i.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>uniNmix</code> and <code>Nmix</code>, for which many methods are available (see <code>methods(class = "uniNmix")</code> and <code>methods(class = "Nmix")</code>)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>References</h3>
+
+<p>Royle, J.A. (2004) Models for estimating population size from spatially replicated counts. Biometrics 60:108-105.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointNmix</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## simulating data with negative binomial latent abundances
+R &lt;- 10 # sites
+T &lt;- 10 # time occasions
+lambda &lt;- 5 # abundance parameter
+p &lt;- .3 # probability of detection
+phi &lt;- 1 # dispersion parameter
+set.seed(1234); Ni &lt;- rnbinom(R, mu=lambda, size=phi) # latent abundances
+y &lt;- matrix(0, ncol=T, nrow=R)
+set.seed(1234); for(i in 1:R) y[,i] &lt;- rbinom(T, Ni, p) # observed abundances
+
+## fitting the Poisson N-mixture model
+fitp &lt;- Nmix(y, Xp=cbind(rep(1, R*T)), Xl=cbind(rep(1, R)), mixture="P", K=25)
+
+## fitting the negative binomial N-mixture model
+fitnb &lt;- Nmix(y, Xp=cbind(rep(1, R*T)), Xl=cbind(rep(1, R)), mixture="NB", K=25)
+
+## fitting the Neyman-A N-mixture model
+fitna &lt;- Nmix(y, Xp=cbind(rep(1, R*T)), Xl=cbind(rep(1, R)), mixture="NeymanA", K=25)
+
+## likelihood-ratio test between Poisson and negbin models
+anova(fitp, fitnb)
+
+## comparing using AIC
+lapply(list(fitp, fitnb, fitna), AIC)
+
+## conditional posterior probability functions for abundances
+plot(fitnb, posterior = TRUE)
+
+## estimated abundances vs. true abundances
+data.frame(getranef.uniNmix(fitnb), Ni)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>allowFunctions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Allow function calls without authorization</h2>
+
+<h3>Description</h3>
+
+<p>Adds R function names to the list of functions, that
+can be called from a web page without manual confirmation on the R side.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">allowFunctions(funs = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>funs</code></td>
+<td>
+<p>Vector of function names to be added to the list. If <code>NULL</code>,
+returns names of all currently allowed R functions.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around <code>allowFunctions</code> method of class <code>App</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Names of all currently allowed functions if <code>funs = NULL</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>allowVariables</code>, <code>authorize</code>, <code>openPage</code> (check argument
+<code>allowedFunctions</code>), <code>callFunction</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+allowFunctions(c("myFunction1", "print", "someObject$method"))
+funs &lt;- allowFunctions()
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,200 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>svycor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Pearson correlations with complex survey data</h2>
+
+<h3>Description</h3>
+
+<p><code>svycor</code> extends the <code>survey</code> package by calculating correlations
+with syntax similar to the original package, which for reasons unknown lacks
+such a function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">svycor(
+  formula,
+  design,
+  na.rm = FALSE,
+  digits = getOption("jtools-digits", default = 2),
+  sig.stats = FALSE,
+  bootn = 1000,
+  mean1 = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula (e.g., ~var1+var2) specifying the terms to correlate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design</code></td>
+<td>
+<p>The <code>survey.design</code> or <code>svyrep.design</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical. Should cases with missing values be dropped?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer specifying the number of digits past the decimal to
+report in the output. Default is 2. You can change the default number of
+digits for all jtools functions with
+<code>options("jtools-digits" = digits)</code> where digits is the desired number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig.stats</code></td>
+<td>
+<p>Logical. Perform non-parametric bootstrapping
+(using <code>wtd.cor</code>) to generate standard errors and
+associated t- and p-values. See details for some considerations when doing
+null hypothesis testing with complex survey correlations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bootn</code></td>
+<td>
+<p>If <code>sig.stats</code> is TRUE, this defines the number of
+bootstraps to be run to generate the standard errors and p-values. For
+large values and large datasets, this can contribute considerably to
+processing time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean1</code></td>
+<td>
+<p>If <code>sig.stats</code> is TRUE, it is important to know whether the
+sampling weights should have a mean of 1. That is, should the standard
+errors be calculated as if the number of rows in your dataset is the total
+number of observations (TRUE) or as if the sum of the weights in your
+dataset is the total number of observations (FALSE)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to <code>svyvar()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function extends the <code>survey</code> package by calculating the
+correlations for user-specified variables in survey design and returning a
+correlation matrix.
+</p>
+<p>Using the <code>wtd.cor</code> function, this function also
+returns standard errors and p-values for the correlation terms using a
+sample-weighted bootstrapping procedure. While correlations do not require
+distributional assumptions, hypothesis testing (i.e., <code class="reqn">r &gt; 0</code>) does.
+The appropriate way to calculate standard errors and use them to define a
+probability is not straightforward in this scenario since the weighting
+causes heteroskedasticity, thereby violating
+an assumption inherent in the commonly used methods for converting Pearson's
+correlations into t-values. The method provided here is defensible, but if
+reporting in scientific publications the method should be spelled out.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If significance tests are not requested, there is one returned value:
+</p>
+<table><tr style="vertical-align: top;">
+<td><code>cors</code></td>
+<td>
+<p>The correlation matrix (without rounding)</p>
+</td>
+</tr></table>
+<p>If significance tests are requested, the following are also returned:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>p.values</code></td>
+<td>
+<p>A matrix of p values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.values</code></td>
+<td>
+<p>A matrix of t values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>std.err</code></td>
+<td>
+<p>A matrix of standard errors</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This function was designed in part on the procedure recommended by
+Thomas Lumley, the author of the survey package, on
+<a href="https://stackoverflow.com/questions/34418822/pearson-correlation-coefficient-in-rs-survey-package#41031088">Stack Overflow</a>. However, he has
+not reviewed or endorsed this implementation.
+All defects are attributed to the author.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jacob Long <a href="mailto:jacob.long@sc.edu">jacob.long@sc.edu</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>wtd.cor</code>, <code>svymean()</code>
+</p>
+<p>Other survey package extensions: 
+<code>svysd()</code>
+</p>
+<p>Other survey tools: 
+<code>pf_sv_test()</code>,
+<code>svysd()</code>,
+<code>weights_tests()</code>,
+<code>wgttest()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (requireNamespace("survey")) {
+ library(survey)
+ data(api)
+ # Create survey design object
+ dstrat &lt;- svydesign(id = ~1, strata = ~stype, weights = ~pw,
+                     data = apistrat, fpc = ~fpc)
+
+ # Print correlation matrix
+ svycor(~api00 + api99 + dnum, design = dstrat)
+
+ # Save the results, extract correlation matrix
+ out &lt;- svycor(~api00 + api99 + dnum, design = dstrat)
+ out$cors
+
+}
+
+</code></pre>
+
+
+</div>

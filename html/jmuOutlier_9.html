@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lineGraph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Line Graph Plotting</h2>
+
+<h3>Description</h3>
+
+<p>Constructs a line graph.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lineGraph(x, freq = TRUE, prob = NULL, col = "red", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of numerical observations to be graphed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+<p>Logical; if <code>freq</code> is <code>FALSE</code> or <code>prob</code> sums to 1, then relative frequencies are graphed;
+otherwise, frequencies are graphed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>Vector of the probabilities or weights on <code>x</code>,
+and does not need to sum to one.  If <code>prob</code> is <code>NULL</code>, 
+then all <code>x</code> values are equally weighted.  Also, see <code>freq</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>The color of the plotted lines.  Type <code>colors()</code> for selections.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments to <code>plot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>hist</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">par( mfrow=c(2,2) )
+lineGraph( c( rep(6,4), rep(9,7), rep(3,5), 5, 8, 8 ) )
+lineGraph( c( rep(6,4), rep(9,7), rep(3,5), 5, 8, 8 ), FALSE, col="purple" )
+lineGraph( 11:14, , c( 12, 9, 17, 5 ), col="blue" )
+lineGraph( 0:10, FALSE, dbinom(0:10,10,0.4), col="darkgreen", 
+   main="Binomial(n=10,p=0.4) probabilities" )
+par( mfrow=c(1,1) )</code></pre>
+
+
+</div>

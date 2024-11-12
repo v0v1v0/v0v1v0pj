@@ -1,0 +1,318 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit joint model for survival and longitudinal data measured with error</h2>
+
+<h3>Description</h3>
+
+<p>This generic function fits a joint model with random latent
+association, building on the formulation described in Wulfsohn and Tsiatis
+(1997) while allowing for the presence of longitudinal and survival
+covariates, and three choices for the latent process. The link between the
+longitudinal and survival processes can be proportional or separate. When
+failure is attributable to 2 separate causes, a competing risks joint model
+is fitted as per Williamson et al. (2008).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joint(
+  data,
+  long.formula,
+  surv.formula,
+  model = c("intslope", "int", "quad"),
+  sepassoc = FALSE,
+  longsep = FALSE,
+  survsep = FALSE,
+  gpt,
+  lgpt,
+  max.it,
+  tol,
+  verbose = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>an object of class <code>jointdata</code> containing the variables
+named in the formulae arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>long.formula</code></td>
+<td>
+<p>a formula object with the response variable, and the
+covariates to include in the longitudinal sub-model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv.formula</code></td>
+<td>
+<p>a formula object with the survival time, censoring
+indicator and the covariates to include in the survival sub-model. The
+response must be a survival object as returned by the
+<code>Surv</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>a character string specifying the type of latent association.
+This defaults to the intercept and slope version as seen in Wulfsohn and
+Tsiatis (1997). For association via the random intercept only, choose
+<code>model = "int"</code>, whereas for a quadratic association, use <code>model
+= "quad"</code>. Computing times are commensurate with the type of association
+structure chosen.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sepassoc</code></td>
+<td>
+<p>logical value: if <code>TRUE</code> then the joint model is fitted
+with separate association, see <code>Details</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longsep</code></td>
+<td>
+<p>logical value: if <code>TRUE</code>, parameter estimates and
+log-likelihood from a separate linear mixed model analysis of the
+longitudinal data (see the <code>lme</code> function for details)
+are returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survsep</code></td>
+<td>
+<p>if <code>TRUE</code>, parameter estimates and log-likelihood from a
+separate analysis of the survival data using the Cox proportional hazards
+model are returned (see <code>coxph</code> function for
+details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gpt</code></td>
+<td>
+<p>the number of quadrature points across which the integration with
+respect to the random effects will be performed. Defaults to <code>gpt = 3</code>
+which produces stable estimates in most datasets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lgpt</code></td>
+<td>
+<p>the number of quadrature points which the log-likelihood is
+evaluated over following a model fit. This defaults to <code>lgpt = 10</code>,
+though <code>lgpt = 3</code> is often sufficient.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.it</code></td>
+<td>
+<p>the maximum number of iterations of the EM algorithm that the
+function will perform. Defaults to <code>max.it = 200</code>, though more
+iterations may be necessary for large, complex data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the tolerance level before convergence of the algorithm is deemed
+to have occurred. Default value is <code>tol = 0.001</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>if <code>TRUE</code>, the parameter estimates at each iteration of
+the EM algorithm are printed. Default is <code>verbose = FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>joint</code> function fits a joint model to survival and 
+longitudinal data. The formulation is similar to Wulfsohn and Tsiatis 
+(1997). A linear mixed effects model is assumed for the longitudinal data,
+namely
+</p>
+<p style="text-align: center;"><code class="reqn">Y_i = X_{i1}(t_i)^T\beta_1 + D_i(t_i)^T U_i + \epsilon_i,</code>
+</p>
+
+<p>where <code class="reqn">U_i</code> is a vector of random effects, <code class="reqn">(U_{0i}, \ldots 
+  U_{qi})</code> whose length depends on the model chosen, i.e. <code class="reqn">q = 1</code> for the
+random intercept model. <code class="reqn">D_i</code> is the random effects covariate matrix, 
+which will be time-dependent for all but the random intercept model. 
+<code class="reqn">X_{i1}</code> is the longitudinal design matrix for unit <code class="reqn">i</code>, and 
+<code class="reqn">t_i</code> is the vector of measurement times for subject <code class="reqn">i</code>. 
+Measurement error is represented by <code class="reqn">\epsilon_i</code>.
+</p>
+<p>The Cox proportional hazards model is adopted for the survival data, namely
+</p>
+<p style="text-align: center;"><code class="reqn">\lambda(t) = \lambda_0(t) \exp\{{X_{i2}(t)^T \beta_2 + 
+  D_i(t)(\gamma^T U_i)}\}.</code>
+</p>
+
+<p>The parameter <code class="reqn">\gamma</code> determines the level of association between the 
+two processes. For the intercept and slope model with separate association 
+we have
+</p>
+<p style="text-align: center;"><code class="reqn">D_i(t) (\gamma^T U_i) = \gamma_0 U_{0i} + \gamma_1 U_{1i} t,</code>
+</p>
+
+<p>whereas under proportional association
+</p>
+<p style="text-align: center;"><code class="reqn">D_i(t)(\gamma^T U_i) = \gamma (U_{0i} + U_{1i} t).</code>
+</p>
+
+<p><code class="reqn">X_{i2}</code> is the vector of survival covariates for unit <code class="reqn">i</code>. The 
+baseline hazard function is <code class="reqn">\lambda_0(t)</code>.
+</p>
+<p>The function uses an EM algorithm to estimate parameters in the joint
+model. Starting values are provided by calls to standard R functions
+<code>lme</code> and <code>coxph</code> for the
+longitudinal and survival components, respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing the parameter estimates from the joint model and,
+if required, from either or both of the separate analyses. The combined
+log-likelihood from a separate analysis and the log-likelihood from the
+joint model are also produced as part of the fit.
+</p>
+
+
+<h3>Competing risks</h3>
+
+<p>If failure can be attributed to 2 causes, i.e. 
+so-called competing risks events data, then a cause-specific hazards model
+is adopted, namely
+</p>
+<p style="text-align: center;"><code class="reqn">\lambda_g(t) = \lambda_{0g}(t) \exp\{{X_{i2}(t)^T \beta_2^{(g)} + 
+  D_i(t)(\gamma^T U_i)}\},</code>
+</p>
+
+<p>where <code class="reqn">g = 1,2</code> denotes the failure type, <code class="reqn">\beta_2^{(g)}</code> (<code class="reqn">g =
+  1,2</code>) are cause-specific hazard parameters corresponding to the same 
+covariates, and <code class="reqn">\lambda_{0g}(t)</code> are cause-specific baseline hazard 
+functions. For this data, a proportional association structure is assumed 
+(i.e. <code>sepassoc = FALSE</code>) and a random-intercepts and random-slopes 
+model must be used (i.e. <code>model = "intslope"</code>). Note that the function
+only permits 2 failure types. The model is specified in full by Williamson
+et al. (2008). The function <code>joint()</code> automatically detects whether
+competing risks are present by counting the number of unique components in
+the event column on the event time data.
+</p>
+
+
+<h3>Separate models</h3>
+
+<p>Both <code>longsep</code> and <code>survsep</code> ignore any
+latent association (i.e. <code class="reqn">\gamma = 0</code>) between the longitudinal and
+survival processes but their output can be used to compare with the results
+from the joint model. If interest is solely in the individual processes
+then the user should instead make use of the functions
+<code>lme</code> and <code>coxph</code> mentioned above.
+Furthermore, if interest is in the separate effect of each random effect
+(this is for intercept and slope or quadratic models only) upon the
+survival data, the user should set <code>sepassoc = TRUE</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Since numerical integration is required, it is advisable to check the
+stability of the maximum likelihood estimates with an increasing number of
+Gauss-Hermite quadrature points. <code>joint()</code> uses <code>gpt = 3</code> by
+default, as this has been adequate for many datasets. However, for certain
+datasets and models, this might be too small.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Pete Philipson
+</p>
+
+
+<h3>References</h3>
+
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>:
+465-480.
+</p>
+<p>Williamson PR, Kolamunnage-Dona R, Philipson P, Marson AG. Joint modelling of
+longitudinal and competing risks data. <em>Stat Med.</em> 2008; <strong>27</strong>:
+6426-6438.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>lme</code>, <code>coxph</code>,
+<code>jointdata</code>, <code>jointplot</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Standard joint model
+
+data(heart.valve)
+heart.surv &lt;- UniqueVariables(heart.valve,
+                              var.col = c("fuyrs", "status"),
+                              id.col = "num")
+heart.long &lt;- heart.valve[, c("num", "time", "log.lvmi")]
+heart.cov &lt;- UniqueVariables(heart.valve,
+                             c("age", "hs", "sex"),
+                             id.col = "num")
+heart.valve.jd &lt;- jointdata(longitudinal = heart.long,
+                            baseline = heart.cov,
+                            survival = heart.surv,
+                            id.col = "num",
+                            time.col = "time")
+fit &lt;- joint(data = heart.valve.jd,
+             long.formula = log.lvmi ~ 1 + time + hs,
+             surv.formula = Surv(fuyrs, status) ~ hs,
+             model = "intslope")
+             
+## Competing risks joint model (same data as Williamson et al. 2008)
+
+## Not run: 
+data(epileptic)
+epileptic$interaction &lt;- with(epileptic, time * (treat == "LTG"))
+longitudinal &lt;- epileptic[, c(1:3, 13)]
+survival &lt;- UniqueVariables(epileptic, c(4, 6), "id")
+baseline &lt;- UniqueVariables(epileptic, "treat", "id")
+data &lt;- jointdata(longitudinal = longitudinal,
+                  survival = survival,
+                  baseline = baseline,
+                  id.col = "id",
+                  time.col = "time")
+                  
+fit2 &lt;- joint(data = data,
+              long.formula = dose ~ time + treat + interaction,
+              surv.formula = Surv(with.time, with.status2) ~ treat,
+              longsep = FALSE, survsep = FALSE,
+              gpt = 3)
+summary(fit2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

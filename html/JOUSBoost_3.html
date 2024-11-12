@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>circle_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate data from the circle model.</h2>
+
+<h3>Description</h3>
+
+<p>Simulate draws from a bernoulli distribution over <code>c(-1,1)</code>.  First, the
+predictors <code class="reqn">x</code> are drawn i.i.d. uniformly over the square in the two dimensional
+plane centered at the origin with side length <code>2*outer_r</code>, and then the
+response is drawn according to <code class="reqn">p(y=1|x)</code>, which depends
+on <code class="reqn">r(x)</code>, the euclidean norm of <code class="reqn">x</code>.  If
+<code class="reqn">r(x) \le inner_r</code>, then <code class="reqn">p(y=1|x) = 1</code>, if <code class="reqn">r(x) \ge outer_r</code>
+then <code class="reqn">p(y=1|x) = 1</code>, and <code class="reqn">p(y=1|x) = (outer_r - r(x))/(outer_r - inner_r)</code>
+when <code class="reqn">inner_r &lt;= r(x) &lt;= outer_r</code>.  See Mease (2008).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">circle_data(n = 500, inner_r = 8, outer_r = 28)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of points to simulate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inner_r</code></td>
+<td>
+<p>Inner radius of annulus.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outer_r</code></td>
+<td>
+<p>Outer radius of annulus.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Vector of simulated response in <code>c(-1,1)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>An <code>n</code>x<code>2</code> matrix of simulated predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>The true conditional probability <code class="reqn">p(y=1|x)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Mease, D., Wyner, A. and Buha, A. (2007). Costweighted
+boosting with jittering and over/under-sampling:
+JOUS-boost. J. Machine Learning Research 8 409-439.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Generate data from the circle model
+set.seed(111)
+dat = circle_data(n = 500, inner_r = 1, outer_r = 5)
+
+## Not run: 
+# Visualization of conditional probability p(y=1|x)
+inner_r = 0.5
+outer_r = 1.5
+x = seq(-outer_r, outer_r, by=0.02)
+radius = sqrt(outer(x^2, x^2, "+"))
+prob = ifelse(radius &gt;= outer_r, 0, ifelse(radius &lt;= inner_r, 1,
+             (outer_r-radius)/(outer_r-inner_r)))
+image(x, x, prob, main='Probability Density: Circle Example')
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

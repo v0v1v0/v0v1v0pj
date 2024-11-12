@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>chaindens_line</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simple by-chain kernel density plot</h2>
+
+<h3>Description</h3>
+
+<p>By-chain kernel density plot of a single parameter node.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">chaindens_line(x, nline, lwd = 1, main = "", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Posterior vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nline</code></td>
+<td>
+<p>Number of chains</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>Line width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Plot title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>tracedens_jags, chaindens_jags, chaindens_df
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">b1 &lt;- jags_df(asdf_jags_out, p="b1")
+
+chaindens_line(b1, nline=3, main="b1")
+</code></pre>
+
+
+</div>

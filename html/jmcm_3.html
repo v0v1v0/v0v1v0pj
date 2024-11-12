@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bootcurve</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Fitted Curves and Corresponding Confidence Interval using
+bootstrapping method</h2>
+
+<h3>Description</h3>
+
+<p>Plot fitted curves and corresponding 95% confidence interval
+using bootstrapping method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bootcurve(object, nboot)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a fitted joint mean covariance model of class "jmcmMod", i.e.,
+typically the result of jmcm().</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+<p>number of the bootstrap replications.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# It may take hours for large bootstrap replications
+fit.mcd &lt;- jmcm(I(sqrt(cd4)) | id | time ~ 1 | 1, data=aids,
+  triple = c(8, 1, 3), cov.method = 'mcd', control = jmcmControl(trace=T))
+bootcurve(fit.mcd, nboot = 1000)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

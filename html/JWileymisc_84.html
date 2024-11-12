@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.modelDiagnostics.lm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Diagnostics for an lm model</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a number of diagnostic plots
+from lm models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'modelDiagnostics.lm'
+plot(x, y, plot = TRUE, ask = TRUE, ncol, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>modelDiagnostics</code> class object from lm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Included to match the generic. Not used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>A logical value whether or not to plot the results or
+simply return the graaphical  objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>A logical whether to ask before changing plots.
+Only applies to interactive environments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncol</code></td>
+<td>
+<p>The number of columns to use for plots.
+Missing by default which means individual plots are created.
+If specified, plots are put together in a grid.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Included to match the generic. Not used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a list including plots of the residuals,
+residuals versus fitted values
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">testm &lt;- stats::lm(mpg ~ hp * factor(cyl), data = mtcars)
+
+md &lt;- modelDiagnostics(testm, ev.perc = .1)
+
+plot(md)
+plot(md, ncol = 2)
+
+## clean up
+rm(testm, md)
+</code></pre>
+
+
+</div>

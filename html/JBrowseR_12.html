@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>theme</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a theme for a custom JBrowse 2 view</h2>
+
+<h3>Description</h3>
+
+<p>Creates the necessary configuration string
+for a custom theme palette for your browser.
+Accepts up to four hexadecimal colors. For more
+information on how JBrowse 2 custom themes work,
+visit <a href="https://jbrowse.org/jb2/docs/config_guide#configuring-the-theme">https://jbrowse.org/jb2/docs/config_guide#configuring-the-theme</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">theme(primary, secondary = NULL, tertiary = NULL, quaternary = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>primary</code></td>
+<td>
+<p>the primary color of your custom palette</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>secondary</code></td>
+<td>
+<p>the secondary color of your custom palette</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tertiary</code></td>
+<td>
+<p>the tertiary color of your custom palette</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quaternary</code></td>
+<td>
+<p>the quaternary color of your custom palette</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a character vector of stringified theme JSON configuration
+to configure a custom color palette for the browser
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">theme("#311b92")
+theme("#311b92", "#0097a7")
+theme("#311b92", "#0097a7", "#f57c00")
+theme("#311b92", "#0097a7", "#f57c00", "#d50000")
+</code></pre>
+
+
+</div>

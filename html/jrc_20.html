@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sendData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Send data to a web page</h2>
+
+<h3>Description</h3>
+
+<p>Sends a variable to a web page, where it is saved under a specified name. This function
+is a wrapper around <code>sendData</code> method of class <code>Session</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sendData(
+  variableName,
+  variable,
+  keepAsVector = FALSE,
+  rowwise = TRUE,
+  sessionId = NULL,
+  wait = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>variableName</code></td>
+<td>
+<p>Name that the variable will have on the web page.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable</code></td>
+<td>
+<p>Variable to send.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keepAsVector</code></td>
+<td>
+<p>If <code>TRUE</code>, variables with length 1 will be saved as arrays on the web page, otherwise they 
+will be converted to atomic types.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowwise</code></td>
+<td>
+<p>If <code>TRUE</code>, matrices and data.frames will be transformed into JavaScript objects or arrays
+row wise (e.g. a matrix will become an Array of its rows).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>An ID of the session to which the data should be sent. Can also be a vector of multiple session IDs.
+If <code>NULL</code>, the data will be sent to all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wait</code></td>
+<td>
+<p>If <code>wait &gt; 0</code>, after sending the message, R will wait for a reply for a given number of seconds. 
+For this time (or until the reply is received), execution of other commands will be halted. Any incoming message 
+from the session will be considered as a reply.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>To send data back from the web page to the current R session one should use<code>jrc.sendData(variableName, variable, internal)</code>.
+Its arguments are:
+</p>
+
+<dl>
+<dt><code>variableName</code></dt>
+<dd>
+<p>Name that the variable will have in the R session. If variable name hasn't been previously added to the list
+of allowed variables (see <code>allowVariables</code> or <code>allowedVariables</code> argument of the <code>openPage</code>
+function), attempt to assign it from a web page will require manual authorization on the R side.
+</p>
+</dd>
+<dt><code>variable</code></dt>
+<dd>
+<p>Variable to send.
+</p>
+</dd>
+<dt>
+<code>internal</code> (optional)</dt>
+<dd>
+<p>Whether this variable should be used only by the session that sent it. If <code>true</code>, variable will be stored
+in the session-specific environment and can be accessed from the outside with <code>getSessionVariable</code>
+function. If <code>false</code>, variable will be saved to the outer environment of the app (see <code>setEnvironment</code>).
+By default, uses <code>true</code> for variables that already exist in the session specific environment 
+(see <code>setSessionVariables</code> or <code>sessionVariables</code> argument of the <code>openPage</code> function.)
+and <code>false</code> otherwise.
+</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>allowVariables</code>, <code>sendCommand</code>,
+<code>callFunction</code>, <code>sendHTML</code>, <code>openPage</code>, <code>getSessionIds</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+x &lt;- 1:100
+sendData("x", x)
+sendCommand("console.log(x);")
+sendCommand("jrc.sendData('x', x.filter(function(e) {return e % 2 == 0}))")
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

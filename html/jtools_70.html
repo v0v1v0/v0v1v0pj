@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>movies</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Data about movies</h2>
+
+<h3>Description</h3>
+
+<p>A dataset containing information about films, how popular they were, and
+the extent to which they feature women.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">movies
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 841 rows and 24 variables:
+</p>
+
+<dl>
+<dt>title</dt>
+<dd>
+<p>The movie's title</p>
+</dd>
+<dt>year</dt>
+<dd>
+<p>The year of the movie's US theatrical release</p>
+</dd>
+<dt>release_date</dt>
+<dd>
+<p>The exact date of the movie's US theatrical release</p>
+</dd>
+<dt>runtime</dt>
+<dd>
+<p>The length of the movie in hours</p>
+</dd>
+<dt>genre5</dt>
+<dd>
+<p>The movie's primary genre per IMDB, fit into one of 5
+broad categories</p>
+</dd>
+<dt>genre_detailed</dt>
+<dd>
+<p>The verbatim genre description per IMDB</p>
+</dd>
+<dt>rated</dt>
+<dd>
+<p>The movie's MPA rating (G, PG, PG-13, R, or NC-17) as an
+ordered factor</p>
+</dd>
+<dt>director</dt>
+<dd>
+<p>The name of the movie's director(s)</p>
+</dd>
+<dt>writer</dt>
+<dd>
+<p>The name of the movie's screenwriter(s)</p>
+</dd>
+<dt>actors</dt>
+<dd>
+<p>A comma-separated string of leading actors in the film</p>
+</dd>
+<dt>language</dt>
+<dd>
+<p>The movie's language(s), per IMDB</p>
+</dd>
+<dt>country</dt>
+<dd>
+<p>The country(ies) in which the movie was produced</p>
+</dd>
+<dt>metascore</dt>
+<dd>
+<p>The movie's score on MetaCritic, ranging from 0 to 100</p>
+</dd>
+<dt>imdb_rating</dt>
+<dd>
+<p>The movie's rating on IMDB, ranging from 0 to 10</p>
+</dd>
+<dt>imdb_votes</dt>
+<dd>
+<p>The number of users who submitted a rating on IMDB</p>
+</dd>
+<dt>imdb_id</dt>
+<dd>
+<p>The unique identifier for the movie at IMDB</p>
+</dd>
+<dt>studio</dt>
+<dd>
+<p>The studio(s) who produced the movie</p>
+</dd>
+<dt>bechdel_binary</dt>
+<dd>
+<p>A logical indicating whether the movie passed the
+Bechdel test</p>
+</dd>
+<dt>bechdel_ordinal</dt>
+<dd>
+<p>A more granular measure of the bechdel test,
+indicating not just whether the movie passed or failed but how close it
+got to passing if it did fail</p>
+</dd>
+<dt>us_gross</dt>
+<dd>
+<p>The movie's US gross in 2013 US dollars</p>
+</dd>
+<dt>int_gross</dt>
+<dd>
+<p>The movie's international gross in 2013 US dollars</p>
+</dd>
+<dt>budget</dt>
+<dd>
+<p>The movie's budget in 2013 US dollars</p>
+</dd>
+<dt>men_lines</dt>
+<dd>
+<p>The proportion of spoken lines that were spoken by male
+characters</p>
+</dd>
+<dt>lines_data</dt>
+<dd>
+<p>The raw data used to calculate <code>men_lines</code>; see Source
+for more information</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>These data are aggregated from several sources. Metadata is gathered from
+IMDB. Other information, particularly about the lines, is collected from
+<a href="https://github.com/matthewfdaniels/scripts/">The Pudding</a>. The data
+regarding the Bechdel Test, as well as about finances, comes from
+FiveThirtyEight and its associated R package (<code>fivethirtyeight</code> and its
+dataset, <code>bechdel</code>).
+</p>
+
+
+</div>

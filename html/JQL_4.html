@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tune.RJQL</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tuning function via k-fold cross vaidation for Residual Jump Q-learning.</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the cross-validation to train the best tuning parameters lambda_n and gamma_n for Residual Jump Q-learning.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tune.RJQL(sample,cm=6,Gamma.list=seq(from=1,to=20,by=2)/5,
+Lambda.list=seq(from=1,to=20,by=2)/5,RF_A.list=c(0,0.25,0.5,0.75,1),folds_num=5)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sample</code></td>
+<td>
+<p>The training dataset (Y,A,X), where Y is the patient’s associated response/outcome, A is the dose level received by each patient, and X is the patient’s baseline covariates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cm</code></td>
+<td>
+<p>The constent cm in m=n/cm, where m is the number of total subinterval that diverges with sample size n. The default value is 6.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Gamma.list</code></td>
+<td>
+<p>The candidate tuning paramter space for c1 in penalty term gamma=c1 log(n)/n. The default value is seq(from=1,to=20,by=2)/5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Lambda.list</code></td>
+<td>
+<p>The candidate tuning paramter space for c2 in penalty term lambda=c2 log(n)/n. The default value is seq(from=1,to=20,by=2)/5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RF_A.list</code></td>
+<td>
+<p>The candidate tuning paramter space for A in fitted E(Y|A=a,X) by Random Forest Regression for method 'RJQL' only. The default value is c(0,0.25,0.5,0.75,1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>folds_num</code></td>
+<td>
+<p>The number of the folds in the cross-validation process. The default value is 5.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>best_gamma</code></td>
+<td>
+<p>The best tuning parameter gamma by minimuming the least square loss function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>best_lambda</code></td>
+<td>
+<p>The best tuning parameter lambda by minimuming the least square loss function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>best_a</code></td>
+<td>
+<p>The best tuning parameter a to fit random forest by minimuming the least square loss function.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Jump Q-learning for Individualized Interval-valued Dose Rule.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n=50
+d=4
+x=matrix(runif(n*(d-1),-1,1),nrow=n,ncol=d-1)
+a=runif(n,0,1)
+y=(1+x[,1])*(a&gt;=0&amp;a&lt;0.35)+(x[,1]-x[,2])*(a&gt;=0.35&amp;a&lt;0.65)+(1-x[,2])*(a&gt;=0.65&amp;a&lt;=1)+rnorm(n,0,1)
+sample=data.frame(y=y,a=a,x=x)
+tune.RJQL(sample)
+</code></pre>
+
+
+</div>

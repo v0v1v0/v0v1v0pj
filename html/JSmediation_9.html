@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>build_contrast</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Builds a contrast code from character vector</h2>
+
+<h3>Description</h3>
+
+<p>This function constructs a contrast code from a character
+variable. It is useful when one needs to recode a two-category character
+variable to a numeric one.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">build_contrast(vector, cond_a, cond_b)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vector</code></td>
+<td>
+<p>A character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cond_a</code></td>
+<td>
+<p>A character string to be coded -0.5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cond_b</code></td>
+<td>
+<p>A character string to be coded  0.5.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>lm</code> method supports factor and character variables by dummy
+coding them. Dummy coding can make the interpretation of regression
+coefficient difficult or at least more difficult than contrast coding.
+Contrast-coded-variable coefficients interpretation is particularly useful
+when conducting a joint-significance test.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>scale</code> for centering continuous numeric variable.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  data(ho_et_al)
+
+  ho_et_al$condition_contrast &lt;- build_contrast(ho_et_al$condition,
+                                                "Low discrimination",
+                                                "High discrimination")
+
+ head(ho_et_al)
+
+</code></pre>
+
+
+</div>

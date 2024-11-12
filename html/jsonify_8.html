@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>validate_json</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>validate JSON</h2>
+
+<h3>Description</h3>
+
+<p>Validates JSON
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">validate_json(json)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>json</code></td>
+<td>
+<p>character or json object</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>logical vector
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+validate_json('[]')
+df &lt;- data.frame(id = 1:5, val = letters[1:5])
+validate_json( to_json(df) )
+
+validate_json('{"x":1,"y":2,"z":"a"}')
+
+validate_json( c('{"x":1,"y":2,"z":"a"}', to_json(df) ) )
+validate_json( c('{"x":1,"y":2,"z":a}', to_json(df) ) )
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.psvcsignal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting function for <code>psVCSignal</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Plotting function for varying-coefficent signal
+regression P-spline smooth coefficients (using <code>psVCSignal</code> with <code>class psvcsignal</code>).
+Although se surface bands can be comuputed they are intentially left out as they are not
+interpretable, and there is generally little data to steer
+such a high-dimensional parameterization.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'psvcsignal'
+plot(x, ..., xlab = " ", ylab = " ", Resol = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the P-spline object, usually from <code>psVCSignal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>label for the x-axis, e.g. "my x" (quotes required).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>label for the y-axis, e.g. "my y" (quotes required).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Resol</code></td>
+<td>
+<p>resolution for plotting, default <code>Resol = 100</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>Plot</code></td>
+<td>
+<p>a two panel plot, one of the 2D P-spline signal coefficient surface
+and another that displays several slices of the smooth coefficient vectors at fixed levels of the
+varying index.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P. H. C. and Marx, B. D. (2003). Multivariate calibration with temperature
+interaction using two-dimensional penalized signal regression. <em>Chemometrics
+and Intellegent Laboratory Systems</em>, 66, 159–174.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(fds)
+data(nirc)
+iindex &lt;- nirc$x
+X &lt;- nirc$y
+sel &lt;- 50:650 # 1200 &lt;= x &amp; x&lt;= 2400
+X &lt;- X[sel, ]
+iindex &lt;- iindex[sel]
+dX &lt;- diff(X)
+diindex &lt;- iindex[-1]
+y &lt;- as.vector(labc[1, 1:40]) # percent fat
+t_var &lt;- as.vector(labc[4, 1:40]) # percent flour
+oout &lt;- 23
+dX &lt;- t(dX[, -oout])
+y &lt;- y[-oout]
+t_var = t_var[-oout]
+Pars = rbind(c(min(diindex), max(diindex), 25, 3, 1e-7, 2),
+c(min(t_var), max(t_var), 20, 3, 0.0001, 2))
+fit1 &lt;- psVCSignal(y, dX, diindex, t_var, Pars = Pars,
+family = "gaussian", link = "identity", int = TRUE)
+plot(fit1, xlab = "Coefficient Index", ylab = "VC: % Flour")
+names(fit1)
+</code></pre>
+
+
+</div>

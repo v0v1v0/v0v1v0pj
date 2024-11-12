@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jdm_new_bs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A Monte Carlo Option Pricing Algorithm for Jump Diffusion Model with Correlational Companies</h2>
+
+<h3>Description</h3>
+
+<p>A Monte Carlo Option Pricing Algorithm for Jump Diffusion Model with Correlational Companies
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jdm_new_bs(
+  correlation_matrix,
+  day = 180,
+  monte_carlo = 1000,
+  start_price = start_price,
+  mu = mu,
+  sigma = sigma,
+  lambda = lambda,
+  K = K,
+  plot = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>correlation_matrix</code></td>
+<td>
+<p>: a matrix of a correlation coefficient of companies</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>day</code></td>
+<td>
+<p>: an integer of a time duration of simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>monte_carlo</code></td>
+<td>
+<p>: an integer of an iteration number for monte carlo.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start_price</code></td>
+<td>
+<p>: a vector of company's initial stock prices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>: a vector of drift parameters of geometric Brownian motion.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>: a vector of volatility parameters of geometric Brownian motion.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>: an integer of how many times jump in unit time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>: a vector of option strike prices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>: a logical type of whether plot a result or not.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>option prices : a list of (call_price, put_price)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">price &lt;- jdm_new_bs(matrix(c(0.1,0.2,0.3,0.4,0.5,0.6,0.7,0.8,0.9),nrow=3, ncol=3),
+                    day=100,monte_carlo=20, c(1000,500,500),
+                    c(0.002, 0.012, 0.005),c(0.05,0.05,0.06), 3,
+                    c(1500,1000,700),plot=TRUE
+                   )
+</code></pre>
+
+
+</div>

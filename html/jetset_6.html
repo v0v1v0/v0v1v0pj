@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scores</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Data: Probe set quality scores</h2>
+
+<h3>Description</h3>
+
+<p>This data set provides gene target and quality scores for each probe set on the 
+corresponding Affymetrix gene expression microarrays. </p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scores.hgu95av2
+scores.hgu133a
+scores.hgu133plus2
+scores.u133x3p
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with each row corresponding to a probe set, with 4 columns:
+</p>
+
+<dl>
+<dt>EntrezID</dt>
+<dd>
+<p>Entrez GeneID of the targeted gene (character).</p>
+</dd>
+<dt>process</dt>
+<dd>
+<p>Processivity requirement  (integer).</p>
+</dd>
+<dt>specificity</dt>
+<dd>
+<p>Specificity score (numeric).</p>
+</dd>
+<dt>coverage</dt>
+<dd>
+<p>Coverage score (numeric).</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>If there is a relative majority (plurality) of the probes in a probe set that are specific 
+for a single gene, this is defined as the <em>targeted gene</em>. If no such majority exists, 
+the targeted gene is defined as <code>NA</code>, as are the following scores.
+</p>
+<p>The <em>processivity requirement</em> is the number of consecutive bases that
+must be synthesized to generate a target that can be detected by the probe set.
+</p>
+<p>The <em>specificity score</em> is the fraction of the probes in a probe set 
+that are likely to detect the targeted gene and unlikely to detect other genes.
+</p>
+<p>The <em>coverage score</em> is the fraction of the splice isoforms
+belonging to the targeted gene that are detected by the probe set.
+</p>
+<p>The following two scores are not contained in this data, but are calculated from the above scores; to see them use <code>jscores</code>.
+</p>
+<p>The <em>robustness score</em> quantifies robustness against transcript
+degradation.  The robustness score uses the processivity requirement to estimate the 
+signal intensity of a probe set, relative to the ideal case of perfect processivity.
+</p>
+<p>The <em>overall score</em> is the product of the specificity score, 
+coverage score, and robustness score.
+</p>
+<p>All scores can range from 0 to 1.  A higher score indicates better (predicted) performance. 
+</p>
+<p>Details about the jetset algorithm are available in the vignette.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This data is also available in CSV format from
+<a href="http://www.cbs.dtu.dk/biotools/jetset/">http://www.cbs.dtu.dk/biotools/jetset/</a>
+</p>
+
+
+<h3>Source</h3>
+
+<p>Scores are calculated from BLASTN alignments between probe sequences
+and Refseq transcript sequences, as described in the vignette and in the reference below.
+</p>
+<p>The Refseq human RNA was downloaded from NCBI on 2017-04-04. The lookups were based on <span class="pkg">org.Hs.eg.db</span> version 3.4.0.
+</p>
+
+
+<h3>References</h3>
+
+<p>Qiyuan Li, Nicolai J. Birkbak, Balazs Gyorffy, Zoltan Szallasi and Aron C. Eklund. (2011) Jetset: selecting the optimal microarray probe set to represent a gene. BMC Bioinformatics. 12:474.
+</p>
+
+
+<h3>See Also</h3>
+
+ <p><code>jscores</code> for a more convenient way to access this data</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  ## Here is the EntrezID for the ESR1 gene
+  id &lt;- "2099"
+  
+  ## Extract the scores for all probe sets detecting ESR1
+  scores.hgu95av2[which(scores.hgu95av2$EntrezID == id), ]
+
+  ## Compare to the recommended function 'jscores'
+  jscores("hgu95av2", eg = "2099")
+
+</code></pre>
+
+
+</div>

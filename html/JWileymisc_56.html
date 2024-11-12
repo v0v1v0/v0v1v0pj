@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>internalformulaIt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal function to create a formula</h2>
+
+<h3>Description</h3>
+
+<p>This function is not intended to be called by users.
+It creates a formula style character string from its argument.
+But note that it does not actually create a formula class object.
+If you do not want an argument, use the empty string.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">internalformulaIt(dv, iv, covariates)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dv</code></td>
+<td>
+<p>A character string of the dependent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv</code></td>
+<td>
+<p>A character string or vector of the independent variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariates</code></td>
+<td>
+<p>A character string or vector of the dependent variables</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">JWileymisc:::internalformulaIt("mpg", "hp", "am")
+JWileymisc:::internalformulaIt("mpg", "hp", "")
+JWileymisc:::internalformulaIt("mpg", "", "am")
+</code></pre>
+
+
+</div>

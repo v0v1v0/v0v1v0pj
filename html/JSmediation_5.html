@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add_index.moderated_mediation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>add_index method for moderated mediation</h2>
+
+<h3>Description</h3>
+
+<p>Adds the confidence interval for the index of moderated
+mediation to a model fitted with <code>mdt_moderated</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'moderated_mediation'
+add_index(mediation_model, times = 5000, level = 0.05, stage = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mediation_model</code></td>
+<td>
+<p>A mediation model of class
+<code>"moderated_mediation"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Number of simulations to use to compute the Monte Carlo indirect
+effect confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Alpha threshold to use for the confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stage</code></td>
+<td>
+<p>Moderated indirect effect's stage for which to compute the
+confidence interval. Can be either <code>1</code> (or <code>"first"</code>) or <code>2</code>
+(or <code>"second"</code>). To compute total indirect effect moderation index,
+use <code>"total"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Indirect effect moderation index for moderated mediation uses
+<code class="reqn">a</code>, <code class="reqn">a \times Mod</code>, <code class="reqn">b</code>, and <code class="reqn">b \times Mod</code> estimates and their standard errors to compute the appropriate index
+product distribution using Monte Carlo methods (see Muller, Judd, &amp;
+Yzerbyt, 2005).
+</p>
+<p>JSmediation supports different types of mediated indirect effect
+index:
+</p>
+
+<ul>
+<li> <p><strong>Stage 1:</strong> computes the product between <code class="reqn">a \times Mod</code> and
+<code class="reqn">b</code>.
+</p>
+</li>
+<li> <p><strong>Stage 2:</strong> computes the product between <code class="reqn">a</code> and <code class="reqn">b \times
+     Mod</code>.
+</p>
+</li>
+<li> <p><strong>Total:</strong> computes the sum of Stage 1 and Stage 2 distribution.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Muller, D., Judd, C. M., &amp; Yzerbyt, V. Y. (2005). When moderation
+is mediated and mediation is moderated. <em>Journal of Personality and Social
+Psychology</em>, 89(6), 852-863. doi: 10.1037/0022-3514.89.6.852
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## getting a stage 1 moderated indirect effect index
+ho_et_al$condition_c &lt;- build_contrast(ho_et_al$condition,
+                                       "Low discrimination",
+                                       "High discrimination")
+ho_et_al &lt;- standardize_variable(ho_et_al, c(linkedfate, sdo), suffix ="c")
+moderated_model &lt;- mdt_moderated(data = ho_et_al,
+                                 IV = condition_c,
+                                 DV = hypodescent,
+                                 M = linkedfate_c,
+                                 Mod = sdo_c)
+add_index(moderated_model, stage = 1)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Complaints</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Environmental complaints from the Rijnomond area of The Netherlands</h2>
+
+<h3>Description</h3>
+
+<p>Environmental complaints about odors from the Rijnmond region (near Rotterdam in the Netherlands) in 1988.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(Complaints)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A dataframe with two columns:
+</p>
+
+<dl>
+<dt><code>freq</code></dt>
+<dd>
+<p>The daily number of complaints.</p>
+</dd>
+<dt><code>count</code></dt>
+<dd>
+<p>The number of days the specific complaint frequency occurred.</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>In 1988, the Rijnmond Environmental Agency registered approximately 20,000
+complaints about odors from regional inhabitants.
+</p>
+
+
+<h3>Source</h3>
+
+<p>Personal information from Paul Eilers.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">plot(Complaints$freq, Complaints$count, type = 'h',
+xlab = 'Number of complaints per day', ylab = 'Frequency')
+</code></pre>
+
+
+</div>

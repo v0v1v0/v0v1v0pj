@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>show</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print methods</h2>
+
+<h3>Description</h3>
+
+<p>Show methods, to display objects at the prompt</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">albert_show(x)
+spin_show(x)
+jordan_matrix_show(x)
+description(x,plural=FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Jordan object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plural</code></td>
+<td>
+<p>Boolean, indicating whether plural form is to
+be given</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The special algebras use a bespoke show method,
+<code>jordan_matrix_show()</code> or <code>spin_show()</code>.  If the number of
+elements is small, they display a concise representation and modify
+the row and column names of the underlying matrix slightly; spin
+factors are displayed with the scalar component offset from the vector
+component.
+</p>
+<p>Print methods for special algebras are sensitive to the value of
+option <code>head_and_tail</code>, a two-element integer vector indicating
+the number of start lines and end lines to print.
+</p>
+<p>Function <code>description()</code> gives a natural-language description of
+its argument, used in the print method.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns the argument</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rspin()
+
+rqhm()
+
+rchm()
+</code></pre>
+
+
+</div>

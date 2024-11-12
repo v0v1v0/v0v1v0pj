@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized logit function</h2>
+
+<h3>Description</h3>
+
+<p>Compute generalized logit function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logit(x, min = 0, max = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>value(s) to be transformed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min</code></td>
+<td>
+<p>Lower end of logit interval</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max</code></td>
+<td>
+<p>Upper end of logit interval</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The generalized logit function takes values on <code class="reqn">[min, max]</code> and transforms them to span <code class="reqn">[ -\infty, +\infty ]</code> it is defined as:
+</p>
+<p style="text-align: center;"><code class="reqn">y = log(\frac{p}{(1-p)})</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">where</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">p=\frac{(x-min)}{(max-min)}</code>
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>y Transformed value(s).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Gregory R. Warnes &lt;greg@warnes.net&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- seq(0,10, by=0.25)
+xt &lt;- jSDM::logit(x, min=0, max=10)
+cbind(x,xt)
+y &lt;- jSDM::inv_logit(xt, min=0, max=10)
+cbind(x,xt,y)  
+</code></pre>
+
+
+</div>

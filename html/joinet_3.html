@@ -1,0 +1,219 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cv.joinet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Model comparison</h2>
+
+<h3>Description</h3>
+
+<p>Compares univariate and multivariate regression.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cv.joinet(
+  Y,
+  X,
+  family = "gaussian",
+  nfolds.ext = 5,
+  nfolds.int = 10,
+  foldid.ext = NULL,
+  foldid.int = NULL,
+  type.measure = "deviance",
+  alpha.base = 1,
+  alpha.meta = 1,
+  compare = FALSE,
+  mice = FALSE,
+  cvpred = FALSE,
+  times = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>outputs<strong>:</strong>
+numeric matrix with <code class="reqn">n</code> rows (samples)
+and <code class="reqn">q</code> columns (outputs)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>inputs<strong>:</strong>
+numeric matrix with <code class="reqn">n</code> rows (samples)
+and <code class="reqn">p</code> columns (inputs)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>distribution<strong>:</strong>
+vector of length <code class="reqn">1</code> or <code class="reqn">q</code> with entries
+<code>"gaussian"</code>, <code>"binomial"</code> or <code>"poisson"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfolds.ext</code></td>
+<td>
+<p>number of external folds</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfolds.int</code></td>
+<td>
+<p>number of internal folds</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foldid.ext</code></td>
+<td>
+<p>external fold identifiers<strong>:</strong>
+vector of length <code class="reqn">n</code> with entries
+between <code class="reqn">1</code> and <code>nfolds.ext</code>;
+or <code>NULL</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>foldid.int</code></td>
+<td>
+<p>internal fold identifiers<strong>:</strong>
+vector of length <code class="reqn">n</code> with entries
+between <code class="reqn">1</code> and <code>nfolds.int</code>;
+or <code>NULL</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type.measure</code></td>
+<td>
+<p>loss function<strong>:</strong>
+vector of length <code class="reqn">1</code> or <code class="reqn">q</code> with entries
+<code>"deviance"</code>, <code>"class"</code>, <code>"mse"</code> or <code>"mae"</code>
+(see <code>cv.glmnet</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha.base</code></td>
+<td>
+<p>elastic net mixing parameter for base learners<strong>:</strong>
+numeric between <code class="reqn">0</code> (ridge) and <code class="reqn">1</code> (lasso)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha.meta</code></td>
+<td>
+<p>elastic net mixing parameter for meta learners<strong>:</strong>
+numeric between <code class="reqn">0</code> (ridge) and <code class="reqn">1</code> (lasso)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compare</code></td>
+<td>
+<p>experimental arguments<strong>:</strong>
+character vector with entries "mnorm", "spls", "mrce",
+"sier", "mtps", "rmtl", "gpm" and others
+(requires packages <code>spls</code>, <code>MRCE</code>, <code>SiER</code>, <code>MTPS</code>, <code>RMTL</code> or <code>GPM</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mice</code></td>
+<td>
+<p>missing data imputation<strong>:</strong>
+logical (<code>mice=TRUE</code> requires package <code>mice</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cvpred</code></td>
+<td>
+<p>return cross-validated predictions: logical</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>measure computation time<strong>:</strong>
+logical</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to <code>glmnet</code>
+and <code>cv.glmnet</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns a matrix with <code class="reqn">q</code> columns,
+including the cross-validated loss from the univariate models
+(<code>base</code>), the multivariate models (<code>meta</code>),
+and the intercept-only models (<code>none</code>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=rowSums(X[,1:5])))
+cv.joinet(Y=Y,X=X)
+## End(Not run)
+
+## Not run: 
+# correlated features
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+mu &lt;- rep(0,times=p)
+Sigma &lt;- 0.90^abs(col(diag(p))-row(diag(p)))
+X &lt;- MASS::mvrnorm(n=n,mu=mu,Sigma=Sigma)
+mu &lt;- rowSums(X[,sample(seq_len(p),size=5)])
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=mu))
+#Y &lt;- t(MASS::mvrnorm(n=q,mu=mu,Sigma=diag(n)))
+cv.joinet(Y=Y,X=X)
+## End(Not run)
+
+## Not run: 
+# other distributions
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+eta &lt;- rowSums(X[,1:5])
+Y &lt;- replicate(n=q,expr=rbinom(n=n,size=1,prob=1/(1+exp(-eta))))
+cv.joinet(Y=Y,X=X,family="binomial")
+Y &lt;- replicate(n=q,expr=rpois(n=n,lambda=exp(scale(eta))))
+cv.joinet(Y=Y,X=X,family="poisson")
+## End(Not run)
+
+## Not run: 
+# uncorrelated outcomes
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+y &lt;- rnorm(n=n,mean=rowSums(X[,1:5]))
+Y &lt;- cbind(y,matrix(rnorm(n*(q-1)),nrow=n,ncol=q-1))
+cv.joinet(Y=Y,X=X)
+## End(Not run)
+
+## Not run: 
+# sparse and dense models
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=rowSums(X[,1:5])))
+set.seed(1) # fix folds
+cv.joinet(Y=Y,X=X,alpha.base=1) # lasso
+set.seed(1)
+cv.joinet(Y=Y,X=X,alpha.base=0) # ridge
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_jma_weather</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read the past weather</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+<p>Read the past weather data files downloaded from JMA.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_jma_weather(path)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>The path to the downloaded file.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a <code>tbl</code> object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://www.data.jma.go.jp/gmd/risk/obsdl/index.php">https://www.data.jma.go.jp/gmd/risk/obsdl/index.php</a>,
+<a href="https://www.data.jma.go.jp/gmd/risk/obsdl/top/help3.html">https://www.data.jma.go.jp/gmd/risk/obsdl/top/help3.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">read_jma_weather(system.file("dummy/dl_data.csv", package = "jmastats"))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>transform_vars_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transform skewed variables (aiming at they conform to a normal distribution) in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Transform skewed variables (aiming at they conform to a normal distribution) in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">transform_vars_omv(
+  dtaInp = NULL,
+  fleOut = "",
+  varXfm = NULL,
+  psvAnl = FALSE,
+  usePkg = c("foreign", "haven"),
+  selSet = "",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtaInp</code></td>
+<td>
+<p>Either a data frame or the name of a data file to be read (including the path, if required; "FILENAME.ext"; default: NULL); files can be of
+any supported file type, see Details below</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fleOut</code></td>
+<td>
+<p>Name of the data file to be written (including the path, if required; "FILE_OUT.omv"; default: ""); if empty, the resulting data frame is
+returned instead</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varXfm</code></td>
+<td>
+<p>Named list variable where the name indicates which transformation is to be carried out and where each list entry points to one or more
+variables to be transformed using this transformation. See Details for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psvAnl</code></td>
+<td>
+<p>Whether analyses that are contained in the input file shall be transferred to the output file (default: FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>usePkg</code></td>
+<td>
+<p>Name of the package: "foreign" or "haven" that shall be used to read SPSS, Stata and SAS files; "foreign" is the default (it comes with
+base R), but "haven" is newer and more comprehensive</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selSet</code></td>
+<td>
+<p>Name of the data set that is to be selected from the workspace (only applies when reading .RData-files)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>varXfm</code> has to be a named list variable where the names can either indicate the type of transformation or the kind and degree of skewness that shall be
+corrected. For the type of transformation, the following names are valid: <code>posSqr</code>, <code>negSqr</code>, <code>posLog</code>, <code>negLog</code>, <code>posInv</code>, <code>negInv</code>; where the second
+part of the name indicates the transformation to be carried out: <code>...Sqr</code> - square root, <code>...Log</code> - logarithm to the basis 10, <code>...Inv</code> - inversion, i.e.,
+1 / original value), and where the first part of the name indicates whether the original value is used (<code>pos...</code>) or whether the original value is
+subtracted from the maximum value of that variable (<code>neg...</code>; a constant of 1 is added to the maximum value for <code>...Log</code> and <code>...Inv</code> transformations).
+For the degree and kind of skewness, the following names are valid: <code>mdrPos</code>, <code>strPos</code>, <code>svrPos</code>, <code>mdrNeg</code>, <code>strNeg</code>, <code>svrNeg</code> (degree: moderate, strong,
+severe; kind: positive or negative).
+</p>
+</li>
+<li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the functions that are used for reading and writing the data. By clicking
+on the respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take. The functions are:
+<code>read_omv</code> and <code>write_omv</code> (for jamovi-files), <code>read.table</code> (for CSV / TSV files; using similar defaults as <code>read.csv</code> for CSV and <code>read.delim</code> for TSV
+which both are based upon <code>read.table</code>), <code>load</code> (for .RData-files), <code>readRDS</code> (for .rds-files), <code>read_sav</code> (needs the R-package <code>haven</code>) or <code>read.spss</code>
+(needs the R-package <code>foreign</code>) for SPSS-files, <code>read_dta</code> (<code>haven</code>) / <code>read.dta</code> (<code>foreign</code>) for Stata-files, <code>read_sas</code> (<code>haven</code>) for SAS-data-files,
+and <code>read_xpt</code> (<code>haven</code>) / <code>read.xport</code> (<code>foreign</code>) for SAS-transport-files. If you would like to use <code>haven</code>, you may need to install it using
+<code>install.packages("haven", dep = TRUE)</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>a data frame (only returned if <code>fleOut</code> is empty) where the order of variables / columns of the input data set is re-arranged
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>transform_vars_omv</code> internally uses the following functions for reading and writing data files in different formats: <code>read_omv()</code> and
+<code>write_omv()</code> for jamovi-files, <code>utils::read.table()</code> for CSV / TSV files, <code>load()</code> for reading .RData-files, <code>readRDS()</code> for .rds-files,
+<code>haven::read_sav()</code> or <code>foreign::read.spss()</code> for SPSS-files, <code>haven::read_dta()</code> or <code>foreign::read.dta()</code> for Stata-files, <code>haven::read_sas()</code> for
+SAS-data-files, and <code>haven::read_xpt()</code> or <code>foreign::read.xport()</code> for SAS-transport-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# generate skewed variables
+set.seed(335)
+dtaInp &lt;- data.frame(MP = rnorm(1000) * 1e-1 + rexp(1000, 2) * (1 - 1e-1),
+                     MN = rnorm(1000) * 1e-1 - rexp(1000, 2) * (1 - 1e-1),
+                     SP = rnorm(1000) * 1e-2 + rexp(1000, 2) * (1 - 1e-2),
+                     SN = rnorm(1000) * 1e-2 - rexp(1000, 2) * (1 - 1e-2),
+                     EP = rnorm(1000) * 1e-4 + rexp(1000, 2) * (1 - 1e-4),
+                     EN = rnorm(1000) * 1e-4 - rexp(1000, 2) * (1 - 1e-4))
+jmv::descriptives(data = dtaInp, skew = TRUE, sw = TRUE)
+
+crrXfm &lt;- list(posSqr = c("MP"), negSqr = c("MN"), posLog = c("MP", "SP"), negLog = c("SN"),
+               posInv = c("MP", "SP", "EP"), negInv = c("EN"))
+dtaOut &lt;- jmvReadWrite::transform_vars_omv(dtaInp = dtaInp, varXfm = crrXfm)
+jmv::descriptives(data = dtaOut, skew = TRUE, sw = TRUE)
+
+crrXfm &lt;- list(mdrPos = c("MP"), mdrNeg = c("MN"), strPos = c("SP"), strNeg = c("SN"),
+               svrPos = c("EP"), svrNeg = c("EN"))
+dtaOut &lt;- jmvReadWrite::transform_vars_omv(dtaInp = dtaInp, varXfm = crrXfm)
+jmv::descriptives(data = dtaOut, skew = TRUE, sw = TRUE)
+
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

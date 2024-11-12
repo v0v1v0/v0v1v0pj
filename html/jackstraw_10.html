@@ -1,0 +1,185 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstraw_lfa</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Non-Parametric Jackstraw for Logistic Factor Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Test association between the observed variables and their latent variables captured by logistic factors (LFs).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstraw_lfa(
+  dat,
+  r,
+  FUN,
+  r1 = NULL,
+  s = NULL,
+  B = NULL,
+  covariate = NULL,
+  permute_alleles = TRUE,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>either a genotype matrix with <code>m</code> rows as variables and <code>n</code> columns as observations, or a <code>BEDMatrix</code> object (see package <code>BEDMatrix</code>, these objects are transposed compared to the above but this works fine as-is, see example, no need to modify a <code>BEDMatrix</code> input).
+A <code>BEDMatrix</code> input triggers a low-memory mode where permuted data is also written and processed from disk, whereas a regular matrix input stores permutations in memory.
+The tradeoff is <code>BEDMatrix</code> version typically runs considerably slower, but enables analysis of very large data that is otherwise impossible.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>a number of significant LFs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>a function to use for LFA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>a numeric vector of LFs of interest (implying you are not interested in all <code>r</code> LFs).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>a number of “synthetic” null variables. Out of <code>m</code> variables, <code>s</code> variables are independently permuted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a number of resampling iterations. There will be a total of <code>s*B</code> null statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariate</code></td>
+<td>
+<p>a data matrix of covariates with corresponding <code>n</code> observations (do not include an intercept term).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>permute_alleles</code></td>
+<td>
+<p>If TRUE (default), alleles (rather than genotypes) are permuted, which results in a more Binomial synthetic null when data is highly structured.
+Changing to FALSE is not recommended, except for research purposes to confirm that it performs worse than the default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical specifying to print the computational progress.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function uses logistic factor analysis (LFA) from Hao et al. (2016).
+Particularly, the deviance in logistic regression (the full model with <code>r</code> LFs vs. the intercept-only model) is used to assess significance.
+This function requires the <code>gcatest</code> package, and in practice also the <code>lfa</code> package, to be installed from Bioconductor.
+</p>
+<p>The random outputs of the regular matrix versus the <code>BEDMatrix</code> versions are equal in distribution.
+However, fixing a seed and providing the same data to both versions does not result in the same exact outputs.
+This is because the <code>BEDMatrix</code> version permutes loci in a different order by necessity.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>jackstraw_lfa</code> returns a list consisting of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p><code>m</code> p-values of association tests between variables and their LFs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs.stat</code></td>
+<td>
+<p><code>m</code> observed deviances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.stat</code></td>
+<td>
+<p><code>s*B</code> null deviances</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Neo Christopher Chung <a href="mailto:nchchung@gmail.com">nchchung@gmail.com</a>
+</p>
+<p>Alejandro Ochoa <a href="mailto:alejandro.ochoa@duke.edu">alejandro.ochoa@duke.edu</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Chung and Storey (2015) Statistical significance of variables driving systematic variation in high-dimensional data. Bioinformatics, 31(4): 545-554 <a href="https://doi.org/10.1093/bioinformatics/btu674">doi:10.1093/bioinformatics/btu674</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jackstraw_pca jackstraw jackstraw_subspace
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+## simulate genotype data from a logistic factor model: drawing rbinom from logit(BL)
+m &lt;- 5000; n &lt;- 100; pi0 &lt;- .9
+m0 &lt;- round(m*pi0)
+m1 &lt;- m - round(m*pi0)
+B &lt;- matrix(0, nrow=m, ncol=1)
+B[1:m1,] &lt;- matrix(runif(m1*n, min=-.5, max=.5), nrow=m1, ncol=n)
+L &lt;- matrix(rnorm(n), nrow=1, ncol=n)
+BL &lt;- B %*% L
+prob &lt;- exp(BL)/(1+exp(BL))
+
+dat &lt;- matrix(rbinom(m*n, 2, as.numeric(prob)), m, n)
+
+# load lfa package (install from Bioconductor)
+library(lfa)
+# choose the number of logistic factors, including the intercept
+r &lt;- 2
+# define the function this way, a function of the genotype matrix only
+FUN &lt;- function(x) lfa::lfa( x, r )
+
+## apply the jackstraw_lfa
+out &lt;- jackstraw_lfa( dat, r, FUN )
+
+# if you had very large genotype data in plink BED/BIM/FAM files,
+# use BEDMatrix and save memory by reading from disk (at the expense of speed)
+library(BEDMatrix)
+dat_BM &lt;- BEDMatrix( 'filepath' ) # assumes filepath.bed, .bim and .fam exist
+# run jackstraw!
+out &lt;- jackstraw_lfa( dat_BM, r, FUN )
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_html2cms</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert a HTML file into a HTML block to be copied and pasted for CMS.</h2>
+
+<h3>Description</h3>
+
+<p>Convert a HTML file into a HTML block to be copied and pasted for CMS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_html2cms(
+  in_text,
+  full_html = the$full_html %||% FALSE,
+  tag = the$tag %||% "body",
+  id = the$id,
+  remove_script = the$remove_script %||% FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>in_text</code></td>
+<td>
+<p>character. Character vector representing the HTML file to convert.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>full_html</code></td>
+<td>
+<p>logical. If TRUE, produce complete html output,
+convenient when drafting a document. When this option is enabled, tag and
+id and remove_script options are silently ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tag</code></td>
+<td>
+<p>character. Outer-most tag for the resulting HTML snippet.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>character. id attribute for the outer-most tag.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove_script</code></td>
+<td>
+<p>logical. If TRUE, script tags are all stripped out.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character. HTML block.
+</p>
+
+
+</div>

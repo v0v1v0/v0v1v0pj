@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_residual_cor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the residual correlation matrix from a latent variable model (LVM)</h2>
+
+<h3>Description</h3>
+
+<p>This function use coefficients <code class="reqn">(\lambda_{jl}</code> with <code class="reqn">j=1,\dots,n_{species}</code> and <code class="reqn">l=1,\dots,n_{latent})</code>, corresponding to latent variables fitted using <code>jSDM</code> package, to calculate the variance-covariance matrix which controls correlation between species.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_residual_cor(mod, prob = 0.95, type = "mean")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mod</code></td>
+<td>
+<p>An object of class <code>"jSDM"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>A numeric scalar in the interval <code class="reqn">(0,1)</code> giving the target probability coverage of the highest posterior density (HPD) intervals, by which to determine whether the correlations are "significant". Defaults to 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A choice of either the posterior median (<code>type = "median"</code>) or posterior mean (<code>type = "mean"</code>), which are then treated as estimates and the fitted values are calculated from.
+Default is posterior mean.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>After fitting the jSDM with latent variables, the <b>fullspecies residual correlation matrix</b> : <code class="reqn">R=(R_{ij})</code> with <code class="reqn">i=1,\ldots, n_{species}</code> and <code class="reqn">j=1,\ldots, n_{species}</code> can be derived from the covariance in the latent variables such as : 
+<code class="reqn">\Sigma_{ij}=\lambda_i' .\lambda_j</code>, in the case of a regression with probit, logit or poisson link function and 
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code class="reqn">\Sigma_{ij}</code> </td>
+<td style="text-align: left;"> <code class="reqn">= \lambda_i' .\lambda_j + V</code> </td>
+<td style="text-align: left;"> if i=j </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+         </td>
+<td style="text-align: left;"> <code class="reqn">= \lambda_i' .\lambda_j</code> </td>
+<td style="text-align: left;"> else, </td>
+</tr>
+</table>
+<p>, in the case of a linear regression with a response variable such as </p>
+<p style="text-align: center;"><code class="reqn">y_{ij} \sim \mathcal{N}(\theta_{ij}, V)</code>
+</p>
+<p>.
+Then we compute correlations from covariances :
+</p>
+<p style="text-align: center;"><code class="reqn">R_{ij} = \frac{\Sigma_{ij}}{\sqrt{\Sigma_ii\Sigma _jj}}</code>
+</p>
+<p>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>results A list including : 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>cov.mean</code></td>
+<td>
+<p>Average over the MCMC samples of the variance-covariance matrix, if <code>type = "mean"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.median</code></td>
+<td>
+<p>Median over the MCMC samples of the variance-covariance matrix, if <code>type = "median"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.lower</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the lower limits of the  (<code class="reqn">100 \times prob \%</code>) HPD interval of variance-covariance matrices over the MCMC samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.upper</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the upper limits of the  (<code class="reqn">100 \times prob \%</code>) HPD interval of variance-covariance matrices over the MCMC samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.sig</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the value 1 corresponding to the “significant" co-variances and the value 0 corresponding to "non-significant" co-variances, whose (<code class="reqn">100 \times prob \%</code>) HPD interval over the MCMC samples contain zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.mean</code></td>
+<td>
+<p>Average over the MCMC samples of the residual correlation matrix, if <code>type = "mean"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.median</code></td>
+<td>
+<p>Median over the MCMC samples of the residual correlation matrix, if <code>type = "median"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.lower</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the lower limits of the  (<code class="reqn">100 \times prob \%</code>) HPD interval of correlation matrices over the MCMC samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.upper</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the upper limits of the  (<code class="reqn">100 \times prob \%</code>) HPD interval of correlation matrices over the MCMC samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.sig</code></td>
+<td>
+<p>A <code class="reqn">n_{species} \times n_{species}</code> matrix containing the value <code class="reqn">1</code> corresponding to the “significant" correlations and the value <code class="reqn">0</code> corresponding to "non-significant" correlations,
+whose (<code class="reqn">100 \times prob \%</code>) HPD interval over the MCMC samples contain zero.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Ghislain Vieilledent &lt;ghislain.vieilledent@cirad.fr&gt;
+</p>
+<p>Jeanne Clément &lt;jeanne.clement16@laposte.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Hui FKC (2016). boral: Bayesian Ordination and Regression Analysis of Multivariate Abundance Data in R. <em>Methods in Ecology and Evolution</em>, 7, 744–750. <br></p>
+<p>Ovaskainen and al. (2016). Using latent variable models to identify large networks of species-to-species associations at different spatial scales. <em>Methods in Ecology and Evolution</em>, 7, 549-555. <br></p>
+<p>Pollock and al. (2014). Understanding co-occurrence by modelling species simultaneously with a Joint Species Distribution Model (JSDM). <em>Methods in Ecology and Evolution</em>, 5, 397-406. <br></p>
+
+
+<h3>See Also</h3>
+
+<p><code>get_enviro_cor</code> <code>cov2cor</code> <code>jSDM-package</code> <code>jSDM_binomial_probit</code> <br><code>jSDM_binomial_logit</code>  <code>jSDM_poisson_log</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jSDM)
+# frogs data
+ data(frogs, package="jSDM")
+ # Arranging data
+ PA_frogs &lt;- frogs[,4:12]
+ # Normalized continuous variables
+ Env_frogs &lt;- cbind(scale(frogs[,1]),frogs[,2],scale(frogs[,3]))
+ colnames(Env_frogs) &lt;- colnames(frogs[,1:3])
+ Env_frogs &lt;- as.data.frame(Env_frogs)
+ # Parameter inference
+# Increase the number of iterations to reach MCMC convergence
+ mod &lt;- jSDM_binomial_probit(# Response variable
+                             presence_data=PA_frogs,
+                             # Explanatory variables
+                             site_formula = ~.,
+                             site_data = Env_frogs,
+                             n_latent=2,
+                             site_effect="random",
+                             # Chains
+                             burnin=100,
+                             mcmc=100,
+                             thin=1,
+                             # Starting values
+                             alpha_start=0,
+                             beta_start=0,
+                             lambda_start=0,
+                             W_start=0,
+                             V_alpha=1,
+                             # Priors
+                             shape=0.5, rate=0.0005,
+                             mu_beta=0, V_beta=10,
+                             mu_lambda=0, V_lambda=10,
+                             # Various
+                             seed=1234, verbose=1)
+# Calcul of residual correlation between species 
+result &lt;- get_residual_cor(mod, prob=0.95, type="mean")
+# Residual variance-covariance matrix
+result$cov.mean
+## All non-significant co-variances are set to zero.
+result$cov.mean * result$cov.sig
+# Residual correlation matrix
+result$cor.mean
+## All non-significant correlations are set to zero.
+result$cor.mean * result$cor.sig
+</code></pre>
+
+
+</div>

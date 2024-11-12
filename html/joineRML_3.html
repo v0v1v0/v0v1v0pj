@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>baseHaz</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The baseline hazard estimate of an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the (baseline) hazard increment from a
+fitted <code>mjoint</code> object. In addition, it can report either the
+<em>uncentered</em> or the more ubiquitous <em>centered</em> version.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">baseHaz(object, centered = TRUE, se = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centered</code></td>
+<td>
+<p>logical: should the baseline hazard be for the mean-centered
+covariates model or not? Default is <code>centered=TRUE</code>. See
+<strong>Details</strong>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p>logical: should standard errors be approximated for the hazard
+increments? Default is <code>se=FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When covariates are included in the time-to-event sub-model,
+<code>mjoint</code> automatically centers them about their respective
+means. This also applies to non-continuous covariates, which are first
+coded using a dummy-transformation for the design matrix and subsequently
+centered. The reason for the mean-centering is to improve numerical
+stability, as the survival function involves exponential terms. Extracting
+the baseline hazard increments from <code>mjoint.object</code> returns the
+Breslow hazard estimate (Lin, 2007) that corresponds to this mean-centered
+model. This is the same as is done in the R <code>survival</code> package when
+using <code>coxph.detail</code> (Therneau and Grambsch, 2000).
+If the user wants to access the baseline hazard estimate for the model in
+which no mean-centering is applied, then they can use this function, which
+scales the mean-centered baseline hazard by
+</p>
+<p style="text-align: center;"><code class="reqn">\exp\{-\bar{w}^\top \gamma_v\},</code>
+</p>
+
+<p>where <code class="reqn">\bar{w}</code> is a vector of the means from the time-to-event
+sub-model design matrix.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with two columns: the unique failure times and
+the estimate baseline hazard. If <code>se=TRUE</code>, then a third column is
+appended with the corresponding standard errors (for the centred case).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Therneau TM, Grambsch PM. <em>Modeling Survival Data: Extending the Cox
+Model.</em> New Jersey: Springer-Verlag; 2000.
+</p>
+<p>Lin DY. On the Breslow estimator. <em>Lifetime Data Anal.</em> 2007;
+<strong>13(4)</strong>: 471-480.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mjoint</code> and <code>coef</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+baseHaz(fit2, centered = FALSE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>smd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate Standardized Mean Difference (SMD)</h2>
+
+<h3>Description</h3>
+
+<p>Simple function to calculate effect sizes for mean differences.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">smd(x, g, index = c("all", "1", "2"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A continuous variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>A grouping variable, with two levels</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>index</code></td>
+<td>
+<p>A character string: “all” uses pooled variance,
+“1” uses the first factor level variance,
+“2” uses the second factor level variance.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The standardized mean difference.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">smd(mtcars$mpg, mtcars$am)
+smd(mtcars$mpg, mtcars$am, "all")
+smd(mtcars$mpg, mtcars$am, "1")
+smd(mtcars$mpg, mtcars$am, "2")
+
+smd(mtcars$hp, mtcars$vs)
+
+d &lt;- data.table::as.data.table(mtcars)
+d[, smd(mpg, vs)]
+rm(d)
+</code></pre>
+
+
+</div>

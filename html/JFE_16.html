@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getFrench.Factors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Download seven asset pricing factors data from the data library of Dr. French</h2>
+
+<h3>Description</h3>
+
+<p>It downloads seven factors data used for asset pricing analysis from the data library of Dr. Kenneth R. French at Dartmouth College.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">#To save time, the example below is commented.
+#getFrench.Factors(filename="F-F_Research_Data_5_Factors_2x3")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>filename</code></td>
+<td>
+
+<p>The name of data file as listed in &lt;"http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"&gt;, which is an important database for asset pricing literature, this function supports seven factor files: <br>
+"F-F_Research_Data_Factors",# Fama/French 3 Factors  <br>
+"F-F_Research_Data_5_Factors_2x3",# Fama/French 5 Factors <br>
+"F-F_Momentum_Factor", # Fama/French Momentum Factors <br>
+"F-F_Momentum_Factor_daily", # Fama/French Momentum Factors(daily) <br>
+"F-F_Research_Data_Factors_weekly",# Fama/French 3 Factors(weekly) <br>
+"F-F_Research_Data_Factors_daily", # Fama/French 3 Factors(daily) <br>
+"F-F_Research_Data_5_Factors_2x3_daily" # Fama/French 5 Factors (daily)
+</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function connects with &lt;"http://mba.tuck.dartmouth.edu/pages/faculty/ken.french/data_library.html"&gt; and downloads the specified factors data. Sometimes, the datafile contains multiple data tables, hence the code returns a list.
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>ff.factor</code></td>
+<td>
+<p>The data retrieved and arranged.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+getFrench.Factors(filename="F-F_Research_Data_Factors")
+
+
+</code></pre>
+
+
+</div>

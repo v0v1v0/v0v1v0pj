@@ -1,0 +1,352 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Accuracy Measures</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Time-Dependent Predictive Accuracy Measures for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Using the available longitudinal information up to a starting time point, these functions compute estimates of the ROC curve and the AUC, the Brier score and expected predictive cross-entropy at a horizon time point based on joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tvROC(object, newdata, Tstart, ...)
+
+## S3 method for class 'jm'
+tvROC(object, newdata, Tstart, Thoriz = NULL,
+    Dt = NULL, type_weights = c("model-based", "IPCW"), ...)
+
+tvAUC(object, newdata, Tstart, ...)
+
+## S3 method for class 'jm'
+tvAUC(object, newdata, Tstart, Thoriz = NULL,
+    Dt = NULL, type_weights = c("model-based", "IPCW"), ...)
+
+## S3 method for class 'tvROC'
+tvAUC(object, ...)
+
+calibration_plot(object, newdata, Tstart, Thoriz = NULL,
+    Dt = NULL, df_ns = 3, plot = TRUE, add_density = TRUE,
+    col = "red", lty = 1, lwd = 1,
+    col_dens = "grey", xlab = "Predicted Probabilities",
+    ylab = "Observed Probabilities", main = "", ...)
+
+calibration_metrics(object, newdata, Tstart, Thoriz = NULL,
+    Dt = NULL, df_ns = 3, ...)
+
+tvBrier(object, newdata, Tstart, Thoriz = NULL, Dt = NULL,
+    integrated = FALSE, type_weights = c("model-based", "IPCW"),
+    model_weights = NULL, eventData_fun = NULL,
+    parallel = c("snow", "multicore"),
+    cores = parallelly::availableCores(omit = 1L), ...)
+
+tvEPCE(object, newdata, Tstart, Thoriz = NULL, Dt = NULL, eps = 0.001,
+    model_weights = NULL, eventData_fun = NULL,
+    parallel = c("snow", "multicore"),
+    cores = parallelly::availableCores(omit = 1L), ...)
+
+create_folds(data, V = 5, id_var = "id", strata = NULL, seed = 123L)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jm</code>, except for <code>tvAUC.tvROC()</code> where this is an object of class <code>tvROC</code>. For <code>tvBrier()</code> and <code>tvEPCE()</code> it can also be a library of joint models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data.frame that contains the longitudinal and covariate information for the subjects for which prediction of survival probabilities is required. The names of the variables in this data.frame must be the same as in the data.frames that were used to fit the linear mixed effects and the event process model that were supplied as the two first argument of <code>jm</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>numeric scalar denoting the time point up to which longitudinal information is to be used to derive predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>numeric scalar denoting the time point for which a prediction of the survival status is of interest; <code>Thoriz</code> must be later than <code>Tstart</code> and either <code>Dt</code> or <code>Thoriz</code> must be specified. If <code>Thoriz</code> is <code>NULL</code> is set equal to <code>Tstart + Dt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Dt</code></td>
+<td>
+<p>numeric scalar denoting the length of the time interval of prediction; either <code>Dt</code> or <code>Thoriz</code> must be specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integrated</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the integrated Brier score is calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type_weights</code></td>
+<td>
+<p>character string denoting the type of weights to use to account for censorting. Options are model-based (default) and inverse probability of censoring weighting (using the Kaplan-Meier estimate of the censoring distribution).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>numeric scalar used in the approximation of the hazard function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_weights</code></td>
+<td>
+<p>a numeric vector of weights to combine predictions when <code>object</code> is a list of joint models of class <code>"jmList"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eventData_fun</code></td>
+<td>
+<p>a function that takes as input the <code>newdata</code> and produces the dataset used for the event process model. This is useful when, for example, the event process model contains other time-varying covariates.
+It is important that this function does not alter the ordering of the subjects in <code>newdata</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>character string; what type of parallel computing to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cores</code></td>
+<td>
+<p>integer denoting the number of cores to be used when a library of joint models has been provided in
+<code>object</code>. If <code>cores = 1</code>, no parallel computing is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_ns</code></td>
+<td>
+<p>the degrees of freedom for the natural cubic spline of the cloglog transformation of the
+predicted probabilities used in the Cox model that assess calibration.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>logical; should a plot be produced. If <code>FALSE</code>, a list is returned with the observed and predicted probabilities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add_density</code></td>
+<td>
+<p>logical; should the kernal density estimation of the predicted probabilities be superimposed in the calibration plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col, lwd, lty, col_dens, xlab, ylab, main</code></td>
+<td>
+<p>graphical parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data.frame to split in folds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V</code></td>
+<td>
+<p>numeric scalar denoting the number of folds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id_var</code></td>
+<td>
+<p>character string denoting the name of the subject id variable in <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strata</code></td>
+<td>
+<p>character vector with the names of stratifying variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>integer denoting the seed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments passed to <code>predict.jm()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of class <code>tvAUC</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>auc</code></td>
+<td>
+<p>a numeric scalar denoting the estimated prediction error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>a copy of the <code>Tstart</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>a copy of the <code>Thoriz</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr</code></td>
+<td>
+<p>a numeric scalar denoting the number of subjects at risk at time <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classObject</code></td>
+<td>
+<p>the class of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameObject</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+</table>
+<p>A list of class <code>tvROC</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>TP, FP, nTP, nFN, nTN, qSN, qSP, qOverall</code></td>
+<td>
+<p>accuracy indexes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F1score, Youden</code></td>
+<td>
+<p>numeric scalars with the optimal cut-point using the F1 score and the Youden index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thr</code></td>
+<td>
+<p>numeric vector of thresholds.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>a copy of the <code>Tstart</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>a copy of the <code>Thoriz</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr</code></td>
+<td>
+<p>a numeric scalar denoting the number of subjects at risk at time <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classObject</code></td>
+<td>
+<p>the class of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameObject</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Antolini, L., Boracchi, P., and Biganzoli, E. (2005). A time-dependent discrimination index
+for survival data. <em>Statistics in Medicine</em> <b>24</b>, 3927–3944.
+</p>
+<p>Commenges, D., Liquet, B., and Proust-Lima, C. (2012). Choice of prognostic estimators
+in joint models by estimating differences of expected conditional Kullback-Leibler risks.
+<em>Biometrics</em> <b>68</b>, 380–387.
+</p>
+<p>Harrell, F., Kerry, L. and Mark, D. (1996). Multivariable prognostic models: issues in
+developing models, evaluating assumptions and adequacy, and measuring and reducing errors.
+<em>Statistics in Medicine</em> <b>15</b>, 361–387.
+</p>
+<p>Heagerty, P. and Zheng, Y. (2005). Survival model predictive accuracy and ROC curves.
+<em>Biometrics</em> <b>61</b>, 92–105.
+</p>
+<p>Rizopoulos, D. (2016). The R package JMbayes for fitting joint models for longitudinal and
+time-to-event data using MCMC. <em>Journal of Statistical Software</em> <b>72(7)</b>, 1–45.
+doi:10.18637/jss.v072.i07.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for
+longitudinal and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+<p>Rizopoulos, D., Molenberghs, G. and Lesaffre, E.M.E.H. (2017). Dynamic predictions with time-dependent covariates in survival analysis using joint modeling and landmarking. <em>Biometrical Journal</em> <b>59</b>, 1261–1276.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>predict</code>, <code>jm</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# We fit a multivariate joint model
+pbc2.id$status2 &lt;- as.numeric(pbc2.id$status != 'alive')
+CoxFit &lt;- coxph(Surv(years, status2) ~ sex, data = pbc2.id)
+fm1 &lt;- lme(log(serBilir) ~ ns(year, 3) * sex, data = pbc2,
+           random = ~ ns(year, 3) | id, control = lmeControl(opt = 'optim'))
+fm2 &lt;- lme(prothrombin ~ ns(year, 2) * sex, data = pbc2,
+           random = ~ ns(year, 2) | id, control = lmeControl(opt = 'optim'))
+fm3 &lt;- mixed_model(ascites ~ year * sex, data = pbc2,
+                   random = ~ year | id, family = binomial())
+
+jointFit &lt;- jm(CoxFit, list(fm1, fm2, fm3), time_var = "year", n_chains = 1L)
+
+roc &lt;- tvROC(jointFit, newdata = pbc2, Tstart = 4, Dt = 3, cores = 1L)
+roc
+tvAUC(roc)
+plot(roc, legend = TRUE, optimal_cutoff = "Youden")
+
+</code></pre>
+
+
+</div>

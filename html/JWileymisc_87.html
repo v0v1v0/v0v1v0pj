@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.SEMSummary.list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plots SEMSummary.list object</h2>
+
+<h3>Description</h3>
+
+<p>Plots SEMSummary.list object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'SEMSummary.list'
+plot(x, y, which, plot = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class SEMSummary.list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Ignored</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>either a numeric vector based on the positions,
+or a character vector giving the names of the levels of the
+list to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot</code></td>
+<td>
+<p>A logical, whether to actually plot the results or not.
+Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the real workhorse, <code>corplot</code>.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>corplot</code>, <code>SEMSummary</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## correlation matrix by am level
+plot(SEMSummary(~ . | am, data = mtcars))
+</code></pre>
+
+
+</div>

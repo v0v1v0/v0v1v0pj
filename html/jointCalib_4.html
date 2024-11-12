@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joint_calib_create_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An internal function to create an A matrix for calibration of quantiles</h2>
+
+<h3>Description</h3>
+
+<p><code>joint_calib_create_matrix</code> is function that creates an \(A = [a_{ij}]\) matrix for calibration of quantiles. Function allows to create matrix using <code>logistic</code> interpolation (using <code>stats::plogis</code>, default) or <code>linear</code> (as in Harms and Duchesne (2006), i.e. slightly modified Heavyside function).
+</p>
+<p>In case of <code>logistic</code> interpolation elements of \(A\) are created as follows
+</p>
+\[a_{i j} = \frac{1}{(1 + \exp\left(-2l\left(x_{ij}-Q_{x_j, \alpha}\right)\right))N},\]
+<p>where \(x_{ij}\) is the \(i\)th row of the auxiliary variable \(X_j\), \(N\) is the population size, \(Q_{x_j, \alpha}\) is the known population \(\alpha\)th quantile, and \(l\) is set to -1000 (by default).
+</p>
+<p>In case of  <code>linear</code> interpolation elements of \(A\) are created as follows
+</p>
+\[a_{i j}=
+\begin{cases}
+N^{-1}, &amp;  x_{i j} \leqslant L_{x_{j}, r} \left(Q_{x_j, \alpha}\right), \cr
+N^{-1} \beta_{x_{j}, r}\left(Q_{x_j, \alpha}\right), &amp; x_{i j}=U_{x_{j}, r}\left(Q_{x_j, \alpha}\right), \cr
+0, &amp; x_{i j}&gt;U_{x_{j}, r} \left(Q_{x_j, \alpha}\right),
+\end{cases}\]
+<p>\(i=1,...,r\), \(j=1,...,k\), where \(r\) is the set of respondents, \(k\) is the auxiliary variable index and
+</p>
+\[L_{x_{j}, r}(t) = \max \left\lbrace\left\lbrace{x_{i j}}, i \in s \mid x_{i j} \leqslant t\right\rbrace \cup \lbrace-\infty\rbrace \right\rbrace,\]
+\[U_{x_{j}, r}(t) = \min \left\lbrace\left\lbrace{x_{i j}}, i \in s \mid x_{i j}&gt;t\right\rbrace \cup \lbrace\infty\rbrace \right\rbrace,\]
+\[\beta_{x_{j}, r}(t) = \frac{t-L_{x_{j}, s}(t)}{U_{x_{j}, s}(t)-L_{x_{j}, s}(t)},\]
+<p>\(i=1,...,r\), \(j=1,...,k\), \(t \in \mathbb{R}\).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joint_calib_create_matrix(X_q, N, pop_quantiles, control = control_calib())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X_q</code></td>
+<td>
+<p>matrix of variables for calibration of quantiles,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>population size for calibration of quantiles,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pop_quantiles</code></td>
+<td>
+<p>a vector of population quantiles for <code>X_q</code>,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a control parameter for creation of <code>X_q</code> matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return matrix A
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Maciej Beręsewicz
+</p>
+<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script><h3>References</h3>
+
+<p>Harms, T. and Duchesne, P. (2006). On calibration estimation for quantiles.
+Survey Methodology, 32(1), 37.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create matrix for one variable and 3 quantiles
+set.seed(123)
+N &lt;- 1000
+x &lt;- as.matrix(rnorm(N))
+quants &lt;- list(quantile(x, c(0.25,0.5,0.75)))
+A &lt;- joint_calib_create_matrix(x, N, quants)
+head(A)
+colSums(A)
+
+# Create matrix with linear interpolation
+A &lt;- joint_calib_create_matrix(x, N, quants, control_calib(interpolation="linear"))
+head(A)
+colSums(A)
+
+# Create matrix for two variables and different number of quantiles
+
+set.seed(123)
+x1 &lt;- rnorm(N)
+x2 &lt;- rchisq(N, 1)
+x &lt;- cbind(x1, x2)
+quants &lt;- list(quantile(x1, 0.5), quantile(x2, c(0.1, 0.75, 0.9)))
+B &lt;- joint_calib_create_matrix(x, N, quants)
+head(B)
+colSums(B)
+</code></pre>
+
+
+</div>

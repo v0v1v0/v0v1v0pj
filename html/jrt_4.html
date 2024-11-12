@@ -1,0 +1,363 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jrt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit ordinal IRT models on judgment data and return factor scores and
+statistics.</h2>
+
+<h3>Description</h3>
+
+<p>This function automatically selects appropriate polytomous IRT
+models based on an information criterion (e.g. Corrected AIC), then returns
+factor scores, standard errors and various IRT psychometric information, as
+well as more traditionnal ("CTT") psychometric information. All IRT
+estimation procedures are executed with the package <code>mirt</code> (Chalmers,
+2012). The non-IRT procedures use packages <code>psych</code> and <code>irr</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jrt(
+  data,
+  irt.model = "auto",
+  summary = T,
+  selection.criterion = "AIC",
+  response.categories = "auto",
+  remove.judges.with.unobserved.categories = F,
+  additional.stats = F,
+  method.factor.scores = "EAP",
+  return.mean.scores = T,
+  prefix.for.outputs = "Judgments",
+  column.names = "Judge",
+  maximum.iterations = 2000,
+  convergence.threshold = 0.001,
+  estimation.algorithm = "EM",
+  status.verbose = F,
+  estimation.package.warnings = F,
+  digits = 3,
+  plots = T,
+  greyscale = F,
+  progress.bar = T,
+  method.item.fit = "X2",
+  select.variables.that.contain = NULL,
+  silent = F,
+  show.calls = F,
+  debug = F
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataframe or matrix including the judgments to be scored. Note
+that so far missing data are not supported. This is the only required
+argument for the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>irt.model</code></td>
+<td>
+<p>A string value with the name of the model to fit. It can be:
+</p>
+
+<ul><li>
+<p><code>"auto"</code> (default) or <code>NULL</code> : Empirically select the model
+based on an information criterion (see <code>selection.criterion</code> argument).
+</p>
+<p>Difference models (more or less constrained versions of the
+Graded Response Model)
+</p>
+
+<ul>
+<li>
+<p><code>"GRM"</code>: Graded Response Model
+</p>
+</li>
+<li>
+<p><code>"CGRM"</code>: Constrained Graded Response Model (equal discriminations)
+</p>
+</li>
+<li>
+<p><code>"GrRSM"</code>: Graded Rating Scale Model (same category structures)
+</p>
+</li>
+<li>
+<p><code>"CGrRSM"</code>: Constrained Graded Rating Scale Model (same category
+structures and equal discriminations)
+</p>
+</li>
+</ul>
+<p>Divide-by-total models (more or less constrained versions of the
+Generalized Partial Credit Model)
+</p>
+
+<ul>
+<li>
+<p><code>"GPCM"</code>: Generalized Partial Credit Model
+</p>
+</li>
+<li>
+<p><code>"PCM"</code>: Partial Credit Model (equal discriminations)
+</p>
+</li>
+<li>
+<p><code>"GRSM"</code>: Generalized Rating Scale Model (same
+category structures)
+</p>
+</li>
+<li>
+<p><code>"RSM"</code>: Rating Scale Model (same category structures and
+equal discriminations)
+</p>
+</li>
+</ul>
+</li></ul>
+<p>For convenience, models can also be called by their full names
+(e.g. <code>"Generalized Rating Scale Model"</code>
+or <code>"Generalized Rating Scale"</code> work.)<br></p>
+
+<ul><li>
+<p>Note: Models where judges are constrained to same category structures (Graded Rating Scale Model,
+Constrained Graded Rating Scale Model, Generalized Rating Scale Model and Rating Scale Model) cannot be fit
+if judges have different observed categories. Judges with unobserved categories are automatically removed
+if these models are called. If the automatic model selection is used,
+these models are ignored in the comparison by default, but this behavior can
+be modified to removing judges in the comparison with <code>remove.judges.with.unobserved.categories = T</code>.</p>
+</li></ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>summary</code></td>
+<td>
+<p>A logical to indicate if summary statistics should be
+displayed as messages (default is <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selection.criterion</code></td>
+<td>
+<p>A string with the criterion for the automatic
+selection. The default is the Akaike Information Criterion
+(<code>AIC</code>), but other criteria may be used (<code>HQ</code> for Hannan-Quinn Criterion, <code>BIC</code> for Bayesian Information Criterion and
+<code>SABIC</code> for Sample-Adjusted Bayesian Information Criterion).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>response.categories</code></td>
+<td>
+<p>A numeric vector to indicate the possible score
+values. For example, use <code>1:7</code> for a Likert-type score from 1 to 7.
+The default, <code>auto</code> automatically detects the possible values based on
+the dataset provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.judges.with.unobserved.categories</code></td>
+<td>
+<p>A logical value to indicate whether to only keep the
+judges with all categories observed (based on the <code>response.categories</code>
+argument). The Rating Scale Model (RSM) and Graded Rating Scale Model
+(GRSM) can only be estimated if the same categories are observed for all
+judges. If set to <code>TRUE</code>, "incomplete judges" are removed only to fit
+models that require it (RSM and GRSM), and for other models when they are compared to them (to allow
+meaningful model comparisons). It defaults to <code>FALSE</code> to keep all the data available, and has no effect
+if models that do not require "complete judges" are called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>additional.stats</code></td>
+<td>
+<p>A logical to indicate whether to report other
+("non-IRT") reliability statistics (based on computations from packages
+'psych' and 'irr'). Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method.factor.scores</code></td>
+<td>
+<p>A string to indicate the method used to compute
+the factor scores. Bayesian methods (<code>EAP</code>, <code>MAP</code>) are
+recommended. Defaults to Expected A Posteriori (<code>EAP</code>) based on a Standard
+Normal <code class="reqn">N(0,1)</code> prior distribution. Alternatively, Maximum A Posteriori
+(<code>MAP</code>) with a Standard Normal <code class="reqn">N(0,1)</code> prior may be used. Maximum
+Likelihood (<code>ML</code>) is also possible (it is equivalent to using a
+uniform prior), but it is discouraged as can produce -Inf and +Inf
+factor scores (for which standard errors will be missing). Alternatively,
+Weighted Likelihood Estimation (<code>WLE</code>) may be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return.mean.scores</code></td>
+<td>
+<p>A logical to indicate whether to return the mean
+scores in the output (defaults to <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix.for.outputs</code></td>
+<td>
+<p>A character used as prefix to name the vectors in the
+output data frames. Default is <code>"Judgments"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>column.names</code></td>
+<td>
+<p>A character to indicate the preferred name to give to a Judge. Defaults to <code>"Judge"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maximum.iterations</code></td>
+<td>
+<p>A numeric indicating the maximum number of
+iterations used to fit the model (default is <code>2000</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence.threshold</code></td>
+<td>
+<p>A numeric to indicate the threshold used to
+tolerate convergence (default is <code>.001</code>). Reduce for increased
+precision (but slower or non convergent results).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimation.algorithm</code></td>
+<td>
+<p>A string indicating the estimation algorithm. Can
+notably be <code>EM</code> for Bock and Atkin's Expected-Maximization (default)
+or <code>MHRM</code> for the Metropolis-Hastings Robbins-Monro algorithm (usually
+slower for unidimensional models).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>status.verbose</code></td>
+<td>
+<p>A logical to indicate whether to output messages
+indicating what the package is doing. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimation.package.warnings</code></td>
+<td>
+<p>A logical to indicate whether to output
+the warnings and messages of the estimation package. Defaults to
+<code>FALSE</code> for a cleaner output, but set to <code>TRUE</code> if experiencing
+issues with the estimation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>A numeric to indicate the number of digits to round output
+statistics by (default is <code>3</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plots</code></td>
+<td>
+<p>A logical to indicate whether to plot the total information plot
+and judge category curves (<code>TRUE</code>, default) or not (<code>FALSE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>greyscale</code></td>
+<td>
+<p>A logical to indicate whether the plots should be in greyscale (<code>TRUE</code>) or color (<code>FALSE</code>, default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress.bar</code></td>
+<td>
+<p>A logical to indicate whether to show a progress bar
+during the automatic model selection. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method.item.fit</code></td>
+<td>
+<p>A character value to indicate which fit statistic to use
+for the item fit output. Passed to the <code>itemfit</code> function of the
+<code>mirt</code> package. Can be <code>S_X2</code>, <code>Zh</code>, <code>X2</code>, <code>G2</code>,
+<code>PV_Q1</code>, <code>PV_Q1</code>, <code>X2*</code>, <code>X2*_df</code>, <code>infit</code>. Note that some are not be computable if there are missing data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>select.variables.that.contain</code></td>
+<td>
+<p>A character string to use as data the
+variables in the original dataset that contain the string. Based on the
+<code>select</code> function of <code>dplyr</code>. For example, if all your judgment
+data includes "Rater", use "Rater" to filter your dataset here.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>A logical (defaults to <code>FALSE</code>) to ask no output (no message or plot) but the <code>jrt</code> object.
+This uses other parameters (<code>progress.bar</code>, <code>estimation.package.warnings</code>,
+<code>plots</code>, <code>summary</code>) in order to return a silent output.
+Useful if only using the package for factor scoring, for example.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show.calls</code></td>
+<td>
+<p>A logical to report the calls made to fit the different models. This is meant as a didactic options for users who may be interested in switching over to <code>mirt</code> directly. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>debug</code></td>
+<td>
+<p>A logical to report debug messages (used in development).
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of S4-class <code>jrt</code>. The factor scores can be accessed
+in slot <code>@output.data</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Chalmers, R., P. (2012). mirt: A Multidimensional Item Response
+Theory Package for the R Environment. <em>Journal of Statistical Software,
+48</em>(6), 1-29. <a href="https://doi.org/10.18637/jss.v048.i06">doi:10.18637/jss.v048.i06</a>
+</p>
+<p>Myszkowski, N., &amp; Storme, M. (2019). Judge Response Theory? A call to upgrade our psychometrical account of creativity judgments. <em>Psychology of Aesthetics, Creativity and the Arts, 13</em>(2), 167-175. <a href="https://doi.org/10.1037/aca0000225">doi:10.1037/aca0000225</a>
+</p>
+<p>Myszkowski, N. (2021). Development of the R library <code>jrt</code>: Automated item response theory procedures for judgment data and their application with the consensual assessment techniques. <em>Psychology of Aesthetics, Creativity and the Arts, 15</em>(3), 426-438. <a href="https://doi.org/10.1037/aca0000287">doi:10.1037/aca0000287</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Load dataset
+data &lt;- jrt::ratings
+
+# Fit models
+fit &lt;- jrt(data,
+  irt.model = "GRM", # to manually select a model
+  plots = FALSE) # to remove plots
+
+# Extract the factor scores
+fit@factor.scores # In a dataframe with standard errors
+fit@factor.scores.vector # As a numeric vector
+
+# See vignette for more options
+
+</code></pre>
+
+
+</div>

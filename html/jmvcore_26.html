@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>format</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Format a string with arguments</h2>
+
+<h3>Description</h3>
+
+<p>Substitutes the arguments into the argument str. See the examples below.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">format(str, ..., context = "normal")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>str</code></td>
+<td>
+<p>the format string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>the arguments to substitute into the string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>context</code></td>
+<td>
+<p>'normal' or 'R'</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the resultant string
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+jmvcore::format('the {} was delish', 'fish')
+
+# 'the fish was delish'
+
+jmvcore::format('the {} was more delish than the {}', 'fish', 'cow')
+
+# 'the fish was more delish than the cow'
+
+jmvcore::format('the {1} was more delish than the {0}', 'fish', 'cow')
+
+# 'the cow was more delish than the fish'
+
+jmvcore::format('the {what} and the {which}', which='fish', what='cow')
+
+# 'the cow and the fish'
+
+jmvcore::format('that is simply not {}', TRUE)
+
+# 'that is simply not true'
+
+jmvcore::format('that is simply not {}', TRUE, context='R')
+
+# 'that is simply not TRUE'
+
+</code></pre>
+
+
+</div>

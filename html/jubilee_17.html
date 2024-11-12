@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.ols</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal utility to calculate OLS regression</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the OLS regression for a given time series and fraction
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.ols(fraction, ts, lookback.channel, tol.frac = 1/6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fraction</code></td>
+<td>
+<p>numeric, the ending fraction of regression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ts</code></td>
+<td>
+<p>numeric, the time series data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lookback.channel</code></td>
+<td>
+<p>numeric, the backward-looking regression period</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol.frac</code></td>
+<td>
+<p>numeric, tolerance of missing data in the beginning, expressed as fraction.
+Default is 1/6, that is, two months.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.table with columns of <code>fraction, lm.a, lm.y, lm.r</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>References</h3>
+
+<p>See Section 2.3 of Stephen H.T. Lihn, "Jubilee Tectonic Model:
+Forecasting Long-Term Growth and Mean Reversion in the U.S. Stock Market."
+Available at <a href="http://dx.doi.org/10.2139/ssrn.3156574">http://dx.doi.org/10.2139/ssrn.3156574</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  dtb &lt;- jubilee.repo(online=FALSE)@ie
+  df &lt;- jubilee.ols(dtb$fraction, dtb$log.tri, 50)
+  subset(df, fraction &gt; 1970 &amp; fraction &lt; 1970.05)
+  # fraction     lm.a      lm.r       lm.y
+  # 1970.042 11.86401 0.1007617 0.02103105
+
+## End(Not run)
+</code></pre>
+
+
+</div>

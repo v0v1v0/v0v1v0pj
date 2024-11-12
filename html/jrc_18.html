@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>removeSessionVariables</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Remove variables from a client session environment</h2>
+
+<h3>Description</h3>
+
+<p>This function removes variables from the environment of a client session. It allows, for instance, to unmask
+a variable with the same name from the outer app environment (see <code>setEnvironment</code>) for the session 
+(check the example below). This function
+is a wrapper around method <code>sessionVariables</code> of the class <code>Session</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">removeSessionVariables(varNames, sessionId = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>varNames</code></td>
+<td>
+<p>Names of variables to remove.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session. If there is only one active session, this argument becomes optional.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>setSessionVariables</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage(allowedVariables = "k", sessionVars = list(k = 10))
+
+k &lt;- -1
+getPage()$openPage(FALSE)
+id1 &lt;- getSessionIds()[1]
+id2 &lt;- getSessionIds()[2]
+removeSessionVariables("k", id1)
+#this changes global 'k', since the variable is no longer masked
+sendCommand("jrc.sendData('k', 1)", sessionId = id1, wait = 3)
+#this doesn't affect global 'k'
+sendCommand("jrc.sendData('k', 5)", sessionId = id2, wait = 3)
+local_k &lt;- getSessionVariable("k", id2)
+
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

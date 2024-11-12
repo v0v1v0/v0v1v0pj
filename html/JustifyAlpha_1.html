@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ftestEvidence</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Justify your alpha level by avoiding the Lindley paradox or aiming for moderate or strong evidence when using anova.</h2>
+
+<h3>Description</h3>
+
+<p>Justify your alpha level by avoiding the Lindley paradox or aiming for moderate or strong evidence when using anova.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ftestEvidence(evidence, df1, df2, paired = FALSE, printplot = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>evidence</code></td>
+<td>
+<p>Desired level of evidence: "Lindley" to avoid the Lindley Paradox, "moderate" to achieve moderate evidence and "strong" to achieve strong evidence.
+Users that are more familiar with Bayesian statistics can also directly enter their desired Bayes factor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df1</code></td>
+<td>
+<p>Numerator degrees of freedom.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df2</code></td>
+<td>
+<p>Denominator degrees of freedom.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paired</code></td>
+<td>
+<p>If true a within subjects design is assumed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>printplot</code></td>
+<td>
+<p>If true prints a plot relating Bayes factors and p-values.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric alpha level required to avoid Lindley's paradox.
+</p>
+
+
+<h3>References</h3>
+
+<p>Maier &amp; Lakens (2021). Justify Your Alpha: A Primer on Two Practical Approaches
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Avoid the Lindley paradox for an anova with 1 numerator and 248 denominator degrees of freedom.
+ftestEvidence("lindley", 1, 248)
+</code></pre>
+
+
+</div>

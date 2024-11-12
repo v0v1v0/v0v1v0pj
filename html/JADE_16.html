@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>JADE</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> JADE Algorithm for ICA </h2>
+
+<h3>Description</h3>
+
+<p>This is an <span class="pkg">R</span> version of Cardoso's JADE ICA algorithm (for real data) ported from matlab. The ported version is 1.5. Some minor changes compared to the matlab function are explained in the details section. The matlab code can be found for example on the ICA central homepage.
+</p>
+<p>The function uses <code>frjd</code> for the joint diagonalization.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">JADE(X, n.comp = NULL, eps = 1e-06, maxiter = 100, na.action = na.fail)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Numeric data matrix or dataframe. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.comp</code></td>
+<td>
+<p>Number of components to extract.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>Convergence tolerance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>Maximum number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>A function which indicates what should happen when the data
+contain 'NA's.  Default is to fail.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Some minor modifications were done when porting the function to <span class="pkg">R</span>, and they are:
+</p>
+
+<dl>
+<dt>1</dt>
+<dd>
+<p>the model assumed here is <code class="reqn">X=S A' +\mu</code>. Therefore <code class="reqn">S</code> and <code class="reqn">X</code> have one row per observation. Note that this still differs from 
+the model definition in <span class="pkg">R</span> of <code>FastICA</code> and <code>PearsonICA</code> but agrees with <code>ics</code>.</p>
+</dd>
+<dt>2</dt>
+<dd>
+<p>The whitening covariance matrix is divided by n-1 and not n (n = number of observations).</p>
+</dd>
+<dt>3</dt>
+<dd>
+<p>The initial value for the joint diagonalisation is always I.</p>
+</dd>
+<dt>4</dt>
+<dd>
+<p>The original eps would be <code class="reqn">\frac{1}{100\sqrt{n}}</code>.</p>
+</dd>
+</dl>
+<p>It is also worth mentioning that the estimated independent components <code class="reqn">S</code> are scaled to unit variance and are ordered in such a way, that their fourth moments are in the decreasing order.
+The signs of the unmixing matrix <code class="reqn">W</code> are fixed so that the sum of the elements on each row is positive.
+</p>
+<p>The code is based on the original matlab code ("MatlabjadeR.m"). 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>The estimated mixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W </code></td>
+<td>
+<p>The estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S </code></td>
+<td>
+<p>Dataframe with the estimated independent components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xmu </code></td>
+<td>
+<p>The location of the original data.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jean-Francois Cardoso. Ported to <span class="pkg">R</span> by Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Cardoso, J.-F. and Souloumiac, A., (1993), Blind beamforming for non Gaussian signals, <em>IEE Proceedings-F</em>, <b>140</b>,  362–370.</cite>  
+</p>
+<p><cite>Miettinen, J., Taskinen S., Nordhausen, K. and Oja, H. (2015), Fourth Moments and Independent
+Component Analysis, <em>Statistical Science</em>, 30, 372–390.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 3 source and 3 signals
+
+S &lt;- cbind(rt(1000, 4), rnorm(1000), runif(1000))
+A &lt;- matrix(rnorm(9), ncol = 3)
+X &lt;- S %*% t(A)
+res&lt;-JADE(X,3)
+res$A
+res$W
+res$S[1:10,]
+(sweep(X,2,res$Xmu) %*% t(res$W))[1:10,]
+round(res$W %*% A,4) 
+
+# 2 sources and 3 signals
+
+S2 &lt;- cbind(rt(1000, 4), rnorm(1000)) 
+A2 &lt;- matrix(rnorm(6), ncol = 2)
+X2 &lt;- S2 %*% t(A2)
+res2 &lt;-JADE(X2,2)
+res2$A
+res2$W
+res2$S[1:10,]
+(sweep(X2,2,res2$Xmu) %*% t(res2$W))[1:10,]
+SIR(S2,res2$S)
+</code></pre>
+
+
+</div>

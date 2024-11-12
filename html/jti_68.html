@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>triangulate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Triangulate a Bayesian network</h2>
+
+<h3>Description</h3>
+
+<p>Given a list of CPTs, this function finds a triangulation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">triangulate(
+  x,
+  root_node = "",
+  joint_vars = NULL,
+  tri = "min_fill",
+  pmf_evidence = NULL,
+  alpha = NULL,
+  perm = FALSE,
+  mpd_based = FALSE
+)
+
+## S3 method for class 'cpt_list'
+triangulate(
+  x,
+  root_node = "",
+  joint_vars = NULL,
+  tri = "min_fill",
+  pmf_evidence = NULL,
+  alpha = NULL,
+  perm = FALSE,
+  mpd_based = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object returned from <code>cpt_list</code> (baeysian network) or
+<code>pot_list</code> (decomposable markov random field)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>root_node</code></td>
+<td>
+<p>A node for which we require it to live in the root
+clique (the first clique).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>joint_vars</code></td>
+<td>
+<p>A vector of variables for which we require them
+to be in the same clique. Edges between all these variables are added
+to the moralized graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tri</code></td>
+<td>
+<p>The optimization strategy used for triangulation if x originates
+from a Baeysian network. One of
+</p>
+
+<ul>
+<li>
+<p> 'min_fill'
+</p>
+</li>
+<li>
+<p> 'min_rfill'
+</p>
+</li>
+<li>
+<p> 'min_sp'
+</p>
+</li>
+<li>
+<p> 'min_ssp'
+</p>
+</li>
+<li>
+<p> 'min_lsp'
+</p>
+</li>
+<li>
+<p> 'min_lssp'
+</p>
+</li>
+<li>
+<p> 'min_elsp'
+</p>
+</li>
+<li>
+<p> 'min_elssp'
+</p>
+</li>
+<li>
+<p> 'min_nei'
+</p>
+</li>
+<li>
+<p> 'minimal'
+</p>
+</li>
+<li>
+<p> 'alpha'
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pmf_evidence</code></td>
+<td>
+<p>A named vector of frequencies of the expected
+missingness of a variable. Variables with frequencies of 1 can be
+neglected; these are inferrred. A value of 0.25 means, that the
+given variable is expected to be missing (it is not a evidence node)
+in one fourth of the future cases. Relevant for <code>tri</code> methods
+'min_elsp' and 'min_elssp'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Character vector. A permutation of the nodes
+in the graph. It specifies a user-supplied eliminination ordering for
+triangulation of the moral graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perm</code></td>
+<td>
+<p>Logical. If <code>TRUE</code> the moral graph is permuted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mpd_based</code></td>
+<td>
+<p>Logical. True if the triangulation should be performed on a maximal
+peime decomposition</p>
+</td>
+</tr>
+</table>
+</div>

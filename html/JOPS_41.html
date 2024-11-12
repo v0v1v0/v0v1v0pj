@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.ps2dsignal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>ps2DSignal</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns both linear
+predictor and inverse link predictions for arbitrary 2D signals (using
+<code>ps2DSignal</code> with <code>class ps2dsignal</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'ps2dsignal'
+predict(object, ..., M_pred, M_type = "unfolded", type = "mu")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>ps2DSignal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M_pred</code></td>
+<td>
+<p>a matrix of <code>q</code> arbitrary "stacked" or "unfolded" signal matrices
+of dimension (<code>q</code> by <code>p1</code>) by <code>p2</code> or <code>q</code> by (<code>p1</code>
+by <code>p2</code>, respectively,
+for desired prediction (default "unfolded").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M_type</code></td>
+<td>
+<p>"stacked" or "unfolded" (default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the mean value <code>type = "mu"</code> (default) or linear predictor
+<code>type = "eta"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated mean (inverse link function)
+or the linear predictor prediction with <code>type =
+"eta"</code>, for arbitary 2D signals in <code>M_pred</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B.D. and Eilers, P.H.C. (2005).
+Multidimensional penalized signal regression, <em>Technometrics</em>, 47: 13-22.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(fields)
+library(JOPS)
+
+# Get the data
+x0 &lt;- Sugar$X
+x0 &lt;- x0 - apply(x0, 1, mean) # center Signal
+y &lt;- as.vector(Sugar$y[, 3]) # Response is Ash
+
+# Inputs for two-dimensional signal regression
+nseg &lt;- c(7, 37)
+pord &lt;- c(3, 3)
+min_ &lt;- c(230, 275)
+max_ &lt;- c(340, 560)
+M1_index &lt;- rev(c(340, 325, 305, 290, 255, 240, 230))
+M2_index &lt;- seq(from = 275, to = 560, by = .5)
+p1 &lt;- length(M1_index)
+p2 &lt;- length(M2_index)
+
+# Fit optimal model based on LOOCV
+opt_lam &lt;- c(8858.6679, 428.1332) # Found via svcm
+Pars_opt &lt;- rbind(
+  c(min_[1], max_[1], nseg[1], 3, opt_lam[1], pord[1]),
+  c(min_[2], max_[2], nseg[2], 3, opt_lam[2], pord[2])
+)
+fit &lt;- ps2DSignal(y, x0, p1, p2, "unfolded", M1_index, M2_index,
+  Pars_opt,int = TRUE, ridge_adj = 0.0001,
+  M_pred = x0 )
+
+
+predict(fit, M_pred= x0, type = "mu", M_type = "unfolded")
+</code></pre>
+
+
+</div>

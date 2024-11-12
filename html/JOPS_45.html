@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.simpsr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>sim_psr</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns single-index
+inverse link linear predictions at arbitrary data locations (using
+<code>sim_psr</code> with <code>class simpsr</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'simpsr'
+predict(object, ..., X_pred)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>sim_psr</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_pred</code></td>
+<td>
+<p>a matrix of arbitrary signals with <code>ncol(X_pred) = length(x_index)</code> locations for
+desired prediction.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated (inverse single-index) mean for the signals in <code>X_pred</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C., B. Li, B.D. Marx (2009).
+Multivariate calibration with single-index signal regression,
+<em>Chemometrics and Intellegent Laboratory Systems</em>, 96(2), 196-202.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Get the data
+library(fds)
+data(nirc)
+iindex &lt;- nirc$x
+X &lt;- nirc$y
+sel &lt;- 50:650 # 1200 &lt;= x &amp; x&lt;= 2400
+X &lt;- X[sel, ]
+iindex &lt;- iindex[sel]
+dX &lt;- diff(X)
+diindex &lt;- iindex[-1]
+y &lt;- as.vector(labc[1, 1:40])
+oout &lt;- 23
+dX &lt;- t(dX[, -oout])
+y &lt;- y[-oout]
+
+pords &lt;- c(2, 2)
+nsegs &lt;- c(27, 7)
+bdegs = c(3, 3)
+lambdas &lt;- c(1e-6, .1)
+max_iter &lt;- 100
+
+# Single-index model
+fit &lt;- sim_psr(y, dX, diindex, nsegs, bdegs, lambdas, pords,
+             max_iter)
+predict(fit, X_pred = dX)
+
+</code></pre>
+
+
+</div>

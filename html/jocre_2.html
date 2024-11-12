@@ -1,0 +1,159 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cset</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence regions and intervals around multivariate normal means</h2>
+
+<h3>Description</h3>
+
+<p>Computes boundaries of (simultaneous) confidence regions and intervals around multivariate normal means using different methods.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cset(dat, method, alpha=0.1, steps=NULL, nboot=1e4, TsengBrownA=1, TsengBrownB=1)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A matrix or data.frame with independent units in rows and multivariate outcomes in columns.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string specifying the method to be used. See details for available <code>method</code>s.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A numeric value giving the type I error level to be controlled. Default is <code>0.1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>An integer setting the initial number of steps for the search algorithm. Default is <code>NULL</code>, which chooses 300 for two-dimensional and 50 for higher-dimensional problems.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+<p>A numeric giving the number of bootstrap replications to be used when <code>method="bootkern"</code> (ignored otherwise). Default is <code>1e4</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TsengBrownA</code></td>
+<td>
+<p>A numeric giving the parameter A to be used when <code>method="tseng.brown"</code> (ignored otherwise). Default is <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>TsengBrownB</code></td>
+<td>
+<p>A numeric giving the parameter B to be used when <code>method="tseng.brown"</code> (ignored otherwise). Default is <code>1</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Available <code>method</code>s for confidence regions are: <code>boot.kern</code> for the nonparametric bootstrap method using kernel density estimation described in Pallmann &amp; Jaki (2017); <code>emp.bayes</code> for the empirical Bayes region described in Casella &amp; Hwang (1983); <code>hotelling</code> for the Hotelling-type region described in Wang et al (1999); <code>limacon.asy</code> for the limacon-shaped mimimum expected volume region described in Brown et al (1995); <code>limacon.fin</code> for the finite-sample variant of the minimum expected volume region described in Berger &amp; Hsu (1996); <code>standard.cor</code> for the standard region incorporating correlation between parameters described in Chew (1966); <code>standard.ind</code> for the standard region ignoring correlation between parameters; <code>tost</code> for the two one-sided test (TOST) intervals described in Schuirmann (1987); <code>tseng</code> for the mimimum expected interval length region described in Tseng (2002); <code>tseng.brown</code> for the pseudo-empirical Bayes region described in Tseng &amp; Brown (1997).
+</p>
+<p>Available <code>method</code>s for confidence intervals are: <code>expanded</code> for the two one-sided test (TOST) procedure (Schuirmann 1987) using the expanded intervals described e.g., in Bofinger (1992) and Hsu et al. (1994); <code>fix.seq</code> for the fixed sequence intervals described in Maurer et al (1995) and Hsu &amp; Berger (1999); <code>tost</code> for the two one-sided test (TOST) intervals described in Schuirmann (1987).
+</p>
+<p>See also an overview and comparison of all methods in Pallmann &amp; Jaki (2017).</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>JOC</code>.</p>
+
+
+<h3>Note</h3>
+
+<p>Warning: please use with care! Some of the functionality has not yet been thoroughly tested.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Philip Pallmann (<a href="mailto:p.pallmann@lancaster.ac.uk">p.pallmann@lancaster.ac.uk</a>)</p>
+
+
+<h3>References</h3>
+
+<p>Roger L. Berger &amp; Jason C. Hsu (1996) Bioequivalence trials, intersection-union tests and equivalence confidence sets. Statistical Science, 11(4), 283–319.
+</p>
+<p>Eve Bofinger (1992) Expanded confidence intervals, one-sided tests, and equivalence testing. Journal of Biopharmaceutical Statistics, 2(2), 181–188.
+</p>
+<p>Lawrence D. Brown, George Casella, J. T. Gene Hwang (1995) Optimal confidence sets, bioequivalence, and the limacon of Pascal. Journal of the American Statistical Association, 90(431), 880–889.
+</p>
+<p>George Casella &amp; Jiunn T. Hwang (1983) Empirical Bayes confidence sets for the mean of a multivariate normal distribution. Journal of the American Statistical Association, 78(383), 688–698.
+</p>
+<p>Victor Chew (1966) Confidence, prediction, and tolerance regions for the multivariate normal distribution. Journal of the American Statistical Association, 61(315), 605–617.
+</p>
+
+<p>Jason C. Hsu &amp; Roger L. Berger (1999) Stepwise confidence intervals without multiplicity adjustment for dose-response and toxicity studies. Journal of the American Statistical Association, 94(446), 468–482.
+</p>
+<p>Jason C. Hsu, J. T. Gene Hwang, Hung-Kung Liu, Stephen J. Ruberg (1994) Confidence intervals associated with tests for bioequivalence. Biometrika, 81(1), 103–114.
+</p>
+<p>Willi Maurer, Ludwig A. Hothorn, Walter Lehmacher (1995) Multiple comparisons in drug clinical trials and preclinical assays: a priori ordered hypotheses. In: Joachim Vollmar (editor), Biometrie in der Chemisch-Pharmazeutischen Industrie, vol. 6, pp. 3–18. Fischer-Verlag, Stuttgart, Germany.
+</p>
+<p>Philip Pallmann &amp; Thomas Jaki (2017) Simultaneous confidence regions and intervals for multivariate bioequivalence. Submitted to Statistics in Medicine.
+</p>
+<p>Donald J. Schuirmann (1987) A comparison of the two one-sided tests procedure and the power approach for assessing the equivalence of average bioavailability. Journal of Pharmacokinetics and Biopharmaceutics, 15(6), 657–680.
+</p>
+<p>Yu-Ling Tseng (2002) Optimal confidence sets for testing average bioequivalence. Test, 11(1), 127–141.
+</p>
+<p>Yu-Ling Tseng &amp; Lawrence D. Brown (1997) Good exact confidence sets for a multivariate normal mean. The Annals of Statistics, 25(5), 2228–2258.
+</p>
+<p>Weizhen Wang, J. T. Gene Hwang, Anirban DasGupta (1999) Statistical tests for multivariate bioequivalence. Biometrika, 86(2), 395–402.
+</p>
+<p># bootkern not included so far
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>csetMV</code> for (simultaneous) confidence regions for normal mean and variance.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Example 1: simultaneous 90% confidence intervals for trivariate data
+
+trivar &lt;- mvtnorm::rmvnorm(n=20, mean=rep(0.05, 3), sigma=toeplitz(c(0.05, 0.04, 0.03)))
+colnames(trivar) &lt;- c("AUCinf", "AUCt", "Cmax")
+
+tost &lt;- cset(dat=trivar, method="tost", alpha=0.1)
+summary(tost)
+
+# Example 2: simultaneous 90% confidence regions for bivariate data
+
+bivar &lt;- mvtnorm::rmvnorm(n=20, mean=rep(0.05, 2), sigma=toeplitz(c(0.05, 0.04)))
+colnames(bivar) &lt;- c("AUC", "Cmax")
+
+hotelling &lt;- cset(dat=bivar, method="hotelling", alpha=0.1)
+summary(hotelling)
+plot(hotelling, main="90% Hotelling Region")
+
+limacon &lt;- cset(dat=bivar, method="limacon.asy", alpha=0.1)
+summary(limacon)
+plot(limacon, main="90% Limacon Region")
+
+tseng &lt;- cset(dat=bivar, method="tseng", alpha=0.1)
+summary(tseng)
+plot(tseng, main="90% Tseng Region")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jcolors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Vectors of colors for figures</h2>
+
+<h3>Description</h3>
+
+<p>Creates different vectors of related colors that may be useful for figures.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jcolors(
+  palette = c("default", "pal2", "pal3", "pal4", "pal5", "pal6", "pal7", "pal8", "pal9",
+    "pal10", "pal11", "pal12", "rainbow")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>Character string indicating a palette of colors.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Vector of character strings representing the chosen palette of colors.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">par(mar=c(0.6,5.1,0.6,0.6))
+plot(0, 0, type = "n", xlab = "", ylab = "", xlim = c(0, 6), ylim = c(4, 0), yaxs = "i",
+     xaxt = "n", yaxt = "n", xaxs = "i")
+axis(side=3, at=1:3, c("default", "pal2", "pal3"), las=1)
+
+def &lt;- jcolors("default")
+points(seq(along = def), rep(1, length(def)), pch = 22, bg = def, cex = 8)
+pal2 &lt;- jcolors("pal2")
+points(seq(along = pal2), rep(2, length(pal2)), pch = 22, bg = pal2, cex = 8)
+pal3 &lt;- jcolors("pal3")
+points(seq(along = pal3), rep(3, length(pal3)), pch = 22, bg = pal3, cex = 8)
+</code></pre>
+
+
+</div>

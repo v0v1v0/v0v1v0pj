@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MakeM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create matrix of conditional joint genotype probabilities</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>MakeM</code> creates the matrix of conditional joint genotype probabilities for biallelic markers for a given allele frequency.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MakeM(p)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>the allele frequency</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a 9 by 9 matrix</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>References</h3>
+
+<p>Csuros, M. (2014) Non-identifiability of identity coefficients at biallelic loci. Theoretical Population Biology 92, pp. 22–29.
+doi: 10.1016/j.tpb.2013.11.001
+</p>
+<p>Graffelman, J., Weir, B.S. and Goudet, J. (2024) Estimation of Jacquard's genetic identity coefficients with bi-allelic variants by constrained least-squares. Under review.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+set.seed(123)
+p &lt;- runif(1)
+M &lt;- MakeM(p)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotRhats</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting all Rhat values</h2>
+
+<h3>Description</h3>
+
+<p>Plotting all values of <code>Rhat</code> (or alternately <code>n.eff</code>) from an output object returned by <code>jagsUI</code>, or perhaps a subset of parameters.
+This function is intended as a quick graphical check of which parameters have adequately converged.
+</p>
+<p><code>Rhat</code> (Gelman-Rubin Convergence Diagnostic, or Potential Scale Reduction Factor)
+is calculated within 'JAGS', and is
+commonly used as a measure of convergence for a given parameter node.  Values close
+to 1 are seen as evidence of adequate convergence.  <code>n.eff</code> is also calculated within 'JAGS', and may be interpreted as a crude measure of
+effective sample size for a given parameter node.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotRhats(
+  x,
+  p = NULL,
+  n.eff = FALSE,
+  fence = NULL,
+  plotsequence = FALSE,
+  splitarr = FALSE,
+  margin = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object returned from <code>jagsUI</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Optional vector of parameters to subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.eff</code></td>
+<td>
+<p>Optionally, whether to plot <code>n.eff</code> instead of <code>Rhat</code>.  Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fence</code></td>
+<td>
+<p>Value of horizontal lines to overlay as reference.  Accepting the default value (<code>NULL</code>) will give <code>fence</code> values
+of 1.1 (a commonly used value) and 1.01 for Rhat, or 100 and 500 for <code>n.eff.</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plotsequence</code></td>
+<td>
+<p>Whether to plot parameter vectors (or matrices) in a sequence, running left to right, which may
+be useful for time series models, etc.  If the default (<code>FALSE</code>) is used, a vertical cluster will be plotted
+for each parameter, resulting in a simpler plot if there are many parameters.  Note that the <code>Rhat</code> values will still be
+plotted in sequence if the default (<code>FALSE</code>) is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>splitarr</code></td>
+<td>
+<p>Whether to split 2+ dimensional parameter arrays by a given dimension, rather than plotting the full
+array in one vertical cluster or continuous sequence.  This may be recommended in the case of large arrays.  Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>If <code style="white-space: pre;">⁠splitarr=⁠</code> is set to <code>TRUE</code>, which array margin to split by.  In the case of a 2-dimensional array, setting
+<code>margin=2</code> will separate the array by column.  If the default (<code>NULL</code>) is accepted, the function will split by the smallest dimension,
+therefore splitting into the fewest groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>References</h3>
+
+<p>Gelman, A., &amp; Rubin, D. B. (1992). Inference from Iterative Simulation
+Using Multiple Sequences. <em>Statistical Science, 7</em>(4), 457–472. http://www.jstor.org/stable/2246093
+</p>
+
+
+<h3>See Also</h3>
+
+<p>traceworstRhat, check_Rhat, qq_postpred, ts_postpred, plot_postpred
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## plotting everything
+plotRhats(SS_out)
+str(SS_out$Rhat)  # the associated values
+
+plotRhats(SS_out, n.eff=TRUE)
+str(SS_out$n.eff)  # the associated values
+
+## behavior of splitarr and margin are shown
+plotRhats(SS_out)
+plotRhats(SS_out, splitarr=TRUE)
+str(SS_out$Rhat) # the associated values
+
+## plotsequence may be useful in the case of a sequence of values
+plotRhats(SS_out, p=c("trend", "cycle_s"), splitarr=TRUE, plotsequence=TRUE)
+</code></pre>
+
+
+</div>

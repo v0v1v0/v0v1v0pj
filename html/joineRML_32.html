@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sigma.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract residual standard deviation(s) from an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Extract residual standard deviation(s) from an <code>mjoint</code>
+object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+sigma(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a number (standard deviation) if <code class="reqn">K = 1</code> (univariate model), or a
+vector if <code class="reqn">K&gt;1</code> (multivariate model).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Pinheiro JC, Bates DM. <em>Mixed-Effects Models in S and S-PLUS.</em> New York:
+Springer Verlag; 2000.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>sigma</code> in the <strong>lme4</strong> package.
+</p>
+
+
+</div>

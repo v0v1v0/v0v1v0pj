@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>traceplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Traceplots of JAGS output</h2>
+
+<h3>Description</h3>
+
+<p>Displays a series of MCMC iteration plots for monitored parameter in a JAGS analysis, along with the calculated Rhat value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  traceplot(x, parameters=NULL, Rhat_min=NULL, layout=NULL, ask=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A jagsUI object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A vector of names (as characters) of parameters to plot. Parameter names must match parameters included in the model. Calling non-scalar parameters without subsetting (e.g. <code>alpha</code>) will plot all values of <code>alpha</code>. If <code>parameters=NULL</code>, all parameters will be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rhat_min</code></td>
+<td>
+<p>If provided, only plot parameters with Rhat values that exceed the provided value. A good min value to start with is 1.05.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout</code></td>
+<td>
+<p>A length 2 vector with the number of rows and columns to display in the plot. The default is 3 x 3, or smaller if there are fewer parameters to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>If <code>TRUE</code>, ask user for confirmation before generating each new plot; the default is to ask when output is going to the screen, not when it is going to a file.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+</div>

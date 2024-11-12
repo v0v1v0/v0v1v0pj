@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_exists</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check whether a julia object with the given name exists or not.</h2>
+
+<h3>Description</h3>
+
+<p><code>julia_exists</code> returns whether a julia object with the given name exists or not.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_exists(name)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>the name of julia object you want to check.</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (identical(Sys.getenv("AUTO_JULIA_INSTALL"), "true")) { ## julia_setup is quite time consuming
+  ## doing initialization and automatic installation of Julia if necessary
+  julia_setup(installJulia = TRUE)
+  julia_exists("sqrt")
+}
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>forestcoxServer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>forestcoxServer:shiny module server for forestcox</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module server for forestcox
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">forestcoxServer(
+  id,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 10,
+  design.survey = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>Reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>Reactive List of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit in factor variable, Default: 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design.survey</code></td>
+<td>
+<p>reactive survey data. default: NULL</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module server for forestcox
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module server for forestcox
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>data.table-package</code>, <code>setDT</code>, <code>setattr</code>
+<code>TableSubgroupMultiCox</code>
+<code>forest_theme</code>, <code>forest</code>
+<code>dml</code>
+<code>read_pptx</code>, <code>add_slide</code>, <code>ph_with</code>, <code>ph_location</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(shiny)
+library(DT)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$am &lt;- factor(mtcars$am)
+mtcars$kk &lt;- factor(as.integer(mtcars$disp &gt;= 150))
+mtcars$kk1 &lt;- factor(as.integer(mtcars$disp &gt;= 200))
+
+library(shiny)
+library(DT)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$am &lt;- factor(mtcars$am)
+mtcars$kk &lt;- factor(as.integer(mtcars$disp &gt;= 150))
+mtcars$kk1 &lt;- factor(as.integer(mtcars$disp &gt;= 200))
+
+out &lt;- mtcars
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      forestcoxUI("Forest")
+    ),
+    mainPanel(
+      tabsetPanel(
+        type = "pills",
+        tabPanel(
+          title = "Data",
+          DTOutput("tablesub"),
+        ),
+        tabPanel(
+          title = "figure",
+          plotOutput("forestplot", width = "100%"),
+          ggplotdownUI("Forest")
+        )
+      )
+    )
+  )
+)
+
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(out)
+  label &lt;- reactive(jstable::mk.lev(out))
+  outtable &lt;- forestcoxServer("Forest", data = data, data_label = label)
+  output$tablesub &lt;- renderDT({
+    outtable()[[1]]
+  })
+  output$forestplot &lt;- renderPlot({
+    a
+    outtable()[[2]]
+  })
+}
+
+</code></pre>
+
+
+</div>

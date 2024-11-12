@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SkewHallLittlewoodPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Hall-Littlewood polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Returns the skew Hall-Littlewood polynomial associated to
+the given skew partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SkewHallLittlewoodPol(n, lambda, mu, which = "P")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables, a positive integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which skew Hall-Littlewood polynomial, <code>"P"</code> or <code>"Q"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>symbolicQspray</code> multivariate polynomial, the skew
+Hall-Littlewood polynomial associated to the skew partition defined by
+<code>lambda</code> and <code>mu</code>. It has a single parameter usually denoted
+by <code class="reqn">t</code> and its coefficients are polynomial in this parameter.
+When substituting <code class="reqn">t</code> with <code class="reqn">0</code> in the skew Hall-Littlewood
+<code class="reqn">P</code>-polynomials, one obtains the skew Schur polynomials.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n &lt;- 3; lambda &lt;- c(3, 2, 1); mu &lt;- c(1, 1)
+skewHLpoly &lt;- SkewHallLittlewoodPol(n, lambda, mu)
+skewSchurPoly &lt;- SkewSchurPol(n, lambda, mu)
+substituteParameters(skewHLpoly, 0) == skewSchurPoly # should be TRUE
+</code></pre>
+
+
+</div>

@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jlme-model-reexports</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Re-exported functions for interacting with Julia model objects</h2>
+
+<h3>Description</h3>
+
+<p>Re-exported functions for interacting with Julia model objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">propertynames(x)
+
+issingular(x)
+
+likelihoodratiotest(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Julia model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to the Julia function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An appropriate R or Julia object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+jlme_setup(restart = TRUE)
+
+x &lt;- jlmer(r2 ~ Anger + (1 | id), lme4::VerbAgg, family = "binomial")
+
+# `propertynames()` lists properties accessible via `$`
+propertynames(x)
+
+# `issingular()` reports whether model has singular fit
+issingular(x)
+
+# `likelihoodratiotest()` conducts a likelihood-ratio test between nested models
+likelihoodratiotest(
+  x,
+  jlmer(r2 ~ 1 + (1 | id), lme4::VerbAgg, family = "binomial")
+)
+
+stop_julia()
+
+
+</code></pre>
+
+
+</div>

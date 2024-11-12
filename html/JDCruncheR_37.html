@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>set_thresholds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set values for thresholds</h2>
+
+<h3>Description</h3>
+
+<p>Set values for thresholds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">set_thresholds(test_name, thresholds)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>test_name</code></td>
+<td>
+<p>String. The name of the test to update.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thresholds</code></td>
+<td>
+<p>Named vector of numerics. The upper values of
+each break of a threshold.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>test_name</code> is missing, the argument <code>thresholds</code> is not used
+and all thresholds will be updated to their default values.
+</p>
+<p>If <code>test_name</code> is not missing, but if the argument <code>thresholds</code> is
+missing then only the thresholds of the test <code>test_name</code> will be updated
+to its default values.
+</p>
+<p>Finally, if <code>test_name</code> and <code>thresholds</code> are not missing, then only
+the thresholds of the test <code>test_name</code> are updated with the value
+<code>thresholds</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Set "m7"
+set_thresholds(
+    test_name = "m7",
+    thresholds = c(Good = 0.8, Bad = 1.4, Severe = Inf)
+)
+
+# Set "oos_mean" to default
+set_thresholds(test_name = "oos_mean")
+
+# Set all thresholds to default
+set_thresholds()
+
+</code></pre>
+
+
+</div>

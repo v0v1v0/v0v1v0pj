@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>NSS.JD</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+NSS.JD Method for Nonstationary Blind Source Separation
+</h2>
+
+<h3>Description</h3>
+
+<p>The NSS.JD method for nonstationary blind source separation. The method first whitens the complete data and then divides it into K time intervals.
+Then <code>frjd</code> is used to jointly diagonalize the covariance matrices computed for the individual time intervals to find the sources.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">NSS.JD(X, ...)
+
+## Default S3 method:
+NSS.JD(X,  K=12, Tau=0, n.cuts=NULL, eps = 1e-06, maxiter = 100, ...)
+## S3 method for class 'ts'
+NSS.JD(X, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a numeric matrix or a multivariate time series object of class <code>ts</code>. Missing values are not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>number of intervals to be used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tau</code></td>
+<td>
+<p>By default 0 which means covariance are computed of each time interval, if Tau is an integer &gt; 0 then rather autocovariance matrices at lag Tau are used for the joint diagonaliation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.cuts</code></td>
+<td>
+<p>if NULL, then the time series is divided into K equally long intervals. To specify intervals n.cuts should be given in the form c(1,n.cut.1,...,n.cut.k, nrow(X)) to specify where to split the time series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>maximum number of iterations for <code>frjd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>convergence tolerance for <code>frjd</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The model assumes that the mean of the p-variate time series is constant but the variances change over time.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>the lag used for the autocovariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.cut</code></td>
+<td>
+<p>specifying the intervals where data is split</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>the number of intervals used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>estimated sources as time series objected standardized to have mean 0 and that the variance of the sources are 1.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Choi S. and Cichocki A. (2000), Blind separation of nonstationary sources in noisy mixtures, 
+<em>Electronics Letters</em>, 36, 848–849.</cite>
+</p>
+<p><cite>Choi S. and Cichocki A. (2000), Blind separation of nonstationary and temporally correlated
+sources from noisy mixtures, Proceedings of the 2000
+<em>IEEE Signal Processing Society Workshop Neural Networks for Signal Processing X</em>, 1, 405–414.</cite>
+</p>
+<p><cite>Nordhausen K. (2014), On robustifying some second order blind source separation methods for nonstationary time series, 
+<em>Statistical Papers</em>, 55, 141–156.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ts, NSS.SD, NSS.TD.JD</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n &lt;- 1000
+s1 &lt;- rnorm(n)
+s2 &lt;- 2*sin(pi/200*1:n)* rnorm(n)
+s3 &lt;- c(rnorm(n/2), rnorm(100,0,2), rnorm(n/2-100,0,1.5))
+S &lt;- cbind(s1,s2,s3)
+plot.ts(S)
+A&lt;-matrix(rnorm(9),3,3)
+X&lt;- S%*%t(A)
+
+NSS2 &lt;- NSS.JD(X)
+NSS2
+MD(coef(NSS2),A)
+plot(NSS2)
+cor(NSS2$S,S)
+
+NSS2b &lt;- NSS.JD(X, Tau=1)
+MD(coef(NSS2b),A)
+
+NSS2c &lt;- NSS.JD(X, n.cuts=c(1,300,500,600,1000))
+MD(coef(NSS2c),A)
+</code></pre>
+
+
+</div>

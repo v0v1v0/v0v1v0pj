@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>APAStyler.lm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>APAStyler method for linear models</h2>
+
+<h3>Description</h3>
+
+<p>APAStyler method for linear models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'lm'
+APAStyler(object, digits = 2, pdigits, file, print = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>lm</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>The number of digits to round results to. Defaults to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pdigits</code></td>
+<td>
+<p>The number of digits to use for p values. Defaults to digits + 1 if missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>An optional argument indicating whether the output should be written to a file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print</code></td>
+<td>
+<p>A logical argument, whether or not to print results to screen.
+This is distinct from saving them to a file. Defaults to <code>TRUE</code> for back compatibility.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional argiuments passed on to <code>write.table</code>.</p>
+</td>
+</tr>
+</table>
+</div>

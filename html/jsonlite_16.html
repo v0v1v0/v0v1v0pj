@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>prettify, minify</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prettify or minify a JSON string</h2>
+
+<h3>Description</h3>
+
+<p>Prettify adds indentation to a JSON string; minify removes all indentation/whitespace.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">prettify(txt, indent = 4)
+
+minify(txt)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>txt</code></td>
+<td>
+<p>JSON string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indent</code></td>
+<td>
+<p>number of spaces to indent</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">myjson &lt;- toJSON(cars)
+cat(myjson)
+prettify(myjson)
+minify(myjson)
+</code></pre>
+
+
+</div>

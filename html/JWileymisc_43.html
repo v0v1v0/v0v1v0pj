@@ -1,0 +1,165 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Heatmap of a Correlation Matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function creates a heatmap of a correlation matrix using <span class="pkg">ggplot2</span>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">corplot(
+  x,
+  coverage,
+  pvalues,
+  type = c("both", "cor", "p", "coverage"),
+  digits = 2,
+  order = c("cluster", "asis"),
+  ...,
+  control.grobs = list()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A correlation matrix or some other square symmetric matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coverage</code></td>
+<td>
+<p>An (optional) matrix with the same dimensions as
+<code>x</code> giving the proportion of data present.  Particularly
+useful when the correlation matrix is a pairwise present.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalues</code></td>
+<td>
+<p>An (optional) matrix with the same dimensions as
+<code>x</code> giving the p values for each correlation. To show, use
+<code>plot = "p"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character string indicating what to show on top of the heatmap. Can be
+‘coverage’, in which case bubble points show coverage;
+‘p’, in which case p values are shown;
+‘cor’, in which case correlations are shown; or
+‘both’, in which case both correlations and p-values are shown.
+Only has an effect if a coverage (or pvalue) matrix is passed
+also. Defaults to <code>cor</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>The number of digits to round to when printing the
+correlations on the heatmap. Text is suppressed when a coverage
+matrix is passed and <code>points = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>A character string indicating how to order the resulting
+plot. Defaults to ‘cluster’ which uses hierarchical clustering
+to sensibly order the variables. The other option is ‘asis’
+in which case the matrix is plotted in the order it is passed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments currently only passed to
+<code>hclust</code> and <code>corOK</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control.grobs</code></td>
+<td>
+<p>A list of additional <code>quote()</code>d
+options to customize the <code>ggplot2</code> output.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The actual plot is created using <code>ggplot2</code> and <code>geom_tile</code>.
+In addition to creating the plot, the variables are ordered based on a
+hierarchical clustering of the correlation matrix.  Specifically, <code>1 - x</code>
+is used as the distance matrix. If coverage is passed, will also add a bubble
+plot with the area proportional to the proportion of data present for any
+given cell.  Defaults for <code>ggplot2</code> are set, but it is possible to use a
+named list of quote()d ggplot calls to override all defaults. This is not
+expected for typical use.  Particularly main, points, and text as these rely
+on internal variable names; however, labels, the gradient color, and area
+scaling can be adjusted more safely.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Primarily called for the side effect of creating a plot.
+However, the <code>ggplot2</code> plot object is returned,
+so it can be saved, replotted, edited, etc.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># example plotting the correlation matrix from the
+# mtcars dataset
+corplot(cor(mtcars))
+
+dat &lt;- as.matrix(iris[, 1:4])
+
+# randomly set 25% of the data to missing
+set.seed(10)
+dat[sample(length(dat), length(dat) * .25)] &lt;- NA
+cor(dat, use = "pair")
+cor(dat, use = "complete")
+
+# create a summary of the data (including coverage matrix)
+sdat &lt;- SEMSummary(~ ., data = dat, use = "pair")
+str(sdat)
+# using the plot method for SEMSummary (which basically just calls corplot)
+## getting correlations above diagonal and p values below diagonal#'
+plot(sdat)
+
+## get correlations only
+plot(sdat, type = "cor")
+
+## showing coverage
+plot(sdat, type = "coverage")
+
+# use the control.grobs argument to adjust the coverage scaling
+# to go from 0 to 1 rather than the range of coverage
+corplot(x = sdat$sSigma, coverage = sdat$coverage,
+  type = "coverage",
+  control.grobs = list(area = quote(scale_size_area(limits = c(0, 1))))
+)
+
+# also works with plot() on a SEMSummary
+plot(x = sdat, type = "coverage",
+  control.grobs = list(area = quote(scale_size_area(limits = c(0, 1))))
+)
+
+rm(dat, sdat)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.vargm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plots the empirical variogram for longitudinal data</h2>
+
+<h3>Description</h3>
+
+<p>Plots the empirical variogram for observed measurements, of an
+object of class <code>vargm</code>, obtained by using function
+<code>variogram</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'vargm'
+plot(x, smooth = FALSE, bdw = NULL, follow.time = NULL, points = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class <code>vargm</code> obtained by using function. 
+<code>variogram</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+<p>logical value to use a non-parametric estimator to calculate 
+the variogram of all <code class="reqn">v_ijk</code>. The default is <code>FALSE</code>, as it uses
+time averages.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdw</code></td>
+<td>
+<p>bandwidth to use in the time averages. The default is <code>NULL</code>,
+because this is calculated automatically.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>follow.time</code></td>
+<td>
+<p>the interval of time we want to construct the variogram 
+for. When <code>NULL</code> this is the maximum of the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>points</code></td>
+<td>
+<p>logical value if the points <code class="reqn">v_ijk</code> should be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other graphical options as in <code>par</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A graphical device with the plot of empirical variogram.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ines Sousa
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(mental)
+mental.unbalanced &lt;- to.unbalanced(mental, id.col = 1, 
+                                   times = c(0, 1, 2, 4, 6, 8),
+                                   Y.col = 2:7, 
+                                   other.col = c(8, 10, 11))
+names(mental.unbalanced)[3] &lt;- "Y"
+vgm &lt;- variogram(indv = tail(mental.unbalanced[, 1], 30),
+                 time = tail(mental.unbalanced[, 2], 30),
+                 Y = tail(mental.unbalanced[, 3], 30))
+plot(vgm)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>draft</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creat A Draft of JDS Article</h2>
+
+<h3>Description</h3>
+
+<p>Create a JDS article draft using the specified LaTeX class file.  This
+function is a simplified version of 'rmarkdown::draft()' for creating a JDS
+article draft only.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">draft(file, cls = c("jdsart", "jds"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>A character string for the file name of the draft.  Different
+with <code>rmarkdown::draft()</code>, the suffix <code>".Rmd"</code> will not be
+added if it is not specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cls</code></td>
+<td>
+<p>The LaTeX class name. The available choices are <code>jdsart</code> for
+the latest class developed by vtex, or <code>jds</code> for the deprecated
+class.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The file name of the new document (invisibly).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive() &amp;&amp; requireNamespace("rmarkdown", quietly = TRUE)) {
+    ## draft from a sample R markdown file
+    jds.rmd::draft("jds-sample.Rmd")
+    ## produce pdf with the tex source kept for submission
+    rmarkdown::render("jds-sample.Rmd")
+}
+</code></pre>
+
+
+</div>

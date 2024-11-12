@@ -1,0 +1,262 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CreateTableOneJS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>CreateTableOneJS: Modified CreateTableOne function in tableone package</h2>
+
+<h3>Description</h3>
+
+<p>Combine CreateTableOne &amp; print function in tableone package
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CreateTableOneJS(
+  vars,
+  strata = NULL,
+  strata2 = NULL,
+  data,
+  factorVars = NULL,
+  includeNA = F,
+  test = T,
+  testApprox = chisq.test,
+  argsApprox = list(correct = TRUE),
+  testExact = fisher.test,
+  argsExact = list(workspace = 2 * 10^5),
+  testNormal = oneway.test,
+  argsNormal = list(var.equal = F),
+  testNonNormal = kruskal.test,
+  argsNonNormal = list(NULL),
+  showAllLevels = T,
+  printToggle = F,
+  quote = F,
+  smd = F,
+  Labels = F,
+  exact = NULL,
+  nonnormal = NULL,
+  catDigits = 1,
+  contDigits = 2,
+  pDigits = 3,
+  labeldata = NULL,
+  psub = T,
+  minMax = F,
+  showpm = T,
+  addOverall = F,
+  normalityTest = F
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>Variables to be summarized given as a character vector. Factors are handled as categorical variables, whereas numeric variables are handled as continuous variables. If empty, all variables in the data frame specified in the data argument are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strata</code></td>
+<td>
+<p>Stratifying grouping variable name(s) given as a character vector. If omitted, the overall results are returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strata2</code></td>
+<td>
+<p>Stratifying 2nd grouping variable name(s) given as a character vector. If omitted, the 1 group results are returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame in which these variables exist. All variables (both vars and strata) must be in this data frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factorVars</code></td>
+<td>
+<p>Numerically coded variables that should be handled as categorical variables given as a character vector. Do not include factors, unless you need to relevel them by removing empty levels. If omitted, only factors are considered categorical variables. The variables specified here must also be specified in the vars argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>includeNA</code></td>
+<td>
+<p>If TRUE, NA is handled as a regular factor level rather than missing. NA is shown as the last factor level in the table. Only effective for categorical variables., Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>If TRUE, as in the default and there are more than two groups, groupwise comparisons are performed, Default: T</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testApprox</code></td>
+<td>
+<p>A function used to perform the large sample approximation based tests. The default is chisq.test. This is not recommended when some of the cell have small counts like fewer than 5, Default: chisq.test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>argsApprox</code></td>
+<td>
+<p>A named list of arguments passed to the function specified in testApprox. The default is list(correct = TRUE), which turns on the continuity correction for chisq.test, Default: list(correct = TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testExact</code></td>
+<td>
+<p>A function used to perform the exact tests. The default is fisher.test. If the cells have large numbers, it will fail because of memory limitation. In this situation, the large sample approximation based should suffice., Default: fisher.test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>argsExact</code></td>
+<td>
+<p>A named list of arguments passed to the function specified in testExact. The default is list(workspace = 2 * 10^5), which specifies the memory space allocated for fisher.test, Default: list(workspace = 2 * 10^5)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testNormal</code></td>
+<td>
+<p>A function used to perform the normal assumption based tests. The default is oneway.test. This is equivalent of the t-test when there are only two groups, Default: oneway.test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>argsNormal</code></td>
+<td>
+<p>A named list of arguments passed to the function specified in testNormal. The default is list(var.equal = TRUE), which makes it the ordinary ANOVA that assumes equal variance across groups., Default: list(var.equal = F)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>testNonNormal</code></td>
+<td>
+<p>A function used to perform the nonparametric tests. The default is kruskal.test (Kruskal-Wallis Rank Sum Test). This is equivalent of the wilcox.test (Man-Whitney U test) when there are only two groups, Default: kruskal.test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>argsNonNormal</code></td>
+<td>
+<p>A named list of arguments passed to the function specified in testNonNormal. The default is list(NULL), which is just a placeholder., Default: list(NULL)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showAllLevels</code></td>
+<td>
+<p>Whether to show all levels. FALSE by default, i.e., for 2-level categorical variables, only the higher level is shown to avoid redundant information., Default: T</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>printToggle</code></td>
+<td>
+<p>Whether to print the output. If FALSE, no output is created, and a matrix is invisibly returned., Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quote</code></td>
+<td>
+<p>Whether to show everything in quotes. The default is FALSE. If TRUE, everything including the row and column names are quoted so that you can copy it to Excel easily, Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smd</code></td>
+<td>
+<p>If TRUE, as in the default and there are more than two groups, standardized mean differences for all pairwise comparisons are calculated, Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Labels</code></td>
+<td>
+<p>Use Label, Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>A character vector to specify the variables for which the p-values should be those of exact tests. By default all p-values are from large sample approximation tests (chisq.test)., Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nonnormal</code></td>
+<td>
+<p>A character vector to specify the variables for which the p-values should be those of nonparametric tests. By default all p-values are from normal assumption-based tests (oneway.test)., Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>catDigits</code></td>
+<td>
+<p>Number of digits to print for proportions. Default: 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contDigits</code></td>
+<td>
+<p>Number of digits to print for continuous variables. Default 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pDigits</code></td>
+<td>
+<p>Number of digits to print for p-values (also used for standardized mean differences), Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labeldata</code></td>
+<td>
+<p>labeldata to use, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psub</code></td>
+<td>
+<p>show sub-group p-values, Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minMax</code></td>
+<td>
+<p>Whether to use [min,max] instead of [p25,p75] for nonnormal variables. The default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showpm</code></td>
+<td>
+<p>Logical, show normal distributed continuous variables as Mean ± SD. Default: T</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>addOverall</code></td>
+<td>
+<p>(optional, only used if strata are supplied) Adds an overall column to the table. Smd and p-value calculations are performed using only the stratifed clolumns. Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>normalityTest</code></td>
+<td>
+<p>Logical, perform the Shapiro test for all variables. Default: F</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix object containing what you see is also invisibly returned. This can be assinged a name and exported via write.csv.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+CreateTableOneJS(vars = names(lung), strata = "sex", data = lung)
+</code></pre>
+
+
+</div>

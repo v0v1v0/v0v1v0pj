@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KostkaJackNumbers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kostka-Jack numbers with a given Jack parameter</h2>
+
+<h3>Description</h3>
+
+<p>Kostka numbers with Jack parameter, or Kostka-Jack numbers,
+for partitions of a given weight and a given Jack parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KostkaJackNumbers(n, alpha = "1")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>positive integer, the weight of the partitions</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the Jack parameter, a <code>bigq</code> number or an object coercible
+to a <code>bigq</code> number</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Kostka-Jack number <code class="reqn">K_{\lambda,\mu}(\alpha)</code> is the
+coefficient of the monomial symmetric polynomial <code class="reqn">m_\mu</code> in the
+expression of the <code class="reqn">P</code>-Jack polynomial <code class="reqn">P_\lambda(\alpha)</code> as a
+linear combination of monomial symmetric polynomials. For <code class="reqn">\alpha=1</code>
+it is the ordinary Kostka number.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The matrix of the Kostka-Jack numbers <code class="reqn">K_{\lambda,\mu}(\alpha)</code>
+given as character strings representing integers or fractions.
+The row names of this matrix encode the partitions <code class="reqn">\lambda</code> and
+the column names encode the partitions <code class="reqn">\mu</code>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KostkaJackNumbersWithGivenLambda</code>,
+<code>symbolicKostkaJackNumbers</code>,
+<code>skewKostkaJackNumbers</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">KostkaJackNumbers(4)
+</code></pre>
+
+
+</div>

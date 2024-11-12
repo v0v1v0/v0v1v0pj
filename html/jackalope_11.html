@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>haps_vcf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Organize information to create haplotypes using a VCF file</h2>
+
+<h3>Description</h3>
+
+<p>This function organizes higher-level information for creating haplotypes from
+Variant Call Format (VCF) files.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">haps_vcf(fn, print_names = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>A single string specifying the name of the VCF file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print_names</code></td>
+<td>
+<p>Logical for whether to print all unique chromosome names from
+the VCF file when VCF chromosome names don't match those from the reference genome.
+This printing doesn't happen until this object is passed to <code>create_haplotypes</code>.
+This can be useful for troubleshooting.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>haps_vcf_info</code> object containing information used in <code>create_haplotypes</code>
+to create variant haplotypes.
+This class is just a wrapper around a list containing the arguments to this
+function, which you can view (but not change) using the object's <code>fn()</code> and
+<code>print_names()</code> methods.
+</p>
+
+
+</div>

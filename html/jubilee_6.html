@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.adj_fault_line</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adjust the time series by fault lines</h2>
+
+<h3>Description</h3>
+
+<p>This utility is used to adjust the time series by the provided fault lines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.adj_fault_line(fraction, ts, fl, months = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fraction</code></td>
+<td>
+<p>numeric, representing year in fraction convention.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ts</code></td>
+<td>
+<p>numeric, time series to be adjusted, typically it is <code>log.cape10</code> or <code>log.cape20</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fl</code></td>
+<td>
+<p>the fault line matrix. See <code>jubilee.std_fault_line()</code> for more detail.
+If it is provided as character string,
+it will be looked up as the name of data set in the standard fault line library.
+If it is provided as numeric array, it will be converted to a matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>months</code></td>
+<td>
+<p>interval in months to ramp up the fault line. Default is 1.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric, ts adjusted by fault lines
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  repo &lt;- jubilee.repo(online=FALSE)
+  dj &lt;- jubilee(repo@ie, 45, 10)@reg.dtb
+  dj$log.cape10.adj &lt;- jubilee.adj_fault_line(dj$fraction, dj$log.cape10, "r_nom_f10_5ftr_4fl")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

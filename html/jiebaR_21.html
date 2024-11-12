@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>keywords</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Keyword extraction</h2>
+
+<h3>Description</h3>
+
+<p>Keyword Extraction worker uses MixSegment model to cut word and uses 
+TF-IDF algorithm to find the keywords.  <code>dict</code> , <code>hmm</code>, 
+<code>idf</code>, <code>stop_word</code> and <code>topn</code> should be provided when initializing 
+jiebaR worker.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">keywords(code, jiebar)
+
+vector_keywords(code, jiebar)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>For <code>keywords</code>, a Chinese sentence or the path of a text file. 
+For <code>vector_keywords</code>, a character vector of segmented words.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jiebar</code></td>
+<td>
+<p>jiebaR Worker.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There is a symbol <code>&lt;=</code> for this function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector of keywords with weight.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Tf-idf">http://en.wikipedia.org/wiki/Tf-idf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>&lt;=.keywords</code> <code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+### Keyword Extraction
+keys = worker("keywords", topn = 1)
+keys &lt;= "words of fun"
+## End(Not run)
+</code></pre>
+
+
+</div>

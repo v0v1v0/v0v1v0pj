@@ -1,0 +1,289 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>psBinomial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smoothing scattered binomial data using P-splines.</h2>
+
+<h3>Description</h3>
+
+<p><code>psBinomial</code> is used to smooth scattered
+binomial data using P-splines using a logit link function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">psBinomial(
+  x,
+  y,
+  xl = min(x),
+  xr = max(x),
+  nseg = 10,
+  bdeg = 3,
+  pord = 2,
+  lambda = 1,
+  ntrials = 0 * y + 1,
+  wts = NULL,
+  show = FALSE,
+  iter = 100,
+  xgrid = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the vector for the continuous regressor of <code>length(y)</code> and
+the abcissae, on which the B-spline basis is constructed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the response vector, usually 0/1 or binomial counts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl</code></td>
+<td>
+<p>the lower limit for the domain of <code>x</code> (default is min(<code>x</code>)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xr</code></td>
+<td>
+<p>the upper limit for the domain of <code>x</code> (default is max(<code>x</code>)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of evenly spaced segments between xl and xr.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the number of the degree of the basis, usually 1, 2 (default), or 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the number of the order of the difference penalty, usually 1, 2, or 3 (defalult).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the (positive) number for the tuning parameter for the penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntrials</code></td>
+<td>
+<p>the vector for the number of binomial trials (default = 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>the vector of weights, default is 1, zeros allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>Set to TRUE or FALSE to display iteration history.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+<p>a scalar to set the maximum number of iterations, default <code>iter = 100</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>a scalar or a vector that gives the <code>x</code> locations for prediction, useful for plotting.
+If a scalar (default 100) is used then a uniform grid of this size along (<code>xl</code>, <code>xr</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pcoef</code></td>
+<td>
+<p>a vector of length <code>n</code> of estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a vector of length <code>m</code> of estimated probabilities.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muhat</code></td>
+<td>
+<p>a vector of length <code>m</code> of estimated means (<code>ntrials*p</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p>deviance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effdim</code></td>
+<td>
+<p>effective dimension of the smooth.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p>AIC</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>a vector of preset weights (default = 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of B-spline segments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the B-spline basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the order of the difference penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the GLM family (repsonse distribution).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the binomial response.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the regressor on which the basis is constructed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>"half" of the penalty matrix, <code>P'P = lambda*D'D</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>the B-spline basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the positive tuning parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dispersion</code></td>
+<td>
+<p>dispersion parameter estimated <code>dev/(m-effdim)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>gridded <code>x</code> values,useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ygrid</code></td>
+<td>
+<p>gridded fitted linear predictor values, useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pgrid</code></td>
+<td>
+<p>gridded (inverse link) fitted probability values, useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se_eta</code></td>
+<td>
+<p>gridded standard errors for the linear predictor.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Extract data
+library(rpart)
+Kyphosis &lt;- kyphosis$Kyphosis
+Age &lt;- kyphosis$Age
+y &lt;- 1 * (Kyphosis == "present") # make y 0/1
+fit1 &lt;- psBinomial(Age, y,
+  xl = min(Age), xr = max(Age), nseg = 20,
+  bdeg = 3, pord = 2, lambda = 10
+)
+names(fit1)
+plot(fit1, xlab = "Age", ylab = "0/1", se = 2)
+</code></pre>
+
+
+</div>

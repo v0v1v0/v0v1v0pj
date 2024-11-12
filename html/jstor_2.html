@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_add_total_pages</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add total count of pages</h2>
+
+<h3>Description</h3>
+
+<p>This function adds a column with the total count of pages. It calls
+<code>jst_get_total_pages()</code> which does the main work.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_add_total_pages(meta_data, quietly = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meta_data</code></td>
+<td>
+<p>Data which was processed via <code>jst_get_article()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quietly</code></td>
+<td>
+<p>Should warnings from converting page ranges be suppressed?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>tibble</code>, as provided with in <code>meta_data</code>, with an additional
+column on total number of pages.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jst_get_total_pages()</code>
+</p>
+
+
+</div>

@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print.jmcsBig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>print.jmcsBig</h2>
+
+<h3>Description</h3>
+
+<p>print method for class 'jmcsBig'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmcsBig'
+print(object, digits = 3, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>used for round the numeric values after decimal</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>others</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>prints table containing various parameter estimates,
+SE, P- value for both survival and longitudinal submodel,
+if the model is bayesian it includes their credible interval too.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+##
+library(survival)
+library(dplyr)
+################################
+mod2&lt;-jmcsBig(dtlong=data.frame(long2),
+dtsurv = data.frame(surv2),
+longm=y~ x7+visit,
+survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,
+samplesize=200,id='id')
+print(mod2)
+   
+</code></pre>
+
+
+</div>

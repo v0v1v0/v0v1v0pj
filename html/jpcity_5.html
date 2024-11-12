@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>city_desig_merge</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Merge designated city wards</h2>
+
+<h3>Description</h3>
+
+<p>Merge designated city wards
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">city_desig_merge(city, merge_tokyo = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>city</code></td>
+<td>
+<p>A <code>jpcity_city</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>merge_tokyo</code></td>
+<td>
+<p>Whether to merge Tokyo special wards?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>jpcity_city</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">city &lt;- parse_city(c("01101", "13101"))
+city_desig_merge(city)
+city_desig_merge(city,
+                 merge_tokyo = TRUE)
+
+</code></pre>
+
+
+</div>

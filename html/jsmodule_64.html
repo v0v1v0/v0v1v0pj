@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tb1moduleUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>tb1moduleUI: table 1 module UI.</h2>
+
+<h3>Description</h3>
+
+<p>Table 1 shiny module UI for descriptive statistics.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tb1moduleUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Table 1 shiny module UI for descriptive statistics.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table 1 module UI.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      tb1moduleUI("tb1")
+    ),
+    mainPanel(
+      DTOutput("table1")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_tb1 &lt;- callModule(tb1module2, "tb1",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$table1 &lt;- renderDT({
+    tb &lt;- out_tb1()$table
+    cap &lt;- out_tb1()$caption
+    out.tb1 &lt;- datatable(tb, rownames = T, extension = "Buttons", caption = cap)
+    return(out.tb1)
+  })
+}
+</code></pre>
+
+
+</div>

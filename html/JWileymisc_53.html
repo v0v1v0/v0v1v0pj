@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gglikert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creates a plot for likert scale</h2>
+
+<h3>Description</h3>
+
+<p>Creates a plot for likert scale
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gglikert(
+  x,
+  y,
+  leftLab,
+  rightLab,
+  colour,
+  data,
+  xlim,
+  title,
+  shape = 18,
+  size = 7
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Variable to plot on the x axis (the likert scale responses or averages)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>The variable containing an index of the different items, should be integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>leftLab</code></td>
+<td>
+<p>The variable with anchors for the low end of the Likert scale</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rightLab</code></td>
+<td>
+<p>The variable with anchors for the high end of the Likert scale</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colour</code></td>
+<td>
+<p>A character string giving the name of a variable for colouring the data, like a grouping variable. Alternately the colour of points passed to <code>geom_point</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data to use for plotting</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+<p>A vector giving the lower an upper limit for the x axis.  This should be the
+possible range of the Likert scale, not the actual range.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>A character vector giving the title for the plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>A number indicating the point shape, passed to <code>geom_point</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>A number indicating the size of points, passed to <code>geom_point</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(JWileymisc)
+library(ggplot2)
+library(ggpubr)
+testdat &lt;- data.table::data.table(
+  Var = 1:4,
+  Mean = c(1.5, 3, 2.2, 4.6),
+  Low = c("Happy", "Peaceful", "Excited", "Content"),
+  High = c("Sad", "Angry", "Hopeless", "Anxious"))
+
+gglikert("Mean", "Var", "Low", "High", data = testdat, xlim = c(1, 5),
+  title = "Example Plot of Average Affect Ratings")
+
+testdat &lt;- rbind(
+  cbind(testdat, Group = "Young"),
+  cbind(testdat, Group = "Old"))
+testdat$Mean[5:8] &lt;- c(1.7, 2.6, 2.0, 4.4)
+
+gglikert("Mean", "Var", "Low", "High", colour = "Group",
+  data = testdat, xlim = c(1, 5),
+  title = "Example Plot of Average Affect Ratings")
+
+gglikert("Mean", "Var", "Low", "High", colour = "Group",
+  data = testdat, xlim = c(1, 5),
+  title = "Example Plot of Average Affect Ratings") +
+ggplot2::scale_colour_manual(values = c("Young" = "grey50", "Old" = "black"))
+
+## clean up
+rm(testdat)
+</code></pre>
+
+
+</div>

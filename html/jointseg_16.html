@@ -1,0 +1,207 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointSeg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint segmentation of multivariate signals</h2>
+
+<h3>Description</h3>
+
+<p>Joint segmentation of multivariate signals in two steps: </p>
+ 
+<ol>
+<li>
+<p>first-pass segmentation.  By default, a fast, greedy approach is used 
+(see <code>method</code>). </p>
+</li>
+<li>
+<p>pruning of the candidate change points obtained 
+by dynamic programming </p>
+</li>
+</ol>
+<h3>Usage</h3>
+
+<pre><code class="language-R">jointSeg(Y, method = "RBS", stat = NULL, dpStat = stat,
+  segFUN = NULL, jitter = NULL,
+  modelSelectionMethod = ifelse(match(method, c("DynamicProgramming",
+  "RBS", "GFLars"), nomatch = 0) &gt; 0, "Lebarbier", "none"),
+  modelSelectionOnDP = (match(method, c("DynamicProgramming", "RBS",
+  "GFLars"), nomatch = 0) &gt; 0), ..., profile = FALSE, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>The signal to be segmented (a matrix or a numeric vector)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A <code>character</code> value, the type of segmentation method used.
+May be one of:  </p>
+ <dl>
+<dt>"RBS"</dt>
+<dd>
+<p>Recursive Binary Segmentation (the 
+default), see <code>segmentByRBS</code> as described in Gey and Lebarbier 
+(2005)</p>
+</dd> <dt>"GFLars"</dt>
+<dd>
+<p>Group fused LARS as described in Bleakley and Vert 
+(2011).</p>
+</dd> <dt>"DP"</dt>
+<dd>
+<p>Dynamic Programming (Bellman, 1956). For univariate 
+signals the pruned DP of  Rigaill et al (2010) is used.</p>
+</dd> <dt>"other"</dt>
+<dd>
+<p>The
+segmentation method is passed as a function using argument <code>segFUN</code> 
+(see examples in directory <code>otherMethods</code> of the <code>jointseg</code> 
+package).</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of 
+<code>Y</code> to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpStat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of 
+<code>Y</code> to be segmented at the second round of segmentation. Defaults to 
+the value of argument <code>stat</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>segFUN</code></td>
+<td>
+<p>The segmentation function to be used when <code>method</code> is set 
+to <code>other</code>. Not used otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jitter</code></td>
+<td>
+<p>Uncertainty on breakpoint position after initial segmentation. 
+Defaults to <code>NULL</code>.  See Details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelSelectionMethod</code></td>
+<td>
+<p>A character value, the name of the method used to
+perform model selection.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelSelectionOnDP</code></td>
+<td>
+<p>A logical value. If <code>TRUE</code> (the default), 
+model selection is performed on segmentation after dynamic programming; 
+else model selection is performed on initial segmentation.  Only applies to
+methods "DP", "RBS" and "GFLars".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to the lower-level segmentation 
+method determined by argument <code>method</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile</code></td>
+<td>
+<p>A <code>logical</code> value: trace time and memory usage ?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ? 
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>modelSelectionOnDP</code> is set to <code>FALSE</code>, then model selection is 
+run on the sets of the form <code>bkp[1:k]</code> for <code class="reqn">1 \leq k \leq 
+length(bkp)</code>, where <code>bkp</code> is the set of breakpoints identified by the 
+initial segmentation.  In particular, this implies that the candidate 
+breakpoints in <code>bkp</code> are sorted by order of appearance and not by 
+position.
+</p>
+<p>If <code>jitter</code> is not <code>NULL</code>, it should be a vector of integer
+indices. The set of candidate breakpoints passed on to dynamic programming is
+augmented by all indices distant from an element of <code>jitter</code> from one of
+the candidates. For example, if <code>jitter==c(-1, 0, 1)</code> and the initial
+set of breakpoints is <code>c(1,5)</code> then dynamic programming is run on
+<code>c(1,2,4,5,6)</code>.
+</p>
+<p>If the return value of the initial segmentation has an element named
+<code>dpseg</code>, then initial segmentation results are not pruned by dynamic
+programming.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+</p>
+<p>Vert, J. P., &amp; Bleakley, K. (2010). Fast detection of multiple
+change-points shared by many signals using group LARS. Advances in Neural
+Information Processing Systems, 23, 2343-2351.
+</p>
+<p>Gey, S., &amp; Lebarbier, E. (2008). Using CART to Detect Multiple
+Change Points in the Mean for Large Sample.
+http://hal.archives-ouvertes.fr/hal-00327146/
+</p>
+<p>Rigaill, G. (2010). Pruned dynamic programming for optimal
+multiple change-point detection. arXiv preprint arXiv:1004.0887.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pruneByDP</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## A two-dimensional signal
+p &lt;- 2
+trueK &lt;- 10
+len &lt;- 1e4
+sim &lt;- randomProfile(len, trueK, 1, p)
+Y &lt;- sim$profile
+K &lt;- 2*trueK
+res &lt;- jointSeg(Y, method="RBS", K=K)
+bkp &lt;- res$bestBkp
+getTpFp(bkp, sim$bkp, tol=5, relax = -1)   ## true and false positives
+plotSeg(Y, list(sim$bkp, res$bestBkp), col=1)
+
+## Now we add some NA:s in one dimension
+jj &lt;- sim$bkp[1]
+Y[jj-seq(-10,10), p] &lt;- NA
+res2 &lt;- jointSeg(Y, method="RBS", K=K, verbose=TRUE)
+bkp &lt;- res2$bestBkp
+getTpFp(res2$bestBkp, sim$bkp, tol=5, relax = -1)   ## true and false positives
+</code></pre>
+
+
+</div>

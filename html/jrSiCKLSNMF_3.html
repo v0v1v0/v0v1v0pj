@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>BuildSNNGraphLaplacians</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Build SNN graphs and generate their graph Laplacians</h2>
+
+<h3>Description</h3>
+
+<p>Generate graph Laplacians for graph regularization of
+jrSiCKLSNMF from the list of raw count matrices using an SNN graph. SNN is more robust to
+situations where the number of cells outnumbers the number of features. Uses
+the <code>scran</code> package's <code>BuildSNNGraph</code> function (Lun et al. 2016)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">BuildSNNGraphLaplacians(SickleJr, k = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Number of KNN neighbors to calculate SNN graph; defaults to 20</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with list of graph Laplacians in sparse
+matrix format added to its <code>graph.laplacian.list</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>Lun AT, McCarthy DJ, Marioni JC (2016).
+“A step-by-step workflow for low-level analysis of single-cell RNA-seq data with Bioconductor.”
+<em>F1000Research</em>, <b>5</b>.
+ISSN 1759796X, <a href="https://doi.org/10.12688/F1000RESEARCH.9501.2/DOI">doi:10.12688/F1000RESEARCH.9501.2/DOI</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/27909575/">https://pubmed.ncbi.nlm.nih.gov/27909575/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-BuildSNNGraphLaplacians(SimSickleJrSmall)
+</code></pre>
+
+
+</div>

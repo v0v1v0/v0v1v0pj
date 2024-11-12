@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>addCol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add a constant column to a data.frame or matrix</h2>
+
+<h3>Description</h3>
+
+<p>Add a constant column to data.frame or matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">addCol(x, ..., value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p><code>data.frame</code> or <code>matrix</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>constants</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p><code>vector</code> a vector of constants</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>data.frame</code> or <code>matrix</code> contains all columns
+in x and those constant columns.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>TszKin Julian Chan <a href="mailto:ctszkin@gmail.com">ctszkin@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">d=data.frame(x=1:5,y=11:15)
+addCol(d,a=1,b=2,c=3)
+addCol(d,value=c(a=100,b=200,c=300))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Multi.Jack</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jack-knife indices in n topologies m times.</h2>
+
+<h3>Description</h3>
+
+<p>The function calculates the indices values for a MultiData list  m (=replicates) times
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Multi.Jack(MultiData = MultiData, times = 100, jtip = 0, jtopol = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>MultiData</code></td>
+<td>
+<p>is the list of Trees and distributions to evaluate, a list object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>in the number of times to repeat the process, an integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jtip</code></td>
+<td>
+<p>is the proportion of terminals to delete, real (range 0-1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jtopol</code></td>
+<td>
+<p>is the proportion of topologies to delete, real (range 0-1).</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> ## get the library
+ library(jrich)
+ 
+ ## load the data
+ data(Multitaxon1) 
+
+Multi.Jack(Multitaxon1, jtip=0.25)
+
+</code></pre>
+
+
+</div>

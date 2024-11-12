@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>forestcoxUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>forestcoxUI:shiny module UI for forestcox</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for forestcox
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">forestcoxUI(id, label = "forestplot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label, Default: 'forestplot'</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shinymodule UI for forestcox
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shinymodule UI
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(shiny)
+library(DT)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$am &lt;- factor(mtcars$am)
+mtcars$kk &lt;- factor(as.integer(mtcars$disp &gt;= 150))
+mtcars$kk1 &lt;- factor(as.integer(mtcars$disp &gt;= 200))
+
+library(shiny)
+library(DT)
+mtcars$vs &lt;- factor(mtcars$vs)
+mtcars$am &lt;- factor(mtcars$am)
+mtcars$kk &lt;- factor(as.integer(mtcars$disp &gt;= 150))
+mtcars$kk1 &lt;- factor(as.integer(mtcars$disp &gt;= 200))
+
+out &lt;- mtcars
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      forestcoxUI("Forest")
+    ),
+    mainPanel(
+      tabsetPanel(
+        type = "pills",
+        tabPanel(
+          title = "Data",
+          DTOutput("tablesub")
+        ),
+        tabPanel(
+          title = "figure",
+          plotOutput("forestplot", width = "100%"),
+          ggplotdownUI("Forest")
+        )
+      )
+    )
+  )
+)
+
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(out)
+  label &lt;- reactive(jstable::mk.lev(out))
+  outtable &lt;- forestcoxServer("Forest", data = data, data_label = label)
+  output$tablesub &lt;- renderDT({
+    outtable()[[1]]
+  })
+  output$forestplot &lt;- renderPlot({
+    outtable()[[2]]
+  })
+}
+
+</code></pre>
+
+
+</div>

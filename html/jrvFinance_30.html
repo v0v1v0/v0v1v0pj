@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GenBSImplied</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized Black Scholes model implied volatility</h2>
+
+<h3>Description</h3>
+
+<p>Find implied volatility given the option price using the generalized Black Scholes model.
+"Generalized" means that the asset can have a continuous dividend yield.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GenBSImplied(
+  s,
+  X,
+  r,
+  price,
+  t,
+  div_yield,
+  PutOpt = FALSE,
+  toler = 1e-06,
+  max.iter = 100,
+  convergence = 1e-08
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>the spot price of the asset (the stock price for options on stocks)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>the exercise or strike price of the option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>the continuously compounded rate of interest in decimal (0.10 or 10e-2 for 10%)
+(use <code>equiv.rate</code> to convert to a continuously compounded rate)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>price</code></td>
+<td>
+<p>the price of the option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>the maturity of the option in years</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>div_yield</code></td>
+<td>
+<p>the continuously compounded dividend yield (0.05 or 5e-2 for 5%)
+(use <code>equiv.rate</code> to convert to a continuously compounded rate)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PutOpt</code></td>
+<td>
+<p><code>TRUE</code> for put options, <code>FALSE</code> for call options</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toler</code></td>
+<td>
+<p>passed on to <code>newton.raphson.root</code>
+The implied volatility is regarded as correct if the solver is able to
+match the option price to within less than <code>toler</code>. Otherwise the function returns <code>NA</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.iter</code></td>
+<td>
+<p>passed on to <code>newton.raphson.root</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence</code></td>
+<td>
+<p>passed on to <code>newton.raphson.root</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>GenBSImplied</code> calls <code>newton.raphson.root</code> and
+if that fails <code>uniroot</code>
+</p>
+
+
+</div>

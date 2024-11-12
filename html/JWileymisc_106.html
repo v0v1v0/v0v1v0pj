@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>star</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to simplify converting p-values to asterisks</h2>
+
+<h3>Description</h3>
+
+<p>Function to simplify converting p-values to asterisks
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">star(x, includeMarginal = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>p values to convert to stars</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>includeMarginal</code></td>
+<td>
+<p>logical value whether to include a symbol for
+marginally significant &gt;.05 but &lt; .10 p-values. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string with stars
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">star(c(.0005, .001, .005, .01, .02, .05, .08, .1, .5, 1))
+</code></pre>
+
+
+</div>

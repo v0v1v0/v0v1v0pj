@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-export_xlsx.QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export des objets QR_matrix dans un fichier Excel</h2>
+
+<h3>Description</h3>
+
+<p>Permet d'exporter un bilan qualité dans un fichier Excel.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>un objet de type <code>character</code> contenant le chemin menant au
+fichier que l'on veut créer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_format</code></td>
+<td>
+<p>booléen indiquant s'il faut formatter la sortie
+(<code>auto_format = TRUE</code> par défaut).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>booléen indiquant s'il faut ré-écrire créer le fichier Excel
+s'il existe déjà (<code>create = TRUE</code> par défaut)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>autres argument non utilisés</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Renvoie de manière invisible (via <code>invisible(x)</code>) un objet de
+classeur créé par <code>XLConnect::loadWorkbook()</code> pour une manipulation
+ultérieure.
+</p>
+
+
+</div>

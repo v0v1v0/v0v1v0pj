@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compareIVs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compares the effects of various independent variables on dependent variables</h2>
+
+<h3>Description</h3>
+
+<p>Utility to estimate the unadjusted, covariate adjusted, and multivariate adjusted
+unique contributions of one or more IVs on one or more DVs
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compareIVs(
+  dv,
+  type,
+  iv,
+  covariates = character(),
+  data,
+  multivariate = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dv</code></td>
+<td>
+<p>A character string or vector of the depentent variable(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character string or vector indicating the type of dependent variable(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iv</code></td>
+<td>
+<p>A character string or vector giving the IV(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariates</code></td>
+<td>
+<p>A character string or vector giving the covariate(s)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data to be used for analysis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multivariate</code></td>
+<td>
+<p>A logical value whether to have models with all IVs simultaneously.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the internal function, <code>.runIt</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with all the model results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">test1 &lt;- compareIVs(
+  dv = c("mpg", "disp"),
+  type = c("normal", "normal"),
+  iv = c("hp", "qsec"),
+  covariates = "am",
+  data = mtcars, multivariate = TRUE)
+test1$OverallSummary
+rm(test1)
+</code></pre>
+
+
+</div>

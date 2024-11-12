@@ -1,0 +1,243 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logRegOrd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Ordinal Logistic Regression</h2>
+
+<h3>Description</h3>
+
+<p>Ordinal Logistic Regression
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logRegOrd(data, dep, covs = NULL, factors = NULL,
+  blocks = list(list()), refLevels = NULL, modelTest = FALSE,
+  dev = TRUE, aic = TRUE, bic = FALSE, pseudoR2 = list("r2mf"),
+  omni = FALSE, thres = FALSE, ci = FALSE, ciWidth = 95,
+  OR = FALSE, ciOR = FALSE, ciWidthOR = 95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+<p>a string naming the dependent variable from <code>data</code>,
+variable must be a factor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covs</code></td>
+<td>
+<p>a vector of strings naming the covariates from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>a vector of strings naming the fixed factors from
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>blocks</code></td>
+<td>
+<p>a list containing vectors of strings that name the predictors
+that are added to the model. The elements are added to the model according
+to their order in the list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refLevels</code></td>
+<td>
+<p>a list of lists specifying reference levels of the
+dependent variable and all the factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTest</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the model
+comparison between the models and the NULL model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the deviance (or
+-2LogLikelihood) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide Aikaike's
+Information Criterion (AIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bic</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Bayesian
+Information Criterion (BIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pseudoR2</code></td>
+<td>
+<p>one or more of <code>'r2mf'</code>, <code>'r2cs'</code>, or
+<code>'r2n'</code>; use McFadden's, Cox &amp; Snell, and Nagelkerke pseudo-R²,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omni</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the omnibus
+likelihood ratio tests for the predictors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thres</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the thresholds
+that are used as cut-off scores for the levels of the dependent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficient estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>OR</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the exponential of
+the log-odds ratio estimate, or the odds ratio estimate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciOR</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficient odds ratio estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthOR</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelFit</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelComp</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$models</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of model specific results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$modelFit$asDF</code>
+</p>
+<p><code>as.data.frame(results$modelFit)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1337)
+
+y &lt;- factor(sample(1:3, 100, replace = TRUE))
+x1 &lt;- rnorm(100)
+x2 &lt;- rnorm(100)
+
+df &lt;- data.frame(y=y, x1=x1, x2=x2)
+
+logRegOrd(data = df, dep = y,
+          covs = vars(x1, x2),
+          blocks = list(list("x1", "x2")))
+
+#
+#  ORDINAL LOGISTIC REGRESSION
+#
+#  Model Fit Measures
+#  ---------------------------------------
+#    Model    Deviance    AIC    R²-McF
+#  ---------------------------------------
+#        1         218    226    5.68e-4
+#  ---------------------------------------
+#
+#
+#  MODEL SPECIFIC RESULTS
+#
+#  MODEL 1
+#
+#  Model Coefficients
+#  ----------------------------------------------------
+#    Predictor    Estimate    SE       Z        p
+#  ----------------------------------------------------
+#    x1             0.0579    0.193    0.300    0.764
+#    x2             0.0330    0.172    0.192    0.848
+#  ----------------------------------------------------
+#
+#
+
+</code></pre>
+
+
+</div>

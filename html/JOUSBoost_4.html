@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>friedman_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate data from the Friedman model</h2>
+
+<h3>Description</h3>
+
+<p>Simulate draws from a bernoulli distribution over <code>c(-1,1)</code>, where the
+log-odds is defined according to:
+</p>
+<p style="text-align: center;"><code class="reqn">log{p(y=1|x)/p(y=-1|x)} = gamma*(1 - x_1 + x_2 - ... + x_6)*(x_1 + x_2 + ... + x_6)</code>
+</p>
+
+<p>and <code class="reqn">x</code> is distributed as N(0, I_<code>d</code>x<code>d</code>).  See Friedman (2000).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">friedman_data(n = 500, d = 10, gamma = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of points to simulate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>The dimension of the predictor variable <code class="reqn">x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>A parameter controlling the Bayes error, with higher values of
+<code>gamma</code> corresponding to lower error rates.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Vector of simulated response in <code>c(-1,1)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>An <code>n</code>x<code>d</code> matrix of simulated predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>The true conditional probability <code class="reqn">p(y=1|x)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Friedman, J., Hastie, T. and Tibshirani, R. (2000). Additive logistic
+regression: a statistical view of boosting (with discussion), Annals of
+Statistics 28: 337-307.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(111)
+dat = friedman_data(n = 500, gamma = 0.5)
+
+</code></pre>
+
+
+</div>

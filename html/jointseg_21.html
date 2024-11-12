@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>multiplyXtXBySparse</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>multiplyXtXBySparse</h2>
+
+<h3>Description</h3>
+
+<p>Compute <code>C = t(X)*X*val</code> , where <code>val</code> is a row-sparse
+<code>(n-1)*p</code> matrix and <code>X</code> is the <code>n*(n-1)</code> design matrix for
+the weighted group fused lasso.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">multiplyXtXBySparse(n, ind, val, w = defaultWeights(n),
+  verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Size of the problem</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind</code></td>
+<td>
+<p>a*1 vector of indices of the non-zero rows of b (each in [1,n-1])</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>val</code></td>
+<td>
+<p>a*p matrix whose rows are the non-zero rows of b (same order as
+ind)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p>(n-1)*1 vector of weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This implementation is derived from the MATLAB code of Vert and Bleakley:
+<a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The <code>(n-1)*p</code> matrix equal to <code>t(X)*X*val</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+<a href="arxiv.org/arXiv:1106.4199">arxiv.org/arXiv:1106.4199</a>
+</p>
+<p>Vert, J. P., &amp; Bleakley, K. (2010). Fast detection of multiple change-points
+shared by many signals using group LARS. Advances in Neural Information
+Processing Systems, 23, 2343-2351.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+val &lt;- matrix(c(1.56, 1.35, 1.26, 1.15), ncol=2)
+ind &lt;- c(5,6)
+n &lt;- 10
+res &lt;- multiplyXtXBySparse(n=n, ind=ind, val=val)
+res
+##           [,1]      [,2]
+## [1,] 0.8874235 0.7329904
+## [2,] 1.3311352 1.0994855
+## [3,] 1.7428651 1.4395645
+## [4,] 2.1737347 1.7954524
+## [5,] 2.6622704 2.1989711
+## [6,] 2.6237347 2.1787857
+## [7,] 2.1036678 1.7469149
+## [8,] 1.6067028 1.3342283
+## [9,] 1.0711352 0.8894855
+
+</code></pre>
+
+
+</div>

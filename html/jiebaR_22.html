@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>new_user_word</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add user word</h2>
+
+<h3>Description</h3>
+
+<p>Add user word
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">new_user_word(worker, words, tags = rep("n", length(words)))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>worker</code></td>
+<td>
+<p>a jieba worker</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>words</code></td>
+<td>
+<p>the new words</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tags</code></td>
+<td>
+<p>the new words tags, default "n"</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">cc = worker()
+new_user_word(cc, "test")
+new_user_word(cc, "do", "v")
+</code></pre>
+
+
+</div>

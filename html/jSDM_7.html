@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_enviro_cor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract covariances and correlations due to shared environmental responses</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the correlation between columns of the response matrix,
+due to similarities in the response to explanatory variables i.e., shared environmental response.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_enviro_cor(mod, type = "mean", prob = 0.95)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mod</code></td>
+<td>
+<p>An object of class <code>"jSDM"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A choice of either the posterior median (<code>type = "median"</code>) or posterior mean (<code>type = "mean"</code>), which are then treated as estimates and the fitted values are calculated from.
+Default is posterior mean.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>A numeric scalar in the interval <code class="reqn">(0,1)</code> giving the target probability coverage of the intervals, by which to determine whether the correlations are "significant".
+Defaults to 0.95.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>In both independent response and correlated response models, where each of the columns of the response matrix <code class="reqn">Y</code> are fitted to a set of explanatory variables given by <code class="reqn">X</code>,
+the covariance between two columns <code class="reqn">j</code> and <code class="reqn">j'</code>, due to similarities in their response to the model matrix, is thus calculated based on the linear predictors <code class="reqn">X \beta_j</code> and <code class="reqn">X \beta_j'</code>, where <code class="reqn">\beta_j</code> are species effects relating to the explanatory variables.
+Such correlation matrices are discussed and found in Ovaskainen et al., (2010), Pollock et al., (2014).
+</p>
+
+
+<h3>Value</h3>
+
+<p>results, a list including : 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>cor, cor.lower, cor.upper</code></td>
+<td>
+<p>A set of <code class="reqn">np \times np</code> correlation matrices, containing either the posterior median or mean estimate  over the MCMC samples plus lower and upper limits of the corresponding 95 % highest posterior interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.sig</code></td>
+<td>
+<p>A <code class="reqn">np \times np</code> correlation matrix containing only the “significant" correlations whose 95 % highest posterior density (HPD) interval does not contain zero. All non-significant correlations are set to zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov</code></td>
+<td>
+<p>Average over the MCMC samples of the <code class="reqn">np \times np</code> covariance matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Ghislain Vieilledent &lt;ghislain.vieilledent@cirad.fr&gt;
+</p>
+<p>Jeanne Clément &lt;jeanne.clement16@laposte.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Hui FKC (2016). “boral: Bayesian Ordination and Regression Analysis of Multivariate Abundance Data in R.” <em>Methods in Ecology and Evolution</em>, 7, 744–750.  
+</p>
+<p>Ovaskainen et al. (2010). Modeling species co-occurrence by multivariate logistic regression generates new hypotheses on fungal interactions. <em>Ecology</em>, 91, 2514-2521. 
+</p>
+<p>Pollock et al. (2014). Understanding co-occurrence by modelling species simultaneously with a Joint Species Distribution Model (JSDM). <em>Methods in Ecology and Evolution</em>, 5, 397-406.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cov2cor</code> <code>get_residual_cor</code> <code>jSDM-package</code> <code>jSDM_binomial_probit</code> <br><code>jSDM_binomial_logit</code> <code>jSDM_poisson_log</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jSDM)
+# frogs data
+ data(frogs, package="jSDM")
+ # Arranging data
+ PA_frogs &lt;- frogs[,4:12]
+ # Normalized continuous variables
+ Env_frogs &lt;- cbind(scale(frogs[,1]),frogs[,2], 
+                    scale(frogs[,3]))
+ colnames(Env_frogs) &lt;- colnames(frogs[,1:3])
+ Env_frogs &lt;- as.data.frame(Env_frogs)
+ # Parameter inference
+# Increase the number of iterations to reach MCMC convergence
+mod &lt;- jSDM_binomial_probit(# Response variable
+                             presence_data=PA_frogs,
+                             # Explanatory variables
+                             site_formula = ~.,
+                             site_data = Env_frogs,
+                             n_latent=0,
+                             site_effect="random",
+                             # Chains
+                             burnin=100,
+                             mcmc=100,
+                             thin=1,
+                             # Starting values
+                             alpha_start=0,
+                             beta_start=0,
+                             V_alpha=1,
+                             # Priors
+                             shape=0.5, rate=0.0005,
+                             mu_beta=0, V_beta=10,
+                             # Various
+                             seed=1234, verbose=1)
+# Calcul of residual correlation between species 
+ enviro.cors &lt;- get_enviro_cor(mod)
+</code></pre>
+
+
+</div>

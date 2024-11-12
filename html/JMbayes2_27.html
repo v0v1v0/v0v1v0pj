@@ -1,0 +1,303 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jm Methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Various Methods for Standard Generics
+</h2>
+
+<h3>Description</h3>
+
+<p>Methods for object of class <code>"jm"</code> for standard generic functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+coef(object, ...)
+
+## S3 method for class 'jm'
+coef(object, ...)
+
+fixef(object, ...)
+
+## S3 method for class 'jm'
+fixef(object, outcome = Inf, ...)
+
+ranef(object, ...)
+
+## S3 method for class 'jm'
+ranef(object, outcome = Inf, post_vars = FALSE, ...)
+
+terms(x, ...)
+
+## S3 method for class 'jm'
+terms(x, process = c("longitudinal", "event"),
+                      type = c("fixed", "random"), ...)
+
+model.frame(formula, ...)
+
+## S3 method for class 'jm'
+model.frame(formula, process = c("longitudinal", "event"),
+                            type = c("fixed", "random"), ...)
+
+model.matrix(object, ...)
+
+## S3 method for class 'jm'
+model.matrix(object, ...)
+
+family(object, ...)
+
+## S3 method for class 'jm'
+family(object, ...)
+
+compare_jm(..., type = c("marginal", "conditional"),
+  order = c("WAIC", "DIC", "LPML", "none"))
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object, x, formula</code></td>
+<td>
+<p>object inheriting from class <code>"jm"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcome</code></td>
+<td>
+<p>the index of the linear mixed submodel to extract the estimated fixed effects. If greater
+than the total number of submodels, extracts from all of them.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>post_vars</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, returns the variance of the posterior distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>which submodel(s) to extract the terms: <br></p>
+
+<ul>
+<li>
+<p> if <code>"longitudinal"</code>, the linear mixed model(s), or
+</p>
+</li>
+<li>
+<p> if <code>"event"</code>, the survival model.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>in <code>terms()</code> and <code>model.frame()</code>, which effects to select in the longitudinal process: <br></p>
+
+<ul>
+<li>
+<p> if <code>"fixed"</code>, the fixed-effects, or
+</p>
+</li>
+<li>
+<p> if <code>"random"</code>, the random-efects.
+</p>
+</li>
+</ul>
+<p>in <code>compare_jm()</code>, which log-likelihood function use to calculate the criteria: <br></p>
+
+<ul>
+<li>
+<p> if <code>"marginal"</code>, the marginal log-likelihood, or
+</p>
+</li>
+<li>
+<p> if <code>"conditional"</code>, the conditional log-likelihood.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments; currently, none is used. <br> in <code>compare_jm()</code>, a series of <code>jm</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>which criteria use to sort the models in the output.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<dl>
+<dt><code>coef()</code></dt>
+<dd>
+<p>Extracts estimated fixed effects for the event process from a fitted joint model.</p>
+</dd>
+<dt><code>fixef()</code></dt>
+<dd>
+<p>Extracts estimated fixed effects for the longitudinal processes from a fitted joint model.</p>
+</dd>
+<dt><code>ranef()</code></dt>
+<dd>
+<p>Extracts estimated random effects from a fitted joint model.</p>
+</dd>
+<dt><code>terms()</code></dt>
+<dd>
+<p>Extracts the terms object(s) from a fitted joint model.</p>
+</dd>
+<dt><code>model.frame()</code></dt>
+<dd>
+<p>Creates the model frame from a fitted joint model.</p>
+</dd>
+<dt><code>model.matrix()</code></dt>
+<dd>
+<p>Creates the design matrices for linear mixed submodels from a fitted joint model.</p>
+</dd>
+<dt><code>family()</code></dt>
+<dd>
+<p>Extracts the error distribution and link function used in the linear mixed submodel(s) from a fitted joint model.</p>
+</dd>
+<dt><code>compare_jm()</code></dt>
+<dd>
+<p>Compares two or more fitted joint models using the criteria WAIC, DIC, and LPML.</p>
+</dd>
+</dl>
+<h3>Value</h3>
+
+
+<dl>
+<dt><code>coef()</code></dt>
+<dd>
+<p>a list with the elements: <br></p>
+
+<ul>
+<li> <p><code>gammas</code>: estimated baseline fixed effects, and
+</p>
+</li>
+<li> <p><code>association</code>: estimated association parameters.
+</p>
+</li>
+</ul>
+</dd>
+<dt><code>fixef()</code></dt>
+<dd>
+<p>a numeric vector of the estimated fixed effects for the <code>outcome</code> selected. If the <code>outcome</code> is greater than the number of linear mixed submodels, it returns a list of numeric vectors for all outcomes.</p>
+</dd>
+<dt><code>ranef()</code></dt>
+<dd>
+<p>a numeric matrix with rows denoting the individuals and columns the random effects. If <code>postVar = TRUE</code>, the numeric matrix has the extra attribute "postVar".</p>
+</dd>
+<dt><code>terms()</code></dt>
+<dd>
+<p>if <code>process = "longitudinal"</code>, a list of the terms object(s) for the linear mixed model(s).
+<br> if <code>process = "event"</code>, the terms object for the survival model.
+</p>
+</dd>
+<dt><code>model.frame()</code></dt>
+<dd>
+<p>if <code>process = "longitudinal"</code>, a list of the model frames used in the linear mixed model(s). <br> if <code>process = "event"</code>, the model frame used in the survival model.
+</p>
+</dd>
+<dt><code>model.matrix()</code></dt>
+<dd>
+<p>a list of the design matrix(ces) for the linear mixed submodel(s).</p>
+</dd>
+<dt><code>family()</code></dt>
+<dd>
+<p>a list of <code>family</code> objects.</p>
+</dd>
+<dt><code>compare_jm()</code></dt>
+<dd>
+<p>a list with the elements: <br></p>
+
+<ul>
+<li> <p><code>table</code>: a table with the criteria calculated for each joint model, and
+</p>
+</li>
+<li> <p><code>type</code>: the log-likelihood function used to calculate the criteria.
+</p>
+</li>
+</ul>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# linear mixed model fits
+fit_lme1 &lt;- lme(log(serBilir) ~ year:sex + age,
+                random = ~ year | id, data = pbc2)
+
+fit_lme2 &lt;- lme(prothrombin ~ sex,
+                random = ~ year | id, data = pbc2)
+
+# cox model fit
+fit_cox &lt;- coxph(Surv(years, status2) ~ age, data = pbc2.id)
+
+# joint model fit
+fit_jm &lt;- jm(fit_cox, list(fit_lme1, fit_lme2), time_var = "year",
+    n_chains = 1L, n_iter = 11000L, n_burnin = 1000L)
+
+# coef(): fixed effects for the event process
+coef(fit_jm)
+
+# fixef(): fixed effects for the first linear mixed submodel
+fixef(fit_jm, outcome = 1)
+
+# ranef(): random effects from all linear mixed submodels
+head(ranef(fit_jm))
+
+# terms(): random effects terms for the first linear mixed submodel
+terms(fit_jm, process = "longitudinal", type = "random")[[1]]
+
+# mode.frame(): model frame for the fixed effects in the second
+# linear mixed submodel
+head(model.frame(fit_jm, process = "longitudinal", type = "fixed")[[2]])
+
+# model.matrix(): fixed effects design matrix for the first linear
+# mixed submodel
+head(model.matrix(fit_jm)[[1]])
+
+# family(): family objects from both linear mixed submodels
+family(fit_jm)
+
+# compare_jm(): compare two fitted joint models
+fit_lme1b &lt;- lme(log(serBilir) ~ 1,
+                  random = ~ year | id, data = pbc2)
+
+fit_jm2 &lt;- jm(fit_cox, list(fit_lme1b, fit_lme2), time_var = "year",
+    n_chains = 1L, n_iter = 11000L, n_burnin = 1000L)
+
+compare_jm(fit_jm, fit_jm2)
+
+</code></pre>
+
+
+</div>

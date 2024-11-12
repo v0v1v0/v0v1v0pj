@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ComonGAP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Comon's Gap</h2>
+
+<h3>Description</h3>
+
+<p>Comon's GAP criterion to evaluate the performance of an ICA algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ComonGAP(A, A.hat)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>The true square mixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>A.hat</code></td>
+<td>
+<p>The estimated square mixing matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Comon's GAP criterion is permutation and scale invariant. It can take every positive value and 0 corresponds to an optimal separation.
+If <code>A</code> is however nearly singular the values of the criterion can be huge.
+</p>
+<p>Note that this function assumes the ICA model is <code class="reqn">X = S A'</code>, as is assumed by <code>JADE</code> and <code>ics</code>. However <code>fastICA</code> and 
+<code>PearsonICA</code> assume <code class="reqn">X = S A</code>. Therefore matrices from those functions have to be transposed first.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The value of the Comon's GAP.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Comon, P., (1994), Independent Component Analysis, A new concept?, <em>Signal Processing</em>, <b>36</b>,  287–314. </cite>  
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>amari.error</code>, <code>SIR</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">S &lt;- cbind(rt(1000, 4), rnorm(1000), runif(1000))
+A &lt;- matrix(rnorm(9), ncol = 3)
+X &lt;- S %*% t(A)
+
+A.hat &lt;- JADE(X, 3)$A
+ComonGAP(A, A.hat)
+</code></pre>
+
+
+</div>

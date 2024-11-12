@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extract_models</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extracts models from a mediation_model object</h2>
+
+<h3>Description</h3>
+
+<p>When conducting a joint-significant test, different models are
+fitted to the data. This function helps accessing the models used in an
+object of class <code>mediation_model</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">extract_models(mediation_model)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>mediation_model</code></td>
+<td>
+<p>An object of class <code>mediation_model</code>.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list of <code>lm</code> objects.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other extract functions: 
+<code>extract_model()</code>,
+<code>extract_tidy_models()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(ho_et_al)
+ho_et_al$condition_c &lt;- build_contrast(ho_et_al$condition,
+                                       "Low discrimination",
+                                       "High discrimination")
+my_model &lt;-
+  mdt_simple(data = ho_et_al,
+             IV = condition_c,
+             DV = hypodescent,
+             M = linkedfate)
+
+extract_models(my_model)
+
+</code></pre>
+
+
+</div>

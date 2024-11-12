@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>segmentByGFLars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Group fused Lars segmentation (low-level)</h2>
+
+<h3>Description</h3>
+
+<p>Low-level function for multivariate fused Lars segmentation (GFLars)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">segmentByGFLars(Y, K, weights = defaultWeights(nrow(Y)),
+  epsilon = 1e-09, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A <code>n*p</code> matrix of signals to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The number of change points to find</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>A <code>(n-1)*1</code> vector of weights for the weigthed group
+fused Lasso penalty. See Details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>Values smaller than epsilon are considered null. Defaults to
+<code>1e-9</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function recrusively looks for the best candidate change point
+according to group-fused LARS. This is a low-level function. It is generally
+advised to use the wrapper <code>doGFLars</code> which also works on data
+frames, has a convenient argument <code>stat</code>, and includes a basic
+workaround for handling missing values.
+</p>
+<p>See also <code>jointSeg</code> for combining group fused LARS segmentation
+with pruning by dynamic programming (<code>pruneByDP</code>).
+</p>
+<p>See <code>PSSeg</code> for segmenting genomic signals from SNP arrays.
+</p>
+<p>The default weights <code class="reqn">\sqrt{n/(i*(n-i))}</code> are calibrated as suggested by
+Bleakley and Vert (2011).  Using this calibration, the first breakpoint
+maximizes the likelihood ratio test (LRT) statistic.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements: </p>
+<dl>
+<dt>bkp</dt>
+<dd>
+<p>A vector of <code>k</code> candidate
+change-point positions</p>
+</dd> <dt>lambda</dt>
+<dd>
+<p>The estimated lambda values for each
+change-point</p>
+</dd> <dt>mean</dt>
+<dd>
+<p>A vector of length <code>p</code>, the mean signal per
+column</p>
+</dd> <dt>value</dt>
+<dd>
+<p>A <code>i x p</code> matrix of change-point values for the
+first i change-points</p>
+</dd> <dt>c</dt>
+<dd>
+<p><code class="reqn">\hat{c}</code>, a <code>n-1 x K</code> matrix </p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This implementation is derived from the MATLAB code by Vert and
+Bleakley: <a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+</p>
+<p>Vert, J. P., &amp; Bleakley, K. (2010). Fast detection of multiple change-points
+shared by many signals using group LARS. Advances in Neural Information
+Processing Systems, 23, 2343-2351.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>PSSeg</code>, <code>jointSeg</code>,
+<code>doGFLars</code>, <code>pruneByDP</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+p &lt;- 2
+trueK &lt;- 10
+sim &lt;- randomProfile(1e4, trueK, 1, p)
+Y &lt;- sim$profile
+K &lt;- 2*trueK
+res &lt;- segmentByGFLars(Y, K)
+print(res$bkp)
+print(sim$bkp)
+plotSeg(Y, res$bkp)
+
+</code></pre>
+
+
+</div>

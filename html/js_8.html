@@ -1,0 +1,39 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>js_typeof</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get the type of a JavaScript object</h2>
+
+<h3>Description</h3>
+
+<p>JavaScript wrapper to <code>typeof</code> to test if a piece of JavaScript code is
+syntactically valid, and the type of object it evaluates to. Useful to
+verify that a piece of JavaScript code contains a proper function/object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">js_typeof(text)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>JavaScript code</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">js_typeof("function(x){return x+1}")
+js_typeof("(function() {return 'foo'})()")
+js_typeof("{foo : 123, bar : true}")
+</code></pre>
+
+
+</div>

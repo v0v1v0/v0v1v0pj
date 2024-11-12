@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary of an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>This function provides a summary of an <code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+summary(object, bootSE = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bootSE</code></td>
+<td>
+<p>an object inheriting from class <code>bootSE</code> for the
+corresponding model. If <code>bootSE=NULL</code>, the function will attempt to
+utilize approximate standard error estimates (if available) calculated from
+the empirical information matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the coefficient matrices for the longitudinal and
+time-to-event sub-models; variance-covariance matrix for the random
+effects; residual error variances; log-likelihood of joint model; AIC and
+BIC statistics; and model fit objects.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>:
+465-480.
+</p>
+<p>Lin H, McCulloch CE, Mayne ST. Maximum likelihood estimation in the joint
+analysis of time-to-event and multiple longitudinal variables. <em>Stat
+Med.</em> 2002; <strong>21</strong>: 2369-2382.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mjoint</code>, <code>mjoint.object</code>, and
+<code>summary</code> for the generic method description.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+summary(fit2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>qtSkewKostkaPolynomials</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew qt-Kostka polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Skew qt-Kostka polynomials associated to a given skew
+partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">qtSkewKostkaPolynomials(lambda, mu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list. The skew qt-Kostka polynomials are usually denoted by
+<code class="reqn">K_{\lambda/\mu, \nu}(q, t)</code> where <code class="reqn">q</code> and <code class="reqn">t</code> denote the two
+variables, <code class="reqn">\lambda</code> and <code class="reqn">\mu</code> are the two integer partitions
+defining the skew partition, and <code class="reqn">\nu</code> is an integer partition.
+One obtains the skew Kostka-Foulkes polynomials by substituting <code class="reqn">q</code>
+with <code class="reqn">0</code>.
+For given partitions <code class="reqn">\lambda</code> and <code class="reqn">\mu</code>, the function returns the
+polynomials <code class="reqn">K_{\lambda/\mu, \nu}(q, t)</code> as <code>qspray</code> objects
+for all partitions <code class="reqn">\nu</code> of the same weight as the skew partition. The
+generated list is a list of lists with two elements: the integer
+partition <code class="reqn">\nu</code> and the polynomial.
+</p>
+
+
+</div>

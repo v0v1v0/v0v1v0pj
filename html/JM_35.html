@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simulate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate from Joint Models.</h2>
+
+<h3>Description</h3>
+
+<p>simulate longitudinal responses and event times from joint models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simulateJM(nsim, nsub, thetas, times, formulas, Data = NULL, 
+    method = c("weibull-PH", "weibull-AFT", "piecewise-PH", "spline-PH"), 
+    lag = 0, censoring = "uniform", max.FUtime = NULL, seed = NULL, 
+    return.ranef = FALSE)
+## S3 method for class 'jointModel'
+simulate(object, nsim, seed = NULL, times = NULL, 
+    Data = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>number of data sets to be simulated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsub</code></td>
+<td>
+<p>the number of subjects in each data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thetas</code></td>
+<td>
+<p>a list with the parameter values. This should be of the same structure as 
+the <code>coefficients</code> component returned by <code>jointModel()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>a numeric vector denoting the time points at which longitudinal measurements
+are planned to be taken.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formulas</code></td>
+<td>
+<p>a list with components: <code>Yfixed</code> a formula for the fixed-effects part
+of the linear mixed model, <code>Yrandom</code> a formula for the random-effects part of the
+linear mixed model, <code>Tfixed</code> a formula for the baseline covariates part of the 
+survival submodel, <code>timeVar</code> a character string indicating the name of the time 
+variable in the linear mixed model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Data</code></td>
+<td>
+<p>a data frame containing any covariates used in the formulas defined in the
+<code>formulas</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>a character string indicating from what type of survival submodel to simulate.
+There are the same options as the ones provided by <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>a numeric value denoting a lagged effect; the same as the <code>lag</code> 
+argument of <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>censoring</code></td>
+<td>
+<p>a character string or a numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.FUtime</code></td>
+<td>
+<p>a numeric value denoting the maximum follow-up time for the study. The default
+is <code>max(times) + 2 * IQR(times)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>an object specifying if and how the random number generator should 
+be initialized ('seeded'). It could be either <code>NULL</code> or an integer that 
+will be used in a call to <code>set.seed()</code> before simulating the response 
+vectors. If set, the value is saved as the "seed" attribute of the returned value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return.ranef</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, each component of the returned list has the attributed
+<code>"ranef"</code> that contains the random-effects values used in the simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of length <code>nsim</code> of data frames that contains the simulated responses 
+for the longitudinal process "y", the simulated event times "Time", the event indicator 
+"Event", and the subject identification number "id". If extra covariates were assumed, 
+these are also included.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+prothro$t0 &lt;- as.numeric(prothro$time == 0)
+lmeFit &lt;- lme(pro ~ treat * (time + t0), random = ~ time | id, data = prothro)
+survFit &lt;- coxph(Surv(Time, death) ~ treat, data = prothros, x = TRUE)
+jointFit &lt;- jointModel(lmeFit, survFit, timeVar = "time", 
+    method = "weibull-PH-aGH")
+
+newData &lt;- simulate(jointFit, nsim = 1, times = seq(0, 11, len = 15))
+newData
+
+## End(Not run)
+</code></pre>
+
+
+</div>

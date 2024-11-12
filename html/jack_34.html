@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SkewMacdonaldPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Macdonald polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Returns the skew Macdonald polynomial associated to
+the given skew partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SkewMacdonaldPol(n, lambda, mu, which = "P")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables, a positive integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which skew Macdonald polynomial, <code>"P"</code>, <code>"Q"</code>
+or <code>"J"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>symbolicQspray</code> multivariate polynomial, the skew
+Macdonald polynomial associated to the skew partition defined by
+<code>lambda</code> and <code>mu</code>. It has two parameters usually
+denoted by <code class="reqn">q</code> and <code class="reqn">t</code>. Substituting <code class="reqn">q</code> with <code class="reqn">0</code>
+yields the skew Hall-Littlewood polynomials.
+</p>
+
+
+</div>

@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>folderGadget</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Folder gadget</h2>
+
+<h3>Description</h3>
+
+<p>Shiny gadget allowing to manipulate one or more folders.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">folderGadget(
+  dirs = ".",
+  tabs = FALSE,
+  recursive = TRUE,
+  all.files = FALSE,
+  trash = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dirs</code></td>
+<td>
+<p>character vector of paths to some folders</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tabs</code></td>
+<td>
+<p>logical, whether to display the trees in tabs; this option is
+effective only when there are two folders in the <code>dirs</code> argument</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recursive, all.files</code></td>
+<td>
+<p>options passed to <code>list.files</code>;
+even if <code>all.files = TRUE</code>, <code>'.git'</code> and <code>'.Rproj.user'</code>
+folders are always discarded</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trash</code></td>
+<td>
+<p>logical, whether to add a trash to the gadget, allowing to
+restore the files or folders you delete</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value, just launches a Shiny gadget.
+</p>
+
+
+<h3>Note</h3>
+
+<p>You can run the gadget for the current directory from the Addins menu
+within RStudio ('Explore current folder').
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jsTreeR)
+
+# copy a folder to a temporary location for the illustration:
+tmpDir &lt;- tempdir()
+folder &lt;- file.path(tmpDir, "htmlwidgets")
+htmlwidgets &lt;- system.file("htmlwidgets", package = "jsTreeR")
+R.utils::copyDirectory(htmlwidgets, folder)
+# we use a copy because the actions performed in the gadget are
+# actually executed on the files system!
+
+# explore and manipulate the folder (drag-and-drop, right-click):
+if(interactive()){
+  folderGadget(folder)
+}
+
+# the 'trash' option allows to restore the elements you delete:
+if(interactive()){
+  folderGadget(folder, trash = TRUE)
+}
+
+# you can open several folders:
+folder1 &lt;- file.path(folder, "lib")
+folder2 &lt;- file.path(folder, "gadget")
+if(interactive()){
+  folderGadget(c(folder1, folder2))
+}
+</code></pre>
+
+
+</div>

@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>external_graphs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Change Default Graphing Device from RStudio</h2>
+
+<h3>Description</h3>
+
+<p>Checks to see if the user is in RStudio. If so, then it changes the device
+to a popup window.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">external_graphs(ext = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>ext</code></td>
+<td>
+<p>A <code>logical</code> indicating whether the graph should be done externally
+or internally in RStudio.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Depending on the operating system, the default drivers attempted to be
+used are:
+</p>
+
+<ul>
+<li>
+<p> OS X: <code>quartz()</code>
+</p>
+</li>
+<li>
+<p> Linux: <code>x11()</code>
+</p>
+</li>
+<li>
+<p> Windows: <code>windows()</code>
+</p>
+</li>
+</ul>
+<p>Note, this setting is not permanent. Thus, the behavioral change will last
+until the end of the session.
+</p>
+<p>Also, the active graphing environment will be killed. As a result, any graphs
+that are open will be deleted. You will have to regraph them.
+</p>
+
+
+<h3>Value</h3>
+
+<p>There is no return value. Instead, once finished, the function will cause a
+side effect to occur. See details for more.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>James Balamuta
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Turn on external graphs
+external_graphs()
+
+# Turn off external graphs
+external_graphs(FALSE)
+
+</code></pre>
+
+
+</div>

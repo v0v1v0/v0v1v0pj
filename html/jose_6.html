@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_jwk</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>JSON web-keys</h2>
+
+<h3>Description</h3>
+
+<p>Read and write RSA, ECDSA or AES keys as JSON web keys.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_jwk(file)
+
+write_jwk(x, path = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>path to file with key data or literal json string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an RSA or EC key or pubkey file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>file path to write output</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># generate an ecdsa key
+library(openssl)
+key &lt;- ec_keygen("P-521")
+write_jwk(key)
+write_jwk(as.list(key)$pubkey)
+
+# Same for RSA
+key &lt;- rsa_keygen()
+write_jwk(key)
+write_jwk(as.list(key)$pubkey)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.jtdm_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plots the parameters of a fitted jtdm</h2>
+
+<h3>Description</h3>
+
+<p>Plots the regression coefficients and covariance matrix of a fitted jtdm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jtdm_fit'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a model fitted with <code>jtdm_fit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot of the regression coefficients and covariance matrix of the fitted model
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Giovanni Poggiato
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Y)  
+data(X)  
+m = jtdm_fit(Y=Y, X=X, 
+             formula=as.formula("~GDD+FDD+forest"), sample = 1000)  
+plot(m)
+</code></pre>
+
+
+</div>

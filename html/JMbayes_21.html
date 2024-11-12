@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitted &amp; residuals</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitted Values and Residuals for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Calculates fitted values for joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JMbayes'
+fitted(object, 
+    process = c("Longitudinal", "longitudinal", "Event", "event"), 
+    type = c("Marginal", "marginal", "Subject", "subject"), nullY = FALSE, ...)
+
+## S3 method for class 'JMbayes'
+residuals(object, 
+    process = c("Longitudinal", "longitudinal", "Event", "event"), 
+    type = c("Marginal", "marginal", "Subject", "subject", 
+             "Martingale", "martingale", "nullMartingale", "nullmartingale"),
+    standardized = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>for which model (i.e., linear mixed model or survival model) to calculate fitted values or residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>what type of fitted values or residuals to calculate. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nullY</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the association parameters that connect the longitudinal and event time process 
+are set to zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>standardized</code></td>
+<td>
+<p>logical; if <code>TRUE</code> standardized residuals are calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For <code>process = "Longitudinal"</code>, let <code class="reqn">X</code> denote the design matrix for the fixed effects <code class="reqn">\beta</code>, and 
+<code class="reqn">Z</code> the design matrix for the random effects <code class="reqn">b</code>. Then for <code>type = "Marginal"</code> the fitted values are 
+<code class="reqn">X \hat{\beta},</code> whereas for <code>type = "Subject"</code> they are <code class="reqn">X \hat{\beta} + Z \hat{b}</code>, where <code class="reqn">\hat{\beta}</code>
+and <code class="reqn">\hat{b}</code> denote the corresponding posterior means for the fixed and random effects. The corresponding residuals 
+are calculated by subtracting the fitted values from the observed data <code class="reqn">y</code>. If <code>type = "Subject"</code> and 
+<code>standardized = TRUE</code>, the residuals are divided by the estimated residual standard error.
+</p>
+<p>For <code>process = "Event"</code> function <code>fitted()</code> calculates the cumulative hazard function at each time point a longitudinal
+measurement has been recorded. If <code>nullY = TRUE</code>, then the cumulative hazard is calculated without the contribution of the
+longitudinal process. Function <code>residuals()</code> calculates the martingales residuals or the martingale residuals without the 
+contribution of the longitudinal process when <code>type = "nullMartingale"</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a numeric vector of fitted values or residuals.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 2), data = pbc2,
+              random = ~ ns(year, 2) | id)
+survFit &lt;- coxph(Surv(years, status2) ~ 1, data = pbc2.id, x = TRUE)
+jointFit &lt;- jointModelBayes(lmeFit, survFit, timeVar = "year")
+
+fitted(jointFit, process = "Event")
+residuals(jointFit, type = "Subject", standardized = TRUE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

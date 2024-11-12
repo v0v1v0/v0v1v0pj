@@ -1,0 +1,196 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>test_dfs_JointFPM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tests DFs for JointFPMs.</h2>
+
+<h3>Description</h3>
+
+<p>Test of different degrees of freedoms (DFs) for joint flexible parametric
+survival models.
+</p>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">test_dfs_JointFPM(
+  surv,
+  re_model,
+  ce_model,
+  re_indicator,
+  ce_indicator,
+  dfs_ce,
+  dfs_re,
+  tvc_re_terms = NULL,
+  tvc_ce_terms = NULL,
+  cluster,
+  data
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>surv</code></td>
+<td>
+<p>A formula of the following form <code>Surv(...) ~ 1</code>.
+The <code>Surv</code> objects needs to be of <code>type ==  'counting'</code> with the
+following arguments:
+</p>
+
+<dl>
+<dt>
+<code>time</code>: </dt>
+<dd>
+<p>Start of follow-up time for each event episode, i.e.,
+usually 0 for the competing event and the first occurrence of the
+recurrent event. For every subsequent event the follow-up can either
+be 0 if gap time is the underlying time scale or the time of the
+previous event if total time is the underlying time scale.</p>
+</dd>
+<dt>
+<code>time2</code>: </dt>
+<dd>
+<p>End of follow-up, i.e., either occurrence of a terminal
+or recurrent event, or time of censoring.</p>
+</dd>
+<dt>
+<code>status</code>: </dt>
+<dd>
+<p>Event indicator for both terminal and recurrent
+event.</p>
+</dd>
+<dt>
+<code>type</code>: </dt>
+<dd>
+<p>Has to be <code>counting</code>.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>re_model</code></td>
+<td>
+<p>A formula object specifying the model for the recurrent event
+with an empty right hand side of the formula, e.g. <code>~ sex</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ce_model</code></td>
+<td>
+<p>A formula object specifying the model for the competing event
+with an empty right hand side of the formula, e.g. <code>~ sex</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>re_indicator</code></td>
+<td>
+<p>Indicator that defined which rows in the dataset belong to the recurrent
+event process. These are usually more than one row per observations.
+The variable name needs to be passed as a character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ce_indicator</code></td>
+<td>
+<p>Indicator that defined which row in the dataset belong to the competing
+event process. The variable name needs to be passed as a character vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dfs_ce</code></td>
+<td>
+<p>Defines the number of knots used to model the baseline hazard function
+for the competing event process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dfs_re</code></td>
+<td>
+<p>Defines the number of knots used to model the baseline hazard function
+for the recurrent event process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tvc_re_terms</code></td>
+<td>
+<p>A named list defining the numbers of knots used to model potential
+time-varying effects of variables included in the recurrent event model.
+This list should be of form <code style="white-space: pre;">⁠list(&lt;var_name&gt; = &lt;no. of knots&gt;)⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tvc_ce_terms</code></td>
+<td>
+<p>A named list defining the numbers of knots used to model potential
+time-varying effects of variables included in the competing event model.
+This list should be of form <code style="white-space: pre;">⁠list(&lt;var_name&gt; = &lt;no. of knots&gt;)⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>A chara vector specifying the name of the variable that defines unique
+observation in the dataset passed to the function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A stacked dataset that including both data on the recurrent and competing
+event process. The dataset should have one row for each observation
+including the follow-up time and event indicator for the competing event
+and possibly multiple rows for each observation including the follow-up
+times and event indicator for the recurrent event, e.g.:
+</p>
+<div class="sourceCode"><pre>id st_start  st_end re status
+ 1      0      6.88  0      1
+ 1      0      6.88  1      0
+ 2      0      8.70  0      1
+ 2      0      8.70  1      0
+ 3      0     10     0      0
+ 3      0      1.78  1      1
+ 3      1.78   6.08  1      1
+ 3      6.08  10     1      0
+ 4      0      6.07  0      1
+ 4      0      6.07  1      0
+</pre></div>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with one row per combination of baseline hazards DFs,
+and the DFs of the time varying covariates, and the corresponding
+AIC and BIC.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Test different dfs
+test_dfs_JointFPM(Surv(time  = start,
+                       time2 = stop,
+                       event = event,
+                       type  = 'counting') ~ 1,
+                  re_model = ~ pyridoxine + thiotepa,
+                  ce_model = ~ pyridoxine + thiotepa,
+                  re_indicator = "re",
+                  ce_indicator = "ce",
+                  dfs_ce = 1:3,
+                  dfs_re = 2,
+                  tvc_ce_terms = list(thiotepa   = 1:2),
+                  tvc_re_terms = list(pyridoxine = 2),
+                  cluster  = "id",
+                  data     = bladder1_stacked)
+
+</code></pre>
+
+
+</div>

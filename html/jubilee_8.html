@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.calc_cape</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal utility to calculate n-year CAPE</h2>
+
+<h3>Description</h3>
+
+<p>This CAPE calculator replicates the methodology of Shiller, so that one can calculate
+n-year CAPE, e.g. n=20.
+This utility has been calibrated by original 10-year CAPE data from Shiller.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.calc_cape(dtb, period, tol.frac = 1/6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtb</code></td>
+<td>
+<p>data.table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>period</code></td>
+<td>
+<p>numeric, the backward-looking regression period</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol.frac</code></td>
+<td>
+<p>numeric, tolerance of missing data in the beginning of the time series,
+expressed as fraction.
+Default is 1/6, that is, two months.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric, the same length as <code>dtb$fraction</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  ## Not run: 
+    dtb &lt;- jubilee.repo(online=FALSE)@ie
+    cape10 &lt;- jubilee.calc_cape(dtb, 10)
+    cape20 &lt;- jubilee.calc_cape(dtb, 20)
+  
+## End(Not run)
+</code></pre>
+
+
+</div>

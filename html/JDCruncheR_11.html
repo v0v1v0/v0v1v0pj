@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-add_indicator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Ajout d'un indicateur dans les objets QR_matrix</h2>
+
+<h3>Description</h3>
+
+<p>Permet d'ajouter un indicateur dans les objets <code>QR_matrix</code>.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code> ou <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indicator</code></td>
+<td>
+<p>un <code>vector</code> ou un <code>data.frame</code> (voir détails).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable_name</code></td>
+<td>
+<p>chaîne de caractères contenant les noms des nouvelles
+variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>autres paramètres de la fonction <code>merge</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>La fonction <code>add_indicator()</code> permet d'ajouter un indicateur
+dans la matrice des valeurs du bilan qualité. L'indicateur n'est donc pas
+ajouté dans la matrice des modalités et ne peut être utilisé dans le calcul
+du score (sauf pour le pondérer). Pour l'utiliser dans le calcul du score, il
+faudra d'abord le recoder avec la fonction
+<code>recode_indicator_num</code>.
+</p>
+<p>L'indicateur à ajouter peut être sous deux formats : <code>vector</code> ou
+<code>data.frame</code>. Dans les deux cas, il faut que les valeurs à ajouter
+puissent être associées aux bonnes séries dans la matrice du bilan qualité :
+</p>
+
+<ul>
+<li>
+<p> dans le cas d'un <code>vector</code>, les éléments devront être nommés et les
+noms doivent correspondre à ceux présents dans le bilan qualité (variable
+"series") ;
+</p>
+</li>
+<li>
+<p> dans le cas d'un <code>data.frame</code>, il devra contenir une colonne "series"
+avec les noms des séries correspondantes.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>Cette fonction renvoie le même objet, enrichi de l'indicateur
+choisi. Ainsi, si l'entrée <code>x</code> est une matrice QR, un objet de la classe
+<code>QR_matrix</code> est renvoyé. Si le code d'entrée <code>x</code> est une matrice
+mQR, un objet de la classe <code>mQR_matrix</code> est renvoyé.
+</p>
+
+
+</div>

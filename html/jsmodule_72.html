@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>timeROC_table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>timeROC_table: extract AUC information from list of timeROChelper object.</h2>
+
+<h3>Description</h3>
+
+<p>extract AUC information from list of timeROChelper object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">timeROC_table(ListModel, dec.auc = 3, dec.p = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ListModel</code></td>
+<td>
+<p>list of timeROChelper object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.auc</code></td>
+<td>
+<p>digits for AUC, Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.p</code></td>
+<td>
+<p>digits for p value, Default: 3</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>extract AUC information from list of timeROChelper object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>table of AUC information
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>confint</code>
+<code>data.table</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># library(survival)
+# list.timeROC &lt;- lapply(list("age", c("age", "sex")),
+#                      function(x){
+#                        timeROChelper("status", "time", x, t = 365, data = lung)
+#                       })
+# timeROC_table(list.timeROC)
+</code></pre>
+
+
+</div>

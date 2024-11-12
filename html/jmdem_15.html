@@ -1,0 +1,336 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmdem.sim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Simulate joint mean and dispersion effects models fits
+</h2>
+
+<h3>Description</h3>
+
+<p>Simulate iterative <code>jmdem</code> fits on user-defined model settings
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmdem.sim(mformula = "y ~ 1 + x", dformula = "~ 1 + z", data = NULL, 
+          beta.true, lambda.true, mfamily = gaussian, 
+          dfamily = Gamma, dev.type = c("deviance", "pearson"), 
+          x.str = list(type = "numeric", random.func = "runif", param = list()), 
+          z.str = list(type = "numeric", random.func = "runif", param = list()), 
+          n = NULL, simnum = NULL, trace = FALSE, asymp.test = FALSE, 
+          weights = NULL, moffset = NULL, doffset = NULL, 
+          mustart = NULL, phistart = NULL, betastart = NULL, 
+          lambdastart = NULL, hessian = TRUE, na.action, 
+          grad.func = TRUE, fit.method = "jmdem.fit", 
+          method = c("Nelder-Mead", "BFGS", "CG", "L-BFGS-B", "SANN", "Brent"), 
+          df.adj = FALSE, disp.adj = FALSE, full.loglik = FALSE, 
+          mcontrasts = NULL, dcontrasts = NULL, beta.first = TRUE, 
+          prefit = TRUE, control = list(...), 
+          minv.method = c("solve", "chol2inv", "ginv"), ...)
+          
+simdata.jmdem.sim(mformula = "y ~ 1 + x", dformula = "~ 1 + z", beta.true, lambda.true, 
+                   x.str = list(type = "numeric", random.func = "runif", param = list()), 
+                   z.str = list(type = "numeric", random.func = "runif", param = list()), 
+                   mfamily = gaussian, dfamily = Gamma, weights = NULL, n, simnum = 1, 
+                   moffset = NULL, doffset = NULL)
+
+getdata.jmdem.sim(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mformula</code></td>
+<td>
+<p>the user-defined true mean submodel, expressed in form of an object of class "<code>formula</code>". The number of regressors and their interactions can be specified here, but not their true parameter values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dformula</code></td>
+<td>
+<p>the user-defined true dispersion submodel. See <code>mformula</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>an optional data frame or list of several data frames. If no data are provided, <code>jmdem.sim</code> will generate its own data for simulation by <code>simdata.jmdem.sim</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta.true</code></td>
+<td>
+<p>a vector of the true parameter values of the mean submodel. The number of elements in <code>beta.true</code> must be identical with the number of parameters to be estimated in <code>mformula</code>, including the intercept if there exists one in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda.true</code></td>
+<td>
+<p>a vector of the true parameter values of the dispersion submodel. The number of elements in <code>lambda.true</code> must be identical with the number of parameters to be estimated in <code>dformula</code>, including the intercept if there exists one in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mfamily</code></td>
+<td>
+<p>a description of the error distribution and link function to be used in the <em>mean</em> submodel. This can be a character string naming a family function, a family function or the result of a call to a family function. (See <code>family</code> for details of family functions.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dfamily</code></td>
+<td>
+<p>a description of the error distribution and link function to be used in the <em>dispersion</em> submodel. (Also see <code>family</code> for details of family functions.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev.type</code></td>
+<td>
+<p>a specification of the type of residuals to be used as the response of the <em>dispersion</em> submodel. The ML estimates of the jmdem are the optima of either the quasi-likelihood function for <em>deviance residuals</em>, or the pseudo-likelihood function for <em>Pearson</em> residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x.str</code></td>
+<td>
+<p>a list of user-specified structure for the generation of the mean submodel design matrix, including the <code>type</code> (numeric, character, logical etc.), an <code>r</code> function (<code>random.func</code>) to generate the values of the regressors and the corresponding parameters (<code>param</code>) to be passed on to (<code>random.func</code>). Note that all  parameters that belong to the same <code>random.func</code> must be put in a <code>list(...)</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>z.str</code></td>
+<td>
+<p>a list of user-specified structure for the generation of the dispersion submodel design matrix, including the <code>type</code> (numeric, character, logical etc.), an <code>r</code> function (<code>random.func</code>) to generate the values of the regressors and the corresponding parameters (<code>param</code>) to be passed on to (<code>random.func</code>). Note that all  parameters that belong to the same <code>random.func</code> must be put in a <code>list(...)</code>. See details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>a numeric value specifying the sample size in each simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simnum</code></td>
+<td>
+<p>a numeric value specifying the number of simulations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>a specification whether the estimated coefficients should be printed to screen after each simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>asymp.test</code></td>
+<td>
+<p>a specification whether the Rao's score and Wald tests should be conducted for each simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>for <code>control</code>: arguments to be used to form the default control argument if it is not supplied directly. For <code>jmdem.sim</code>: further arguments passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<p>The following arguments are used for JMDEM fitting. See <code>jmdem</code> for details.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>an optional vector of 'prior weights' to be used in the fitting process. Should be <code>NULL</code> or -a numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>moffset</code></td>
+<td>
+<p>an a priori known component to be included in the linear predictor of the <em>mean</em> submodel during fitting. This should be NULL or a numeric vector of length equal to the number of cases. One or more offset terms can be included in the formula instead or as well, and if more than one is specified their sum is used. See <code>model.offset</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>doffset</code></td>
+<td>
+<p>an a priori known component to be included in the linear predictor of the <em>dispersion</em> submodel during fitting. See <code>model.offset</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mustart</code></td>
+<td>
+<p>a vector of starting values of individual means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phistart</code></td>
+<td>
+<p>a vector of starting values of individual dispersion.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>betastart</code></td>
+<td>
+<p>a vector of starting values for the regression parameters of the <em>mean</em> submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdastart</code></td>
+<td>
+<p>a vector of starting values for the regression parameters of the <em>dispersion</em> submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hessian</code></td>
+<td>
+<p>the method used to compute the information matrix. Hessian matrix will be calculated for <code>"TRUE"</code>, Fisher matrix for <code>"FALSE"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>a function which indicates what should happen when the data contain <code>NA</code>s. The default is set by the <code>na.action</code> setting of <code>options</code>, and is <code>na.fail</code> if that is unset. The 'factory-fresh' default is <code>na.omit</code>. Another possible value is <code>NULL</code>, no action. Value <code>na.exclude</code> can be useful.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grad.func</code></td>
+<td>
+<p>the gradient function will be included in the optimisation for the "<code>BFGS</code>", "<code>CG</code>" and "<code>L-BFGS-B</code>" methods for <code>"TRUE"</code>. If it is <code>NULL</code>, a finite-difference approximation will be used.
+</p>
+<p>For the "<code>SANN</code>" method it specifies a function to generate a new candidate point. If it is <code>NULL</code> a default Gaussian Markov kernel is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit.method</code></td>
+<td>
+<p>the method to be used in fitting the model. The default method "<code>jmdem.fit</code>" uses the general-purpose optimisation (<code>optim</code>): the alternative "model.frame" returns the model frame and does no fitting.
+</p>
+<p>User-supplied fitting functions can be supplied either as a function or a character string naming a function, with a function which takes the same arguments as <code>jmdem.fit</code>. If specified as a character string it is looked up from within the <em>stats</em> namespace.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the method to be used for the optimisation. See <code>optim</code> for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df.adj</code></td>
+<td>
+<p>an adjustment factor for the degrees of freedom <code>(n-p)/n</code>, where <code>n</code> is the number of observations and <code>p</code> is the number of parameters to be estimated in <code>jmdem</code>, will be multiplied to the likelihood function before the optimisation for <code>"TRUE"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>disp.adj</code></td>
+<td>
+<p>an adjustment factor for the dispersion weight will be multiplied to the estimated dispersion parameter during the optimisation for <code>"TRUE"</code>. For details, please see McCullagh and Nelder (1989, Ch. 10, P. 362).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>full.loglik</code></td>
+<td>
+<p>the full likelihood function instead of the quasi- or pseudo-likelihood function will be used for the optimisation for <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcontrasts</code></td>
+<td>
+<p>an optional list for the mean effect constrasts. See the <code>contrasts.arg</code> of <code>model.matrix.default</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dcontrasts</code></td>
+<td>
+<p>an optional list for the dispersion effect constrasts. See the <code>contrasts.arg</code> of <code>model.matrix.default</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta.first</code></td>
+<td>
+<p>the mean effects will be estimated (assuming constant sample dispersion) at the initial stage for <code>TRUE</code>. For <code>FALSE</code>, the dispersion effects will be estimated first (assuming constantly zero mean for the whole sample).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefit</code></td>
+<td>
+<p>a specfication whether <code>jmdem</code> uses <code>glm</code> to prefit the starting values of the mean and dispersion parameters. For <code>FALSE</code>, the initial parameter values of all the regressors are set to zero and the sample mean and sample dispersion will be used as the starting values of the corresponding submodel intercepts instead. If the submodels have no intercept, all parameters will also be set to zero. The sample mean and sample dispersion will then be used as <code>mustart</code> and <code>phistart</code> in the internal computation (they will not be officially recorded in <code>mustart</code> and <code>phistart</code> in the output object). Defaule value is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of parameters for controlling the fitting process. For <code>jmdem.fit</code> this is passed to <code>jmdem.control</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minv.method</code></td>
+<td>
+<p>the method used to invert matrices during the estimation process. "<code>solve</code>" gives the solutions of a system of equations, "<code>chol2inv</code>" gives the inverse from Choleski or QR decomposition and "<code>ginv</code>" gives the generalised inverse of a matrix. If none of the methods is specified or if they are specified in a vector such as <code>c("solve", "chol2inv", "ginv")</code>, the matrices will be inverted by the methods in the sequence as given in the vector until it is found.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>one or several objects of class <code>jmdem.sim</code>, typically the result of a call to <code>jmdem.sim</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>jmdem.sim</code> simulates the fitting of datasets in which the regressors of the mean and dispersion submodels are generated according to the specification given in <code>x.str</code> and <code>z.str</code>. The response variable will be then generated according to the distribution specified in <code>mfamily</code> with linear predictor of the mean given by <code>mformula</code> and the linear predictor of the dispersion given by <code>dformula</code>.
+</p>
+<p>The specifications in <code>x.str</code> and <code>z.str</code> are rather flexible if more than one independent variables are included in any of the submodels. For instance, if one of the two independent variables of the mean submodel is numeric generated from the normal distribution of mean 0 and standard deviation 1, and the other one is a 4-level factor <code class="reqn">{0, 1, 2, 3}</code> generated from the uniform distribution, then they can be specified in a vector using <code>c(...)</code>, such as: <code>x.str = list(type = c("numeric", "factor"), random.func = c("rnorm", "runif"), param = c(list(mean = 0, sd = 1), list(min = 0, max = 3)))</code>.
+</p>
+<p>Note that the higher the number of simulations specified in <code>simnum</code>, the more stabilised are the aggregated simulation results. The larger the sample size in each simulation, the less fluctuated are the estimated results among the simulations.
+</p>
+<p>Users gain <code>simdata.jmdem.sim</code> higher control on the simulation by generating a number of datasets upon their own settings first, and not running <code>jmdem.sim</code> at the same time. By taking these steps, users also have the flexiblility to edit the datasets according their own individual requirements, before calling them in <code>jmdem.sim</code>.
+</p>
+<p>Users can also extract the datasets used in <code>jmdem.sim</code> by <code>getdata.jmdem.sim</code>. This function is useful if the datasets are generated in <code>jmdem.sim</code> where users do not have access prior to the simulations. 
+</p>
+<p><code>getdata.jmdem.sim</code> and <code>simdata.jmdem.sim</code> can also be useful if the users would like to conduct various simulations with different <code>jmdem</code> settings on the same data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>jmdem.sim</code> contains of a list of <code>jmdem</code> fits with full model information. That means, each element of the <code>jmdem.sim</code> object contains the same attributes as a <code>jmdem</code> object. See <em>values</em> of <code>jmdem</code> for details.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmdem</code>, <code>summary.jmdem.sim</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Run 10 JMDEM simulations with samples of size 50. The response
+## variable is Gaussian with mean beta_0 + beta_1 * x and variance 
+## log(sigma^2) = lambda_0 + lambda_1 * z. The observations of 
+## the predictor x should be random numbers generated from the normal 
+## distribution with mean 0 and standard deviation 2. The observations
+## of z are factors with three levels between 0 and 2, generated from 
+## the uniform distribution. The true values of the mean submodel's 
+## intercept and slope are 1.5 and 4, as well as 2.5, 3 and -0.2 for 
+## the dispersion submodel's intercept and slope.
+sim &lt;- jmdem.sim(mformula = y ~ x, dformula = ~ z, beta.first = TRUE, 
+                 mfamily = gaussian, dfamily = Gamma(link = "log"), 
+                 x.str = list(type = "numeric", random.func = "rnorm", 
+                              param = list(mean = 0, sd = 2)),
+                 z.str = list(type = "factor", random.func = "runif", 
+                              param = list(min = 0, max = 2)),
+                 beta.true = c(1.5, 4), lambda.true = c(2.5, 3, -0.2), 
+                 grad.func = TRUE, method = "BFGS", n = 50,
+                 simnum = 10)
+</code></pre>
+
+
+</div>

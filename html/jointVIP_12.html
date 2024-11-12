@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.jointVIP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot the jointVIP object</h2>
+
+<h3>Description</h3>
+
+<p>plot the jointVIP object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointVIP'
+plot(
+  x,
+  ...,
+  smd = "cross-sample",
+  use_abs = TRUE,
+  plot_title = "Joint Variable Importance Plot"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a jointVIP object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>custom options: <code>bias_curve_cutoffs</code>, <code>text_size</code>, <code>max.overlaps</code>, <code>label_cut_std_md</code>, <code>label_cut_outcome_cor</code>, <code>label_cut_bias</code>, <code>bias_curves</code>, <code>add_var_labs</code>, <code>expanded_y_curvelab</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smd</code></td>
+<td>
+<p>specify the standardized mean difference is <code>cross-sample</code> or <code>pooled</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_abs</code></td>
+<td>
+<p>TRUE (default) for absolute measures</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot_title</code></td>
+<td>
+<p>optional string for plot title</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a joint variable importance plot of class <code>ggplot</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- data.frame(year = rnorm(50, 200, 5),
+                   pop = rnorm(50, 1000, 500),
+                   gdpPercap = runif(50, 100, 1000),
+                   trt = rbinom(50, 1, 0.5),
+                   out = rnorm(50, 1, 0.2))
+# random 20 percent of control as pilot data                  
+pilot_sample_num = sample(which(data$trt == 0),
+                          length(which(data$trt == 0)) *
+                          0.2)
+pilot_df = data[pilot_sample_num, ]
+analysis_df = data[-pilot_sample_num, ]
+treatment = "trt"
+outcome = "out"
+covariates = names(analysis_df)[!names(analysis_df)
+                                %in% c(treatment, outcome)]
+new_jointVIP = create_jointVIP(treatment = treatment,
+                               outcome = outcome,
+                               covariates = covariates,
+                               pilot_df = pilot_df,
+                               analysis_df = analysis_df)
+plot(new_jointVIP)
+</code></pre>
+
+
+</div>

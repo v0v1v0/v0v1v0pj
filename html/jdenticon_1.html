@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jdenticon</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a Jdenticon.</h2>
+
+<h3>Description</h3>
+
+<p>Create a Jdenticon.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jdenticon(
+  value = NULL,
+  filePath = tempdir(),
+  fileName = glue::glue("jdenticon_{size}_{value}"),
+  size = "100",
+  config = NULL,
+  type = "png",
+  preview = interactive() &amp;&amp; Sys.getenv("RSTUDIO") == "1",
+  return_list = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p><code>character</code> Value to be converted to hexadecimal hash to render Jdenticon. Cannot contain characters that are reserved for filepaths:</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filePath</code></td>
+<td>
+<p><code>character</code> File path to save Jdenticon .png to. If <code>NULL</code>, defaults to current working directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fileName</code></td>
+<td>
+<p><code>character</code> File name to save Jdenticon .png as. If <code>NULL</code>, defaults to <code style="white-space: pre;">⁠temp_jdenticon_{value}⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p><code>numeric</code> Size of Jdenticon. Default == 100.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>config</code></td>
+<td>
+<p>list of jdenticon configuration options (see <a href="https://jdenticon.com/js-api/M_jdenticon_toPng.html">the jdenticon documentation</a>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Image type (default 'png', or 'svg')</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preview</code></td>
+<td>
+<p><code>boolean</code> Preview Jdenticon in viewer pane?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return_list</code></td>
+<td>
+<p><code>boolean</code> Return full list object with all settings?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Path to Jdenticon icon file, or (if <code>return_list</code> is true) a list with all parameters (including path).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+jdenticon(value = 'mango')
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

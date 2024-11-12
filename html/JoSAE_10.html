@@ -1,0 +1,162 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>JoSAE-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Provides functions for some small area estimators and their
+mean squared errors.
+</h2>
+
+<h3>Description</h3>
+
+<p> This package implements unit-level (Battese et al. 1988)
+and area-level EBLUP (Fay and Herriot 1979), and GREG (Sarndal 1984)
+estimators as well as their variance/MSE estimators. It also contains
+data and a vignette that explain its use. Heteroscedasticity can
+be considered. </p>
+
+
+<h3>Details</h3>
+
+<p>The aim in the analysis of sample surveys is frequently to derive
+estimates of subpopulation characteristics. Often, the sample available
+for the subpopulation is, however, too small to allow a reliable
+estimate. If an auxiliary variable exists that is correlated with the
+variable of interest, small area estimation (SAE) provides methods to
+solve the problem (Rao 2003, Rao and Molina 2015). 
+</p>
+<p>The purpose of this package is primarily to document the functions used
+in the publications Breidenbach and Astrup (2012) and Breidenbach et
+al. (2018). The data used in Breidenbach and Astrup (2012) are provided.
+A subset of the data used in Breidenbach et al. (2018) is also provided
+for testing the functions. The vignette further documents the
+publication Breidenbach et al. (2015).
+</p>
+<p>You might wonder why this package is called JoSAE. Well, first of all,
+JoSAE sounds good (if pronounced like the female name). The other reason
+was that the packages SAE and SAE2 already exist (Gomez-Rubio,
+2008). They are, however, not available on CRAN and unmaintained (as of
+July 2011). They also do not seem to implement the variance estimators
+that we needed. So I just combined SAE with the first part of my name.
+</p>
+
+
+<h3>Note</h3>
+
+<p>All the implemented functions/estimators are described in Rao (2003). This
+package merely makes the use of the estimators easier for the users
+that are not keen on programming. Especially the EBLUP variance
+estimator would require some effort.
+</p>
+<p>Today, there are several well programmed SAE packages available on
+CRAN that also provide the functions described here. This was not the
+case when the first version of the package was uploaded. This package
+is therefore mostly to document the publications mentioned above. With
+respect to heteroskedasticity, this package also implements functions
+that, as far as I can see, are not available in other packages (as of
+May 2018).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Johannes Breidenbach
+</p>
+<p>Maintainer: Johannes Breidenbach &lt;job@nibio.no&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Battese, G. E., Harter, R. M. &amp; Fuller, W. A. (1988), An error-components model
+for prediction of county crop areas using survey and satellite data
+Journal of the American Statistical Association, 83, 28-36 
+</p>
+<p>Breidenbach, J. and Astrup, R. (2012), Small area estimation of
+forest attributes in the Norwegian National Forest Inventory. European
+Journal of Forest Research, 131:1255-1267.
+</p>
+<p>Breidenbach, J., Ronald E. McRoberts, Astrup, R. (2016), Empirical
+coverage of model-based variance estimators for 
+remote sensing assisted estimation of stand-level timber volume. Remote
+Sensing of Environment, 173,
+274-281. https://doi.org/10.1016/j.rse.2015.07.026
+</p>
+<p>Breidenbach, J., Rahlf, J., Magnussen, S., Astrup, R. (2018)
+Unit-level and area-level small area estimation under
+heteroscedasticity using digital aerial photogrammetry data. Remote
+Sensing of Environment. In press.
+</p>
+<p>Fay, R. E., Herriot, R. A., 1979. Estimates of income for small places: an
+application of James- Stein procedures to census data. Journal of the
+American Statistical Association 74 (366a), 269-277.
+</p>
+<p>Gomez-Rubio (2008), Tutorial on small area estimation, UseR
+conference 2008, August 12-14, Technische Universitat Dortmund,
+Germany.
+</p>
+<p>Rao, J.N.K. (2003), Small area estimation. Wiley.
+</p>
+<p>Rao, J. N., Molina, I., (2015). Small area estimation, 2nd Edition. John Wiley &amp; Sons. 
+</p>
+<p>Sarndal, C. (1984), Design-consistent versus model-dependent estimation for
+small domains Journal of the American Statistical Association, JSTOR,
+624-631 
+</p>
+<p>Schoch, T. (2011), rsae: Robust Small Area Estimation. R package
+version 0.1-3. 
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>eblup.mse.f.wrap</code>,
+<code>JoSAE.sample.data</code>, <code>JoSAE.domain.data</code>, 
+<code>sae.al.f</code>, <code>sae.ul.f</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">	#mean auxiliary variables for the populations in the domains
+data(JoSAE.domain.data)
+	#data for the sampled elements
+data(JoSAE.sample.data)
+plot(biomass.ha~mean.canopy.ht,JoSAE.sample.data)
+
+## use the original wrapper function
+
+    #lme model
+summary(fit.lme &lt;- lme(biomass.ha ~ mean.canopy.ht, data=JoSAE.sample.data
+                       , random=~1|domain.ID))
+
+    #domain data need to have the same column names as sample data or vice versa
+d.data &lt;- JoSAE.domain.data
+names(d.data)[3] &lt;- "mean.canopy.ht"
+
+result &lt;- eblup.mse.f.wrap(domain.data = d.data, lme.obj = fit.lme)
+result
+
+##END: use the original wrapper function
+
+
+## the same with a newer function that can consider heteroskedasticity
+res &lt;-
+    sae.ul.f(samp.data=JoSAE.sample.data,
+             population.data=d.data,
+				#assuming homoskedasticity
+             k.ij=rep(1, nrow(JoSAE.sample.data)),
+             formula=biomass.ha ~ mean.canopy.ht,
+             domain.col="domain.ID",
+             sample.id.col="sample.ID",
+             neg.sfrac=TRUE)
+res$est$est
+
+##END: the same with a newer function that can consider heteroskedasticity
+
+</code></pre>
+
+
+</div>

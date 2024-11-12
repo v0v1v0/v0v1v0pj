@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.simvcpsr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>sim_vcpsr</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns varying-coefficient single-index
+inverse link linear predictions at arbitrary data locations (using <code>sim_vcpsr</code> with
+<code>class simvcpsr</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'simvcpsr'
+predict(object, ..., X_pred, t_pred)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>sim_vcpsr</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_pred</code></td>
+<td>
+<p>a matrix of arbitrary signals with <code>ncol(X_pred) = length(x_index)</code> locations for
+desired prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t_pred</code></td>
+<td>
+<p>a <code>q</code> vector for the VC index variable associated with <code>X_pred</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated (inverse single-index) mean for the signals in the matrix <code>X_pred</code>,
+with the companion vector of indexing covariates in <code>t_pred</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B. D. (2015). Varying-coefficient single-index signal
+regression. <em>Chemometrics and Intellegent Laboratory Systems</em>, 143, 111–121.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Load libraries
+library(fields) # Needed for plotting
+
+# Get the data
+Dat &lt;- Mixture
+
+# Dimensions: observations, temperature index, signal
+m &lt;- 34
+p1 &lt;- 401
+p2 &lt;- 12
+
+# Stacking mixture data, each mixture has 12 signals stacked
+# The first differenced spectra are also computed.
+mixture_data &lt;- matrix(0, nrow = p2 * m, ncol = p1)
+for (ii in 1:m)
+{
+  mixture_data[((ii - 1) * p2 + 1):(ii * p2), 1:p1] &lt;-
+    t(as.matrix(Dat$xspectra[ii, , ]))
+  d_mixture_data &lt;- t(diff(t(mixture_data)))
+}
+
+# Response (typo fixed) and index for signal
+y_mixture &lt;- Dat$fractions
+y_mixture[17, 3] &lt;- 0.1501
+index_mixture &lt;- Dat$wl
+
+# Select response and replicated for the 12 temps
+# Column 1: water; 2: ethanediol; 3: amino-1-propanol
+y &lt;- as.vector(y_mixture[, 2])
+y &lt;- rep(y, each = p2)
+
+bdegs = c(3, 3, 3, 3)
+pords &lt;- c(2, 2, 2, 2)
+nsegs &lt;- c(12, 5, 5, 5) # Set to c(27, 7, 7 ,7) for given lambdas
+mins &lt;- c(700, 30)
+maxs &lt;- c(1100, 70)
+lambdas &lt;- c(1e-11, 100, 0.5, 1) # based on svcm search
+x_index &lt;- seq(from = 701, to = 1100, by = 1) # for dX
+t_var_sub &lt;- c(30, 35, 37.5, 40, 45, 47.5, 50, 55, 60, 62.5, 65, 70)
+t_var &lt;- rep(t_var_sub, m)
+max_iter &lt;- 2 # Set higher in practice, e.g. 100
+int &lt;- TRUE
+
+# Defining x as first differenced spectra, number of channels.
+x &lt;- d_mixture_data
+
+
+# Single-index VC model using optimal tuning
+fit &lt;- sim_vcpsr(y, x, t_var, x_index, nsegs, bdegs, lambdas, pords,
+             max_iter = max_iter, mins = mins, maxs = maxs)
+
+predict(fit, X_pred = x, t_pred = t_var)
+</code></pre>
+
+
+</div>

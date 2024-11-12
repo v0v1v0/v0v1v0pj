@@ -1,0 +1,161 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>splineCox.reg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitting the Cox model for survival data using a penalized spline model</h2>
+
+<h3>Description</h3>
+
+<p>Fitting the Cox proportional hazards model when the baseline hazard function is specified by a five-parameter spline model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">splineCox.reg(t.event, event, Z, xi1 = min(t.event), xi3 = max(t.event), 
+kappa = c(seq(10, 1e+17, length = 30)), LCV.plot = TRUE,p0=rep(0,5+p))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>t.event</code></td>
+<td>
+<p>a vector for time-to-event</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>event</code></td>
+<td>
+<p>a vector for event indicator (=1 event; =0 censoring)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>a matrix for covariates; nrow(Z)=sample size, ncol(Z)=the number of covariates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi1</code></td>
+<td>
+<p>lower bound for the hazard function; the default is min(t.event)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi3</code></td>
+<td>
+<p>upper bound for the hazard function; the default is max(t.event)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa</code></td>
+<td>
+<p>a vector for candidate smoothing parameters. Only positive values are allowed. Values too close to zero may yeild errors (see below).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LCV.plot</code></td>
+<td>
+<p>Plot the LCV curves if "TRUE". This plot is used to find the optimal value from the candidate smoothing parameters given by "kappa".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p0</code></td>
+<td>
+<p>Initial values to maximize the penalized likelihood (5+p parameters; five M-spline coefficients and p regression coefficients)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>One can perform Cox-type regression for censored survival data with covariates. The method is essentially the same as
+as Cox regression (Cox 1972) expect for the models of the baseline hazard function.
+Unlike the nonparametric model of Cox (1972), the method applies a five-parameter spline model as originally proposed by Emura et al. (2017).
+The method is detailed in Section 2.4 of Emura et al. (2019). See also Shih and Emura (2021) for more details.
+This method is also used as a subroutine for computing the optimal smoothing parameter (kappa1 and kappa2) for
+many advanced functions, such as "jointCox.reg", "cmprskCox.reg", and "condCox.reg".
+The definition of LCV is given in Section 3.7 of Emura et al. (2019). See also Shih and Emura (2021).
+The error message "Error in nlm(l.func, p = rep(0, 5 + p), hessian = TRUE):non-finite value supplied by 'nlm'"
+may imply that some candidate parameters for kappa are too close to zero; please exclude such values from kappa.
+The output values are usually similar to those given by "coxph(Surv(t.event,event)~Z)". 
+Unreasonable output values are usually caused by a wrong choice of "kappa" and occasionary caused by a wrong choice of p0.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>beta </code></td>
+<td>
+<p>Regression coefficient for Z</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h </code></td>
+<td>
+<p>M-spline coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h_var </code></td>
+<td>
+<p>Variance of M-spline coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa </code></td>
+<td>
+<p>smoothing parameter at the optimal LCV</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DF </code></td>
+<td>
+<p>degree of freedom at the optimal LCV</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LCV </code></td>
+<td>
+<p>the optimal LCV(=logL-DF)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Takeshi Emura</p>
+
+
+<h3>References</h3>
+
+<p>Cox DR (1972), Regression models and life-tables, JRSS(B) 34(2):187-202.
+</p>
+<p>Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints; Joint Frailty-Copula Models,
+JSS Research Series in Statistics, Springer
+</p>
+<p>Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
+Stat Methods Med Res 26(6): 2649-66: Supplementary Material. 
+</p>
+<p>Shih JH, Emura T (2021) Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor 50(16):3749-68
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(dataOvarian)
+t.event=dataOvarian$t.event
+event=dataOvarian$event
+t.death=dataOvarian$t.death
+death=dataOvarian$death
+Z=dataOvarian$CXCL12
+#splineCox.reg(t.event,event,Z,kappa=c(seq(10,1e+17,length=30)))
+</code></pre>
+
+
+</div>

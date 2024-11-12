@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_ncdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>read_ncdata</h2>
+
+<h3>Description</h3>
+
+<p>Reads a ncdf input file to extract the input for the classification:
+pressure field, longitudes, latitudes and dates.
+Absolute time is required to read the dates properly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_ncdata(ncinput, nam_coor, units)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ncinput</code></td>
+<td>
+<p>A NETCDF file with pressure field.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nam_coor</code></td>
+<td>
+<p>Names of space and time coordinates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>units</code></td>
+<td>
+<p>Units required (Pa or hPa).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with:
+</p>
+
+<ul>
+<li>
+<p> A 3D-array of mean sea level (or pressure field) as [lon,lat,times]. The units returned as hPa.
+</p>
+</li>
+<li>
+<p> A numeric with longitudes values.
+</p>
+</li>
+<li>
+<p> A numeric with latitudes values.
+</p>
+</li>
+<li>
+<p> A numeric with dates values.
+</p>
+</li>
+</ul>
+</div>

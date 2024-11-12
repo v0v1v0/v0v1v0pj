@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PlotSickleJrUMAP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate UMAP plots for an object of class SickleJr</h2>
+
+<h3>Description</h3>
+
+<p>Plot the first and second dimensions of a UMAP dimension reduction
+and color either by clustering results or metadata.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PlotSickleJrUMAP(
+  SickleJr,
+  umap.modality = "H",
+  cluster = "kmeans",
+  title = "",
+  colorbymetadata = NULL,
+  legendname = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>umap.modality</code></td>
+<td>
+<p>String corresponding to the name of the UMAP of interest: defaults to <code>"H"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>String input that indicates which cluster to color by: defaults to <code>"kmeans"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>String input for optional <code>ggplot2{ggplot}</code> plot title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>colorbymetadata</code></td>
+<td>
+<p>Name of metadata column if coloring by metadata</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legendname</code></td>
+<td>
+<p>String input that to allow specification of a different legend name</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with plots added to the <code>plots</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>Wickham H (2016).
+<em>ggplot2: Elegant Graphics for Data Analysis</em>, 2 edition.
+Springer International Publishing, Cham, Switzerland.
+ISBN 978-3-319-24277-4, <a href="https://doi.org/10.1007/978-3-319-24277-4">doi:10.1007/978-3-319-24277-4</a>, <a href="https://ggplot2.tidyverse.org/">https://ggplot2.tidyverse.org/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-PlotSickleJrUMAP(SimSickleJrSmall,
+title="K-Means Example")
+SimSickleJrSmall&lt;-PlotSickleJrUMAP(SimSickleJrSmall,umap.modality=1)
+</code></pre>
+
+
+</div>

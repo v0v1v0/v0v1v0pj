@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geeUni</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>geeUni: The coefficient of univariate gee (internal function)</h2>
+
+<h3>Description</h3>
+
+<p>Extract the coefficients of univariate gee using geeglm function (geepack package).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geeUni(y, x, data, id.vec, family, cor.type = "exchangeable")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Dependant variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.vec</code></td>
+<td>
+<p>Vector of id (should be ordered)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>Family: "gaussian", "binomial", "poisson", "quasipoisson", etc...</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cor.type</code></td>
+<td>
+<p>Correlation structure, Default: 'exchangeable'</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>coefficient, standard error, p-value
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(geepack)
+data(dietox)
+dietox$Cu &lt;- as.factor(dietox$Cu)
+gee.uni &lt;- geeUni("Weight", "Time",
+  data = dietox, id.vec = dietox$Pig,
+  family = "gaussian", cor.type = "exchangeable"
+)
+</code></pre>
+
+
+</div>

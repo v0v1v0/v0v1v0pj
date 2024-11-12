@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_example</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get path to jstor example</h2>
+
+<h3>Description</h3>
+
+<p>jstor includes several sample files for demonstration purposes. This helper
+makes them easy to access.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_example(path = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Name of the example file. If <code>NULL</code>, the example files will be
+listed.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>The code for this function was adapted from the package <code>readr</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Either a character vector with the names of example files (if
+<code>jst_example()</code> is called without supplying an argument), or a character
+vector indicating the path to the example file.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_example()
+jst_example("article_with_references.xml") 
+</code></pre>
+
+
+</div>

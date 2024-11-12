@@ -1,0 +1,245 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jomo.smc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Joint Modelling Substantive Model Compatible Imputation 
+</h2>
+
+<h3>Description</h3>
+
+<p>A wrapper function for all the substantive model compatible JM imputation functions. The substantive model of interest is either lm, glm, polr, lmer, clmm, glmer or coxph. Interactions and polynomial functions of the covariates are allowed. Data must be passed as a data.frame where continuous variables are numeric and binary/categorical variables are factors.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  jomo.smc(formula, data, level=rep(1,ncol(data)), beta.start=NULL,
+  l2.beta.start=NULL, u.start=NULL, l1cov.start=NULL, l2cov.start=NULL,
+  l1cov.prior=NULL, l2cov.prior=NULL, a.start=NULL, a.prior=NULL, 
+  nburn=1000, nbetween=1000, nimp=5, meth="common", family="binomial",
+  output=1, out.iter=10, model) 
+    
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>an object of class formula: a symbolic description of the model to be fitted. It is possible to include in this formula interactions (through symbols '*' and '
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+
+<p>A data.frame containing all the variables to include in the imputation model. Columns related to continuous variables have to be numeric and columns related to binary/categorical variables have to be factors. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+
+<p>If the dataset is multilevel, this must be a vector indicating whether each variable is either a level 1 or a level 2 variable. The value assigned to the cluster indicator is irrelevant.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta.start</code></td>
+<td>
+
+<p>Starting value for beta, the vector(s) of level-1 fixed effects for the joint model for the covariates. For each n-category variable we have a fixed effect parameter for each of the n-1 latent normals. The default is a matrix of zeros.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2.beta.start</code></td>
+<td>
+
+<p>Starting value for beta2, the vector(s) of level-2 fixed effects for the joint model for the covariates. For each n-category variable we have a fixed effect parameter for each of the n-1 latent normals. The default is a matrix of zeros.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>u.start</code></td>
+<td>
+
+<p>A matrix where different rows are the starting values within each cluster of the random effects estimates u for the joint model for the covariates. The default is a matrix of zeros.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l1cov.start</code></td>
+<td>
+
+<p>Starting value of the level-1 covariance matrix of the joint model for the covariates. Dimension of this square matrix is equal to the number of covariates (continuous plus latent normals) in the imputation model. The default is the identity matrix. Functions for imputation with random cluster-specific covariance matrices are an exception, because we need to pass the starting values for all of the matrices stacked one above the other. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2cov.start</code></td>
+<td>
+
+<p>Starting value for the level 2 covariance matrix of the joint model for the covariates. Dimension of this square matrix is equal to the number of level-1 covariates (continuous plus latent normals) in the analysis model times the number of random effects plus the number of level-2 covariates. The default is an identity matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l1cov.prior</code></td>
+<td>
+
+<p>Scale matrix for the inverse-Wishart prior for the covariance matrix. The default is the identity matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2cov.prior</code></td>
+<td>
+
+<p>Scale matrix for the inverse-Wishart prior for the level 2 covariance matrix. The default is the identity matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a.start</code></td>
+<td>
+
+<p>Starting value for the degrees of freedom of the inverse Wishart distribution of the cluster-specific covariance matrices. Default is 50+D, with D being the dimension of the covariance matrices. This is used only with clustered data and when option meth is set to "random".
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a.prior</code></td>
+<td>
+
+<p>Hyperparameter (Degrees of freedom) of the chi square prior distribution for the degrees of freedom of the inverse Wishart distribution for the cluster-specific covariance matrices. Default is D, with D being the dimension of the covariance matrices.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meth</code></td>
+<td>
+
+<p>Method used to deal with level 1 covariance matrix. When set to "common", a common matrix across clusters is used (functions jomo1rancon, jomo1rancat and jomo1ranmix). When set to "fixed", fixed study-specific matrices are considered (jomo1ranconhr, jomo1rancathr and jomo1ranmixhr with coption meth="fixed"). Finally, when set to "random", random study-specific matrices are considered (jomo1ranconhr, jomo1rancathr and jomo1ranmixhr with option meth="random")
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nburn</code></td>
+<td>
+
+<p>Number of burn in iterations. Default is 1000.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbetween</code></td>
+<td>
+
+<p>Number of iterations between two successive imputations. Default is 1000.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nimp</code></td>
+<td>
+
+<p>Number of Imputations. Default is 5.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+
+<p>When set to 0, no output is shown on screen at the end of the process. When set to 1, only the parameter estimates related to the substantive model are shown (default). When set to 2, all parameter estimates (posterior means) are displayed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out.iter</code></td>
+<td>
+
+<p>When set to K, every K iterations a dot is printed on screen. Default is 10. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+
+<p>The type of model we want to impute compatibly with. It can currently be one of lm, glm (binomial), polr, coxph, lmer, clmm or glmer (binomial).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+
+<p>One of either "gaussian"" or "binomial". For binomial family, a probit link is assumed. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function allows for substantive model compatible imputation. It can deal with interactions and polynomial terms through the usual lmer syntax in the formula argument. 
+Format of the columns of data is crucial in order for the function to deal with binary/categorical covariates appropriately in the imputation algorithm.  </p>
+
+
+<h3>Value</h3>
+
+<p>On screen, the posterior mean of the fixed effect estimates and of the residual variance are shown. The only argument returned is the imputed dataset in long format. Column "Imputation" indexes the imputations. Imputation number 0 are the original data.
+</p>
+
+
+<h3>References</h3>
+
+<p>Carpenter J.R., Kenward M.G., (2013), Multiple Imputation and its Application. Wiley, ISBN: 978-0-470-74052-1.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+  # make sure sex is a factor:
+  
+  cldata&lt;-within(cldata, sex&lt;-factor(sex))
+  
+  # we define the data frame with all the variables 
+  
+  data&lt;-cldata[,c("measure","age", "sex", "city")]
+  mylevel&lt;-c(1,1,1,1)
+  
+  # And the formula of the substantive lm model
+  
+  formula&lt;-as.formula(measure~sex+age+I(age^2)+(1|city))
+  
+  #And finally we run the imputation function:
+  
+  imp&lt;-jomo.smc(formula,data, level=mylevel, nburn=100, nbetween=100, model="lmer")
+  
+  # Note we are using only 100 iterations to avoid time consuming examples, 
+  # which go against CRAN policies. 
+  # If we were interested in a model with interactions:
+  
+  # formula2&lt;-as.formula(measure~sex*age+(1|city))
+  # imp2&lt;-jomo.smc(formula2,data, level=mylevel, nburn=100, nbetween=100, model="lmer")
+  
+  # The analysis and combination steps are as for all the other functions
+  # (see e.g. help file for function jomo)
+
+  
+  
+  
+</code></pre>
+
+
+</div>

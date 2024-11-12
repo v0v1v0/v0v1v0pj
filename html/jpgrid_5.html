@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geometry_to_grid</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converting sfc geometries to grid square codes</h2>
+
+<h3>Description</h3>
+
+<p>Converting sfc geometries to grid square codes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geometry_to_grid(geometry, grid_size, options = "ALL_TOUCHED=TRUE", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>geometry</code></td>
+<td>
+<p>A <code>sfc</code> vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_size</code></td>
+<td>
+<p>A grid size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>Options vector for GDALRasterize passed on to
+<code>stars::st_rasterize()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed on to <code>stars::st_rasterize()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of <code>grid</code> vectors.
+</p>
+
+
+</div>

@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LabeljsTable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>LabeljsTable: Apply label information to jstable object using label data</h2>
+
+<h3>Description</h3>
+
+<p>Apply label information to table of geeglm.display, lmer.display, coxme.display using label data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LabeljsTable(obj.table, ref)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj.table</code></td>
+<td>
+<p>table of geeglm.display, lmer.display, coxme.display</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ref</code></td>
+<td>
+<p>Label data made by mk.lev function</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>table of geeglm.display, lmer.display, coxme.display with label information
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(coxme)
+fit &lt;- coxme(Surv(time, status) ~ sex + ph.ecog + ph.karno + (1 | inst) + (1 | sex), lung)
+fit.table &lt;- coxme.display(fit)
+lung.label &lt;- mk.lev(lung)
+LabeljsTable(fit.table$table, ref = lung.label)
+</code></pre>
+
+
+</div>

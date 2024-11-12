@@ -1,0 +1,194 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SEMSummary</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary Statistics for a SEM Analysis</h2>
+
+<h3>Description</h3>
+
+<p>This function is designed to calculate the descriptive statistics and
+summaries that are often reported on raw data when the main analyses
+use structural equation modelling.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SEMSummary(
+  formula,
+  data,
+  use = c("fiml", "pairwise.complete.obs", "complete.obs")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula of the variables to be used in the analysis.
+See the ‘details’ section for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame, matrix, or list containing the variables
+used in the formula.  This is a required argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use</code></td>
+<td>
+<p>A character vector of how to handle missing data. Defaults to “fiml”.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function calculates a variety of relevant statistics on the raw
+data used in a SEM analysis.  Because it is meant for SEM style data,
+for now it expects all variables to be numeric.  In the future I may
+try to expand it to handle factor variables somehow.
+</p>
+<p>Both the formula and data arguments are required.  The formula should
+be the right hand side only.  The most common way to use it would be with
+variable names separated by ‘+s’.  For convenience, a ‘.’ is
+expanded to mean “all variables in the data set”.  For a large number
+of variables or when whole datasets are being analyzed, this can be considerably
+easier to write.  Also it facilitates column indexing by simply passing a subset
+of the data (e.g., <code>data[, 1:10]</code>) and using the ‘.’ expansion to
+analyze the first 10 columns.  The examples section demonstrate this use.
+</p>
+<p>Also noteworthy is that <code>SEMSummary</code> is not really meant to be used
+on its own.  It is the computational workhorse, but it is meant to be used
+with a styling or printing method to produce simple output.
+<code>APAStyler</code> has methods for <code>SEMSummary</code> output.
+</p>
+<p>There are several new ways to handle missing data now
+including listwise deletion, pairwise deletion, and using the EM
+algorithm, the default.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with S3 class “SEMSummary”
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>A character vector containing the variable names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>An integer vector of the length of each variable used
+(this includes available and missing data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nmissing</code></td>
+<td>
+<p>An integer vector of the number of missing values in each variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>A vector of the arithmetic means of each variable (on complete data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stdev</code></td>
+<td>
+<p>A numeric vector of the standard deviations of each variable (on complete data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>The numeric covariance matrix for all variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sSigma</code></td>
+<td>
+<p>The numeric correlation matrix for all variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coverage</code></td>
+<td>
+<p>A numeric matrix giving the percentage (technically decimal)
+of information available for each pairwise covariance/correlation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalue</code></td>
+<td>
+<p>The two-sided p values for the correlation matrix. Pairwise present N
+used to calculate degrees of freedom.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>APAStyler</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example using the built in iris dataset
+s &lt;- SEMSummary(~ Sepal.Length + Sepal.Width + Petal.Length, data = iris)
+s # show output ... not very nice
+
+## Prettier output from SEMSummary
+APAStyler(s)
+
+#### Subset the dataset and use the . expansion ####
+
+## summary for all variables in mtcars data set
+## with 11 variables, this could be a pain to write out
+SEMSummary(~ ., data = mtcars)
+
+## . expansion is also useful when we know column positions
+## but not necessarily names
+SEMSummary(~ ., data = mtcars[, c(1, 2, 3, 9, 10, 11)])
+
+## clean up
+rm(s)
+
+## sample data
+Xmiss &lt;- as.matrix(iris[, -5])
+# make q0% missing completely at random
+set.seed(10)
+Xmiss[sample(length(Xmiss), length(Xmiss) * .10)] &lt;- NA
+Xmiss &lt;- as.data.frame(Xmiss)
+
+SEMSummary(~ ., data = Xmiss, use = "fiml")
+
+
+## pairwise
+APAStyler(SEMSummary(~ ., data = Xmiss, use = "pair"),
+  type = "cor")
+
+## same as cor()
+cor(Xmiss, use = "pairwise.complete.obs")
+
+## complete cases only
+SEMSummary(~ ., data = Xmiss, use = "comp")
+
+## clean up
+rm(Xmiss)
+</code></pre>
+
+
+</div>

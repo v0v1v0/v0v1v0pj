@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GenerateWmatricesandHmatrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Initialize the <code class="reqn">\mathbf{W}</code> matrices in each modality and the shared <code class="reqn">\mathbf{H}</code> matrix</h2>
+
+<h3>Description</h3>
+
+<p>Create the <code class="reqn">\mathbf{W}^v</code> matrices and <code class="reqn">\mathbf{H}</code> matrix via non-negative double singular
+value decomposition (NNDSVD) (Boutsidis and Gallopoulus 2008; Gaujoux and Seoighe 2010)
+or randomization. For randomization, the algorithm runs for 10 rounds
+for the desired number of random initializations and picks the <code class="reqn">\mathbf{W}^v</code> matrices and <code class="reqn">\mathbf{H}</code> matrix with
+the lowest achieved loss.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GenerateWmatricesandHmatrix(
+  SickleJr,
+  d = 10,
+  random = FALSE,
+  numberReps = 100,
+  seed = 5,
+  minibatch = FALSE,
+  batchsize = -1,
+  random_W_updates = FALSE,
+  subsample = 1:dim(SickleJr@count.matrices[[1]])[2],
+  usesvd = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Number of latent factors to use: defaults to 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+<p>Boolean indicating whether to use random initialization (<code>TRUE</code>) or NNDSVD (<code>FALSE</code>): default is NNDSVD</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numberReps</code></td>
+<td>
+<p>Number of random initializations to use: default is 5</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Random seed for reproducibility of random initializations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minibatch</code></td>
+<td>
+<p>Indicates whether or not to use the mini-batch algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>Size of batches for mini-batch NMF</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random_W_updates</code></td>
+<td>
+<p>Indicates whether to only update each <code class="reqn">\mathbf{W}^v</code> once per round of
+<code class="reqn">\mathbf{H}</code> updates; only appropriate for mini-batch algorithms</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subsample</code></td>
+<td>
+<p>A vector of values to use for subsampling; only appropriate
+when determining proper values for d.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>usesvd</code></td>
+<td>
+<p>Indicates whether to use <code>R</code>'s singular value decomposition function
+svd (TRUE) or irlba (FALSE), default is <code>FALSE</code>; use irlba for larger datasets
+to increase performance</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>SickleJr An object of class SickleJr with the <code class="reqn">\mathbf{W}^v</code> matrices and <code class="reqn">\mathbf{H}</code> matrix added.
+</p>
+
+
+<h3>References</h3>
+
+<p>Boutsidis C, Gallopoulos E (2008).
+“SVD based initialization: A head start for nonnegative matrix factorization.”
+<em>Pattern Recognition</em>, <b>41</b>(4), 1350–1362.
+ISSN 00313203, <a href="https://doi.org/10.1016/J.PATCOG.2007.09.010">doi:10.1016/J.PATCOG.2007.09.010</a>.
+</p>
+<p>Gaujoux R, Seoighe C (2010).
+“A flexible R package for nonnegative matrix factorization.”
+<em>BMC Bioinformatics</em>, <b>11</b>(1), 1–9.
+ISSN 14712105, <a href="https://doi.org/10.1186/1471-2105-11-367/FIGURES/5">doi:10.1186/1471-2105-11-367/FIGURES/5</a>, <a href="https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-367">https://bmcbioinformatics.biomedcentral.com/articles/10.1186/1471-2105-11-367</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-SetLambdasandRowReg(SimSickleJrSmall,
+lambdaWlist=list(10,50),lambdaH=500,rowReg="None")
+SimSickleJrSmall&lt;-GenerateWmatricesandHmatrix(SimSickleJrSmall,d=5,usesvd=TRUE)
+
+</code></pre>
+
+
+</div>

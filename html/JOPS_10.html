@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>count2d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a matrix of counts.</h2>
+
+<h3>Description</h3>
+
+<p>Count the number of occurrences of pairs of positive integers in two vectors,
+producing a matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">count2d(xb, yb, nb)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>xb</code></td>
+<td>
+<p>a vector of integers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yb</code></td>
+<td>
+<p>a vector of integers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nb</code></td>
+<td>
+<p>a vector of length 2 that provides the number of bins for the 2D histogram on <code>x</code> and <code>y</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function builds a two-dimensional histogram, based on two two vectors of bin numbers (obtained
+with <code>binit</code>). Rows where <code>x[i] &gt; nb[1]</code>  or <code>y[i] &gt; nb[2]</code> are discarded without a warning.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix with <code>nb[1]</code> rows and <code>nb[2]</code> columns with counts.
+It serves as the input for two-dimensional histogram smoothing.
+</p>
+
+
+</div>

@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PlotLossvsLatentFactors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create plots to help determine the number of latent factors</h2>
+
+<h3>Description</h3>
+
+<p>Generate plots of the lowest achieved loss after a
+pre-specified number of iterations (default 100) for each latent factor
+(defaults to 2:20). This operates similarly to a scree plot, so please select
+a number of latent factors that corresponds to the elbow of the plot.
+This method is not appropriate for larger sets of data (more than 1000 cells)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PlotLossvsLatentFactors(
+  SickleJr,
+  rounds = 100,
+  differr = 1e-04,
+  d_vector = c(2:20),
+  parallel = FALSE,
+  nCores = detectCores() - 1,
+  subsampsize = NULL,
+  minibatch = FALSE,
+  random = FALSE,
+  random_W_updates = FALSE,
+  seed = NULL,
+  batchsize = -1,
+  lossonsubset = FALSE,
+  losssubsetsize = dim(SickleJr@count.matrices[[1]])[2]
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rounds</code></td>
+<td>
+<p>Number of rounds to use: defaults to 100; this process is time consuming,
+so a high number of rounds is not recommended</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>differr</code></td>
+<td>
+<p>Tolerance for the percentage update in the likelihood: for these plots,
+this defaults to <code class="reqn">1e-4</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d_vector</code></td>
+<td>
+<p>Vector of <code class="reqn">d</code> values to test: default is 2 to 20</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>Boolean indicating whether to use parallel computation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nCores</code></td>
+<td>
+<p>Number of desired cores; defaults to the number of cores of the current machine minus 1 for convenience</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subsampsize</code></td>
+<td>
+<p>Size of the random subsample (defaults to <code>NULL</code>, which means all cells will be used); using a random subsample decreases computation time but sacrifices accuracy</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minibatch</code></td>
+<td>
+<p>Boolean indicating whether to use the mini-batch algorithm: default is <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+<p>Boolean indicating whether to use random initialization to generate the <code class="reqn">\mathbf{W}^v</code> matrices and <code class="reqn">\mathbf{H}</code> matrix:
+defaults to <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random_W_updates</code></td>
+<td>
+<p>Boolean parameter for mini-batch algorithm; if <code>TRUE</code>, only updates <code class="reqn">\mathbf{W}^v</code> once per epoch on the
+penultimate subset of <code class="reqn">\mathbf{H}</code>; otherwise updates <code class="reqn">\mathbf{W}^v</code> after every update of the subset of <code class="reqn">\mathbf{H}</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Number representing the random seed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>Desired batch size; do not use if using a subsample</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lossonsubset</code></td>
+<td>
+<p>Boolean indicating whether to calculate the loss on a subset rather than the full dataset; speeds up computation for larger datasets</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>losssubsetsize</code></td>
+<td>
+<p>Number of cells to use for the loss subset; default is total number of cells</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with a list of initialized <code class="reqn">\mathbf{W}^v</code> matrices and an <code class="reqn">\mathbf{H}</code> matrix
+for each latent factor <code class="reqn">d\in\{1,...,D\}</code> added to the <code>WHinitials</code> slot, a data frame holding relevant
+values for plotting the elbow plot added to the <code>latent.factor.elbow.values</code> slot, diagnostic plots of the loss vs. the number of latent factors added to the <code>plots</code>
+slot, and the cell indices used to calculate the loss on the subsample added to the <code>lossCalcSubSample</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>Wickham H (2016).
+<em>ggplot2: Elegant Graphics for Data Analysis</em>, 2 edition.
+Springer International Publishing, Cham, Switzerland.
+ISBN 978-3-319-24277-4, <a href="https://doi.org/10.1007/978-3-319-24277-4">doi:10.1007/978-3-319-24277-4</a>, <a href="https://ggplot2.tidyverse.org/">https://ggplot2.tidyverse.org/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall@latent.factor.elbow.values&lt;-data.frame(NULL,NULL)
+SimSickleJrSmall&lt;-PlotLossvsLatentFactors(SimSickleJrSmall,d_vector=c(2:5),
+rounds=5,parallel=FALSE)
+#Next, we commute 2 of these in parallel.
+## Not run: 
+SimSickleJrSmall&lt;-PlotLossvsLatentFactors(SimSickleJrSmall,
+d_vector=c(6:7),rounds=5,parallel=TRUE,nCores=2)
+## End(Not run)
+</code></pre>
+
+
+</div>

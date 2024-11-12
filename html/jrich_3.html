@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Children</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Children of a node.</h2>
+
+<h3>Description</h3>
+
+<p>Get the children of a node in a tree.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Children(tree = tree, node = node)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tree</code></td>
+<td>
+<p>is a single tree with n terminals, an ape phylo object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>node</code></td>
+<td>
+<p>representing the node in APE notation,is an integer.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The children nodes of the internal node; in most cases, two integers.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> library(jrich)
+ data(tree)
+
+Children(tree,7)
+
+</code></pre>
+
+
+</div>

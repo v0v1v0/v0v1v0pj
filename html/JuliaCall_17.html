@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_command</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate string commands in julia and (may) invoke the julia display system.</h2>
+
+<h3>Description</h3>
+
+<p><code>julia_command</code> evaluates string commands in julia
+without returning the result back to R.
+However, it may evoke julia display system,
+see the documentation of the argument 'show_value' for more details.
+If you need to get the evaluation result in R, you can use
+<code>julia_eval</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_command(cmd, show_value = !endsWith(trimws(cmd, "right"), ";"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cmd</code></td>
+<td>
+<p>the command string you want to evaluate in julia.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_value</code></td>
+<td>
+<p>whether to display julia returning value or not,
+the default value is 'FALSE' if the 'cmd' ends with semicolon
+and 'TRUE' otherwise.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (identical(Sys.getenv("AUTO_JULIA_INSTALL"), "true")) { ## julia_setup is quite time consuming
+  ## doing initialization and automatic installation of Julia if necessary
+  julia_setup(installJulia = TRUE)
+  julia_command("a = sqrt(2);")
+}
+
+</code></pre>
+
+
+</div>

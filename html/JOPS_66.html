@@ -1,0 +1,337 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sim_vcpsr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Varying-coefficient single-index signal regression using tensor P-splines.</h2>
+
+<h3>Description</h3>
+
+<p><code>sim_vcpsr</code> is a varying-coefficient single-index
+signal regression approach that allows both the signal coefficients
+and the unknown link function to vary with
+an indexing variable <code>t</code>, e.g. temperature. Two surfaces
+are estimated (coefficent and link) that can be sliced at arbitary <code>t</code>.
+Anisotripic penalization with P-splines is used on both.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sim_vcpsr(
+  y,
+  X,
+  t_var,
+  x_index = c(1:ncol(X)),
+  nsegs = rep(10, 4),
+  bdegs = rep(3, 4),
+  lambdas = rep(1, 4),
+  pords = rep(2, 4),
+  max_iter = 100,
+  mins = c(min(x_index), min(t_var)),
+  maxs = c(max(x_index), max(t_var))
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a response vector of length <code>m</code>, usually continuous.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>the signal regressors with dimension <code>m</code> by <code>p1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t_var</code></td>
+<td>
+<p>the varying coeffient indexing variable of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_index</code></td>
+<td>
+<p>an index of length <code>p</code> for columns of signal matrix;
+default is simple sequence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegs</code></td>
+<td>
+<p>a vector of length 4 containing
+the number of evenly spaced segments between min and max, for each
+the coefficient surface (row and col) and
+link surface (row and col), resp. (default <code>rep(10, 4)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdegs</code></td>
+<td>
+<p>a vector of length 4 containing
+the degree of B-splines, for each
+the coefficient surface (row and col) and link surface (row and col), resp.
+(default cubic <code>rep(3, 4)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdas</code></td>
+<td>
+<p>a vector of length 4 containing
+the positive tuning parameters, for each
+the coefficient surface (row and col) and link surface (row and col), resp.
+(default <code>rep(1, 4)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pords</code></td>
+<td>
+<p>a vector of length 4 containing
+the difference penalty order, for each
+the coefficient surface (row and col) and link surface (row and col), resp.
+(default <code>rep(2, 4)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_iter</code></td>
+<td>
+<p>a scalar for the maximum number of iterations (default 100)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mins</code></td>
+<td>
+<p>A vector length 2, containing min for signal index and <code>t_var</code>, default
+associated with <code>x_index</code> and <code>t_var</code> minimums; default is respective minimums.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxs</code></td>
+<td>
+<p>A vector length 2, containing max for signal index and <code>t_var</code>, default
+associated with <code>x_index</code> and <code>t_var</code> maximums; default is respective maximums.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the response vector of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the P-spline coefficient vector (unfolded) of length <code>(nsegs[1]+bdeg[1])*(negs[2]+bdeg[2])</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+<p>the number of iterations used for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yint</code></td>
+<td>
+<p>the estimated y-intercept for the single-index model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Bx</code></td>
+<td>
+<p>the B-spline matrix built along the signal index, using <code>nsegs[1]</code>, used for the coefficient surface.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>By</code></td>
+<td>
+<p>the B-spline matrix built along the <code>t_var</code> index,
+using <code>nsegs[2]</code>, used for the coefficient surface.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>the effective regressors from the <code>psVCSignal</code> portion of the single-index
+fit with dimension <code>m</code> by <code>length(alpha)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t_var</code></td>
+<td>
+<p>the VC indexing variable of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegs</code></td>
+<td>
+<p>a vector of length 4 containing
+the number of evenly spaced segments between min and max, for each
+the coefficient surface (row and col) and
+link surface (row and col).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdegs</code></td>
+<td>
+<p>a vector of length 4 containing
+the degree of B-splines, for each
+the coefficient surface (row and col) and link surface (row and col).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdas</code></td>
+<td>
+<p>a vector of length 4 containing
+the positive tuning parameters, for each
+the coefficient surface (row and col) and link surface (row and col).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pords</code></td>
+<td>
+<p>a vector of length 4 containing
+the difference penalty order, for each
+the coefficient surface (row and col) and link surface (row and col).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mins</code></td>
+<td>
+<p>a vector length 2, containing min for signal index and <code>t_var</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxs</code></td>
+<td>
+<p>a vector length 2, containing max for signal index and <code>t_var</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>the estimated linear predictor for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pars</code></td>
+<td>
+<p>a matrix of 2 rows associated with the signal coefficient surface
+design parameters, each row: <code>c(min, max, nseg, bdeg, lambda, pord)</code> for
+linear predictor <code>x_index</code> and <code>t_var</code>, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pPars</code></td>
+<td>
+<p>a matrix of 2 rows associated with the link function
+design parameters, each row: <code>c(min, max, nseg, bdeg, lambda, pord)</code> for linear
+predictor <code>eta</code> and <code>t_var</code>, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>the leave-one-out cross-validation statistic
+or the standard error of prediction for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delta_alpha</code></td>
+<td>
+<p>change measure in signal-coefficent parameters at
+convergence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit2D</code></td>
+<td>
+<p><code>ps2DNormal</code> object, fitting f(<code>eta</code>, <code>t_var</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B. D. (2015). Varying-coefficient single-index signal
+regression. <em>Chemometrics and Intelligent Laboratory Systems</em>, 143, 111–121.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Load libraries
+library(fields) # Needed for plotting
+
+# Get the data
+Dat &lt;- Mixture
+
+# Dimensions: observations, temperature index, signal
+m &lt;- 34
+p1 &lt;- 401
+p2 &lt;- 12
+
+# Stacking mixture data, each mixture has 12 signals stacked
+# The first differenced spectra are also computed.
+mixture_data &lt;- matrix(0, nrow = p2 * m, ncol = p1)
+for (ii in 1:m)
+{
+  mixture_data[((ii - 1) * p2 + 1):(ii * p2), 1:p1] &lt;-
+    t(as.matrix(Dat$xspectra[ii, , ]))
+  d_mixture_data &lt;- t(diff(t(mixture_data)))
+}
+
+# Response (typo fixed) and index for signal
+y_mixture &lt;- Dat$fractions
+y_mixture[17, 3] &lt;- 0.1501
+index_mixture &lt;- Dat$wl
+
+# Select response and replicated for the 12 temps
+# Column 1: water; 2: ethanediol; 3: amino-1-propanol
+y &lt;- as.vector(y_mixture[, 2])
+y &lt;- rep(y, each = p2)
+
+bdegs = c(3, 3, 3, 3)
+pords &lt;- c(2, 2, 2, 2)
+nsegs &lt;- c(12, 5, 5, 5) # Set to c(27, 7, 7 ,7) for given lambdas
+mins &lt;- c(700, 30)
+maxs &lt;- c(1100, 70)
+lambdas &lt;- c(1e-11, 100, 0.5, 1) # based on svcm search
+x_index &lt;- seq(from = 701, to = 1100, by = 1) # for dX
+t_var_sub &lt;- c(30, 35, 37.5, 40, 45, 47.5, 50, 55, 60, 62.5, 65, 70)
+t_var &lt;- rep(t_var_sub, m)
+max_iter &lt;- 2 # Set higher in practice, e.g. 100
+int &lt;- TRUE
+
+# Defining x as first differenced spectra, number of channels.
+x &lt;- d_mixture_data
+
+
+# Single-index VC model using optimal tuning
+fit &lt;- sim_vcpsr(y, x, t_var, x_index, nsegs, bdegs, lambdas, pords,
+             max_iter = max_iter, mins = mins, maxs = maxs)
+
+plot(fit, xlab = "Wavelength (nm)", ylab = "Temp C")
+</code></pre>
+
+
+</div>

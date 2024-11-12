@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jquery_core</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Obtain jQuery Core as an HTML dependency</h2>
+
+<h3>Description</h3>
+
+<p>Obtain jQuery Core as an HTML dependency
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jquery_core(major_version = 3, minified = getOption("shiny.minified",
+  TRUE))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>major_version</code></td>
+<td>
+<p>The major version of jQuery Core. Currrently 1, 2, and 3 are supported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minified</code></td>
+<td>
+<p>whether or not to provide a minified JavaScript file.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>htmltools::htmlDependency()</code> object.
+</p>
+
+
+</div>

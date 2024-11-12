@@ -1,0 +1,159 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaccard.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test for Jaccard/Tanimoto similarity coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Compute statistical significance of Jaccard/Tanimoto similarity coefficients between binary vectors, using four different methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaccard.test(x, y, method = "mca", px = NULL, py = NULL, verbose = TRUE,
+  ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>a method to compute a p-value (<code>"mca"</code>, <code>"bootstrap"</code>, <code>"asymptotic"</code>, or <code>"exact"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>px</code></td>
+<td>
+<p>probability of successes in <code>x</code> (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>py</code></td>
+<td>
+<p>probability of successes in <code>y</code> (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>whether to print progress messages</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for specific computational methods</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There exist four methods to compute p-values of Jaccard/Tanimoto similarity coefficients:
+<code>mca</code>, <code>bootstrap</code>, <code>asymptotic</code>, and <code>exact</code>. This is simply a wrapper function for
+corresponding four functions in this package: jaccard.test.mca, jaccard.test.bootstrap,  jaccard.test.asymptotic, and jaccard.test.exact.
+</p>
+<p>We recommand using either <code>mca</code> or <code>bootstrap</code> methods,
+since the <code>exact</code> solution is slow for a moderately large vector and <code>asymptotic</code> approximation may be inaccurate depending on the input vector size.
+The bootstrap method uses resampling with replacement binary vectors to compute a p-value (see optional arguments).
+The <code>mca</code> method uses the measure concentration algorithm that estimates the multinomial distribution with a known error bound (specified by an optional argument <code>accuracy</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>jaccard.test</code> returns a list mainly consisting of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>statistics</code></td>
+<td>
+<p>centered Jaccard/Tanimoto similarity coefficient</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalue</code></td>
+<td>
+<p>p-value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expectation</code></td>
+<td>
+<p>expectation</p>
+</td>
+</tr>
+</table>
+<h3>Optional arguments for <code>method="bootstrap"</code>
+</h3>
+
+
+<dl>
+<dt>fix</dt>
+<dd>
+<p>whether to fix (i.e., not resample) <code>x</code> and/or <code>y</code></p>
+</dd>
+<dt>B</dt>
+<dd>
+<p>a total bootstrap iteration</p>
+</dd>
+<dt>seed</dt>
+<dd>
+<p>a seed for a random number generator</p>
+</dd>
+</dl>
+<h3>Optional arguments for <code>method="mca"</code>
+</h3>
+
+
+<dl>
+<dt>accuracy</dt>
+<dd>
+<p>an error bound on approximating a multinomial distribution</p>
+</dd>
+<dt>error.type</dt>
+<dd>
+<p>an error type on approximating a multinomial distribution (<code>"average"</code>, <code>"upper"</code>, <code>"lower"</code>)</p>
+</dd>
+<dt>seed</dt>
+<dd>
+<p>a seed for the random number generator.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p>jaccard.test.bootstrap jaccard.test.mca jaccard.test.exact jaccard.test.asymptotic
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+x = rbinom(100,1,.5)
+y = rbinom(100,1,.5)
+jaccard.test(x,y,method="bootstrap")
+jaccard.test(x,y,method="mca")
+jaccard.test(x,y,method="exact")
+jaccard.test(x,y,method="asymptotic")
+</code></pre>
+
+
+</div>

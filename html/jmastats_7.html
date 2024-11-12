@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parse_unit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parse data variable units</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="../help/figures/lifecycle-stable.svg" alt="[Stable]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">parse_unit(data, rename = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rename</code></td>
+<td>
+<p><em>logical</em></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>tbl</code> object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># For data retrieved with jma_collect(), here is a minimal example.
+d &lt;-
+tibble::tibble(date = as.Date(c(17742, 17742, 17742, 17742, 17742, 17742), origin = "1970-01-01"),
+               time = c(1, 2, 3, 4, 5, 6),
+               `precipitation(mm)` = c(0, 0, 0, 0, 0, 0),
+               `temperature(℃)` = c(22.4, 22.1, 21, 20.2, 20.4, 23.5))
+d |&gt; parse_unit(rename = TRUE)
+</code></pre>
+
+
+</div>

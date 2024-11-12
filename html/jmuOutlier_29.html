@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>truncHist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Truncated Histograms</h2>
+
+<h3>Description</h3>
+
+<p>Produces a truncated histogram.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">truncHist(x, xmin = NULL, xmax = NULL, trim = 0.025, main = NULL, xlab = "x", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of numerical observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmin</code></td>
+<td>
+<p>Minimum numerical value to be shown in graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmax</code></td>
+<td>
+<p>Maximum numerical value to be shown in graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trim</code></td>
+<td>
+<p>The fraction (0 to 0.5) of observations to be trimmed from
+each end of <code>x</code> before the histogram is constructed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>An overall title for the histogram.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>A title for the x-axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments to <code>hist</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>truncHist</code> may be useful if data contain some extreme outliers.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>hist</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 = sort(rnorm(1000)) ;   c( head(x1), tail(x1)) 
+
+x2 = sort(rnorm(1000)) ;   c( head(x2), tail(x2)) 
+
+y1 = sort(rcauchy(1000)) ; c( head(y1), tail(y1)) 
+
+y2 = sort(rcauchy(1000)) ; c( head(y2), tail(y2)) 
+
+par( mfrow=c(2,2) )
+truncHist(x1, main="Normal data; first simulation",  xlab="x1")
+truncHist(x2, main="Normal data; second simulation", xlab="x2")
+truncHist(y1, main="Cauchy data; first simulation",  xlab="y1")
+truncHist(y2, main="Cauchy data; second simulation", xlab="y2")
+par( mfrow=c(1,1) )
+</code></pre>
+
+
+</div>

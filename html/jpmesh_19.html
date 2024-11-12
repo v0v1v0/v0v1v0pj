@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>meshcode_set</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export meshcode vectors ranges 80km to 1km.</h2>
+
+<h3>Description</h3>
+
+<p>Unique 176 meshcodes.
+The output code may contain values not found in the actual mesh code.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">meshcode_set(mesh_size = c(80, 10, 1), .raw = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mesh_size</code></td>
+<td>
+<p>Export mesh size from 80km to 1km.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.raw</code></td>
+<td>
+<p>return as character.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character or meshcode
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">meshcode_set(mesh_size = 80)
+meshcode_set(mesh_size = 80, .raw = FALSE)
+</code></pre>
+
+
+</div>

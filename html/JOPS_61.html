@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rowtens</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the row tensor product of two matrices</h2>
+
+<h3>Description</h3>
+
+<p>Compute the row tensor product of two matrices with identical numbers of rows.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rowtens(X, Y = X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a numeric matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a numeric matrix (if missing, <code>Y = x</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The input matrices must have the same number of rows, say <code>m</code>. If their numbers of columns are <code>n1</code> and <code>n2</code>,
+the result is a matrix with <code>m</code> rows and <code>n1 * n2</code> columns. Each row of the result is the Kronecker
+product of the corresponding rows of <code>X</code> and <code>Y</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The row-wise tensor product of the two matrices.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P. H. C. and Currie, I. D. and Durban, M. (2006)
+Fast and compact smoothing on large multidimensional grids
+<em>CSDA</em> 50, 61–76.
+</p>
+
+
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>binit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Translated number vector to bin index.</h2>
+
+<h3>Description</h3>
+
+<p>Translates number vector to bin index, given lower and
+upper limits of the domain and number of bins. A support function
+for (smoothing) histograms.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">binit(x, xmin = min(x), xmax = max(x), nbin = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numerical vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmin</code></td>
+<td>
+<p>the lower limit of the domain.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xmax</code></td>
+<td>
+<p>the upper limit of the domain.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbin</code></td>
+<td>
+<p>the number of bins (default=100).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>xbin</code></td>
+<td>
+<p>a vector of <code>length(x)</code> with elements giving the bin index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>a vector of <code>length(nbin)</code> with the midpoints of the bins.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbin</code></td>
+<td>
+<p>the number of bins.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+</div>

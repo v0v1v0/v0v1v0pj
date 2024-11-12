@@ -1,0 +1,179 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.dynSurv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot a <code>dynSurv</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Plots the conditional time-to-event distribution for a
+<em>new</em> subject calculated using the <code>dynSurv</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'dynSurv'
+plot(
+  x,
+  main = NULL,
+  xlab = NULL,
+  ylab1 = NULL,
+  ylab2 = NULL,
+  grid = TRUE,
+  estimator,
+  smooth = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>dynSurv</code> calculated by the
+<code>dynSurv</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>an overall title for the plot: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>a title for the x [time] axis: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab1</code></td>
+<td>
+<p>a character vector of the titles for the <em>K</em> longitudinal
+outcomes y-axes: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab2</code></td>
+<td>
+<p>a title for the event-time outcome axis: see
+<code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>adds a rectangular grid to an existing plot: see
+<code>grid</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>a character string that can take values <code>mean</code> or
+<code>median</code> to specify what prediction statistic is plotted from an
+objecting inheritting of class <code>dynSurv</code>. Default is
+<code>estimator='median'</code>. This argument is ignored for non-simulated
+<code>dynSurv</code> objects, i.e. those of <code>type='first-order'</code>, as in that
+case a mode-based prediction is plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+<p>logical: whether to overlay a smooth survival curve (see
+<strong>Details</strong>). Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments; currently limited to <code>lwd</code> and
+<code>cex</code>. See <code>par</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>joineRML</code> package is based on a semi-parametric model,
+such that the baseline hazards function is left unspecified. For
+prediction, it might be preferable to have a smooth survival curve. Rather
+than changing modelling framework <em>a prior</em>, a constrained B-splines
+non-parametric median quantile curve is estimated using
+<code>cobs</code>, with a penalty function of <code class="reqn">\lambda=1</code>, and
+subject to constraints of monotonicity and <code class="reqn">S(t)=1</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A dynamic prediction plot.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Ng P, Maechler M. A fast and efficient implementation of qualitatively
+constrained quantile smoothing splines. <em>Statistical Modelling</em>. 2007;
+<strong>7(4)</strong>: 315-328.
+</p>
+<p>Rizopoulos D. Dynamic predictions and prospective accuracy in joint models
+for longitudinal and time-to-event data. <em>Biometrics</em>. 2011;
+<strong>67</strong>: 819–829.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dynSurv</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+
+hvd2 &lt;- droplevels(hvd[hvd$num == 1, ])
+out1 &lt;- dynSurv(fit2, hvd2)
+plot(out1, main = "Patient 1")
+
+## End(Not run)
+
+## Not run: 
+# Monte Carlo simulation with 95% confidence intervals on plot
+
+out2 &lt;- dynSurv(fit2, hvd2, type = "simulated", M = 200)
+plot(out2, main = "Patient 1")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

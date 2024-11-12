@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GenBS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized Black Scholes model for pricing vanilla European options</h2>
+
+<h3>Description</h3>
+
+<p>Compute values of call and put options as well as the Greeks -
+the sensitivities of the option price to various input arguments using the
+Generalized Black Scholes model. "Generalized" means that the asset can
+have a continuous dividend yield.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GenBS(s, X, r, Sigma, t, div_yield = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>the spot price of the asset (the stock price for options on stocks)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>the exercise or strike price of the option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>the continuously compounded rate of interest in decimal (0.10 or 10e-2 for 10%)
+(use <code>equiv.rate</code> to convert to a continuously compounded rate)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sigma</code></td>
+<td>
+<p>the volatility of the asset price in decimal  (0.20 or 20e-2 for 20%)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>the maturity of the option in years</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>div_yield</code></td>
+<td>
+<p>the continuously compounded dividend yield (0.05 or 5e-2 for 5%)
+(use <code>equiv.rate</code> to convert to a continuously compounded rate)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Generalized Black Scholes formula for call options is <br><code class="reqn">e^{-r t} (s \;  e^{g t} \; Nd1 - X \; Nd2)</code> <br>
+where <br><code class="reqn">g = r - div\_yield</code> <br><code class="reqn">Nd1 = N(d1)</code> and <code class="reqn">Nd2 = N(d2)</code> <br><code class="reqn">d1 = \frac{log(s / X) + (g + Sigma^2/ 2)  t}{Sigma \sqrt{t}}</code> <br><code class="reqn">d2 = d1 - Sigma \sqrt{t}</code> <br>
+N denotes the normal CDF (<code>pnorm</code>)<br>
+For put options, the formula is <br><code class="reqn">e^{-r t}  (-s \; e^{g  t} \; Nminusd1 + X \;  Nminusd2)</code><br>
+where <br><code class="reqn">Nminusd1 = N(-d1)</code> and <code class="reqn">Nminusd2 = N(-d2)</code> <br></p>
+
+
+<h3>Value</h3>
+
+<p>A list of the following elements
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the value of a call option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>put</code></td>
+<td>
+<p>the value of a put option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks</code></td>
+<td>
+<p>a list of the following elements</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$callDelta</code></td>
+<td>
+<p>the delta of a call option - the sensitivity to the spot price of the asset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$putDelta</code></td>
+<td>
+<p>the delta of a put option - the sensitivity to the spot price of the asset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$callTheta</code></td>
+<td>
+<p>the theta of a call option - the time decay of the option value
+with passage of time. Note that time is measured in years. To find a daily theta divided by 365.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$putTheta</code></td>
+<td>
+<p>the theta of a put option</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$Gamma</code></td>
+<td>
+<p>the gamma of a call or put option - the second derivative with respect to the spot price
+or the sensitivity of delta to the spot price</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$Vega</code></td>
+<td>
+<p>the vega of a call or put option - the sensitivity to the volatility</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$callRho</code></td>
+<td>
+<p>the rho of a call option - the sensitivity to the interest rate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Greeks$putRho</code></td>
+<td>
+<p>the rho of a put option - the sensitivity to the interest rate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra</code></td>
+<td>
+<p>a list of the following elements</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$d1</code></td>
+<td>
+<p>the d1 of the Generalized Black Scholes formula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$d2</code></td>
+<td>
+<p>the d2 of the Generalized Black Scholes formula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$Nd1</code></td>
+<td>
+<p>is <code>pnorm</code>(d1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$Nd2</code></td>
+<td>
+<p>is <code>pnorm</code>(d2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$Nminusd1</code></td>
+<td>
+<p>is <code>pnorm</code>(-d1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$Nminusd2</code></td>
+<td>
+<p>is <code>pnorm</code>(-d2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$callProb</code></td>
+<td>
+<p>the (risk neutral) probability that the call will be exercised = <code>Nd2</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extra$putProb</code></td>
+<td>
+<p>the (risk neutral) probability that the put will be exercised = <code>Nminusd2</code></p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Rank.Indices</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Rank indices.</h2>
+
+<h3>Description</h3>
+
+<p>Renk indices according to the areas' absolute position. If the index value is empty, the function assigns a dummy position "X0X"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Rank.Indices(index.Value = index.Value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>index.Value</code></td>
+<td>
+<p>a table with indices values.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a table with the decreasing order of the areas
+It presents the ties alphabetically
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> ## get the library
+ library(jrich)
+ 
+ ## load the data
+ data(tree) 
+ data(distribution) 
+ 
+Rank.Indices(Calculate.Index(tree=tree, distrib = distribution, verbose=FALSE))
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>constructWeights</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Construct weights for _jewel_ minimization problem from prior information on vertices degrees.</h2>
+
+<h3>Description</h3>
+
+<p>Function takes a numerical vector of vertices degrees and constructs weights with the rule <code>W_ij = 1 / sqrt(d_i * d_j)</code> and then the whole matrix is normilized by the maximum.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">constructWeights(d, K = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>either one numerical vector or a list of <code>K</code> numerical vectors 
+of length <code>p</code> with user-provided degrees of vertices for each class. 
+If there is only one vector, we assume degrees are the same for all <code>K</code> classes. 
+In that case parameter <code>K</code> (number of classes) must be provided.
+Note that for successful _jewel_ estimation true degrees are not necessary: 
+for example, user can provide a vector where known hubs have degree 10 
+and the rest of the vertices have degree 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>number of classes (i.e. datasets, i.e. desired graphs). By default it is length(d).
+In length(d) = 1, <code>K</code> must be provided by the user.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>W - a list of <code>K</code> numeric matrices of the size <code>p</code> by <code>p</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">{
+K &lt;- 3
+p &lt;- 50
+n &lt;- 20
+data &lt;- generateData_rewire(K = K, p = p, n = n, ncores = 1, verbose = FALSE)
+G_list_true &lt;- data$Graphs
+true_degrees &lt;- rowSums(G_list_true[[1]])
+cut &lt;- sort(true_degrees, decreasing = TRUE)[ceiling(p * 0.03)]
+apriori_hubs &lt;- ifelse(true_degrees &gt;= cut, 10, 1)
+W &lt;- constructWeights(apriori_hubs, K = K)
+}
+</code></pre>
+
+
+</div>

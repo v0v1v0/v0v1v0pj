@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>theoryRowpenUpperBound</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Penalty Parameter for Covariance Estimation Based on Theory</h2>
+
+<h3>Description</h3>
+
+<p>This function returns a theoretically-guided choice of
+the glasso penalty parameter, based on both the row and
+column covariance matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">theoryRowpenUpperBound(A, B, n1, n2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>column covariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>row covariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1</code></td>
+<td>
+<p>sample size of group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n2</code></td>
+<td>
+<p>sample size of group two.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a theoretically guided choice of the
+glasso penalty parameter.
+</p>
+
+
+<h3>References</h3>
+
+<p>Joint mean and covariance estimation with unreplicated matrix-variate data
+Michael Hornstein, Roger Fan, Kerby Shedden, Shuheng Zhou
+(2018).  Joint mean and covariance estimation with
+unreplicated matrix-variate data.  Journal of the American
+Statistical Association
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Define sample sizes
+n1 &lt;- 10
+n2 &lt;- 10
+n &lt;- n1 + n2
+m &lt;- 2e3
+# Column covariance matrix (autoregressive of order 1)
+A &lt;- outer(1:n, 1:n, function(x, y) 0.2^abs(x - y))
+# Row covariance matrix (autoregressive of order 1)
+B &lt;- outer(1:n, 1:n, function(x, y) 0.8^abs(x - y))
+# Calculate theoretically guided Gemini penalty.
+rowpen &lt;- theoryRowpenUpperBound(A, B, n1, n2)
+print(rowpen)
+</code></pre>
+
+
+</div>

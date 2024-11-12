@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict_merMod</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Alternative interface for <code>merMod</code> predictions</h2>
+
+<h3>Description</h3>
+
+<p>This function generates predictions for <code>merMod</code> models, but
+with the ability to get standard errors as well.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predict_merMod(
+  object,
+  newdata = NULL,
+  se.fit = FALSE,
+  use.re.var = FALSE,
+  allow.new.levels = FALSE,
+  type = c("link", "response", "terms"),
+  na.action = na.pass,
+  re.form = NULL,
+  boot = FALSE,
+  sims = 100,
+  prog.arg = "none",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>data frame for which to evaluate
+predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se.fit</code></td>
+<td>
+<p>Include standard errors with the predictions? Note that
+these standard errors by default include only fixed effects variance.
+See details for more info. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use.re.var</code></td>
+<td>
+<p>If <code>se.fit</code> is TRUE, include random effects variance in
+standard errors? Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allow.new.levels</code></td>
+<td>
+<p>logical if new levels (or NA values) in
+<code>newdata</code> are allowed. If FALSE (default), such new values in
+<code>newdata</code> will trigger an error; if TRUE, then the prediction
+will use the unconditional (population-level) values for data with
+previously unobserved levels (or NAs).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>character string - either <code>"link"</code>, the default, or
+<code>"response"</code> indicating the type of prediction object returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p><code>function</code> determining what should be done
+with missing values for fixed effects in <code>newdata</code>.
+The default is to predict <code>NA</code>: see <code>na.pass</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>re.form</code></td>
+<td>
+<p>(formula, <code>NULL</code>, or <code>NA</code>) specify which random effects to condition on when predicting.  If <code>NULL</code>,
+include all random effects; if <code>NA</code> or <code>~0</code>,
+include no random effects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boot</code></td>
+<td>
+<p>Use bootstrapping (via <code>lme4::bootMer()</code>) to estimate
+variance for <code>se.fit</code>? Default is FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sims</code></td>
+<td>
+<p>If <code>boot</code> is TRUE, how many simulations should be run? Default
+is 100.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prog.arg</code></td>
+<td>
+<p>If <code>boot</code> and <code>se.fit</code> are TRUE, a character string -
+type of progress bar to display. Default is "none"; the function will look
+for a relevant *ProgressBar function, so "txt" will work in general;
+"tk" is available if the tcltk package is loaded; or "win" on Windows
+systems. Progress bars are disabled (with a message) for parallel operation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>When <code>boot</code> and <code>se.fit</code> are TRUE, any additional arguments are
+passed to <code>lme4::bootMer()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The developers of <span class="pkg">lme4</span> omit an <code>se.fit</code> argument for a
+reason, which is that it's not perfectly clear how best to estimate
+the variance for these models. This solution is a logical one, but perhaps
+not perfect. Bayesian models are one way to do better.
+</p>
+<p>The method used here is based on the one described here:
+<a href="http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#predictions-andor-confidence-or-prediction-intervals-on-predictions">http://bbolker.github.io/mixedmodels-misc/glmmFAQ.html#predictions-andor-confidence-or-prediction-intervals-on-predictions</a>
+</p>
+
+
+</div>

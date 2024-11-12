@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_kishou_feed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read Kishou Disaster Prevention Information Feed</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_kishou_feed(frequency, type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>frequency</code></td>
+<td>
+<p>Release frequency. Select either high frequency ("high") or
+long term ("low")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Feed type. Specify the item to be retrieved as a string.
+See details for the items.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following items can be specified in the type argument.
+</p>
+
+<ul>
+<li>
+<p> regular: It will be announced on time.
+</p>
+</li>
+<li>
+<p> extra: It will be announced at any time.
+</p>
+</li>
+<li>
+<p> eqvol: Earthquakes and Volcanoes.
+</p>
+</li>
+<li>
+<p> other: Other informations.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>a <code>tbl</code> object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://xml.kishou.go.jp">https://xml.kishou.go.jp</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+read_kishou_feed("high", type = "regular")
+read_kishou_feed("low", "other")
+
+</code></pre>
+
+
+</div>

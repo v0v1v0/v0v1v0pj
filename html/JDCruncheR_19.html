@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-rbind.QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Combiner par ligne des objets QR_matrix</h2>
+
+<h3>Description</h3>
+
+<p>Permet de combiner plusieurs objets <code>QR_matrix</code> en combinant par
+ligne les paramètres <code>modalities</code> et <code>values</code>.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>objets <code>QR_matrix</code> à combiner.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>check_formula</code></td>
+<td>
+<p>booléen indiquant s'il faut vérifier la cohérence dans
+les formules de calcul du score.
+Par défaut, <code>check_formula = TRUE</code> : la fonction renvoie une erreur si
+des scores sont calculés avec des formules différentes. Si
+<code>check_formula = FALSE</code>, alors il n'y a pas de vérification et le
+paramètre <code>score_formula</code> de l'objet en sortie est <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>rbind.QR_matrix()</code> renvoie un objet <code>QR_matrix</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Chemin menant au fichier demetra_m.csv
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extraire le bilan qualité à partir du fichier demetra_m.csv
+QR &lt;- extract_QR(demetra_path)
+
+# Calculer differents scores
+QR1 &lt;- compute_score(QR, score_pond = c(m7 = 2, q = 3, qs_residual_sa_on_sa = 5))
+QR2 &lt;- compute_score(QR, score_pond = c(m7 = 2, qs_residual_sa_on_sa = 5))
+
+# Fusionner 2 bilans qualité
+try(rbind(QR1, QR2)) # Une erreur est renvoyée
+rbind(QR1, QR2, check_formula = FALSE)
+
+</code></pre>
+
+
+</div>

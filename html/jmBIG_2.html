@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmbayesBig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint model for BIG data using JMbayes2</h2>
+
+<h3>Description</h3>
+
+<p>function for joint model in BIG DATA using <code>JMbayes2</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmbayesBig(
+  dtlong,
+  dtsurv,
+  longm,
+  survm,
+  samplesize = 50,
+  rd,
+  timeVar,
+  nchain = 1,
+  id,
+  niter = 2000,
+  nburnin = 1000
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtlong</code></td>
+<td>
+<p>longitudinal dataset, which contains id,visit time,longitudinal measurements along with various covariates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtsurv</code></td>
+<td>
+<p>survival dataset corresponding to the longitudinal dataset, with survival status and survival time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longm</code></td>
+<td>
+<p>fixed effect model for longitudinal response</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survm</code></td>
+<td>
+<p>survival model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplesize</code></td>
+<td>
+<p>sample size to divide the Big data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rd</code></td>
+<td>
+<p>random effect model part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVar</code></td>
+<td>
+<p>time variable in longitudinal model, included in the longitudinal data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nchain</code></td>
+<td>
+<p>number of chain for MCMC</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>name of id column in longitudinal dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>niter</code></td>
+<td>
+<p>number of iteration for MCMC chain</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nburnin</code></td>
+<td>
+<p>number of burnin sample for MCMC chain</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a list containing various output which are useful for prediction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Atanu Bhattacharjee, Bhrigu Kumar Rajbongshi and Gajendra Kumar Vishwakarma
+</p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D., G. Papageorgiou, and P. Miranda Afonso. "JMbayes2: extended joint models for longitudinal and time-to-event data." R package version 0.2-4 (2022).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jmcsBig,jmstanBig,joinRMLBig
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ 
+##
+library(survival)
+library(nlme)
+library(dplyr)
+fit5&lt;-jmbayesBig(dtlong=long2,dtsurv = surv2,longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,timeVar='visit',nchain=1,samplesize=200,id='id')
+ydt&lt;-long2%&gt;%filter(id%in%c(900))
+cdt&lt;-surv2[,'id']%&gt;%filter(id%in%c(900))
+newdata&lt;-full_join(ydt,cdt,by='id')
+P2&lt;-predJMbayes(model&lt;-fit5,ids&lt;-c(900),newdata=newdata,process = 'event')
+plot(P2$p1[[1]])
+##
+
+</code></pre>
+
+
+</div>

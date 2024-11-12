@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fungi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>fungi dataset</h2>
+
+<h3>Description</h3>
+
+<p>Presence or absence of 11 species of fungi on dead-wood objects at 800 sites and 12 covariates collected at these sites.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("fungi")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 800 observations on the following 23 variables :
+</p>
+
+<p><b>11 fungi species</b> which presence on sites is indicated by a 1 and absence by a 0 :    
+</p>
+<dl>
+<dt><code>antser</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>antsin</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>astfer</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>fompin</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>hetpar</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>junlut</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>phefer</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>phenig</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>phevit</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>poscae</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd>
+<dt><code>triabi</code></dt>
+<dd>
+<p>a binary vector</p>
+</dd> 
+</dl>
+<p><b>12 covariates</b> collected on the 800 sites :  
+</p>
+<dl>
+<dt><code>diam</code></dt>
+<dd>
+<p>a numeric vector indicating the diameter of dead-wood object</p>
+</dd>
+<dt><code>dc1</code></dt>
+<dd>
+<p>a binary vector indicating if the decay class is 1 measured in the scale 1, 2, 3, 4, 5  (from freshly  decayed to almost completely decayed)</p>
+</dd>
+<dt><code>dc2</code></dt>
+<dd>
+<p>a binary vector indicating if the decay class is 2</p>
+</dd>
+<dt><code>dc3</code></dt>
+<dd>
+<p>a binary vector indicating if the decay class is 3</p>
+</dd>
+<dt><code>dc4</code></dt>
+<dd>
+<p>a binary vector indicating if the decay class is 4</p>
+</dd>
+<dt><code>dc5</code></dt>
+<dd>
+<p>a binary vector indicating if the decay class is 5</p>
+</dd>
+<dt><code>quality3</code></dt>
+<dd>
+<p>a binary vector indicating if the quality is level 3</p>
+</dd>
+<dt><code>quality4</code></dt>
+<dd>
+<p>a binary vector indicating if the quality is level 4</p>
+</dd>
+<dt><code>ground3</code></dt>
+<dd>
+<p>a binary vector indicating if the ground contact is level 3 as 2 = no ground contact,  3 = less than half of the log in ground contact and 4 = more than half of the log in ground contact</p>
+</dd>
+<dt><code>ground4</code></dt>
+<dd>
+<p>a binary vector a binary vector indicating if the ground contact is level 4</p>
+</dd>
+<dt><code>epi</code></dt>
+<dd>
+<p>a numeric vector indicating the epiphyte cover</p>
+</dd>
+<dt><code>bark</code></dt>
+<dd>
+<p>a numeric vector indicating the bark cover</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Wilkinson, D. P.; Golding, N.; Guillera-Arroita, G.; Tingley, R. and McCarthy, M. A. (2018) A comparison of joint species distribution models for presence-absence data. <em>Methods in Ecology and Evolution</em>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(fungi, package="jSDM")
+head(fungi)
+</code></pre>
+
+
+</div>

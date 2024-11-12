@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>moments</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate the first and second moments</h2>
+
+<h3>Description</h3>
+
+<p>This function relies on the <span class="pkg">lavaan</span> package to use the
+Expectation Maximization (EM) algorithm to estimate the first and
+second moments (means and [co]variances) when there is missing data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">moments(data, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame or an object coercable to a data frame.
+The means and covariances of all variables are estimated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to the <code>estimate.moments.EM</code>
+function in <span class="pkg">lavaan</span>. Note this is not an exported function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the esimates from the EM algorithm.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>A named vector of the means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>The covariance matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Suggested by Yves Rosseel author of the lavaan package on which this depends
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SEMSummary</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># sample data
+Xmiss &lt;- as.matrix(iris[, -5])
+# make 25% missing completely at random
+set.seed(10)
+Xmiss[sample(length(Xmiss), length(Xmiss) * .25)] &lt;- NA
+Xmiss &lt;- as.data.frame(Xmiss)
+
+# true means and covariance
+colMeans(iris[, -5])
+# covariance with n - 1 divisor
+cov(iris[, -5])
+
+# means and covariance matrix using list wise deletion
+colMeans(na.omit(Xmiss))
+cov(na.omit(Xmiss))
+
+# means and covariance matrix using EM
+moments(Xmiss)
+# clean up
+rm(Xmiss)
+</code></pre>
+
+
+</div>

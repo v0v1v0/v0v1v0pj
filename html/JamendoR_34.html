@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getUserProfileTracks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get tracks a user has liked, added to favorite or reviewed</h2>
+
+<h3>Description</h3>
+
+<p>Get tracks a user has liked, added to favorite or reviewed
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getUserProfileTracks(user_id, client_id = Sys.getenv("JAMENDO_CLIENT_ID"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>user_id</code></td>
+<td>
+<p>User ID to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains tracks a user has liked, added to favorite or reviewed.
+See <a href="https://developer.jamendo.com/v3.0/users/tracks">https://developer.jamendo.com/v3.0/users/tracks</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Example
+ tracks &lt;- getUserProfileTracks("972174")
+
+</code></pre>
+
+
+</div>

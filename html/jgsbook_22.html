@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sens.spec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>compute sensitivity and specifity</h2>
+
+<h3>Description</h3>
+
+<p>returns sensitivity specifity, negativ-predictive-value, postitiv-predictive-value
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sens.spec(rp, rn, fp, fn)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rp</code></td>
+<td>
+<p>number of true-positive (richtig-positiv)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rn</code></td>
+<td>
+<p>number of true-negative (richtig-negativ)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fp</code></td>
+<td>
+<p>number of false-positive (falsch-positiv)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>number of false-negative (falsch-negativ)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data.frame with sens, spec, ppw, npw
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">sens.spec(40, 17, 85, 4)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ClusterSickleJr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Cluster the <code class="reqn">\mathbf{H}</code> matrix</h2>
+
+<h3>Description</h3>
+
+<p>Perform k-means, spectral clustering, clustering based off of the
+index of the maximum latent factor, or Louvain community detection on the <code class="reqn">\mathbf{H}</code> matrix.
+Defaults to k-means.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ClusterSickleJr(
+  SickleJr,
+  numclusts,
+  method = "kmeans",
+  neighbors = 20,
+  louvainres = 0.3
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numclusts</code></td>
+<td>
+<p>Number of clusters; can be NULL when method is "max" or "louvain"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>String holding the clustering method: can choose "kmeans" for
+k-means clustering, "spectral" for spectral clustering, "louvain" for Louvain
+community detection or "max" for clustering based on the maximum row value; note that
+"max" is only appropriate for jrSiCKLSNMF with L2 norm row regularization</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>neighbors</code></td>
+<td>
+<p>Number indicating the number of neighbors to use to generate the
+graphs for spectral clustering and Louvain community detection: both of these
+methods require the construction of a graph first (here we use KNN);
+defaults to 20 and unused when the clustering method equal to "kmeans" or "max"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>louvainres</code></td>
+<td>
+<p>Numeric containing the resolution parameter for Louvain
+community detection; unused for all other methods</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>SickleJr- an object of class SickleJr with added clustering information
+</p>
+
+
+<h3>References</h3>
+
+<p>Blondel VD, Guillaume JL, Lambiotte R, Lefebvre E (2008).
+“Fast unfolding of communities in large networks.”
+<em>Journal of Statistical Mechanics: Theory and Experiment</em>, <b>2008</b>(10), P10008.
+ISSN 1742-5468, <a href="https://doi.org/10.1088/1742-5468/2008/10/P10008">doi:10.1088/1742-5468/2008/10/P10008</a>, 0803.0476, <a href="https://iopscience.iop.org/article/10.1088/1742-5468/2008/10/P10008">https://iopscience.iop.org/article/10.1088/1742-5468/2008/10/P10008</a>.
+</p>
+<p>Lun AT, McCarthy DJ, Marioni JC (2016).
+“A step-by-step workflow for low-level analysis of single-cell RNA-seq data with Bioconductor.”
+<em>F1000Research</em>, <b>5</b>.
+ISSN 1759796X, <a href="https://doi.org/10.12688/F1000RESEARCH.9501.2/DOI">doi:10.12688/F1000RESEARCH.9501.2/DOI</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/27909575/">https://pubmed.ncbi.nlm.nih.gov/27909575/</a>.
+</p>
+<p>Ng AY, Jordan MI, Weiss Y (2001).
+“On spectral clustering: analysis and an algorithm.”
+In <em>Proceedings of the 14th International Conference on Neural Information Processing Systems: Natural and Synthetic</em>,  NIPS'01, 849–856.
+</p>
+<p>Schliep K, Hechenbichler K (2016).
+“kknn: Weighted k-Nearest Neighbors.”
+<a href="https://cran.r-project.org/package=kknn">https://cran.r-project.org/package=kknn</a>.
+</p>
+<p>Xu W, Liu X, Gong Y (2003).
+“Document clustering based on non-negative matrix factorization.”
+<em>SIGIR '03: Proceedings of the 26th annual international ACM SIGIR conference on research and development in information retrieval</em>, 267–273.
+<a href="https://doi.org/10.1145/860435.860485">doi:10.1145/860435.860485</a>, <a href="https://dl.acm.org/doi/10.1145/860435.860485">https://dl.acm.org/doi/10.1145/860435.860485</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-ClusterSickleJr(SimSickleJrSmall,3)
+SimSickleJrSmall&lt;-ClusterSickleJr(SimSickleJrSmall,method="louvain",neighbors=5)
+SimSickleJrSmall&lt;-ClusterSickleJr(SimSickleJrSmall,method="spectral",neighbors=5,numclusts=3)
+#DO NOT DO THIS FOR REAL DATA; this is just to illustrate max clustering
+SimSickleJrSmall&lt;-SetLambdasandRowReg(SimSickleJrSmall,rowReg="L2Norm")
+SimSickleJrSmall&lt;-ClusterSickleJr(SimSickleJrSmall,method="max")
+</code></pre>
+
+
+</div>

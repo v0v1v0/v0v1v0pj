@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>from_ndjson</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>from ndjson</h2>
+
+<h3>Description</h3>
+
+<p>Converts ndjson into R objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">from_ndjson(ndjson, simplify = TRUE, fill_na = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ndjson</code></td>
+<td>
+<p>new-line delimited JSON to convert to R object. Can be a string, url or link to a file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>logical, if <code>TRUE</code>, coerces JSON to the simplest R object possible. See Details</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fill_na</code></td>
+<td>
+<p>logical, if <code>TRUE</code> and <code>simplify</code> is <code>TRUE</code>, 
+data.frames will be na-filled if there are missing JSON keys.
+Ignored if <code>simplify</code> is <code>FALSE</code>. See details and examples.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+js &lt;- to_ndjson( data.frame( x = 1:5, y = 6:10 ) )
+from_ndjson( js )
+
+
+</code></pre>
+
+
+</div>

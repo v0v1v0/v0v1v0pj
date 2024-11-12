@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>xtable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>xtable Method from Joint Models.</h2>
+
+<h3>Description</h3>
+
+<p>produces a LaTeX table with the results of a joint model using package xtable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointModel'
+xtable(x, caption = NULL, label = NULL, align = NULL,
+    digits = NULL, display = NULL, which = c("all", "Longitudinal", "Event"),
+    varNames.Long = NULL, varNames.Event = NULL, p.values = TRUE, 
+    digits.pval = 4, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption</code></td>
+<td>
+<p>the <code>caption</code> argument of <code>xtable()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>the <code>label</code> argument of <code>xtable()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+<p>the <code>align</code> argument of <code>xtable()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>the <code>digits</code> argument of <code>xtable()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display</code></td>
+<td>
+<p>the <code>display</code> argument of <code>xtable()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>a character string indicating which results to include in the
+LaTeX table. Options are all results, the results of longitudinal
+submodel or the results of the survival submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNames.Long</code></td>
+<td>
+<p>a character vector of the variable names for the
+longitudinal submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varNames.Event</code></td>
+<td>
+<p>a character vector of the variable names for the
+survival submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.values</code></td>
+<td>
+<p>logical; should p-values be included in the table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits.pval</code></td>
+<td>
+<p>a numeric scalare denoting the number of significance
+digits in the <code class="reqn">p</code>-value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A LaTeX code chunk with the results of the joint modeling analysis.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+require(xtable)
+prothro$t0 &lt;- as.numeric(prothro$time == 0)
+lmeFit &lt;- lme(pro ~ treat * (time + t0), random = ~ time | id, data = prothro)
+survFit &lt;- coxph(Surv(Time, death) ~ treat, data = prothros, x = TRUE)
+jointFit &lt;- jointModel(lmeFit, survFit, timeVar = "time", 
+    method = "weibull-PH-aGH")
+
+xtable(jointFit, math.style.negative = TRUE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

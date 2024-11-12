@@ -1,0 +1,161 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SOBI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+SOBI Method for Blind Source Separation
+</h2>
+
+<h3>Description</h3>
+
+<p>The SOBI method for the second order blind source separation problem. The function estimates
+the unmixing matrix in a second order stationary source separation model by jointly diagonalizing
+the covariance matrix and several autocovariance matrices at different lags.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SOBI(X, ...)
+
+## Default S3 method:
+SOBI(X, k=12, method="frjd", eps = 1e-06, maxiter = 100, ...)
+## S3 method for class 'ts'
+SOBI(X, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a numeric matrix or a multivariate time series object of class <code>ts</code>. Missing values are not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>if a single integer, then the lags 1:k are used, if an integer vector, then these are used as the lags.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method to use for the joint diagonalization, options are <code>djd</code>, <code>rjd</code> and <code>frjd</code></p>
+</td>
+</tr>
+</table>
+<p>. 
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>convergence tolerance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>maximum number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The order of the estimated components is fixed so that the sums of squared autocovariances are in the decreasing order.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>lags used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>method used for the joint diagonalization.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>estimated sources as time series objected standardized to have mean 0 and unit variances.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Belouchrani, A., Abed-Meriam, K., Cardoso, J.F. and Moulines, R. (1997), A blind source separation technique using second-order statistics, 
+<em>IEEE Transactions on Signal Processing</em>, 434–444.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2014),  Deflation-based Separation of Uncorrelated Stationary Time Series, 
+<em>Journal of Multivariate Analysis</em>, 123, 214–227.</cite> 
+</p>
+<p><cite>Miettinen, J., Illner, K., Nordhausen, K., Oja, H., Taskinen, S. and Theis, F.J. (2016),  Separation of Uncorrelated Stationary Time Series Using Autocovariance Matrices, 
+<em>Journal of Time Series Analysis</em>, 37, 337–354.</cite> 
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ts</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># creating some toy data
+A&lt;- matrix(rnorm(9),3,3)
+s1 &lt;- arima.sim(list(ar=c(0.3,0.6)),1000)
+s2 &lt;- arima.sim(list(ma=c(-0.3,0.3)),1000)
+s3 &lt;- arima.sim(list(ar=c(-0.8,0.1)),1000)
+
+S &lt;- cbind(s1,s2,s3)
+X &lt;- S %*% t(A)
+
+res1&lt;-SOBI(X)
+res1
+coef(res1)
+plot(res1) # compare to plot.ts(S)
+MD(coef(res1),A)
+
+# input of a time series
+X2&lt;- ts(X, start=c(1961, 1), frequency=12)
+plot(X2)
+res2&lt;-SOBI(X2, k=c(5,10,1,4,2,9,10))
+plot(res2)
+</code></pre>
+
+
+</div>

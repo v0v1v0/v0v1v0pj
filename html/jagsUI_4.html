@@ -1,0 +1,154 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jags.basic</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simplified function to call JAGS from R</h2>
+
+<h3>Description</h3>
+
+<p>The <code>jags.basic</code> function is a simplified version of the <code>jags</code> function which returns only the <code>mcmc.list</code>-class output from <code>rjags</code> rather than a more complex summary (it will also optionally return the model, in which case the output object will be class <code>jagsUIbasic</code>). This minimal function may be useful when the input dataset or output parameter set are very large and memory intensive.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jags.basic(data, inits, parameters.to.save, model.file,
+  n.chains, n.adapt=NULL, n.iter, n.burnin=0, n.thin=1,
+  modules=c('glm'), factories=NULL, parallel=FALSE, n.cores=NULL, DIC=TRUE,
+  seed=NULL, save.model=FALSE, verbose=TRUE)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A named list of the data objects required by the model, or a character vector containing the names of the data objects required by the model.
+Use of a character vector will be deprecated in the next version - switch to using named lists.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inits</code></td>
+<td>
+<p>A list with <code>n.chains</code> elements; each element of the
+list is itself a list of starting values for the <code>BUGS</code> model,
+<em>or</em> a function creating (possibly random) initial values. If inits is 
+<code>NULL</code>, <code>JAGS</code> will generate initial values for parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters.to.save</code></td>
+<td>
+<p>Character vector of the names of the
+parameters in the model which should be monitored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model.file</code></td>
+<td>
+<p>Path to file containing the model written in <code>BUGS</code> code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.chains</code></td>
+<td>
+<p>Number of Markov chains to run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.adapt</code></td>
+<td>
+<p>Number of iterations to run in the <code>JAGS</code> adaptive phase. The default is <code>NULL</code>, which will result in the function running groups of 100 adaptation iterations (to a max of 10,000) until <code>JAGS</code> reports adaptation is sufficient. If you set <code>n.adapt</code> manually, 1000 is the recommended minimum value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.iter</code></td>
+<td>
+<p>Total number of iterations per chain (including burn-in).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.burnin</code></td>
+<td>
+<p>Number of iterations at the beginning of the chain to discard (i.e., the burn-in). Does not include the adaptive phase iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.thin</code></td>
+<td>
+<p>Thinning rate. Must be a positive integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modules</code></td>
+<td>
+<p>List of JAGS modules to load before analysis. By default only module 'glm' is loaded (in addition to 'basemod' and 'bugs'). To force no additional modules to load, set <code>modules=NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factories</code></td>
+<td>
+<p>Optional character vector of factories to enable or disable, in the format &lt;factory&gt; &lt;type&gt; &lt;setting&gt;. For example, to turn <code>TemperedMix</code> on you would provide <code>'mix::TemperedMix sampler TRUE'</code> (note spaces between parts). Make sure you have the corresponding modules loaded as well.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>If TRUE, run MCMC chains in parallel on multiple CPU cores</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.cores</code></td>
+<td>
+<p>If parallel=TRUE, specify the number of CPU cores used. Defaults to total available cores or the number of chains, whichever is smaller.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DIC</code></td>
+<td>
+<p>Option to report deviance values. Defaults to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Option to set a custom seed to initialize JAGS chains, for reproducibility. Should be an integer.
+This argument will be deprecated in the next version, but you can always set the outside the function yourself.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save.model</code></td>
+<td>
+<p>Returns the JAGS model as part of the output object to allow updating the model later. If TRUE, the output object will instead be a list of class <code>jagsUIbasic</code>. Default is false.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If set to FALSE, all text output in the console will be suppressed as the function runs (including most warnings).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See documentation for <code>jags</code> function for analysis details. The update method will only work if <code>save.model=TRUE</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>mcmc.list</code>, if <code>save.model=FALSE</code>; if <code>save.model=TRUE</code>, a 2-element list of class <code>jagsUIbasic</code> containing the mcmc samples and the model.
+</p>
+
+
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+</div>

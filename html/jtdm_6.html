@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joint_trait_prob</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes joint probabilities.</h2>
+
+<h3>Description</h3>
+
+<p>Computes the joint probability of CWM traits in regions in the community-trait space specified by bounds and in sites specified in Xnew.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joint_trait_prob(
+  m,
+  indexTrait,
+  bounds,
+  Xnew = NULL,
+  FullPost = FALSE,
+  samples = NULL,
+  parallel = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>a model fitted with <code>jtdm_fit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indexTrait</code></td>
+<td>
+<p>A vector of the names (as specified in the column names of Y) of the two (or more!) traits we want to compute the joint probabilities of.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bounds</code></td>
+<td>
+<p>The parameter to specify a region in the community-trait space where the function computes the joint probabilities of traits. It is a list of the length of "indexTrait", each element of the list is a vector of length two. The vector represents the inferior and superior bounds of the region for the specified trait. For example, if we consider two traits, bounds=list(c(10,Inf),c(10,Inf)) corresponds to the region in the community-trait space where both traits both take values greater than 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xnew</code></td>
+<td>
+<p>Optionally, a data frame in which to look for variables with which to predict. If omitted, the fitted linear predictors are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FullPost</code></td>
+<td>
+<p>If FullPost = TRUE, the function returns samples from the predictive distribution of joint  probabilities, thus allowing the computation of credible intervals. If FullPost= FALSE, joint probabilities are computed only using the posterior mean of the parameters. FullPost cannot be equal to "mean" here.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samples</code></td>
+<td>
+<p>Optional, default to NULL, only works when FullPost=FALSE. Defines the number of posterior samples to compute the posterior distribution of joint probabilities. Needs to be between 1 the total number of samples drawn from the posterior distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>Optional, only works when <code>FullPost = TRUE</code>. When <code>parallel = TRUE</code>, the function uses mclapply to parallelise the calculation of the posterior distribution joint probabilities.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is time consuming when <code>FullPost = TRUE</code>. Consider setting <code>parallel = TRUE</code> and/or to set <code>samples</code> to a value smaller than the total number of posterior samples .
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>PROBsamples</code></td>
+<td>
+<p>Samples from the posterior distribution of the joint probability.NULL if FullPost=FALSE. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PROBmean</code></td>
+<td>
+<p>Posterior mean of the joint probability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>PROBq975,PROBq025</code></td>
+<td>
+<p>97.5% and 0.25% posterior quantiles of the joint probability. NULL if FullPost=FALSE. </p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Y)  
+data(X)  
+#We sample only few samples from the posterior in order to reduce
+# the computational time of the examples.
+#Increase the number of samples to obtain robust results
+m = jtdm_fit(Y = Y, X = X, formula = as.formula("~GDD+FDD+forest"), sample = 10)  
+# Compute probability of SLA and LNC to be joint-high at sites in the studies
+joint = joint_trait_prob(m, indexTrait = c("SLA","LNC"),
+                         bounds = list(c(mean(Y[,"SLA"]),Inf), c(mean(Y[,"SLA"]),Inf)),
+                         FullPost = TRUE)
+</code></pre>
+
+
+</div>

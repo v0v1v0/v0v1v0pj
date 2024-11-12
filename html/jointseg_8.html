@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doPSCN</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run PSCN segmentation (defunct)</h2>
+
+<h3>Description</h3>
+
+<p>The 'PSCN' package is not maintained anymore and it is not available for R
+&gt;= 3.0.0.  The original 'doPSCN' function has been moved to the directory
+'zzz.defunct'.  The skeleton of that function is kept for backward
+compatibility.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doPSCN(Y, alpha = 0.01, platform = c("Illumina", "Affymetrix"),
+  verbose = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>The signal to be segmented, a matrix containing the following
+columns: </p>
+ <dl>
+<dt>c</dt>
+<dd>
+<p>Total copy number (log scale)</p>
+</dd> <dt>b</dt>
+<dd>
+<p>Allele
+B fraction (a.k.a. BAF)</p>
+</dd> </dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>sensitivity level in [0,1] to be passed to
+<code>PSCN::segmentation</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>platform</code></td>
+<td>
+<p>Specifies form which array platform 'Y' was generated:
+Illumina or Affymetrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to <code>PSCN::smoothing</code></p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Chen, H., Xing, H., &amp; Zhang, N. R. (2011). Estimation of parent
+specific DNA copy number in tumors using high-density genotyping arrays.
+PLoS computational biology, 7(1), e1001060.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>PSSeg</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+print("The 'PSCN' package is not available for R &gt;= 3.0.0.")
+print("See http://cran.r-project.org/web/packages/PSCN/index.html")
+
+</code></pre>
+
+
+</div>

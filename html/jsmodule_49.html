@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mksetdiff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>mksetdiff: function to make variable list excluding specific variables.</h2>
+
+<h3>Description</h3>
+
+<p>Function to make variable list excluding specific variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mksetdiff(varlist, vars)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>varlist</code></td>
+<td>
+<p>Original variable list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>variable to exclude.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Internal function
+</p>
+
+
+<h3>Value</h3>
+
+<p>variable list excluding specific variables.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data_varStruct &lt;- list(variable = names(mtcars))
+mksetdiff(data_varStruct, "mpg")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>number_kyureki.month</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jcalendaR-utils</h2>
+
+<h3>Description</h3>
+
+<p>This is a set of utility functions related to the Kyureki calendar. 'number_kyureki.month()' checks how many days there were in a month by specifying the number of years and months in the Kyureki calendar. 'existence_leap.month()' checks if there was a leap month in a year by entering the number of years in the Kyureki calendar.
+'era.name()' will output the era names of the corresponding year in this package.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">number_kyureki.month(
+  kyureki.year,
+  kyureki.month,
+  era = c("south", "north", "east", "heishi", "kyoto", "non")
+)
+
+existence_leap.month(
+  kyureki.year,
+  existence = c("logical", "number"),
+  era = c("south", "north", "east", "heishi", "kyoto", "non")
+)
+
+era.name(era = c("south", "north", "east", "heishi", "kyoto"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>kyureki.year</code></td>
+<td>
+<p>The number of years in the Kyureki calendar to check.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kyureki.month</code></td>
+<td>
+<p>The number of strings of months in the Kyureki calendar to check.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>era</code></td>
+<td>
+<p>Whether the Gengo of the Japanese calendar is the Southern or Northern dynasty system, the system used in the Kanto region, the Heike, and Kyoto respectively, or no era names.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>existence</code></td>
+<td>
+<p>Whether to return the existence of a leap month as a theoretical type or as a leap month number.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>* 'number_kyureki.month()' returns a numeric vector.
+</p>
+<p>* 'existence_leap.month()' returns a numeric vector or logical vector.
+</p>
+<p>* 'era.name()' returns a string vector that the era names of the corresponding year in this package.
+</p>
+
+
+<h3>References</h3>
+
+<p>The data for the Kyureki calendar and era names refer to the following data.
+</p>
+<p>manakai/data-locale <a href="https://github.com/manakai/data-locale">https://github.com/manakai/data-locale</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">existence_leap.month("\u660e\u6cbb2")
+number_kyureki.month("\u660e\u6cbb2", 1)
+
+</code></pre>
+
+
+</div>

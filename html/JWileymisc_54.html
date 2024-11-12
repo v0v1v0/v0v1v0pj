@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hashDataset</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a character vector or file hash of a dataset and each variable</h2>
+
+<h3>Description</h3>
+
+<p>Given a <code>data.frame</code> or <code>data.table</code>, create a character vector
+MD5 hash of the overall dataset and each variable. The goal of this is to create
+a secure vector / text file that can be tracked using version control
+(e.g., GitHub) without requiring commiting sensitive datasets.
+The tracking will make it possible to evaluate whether two datasets are the
+same, such as when sending data or when datasets may change over time
+to know which variable(s) changed, if any.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hashDataset(x, file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>data.frame</code> or <code>data.table</code> to be hashed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>An optional character string. If given, assumed to be the path/name of a
+file to write the character string hash out to, for convenience. When
+non missing, the character vector is returned invisibly and a file written.
+When missing (default), the character vector is returned directly.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A (possibly invisible) character vector. Also (optionally) a text file
+written version of the character string.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+hashDataset(mtcars)
+
+## if a file is specified it will write the results to the text file
+## nicely formatted, along these lines
+
+cat(hashDataset(cars), sep = "\n")
+
+</code></pre>
+
+
+</div>

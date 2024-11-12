@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dataOvarian</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Survival data of 1003 ovarian cancer patients from 4 independent studies.
+</h2>
+
+<h3>Description</h3>
+
+<p>The data consist of 1003 surgically treated ovarian cancer patients from four studies (N1=110, N2=58, N3=278, N4=557).
+Survival outcomes are given to study if the CXCL12 gene expression is a prognostic factor in ovarian cancer.
+The dataset was used in Emura et al. (2017), which is a subset of the curated ovarian data of Ganzfried et al (2013).
+We prepared the dataset by using "patientselection.config" in "Curated ovarian data" around May 2015 in the analysis of Emura et al. (2017).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("dataOvarian")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 1003 observations on the following 6 variables.
+</p>
+
+<dl>
+<dt><code>t.event</code></dt>
+<dd>
+<p>: time to event (days from surgery to tumour recurrence)</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>: event indicator (1=recurrence, 0=no recurrence)</p>
+</dd>
+<dt><code>t.death</code></dt>
+<dd>
+<p>: time to death (days from surgery to death due to any cause)</p>
+</dd>
+<dt><code>death</code></dt>
+<dd>
+<p>: death indicator (1=death, 0=alive)</p>
+</dd>
+<dt><code>group</code></dt>
+<dd>
+<p>: study ID; group=4, 8, 11, or 14; see the details below</p>
+</dd>
+<dt><code>CXCL12</code></dt>
+<dd>
+<p>: CXCL12 gene expression</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>The data include individual-patient information on 1003 patients from 4 studies (group=4, 8, 11, and 14). The numbers 4, 8, 11 and 14 corresponds to the study IDs from the original data of Ganzfried et al. (2013).
+"group=4" corresponds to 110 Japanese patients from the study of Yoshihara et al. (2010) (GEO accession number: GSE17260). Other groupds are the studies of GSE30161 (58 patients), GSE9891 (278 patients), and TCGA (557 patients).
+</p>
+
+
+<h3>Source</h3>
+
+<p>Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for the ovarian cancer transcriptome, Database, Article ID bat013, doi:10.1093/database/bat013.
+</p>
+
+
+<h3>References</h3>
+
+<p>Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
+Stat Methods Med Res 26(6): 2649-66
+</p>
+<p>Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for the ovarian cancer transcriptome, Database, Article ID bat013, doi:10.1093/database/bat013.
+</p>
+<p>Yoshihara K et al. (2010) Gene expression profile for predicting survival in advanced-stage serous ovarian cancer across two independent datasets. PLoS One 12;5(3):e9615
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(dataOvarian)
+study4=dataOvarian[dataOvarian$group==4,] # extract one study
+study4
+</code></pre>
+
+
+</div>

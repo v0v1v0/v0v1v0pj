@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>barUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>barUI: shiny module UI for barplot</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for barplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">barUI(id, label = "barplot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module UI for barplot
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for barplot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(ggplot2)
+library(ggpubr)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      barUI("bar")
+    ),
+    mainPanel(
+      optionUI("bar"),
+      plotOutput("bar_plot"),
+      ggplotdownUI("bar")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_bar &lt;- barServer("bar",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$bar_plot &lt;- renderPlot({
+    print(out_bar())
+  })
+}
+</code></pre>
+
+
+</div>

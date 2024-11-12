@@ -1,0 +1,124 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ggpairsModule2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ggpairsModule2: shiny module server for basic/scatter plot for reactive data.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module server for basic/scatter plot for reactive data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ggpairsModule2(
+  input,
+  output,
+  session,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 20
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>Reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>List of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit for categorical variables, Default: 20</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module server for basic/scatter plot for reactive data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module server for basic/scatter plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+library(ggplot2)
+library(GGally)
+
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      ggpairsModuleUI1("ggpairs")
+    ),
+    mainPanel(
+      plotOutput("ggpairs_plot"),
+      ggpairsModuleUI2("ggpairs")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_ggpairs &lt;- callModule(ggpairsModule2, "ggpairs",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$kaplan_plot &lt;- renderPlot({
+    print(out_ggpairs())
+  })
+}
+</code></pre>
+
+
+</div>

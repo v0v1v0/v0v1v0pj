@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GLSMeans</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generalized Least Squares</h2>
+
+<h3>Description</h3>
+
+<p>This function applies generalized least squares to estimate
+the  unknown parameters of a linear model X = D beta + E,
+where X has dimension n by m, D has dimension n by k, and
+beta has dimension k by m.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GLSMeans(X, D, B.inv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>data matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>design matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.inv</code></td>
+<td>
+<p>inverse covariance matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><b>Example</b>
+</p>
+<pre>X &lt;- matrix(1:12, nrow=4, ncol=3)
+D &lt;- twoGroupDesignMatrix(1:2, 3:4)
+B.inv &lt;- diag(4)
+beta.hat &lt;- GLSMeans(X, D, B.inv)
+</pre>
+
+
+<h3>Value</h3>
+
+<p>Returns the estimated parameters of the linear model,
+a matrix of dimensions k by m, where k is the number of
+columns of D, and m is the number of columns of X.
+</p>
+
+
+</div>

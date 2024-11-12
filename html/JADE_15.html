@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rjd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint Diagonalization of Real Matrices  </h2>
+
+<h3>Description</h3>
+
+<p>This is an <span class="pkg">R</span> version of Cardoso's rjd matlab function for joint diagonalization of k real-valued square matrices. A version written in C is also available and preferrable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rjd(X, eps = 1e-06, maxiter = 100, na.action = na.fail)
+frjd(X, weight = NULL, maxiter = 100, eps = 1e-06, na.action = na.fail)
+frjd.int(X, maxiter = 100, eps = 1e-06)
+rjd.fortran(X, weight = NULL, maxiter = 100, eps = 1e-06, na.action = na.fail)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix of k stacked pxp matrices with dimension c(kp,p) or an array with dimension c(p,p,k). In case of <code>frjd_int</code> it has to be an array.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight</code></td>
+<td>
+<p>A vector of length k to give weight to the different matrices, if NULL, all matrices have equal weight</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p> Convergence tolerance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p> Maximum number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>A function which indicates what should happen when the data
+contain 'NA's.  Default is to fail.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Denote the square matrices as <code class="reqn">A_i</code>, <code class="reqn">i=1,\ldots,k</code>. The algorithm searches an orthogonal matrix <code class="reqn">V</code> so that <code class="reqn">D_i=V'A_iV</code> is diagonal for all <code class="reqn">i</code>. If the <code class="reqn">A_i</code> commute then there is an exact solution. Otherwise, the function will perform an approximate joint diagonalization by trying to make the <code class="reqn">D_i</code> as diagonal as possible.
+</p>
+<p>Cardoso points out that notion of approximate joint diagonalization
+is ad hoc and very small values of <code>eps</code> make in that case not much sense since the diagonality 
+criterion is ad hoc itself.
+</p>
+<p><code>rjd</code>, <code>frjd</code> and <code>rjd.fortran</code> terminate with an error in case maxiter is reach without convergence whereas <code>frjd_int</code> returns the current state at when <code>maxiter</code> is reached and does not warn about convergence problems.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the components
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>V </code></td>
+<td>
+<p>An orthogonal matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D </code></td>
+<td>
+<p>A stacked matrix with the diagonal matrices or an array with the diagonal matrices. The form of the output
+depends on the form of the input.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+<p>The <code>frjd</code> function returns also the number of iterations.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jean-Francois Cardoso. Ported to <span class="pkg">R</span> by Klaus Nordhausen. C code by Jari Miettinen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Cardoso, J.-F. and Souloumiac, A., (1996), Jacobi angles for simultaneous diagonalization, <em>SIAM J. Mat. Anal. Appl.</em>, <b>17</b>,  161–164.</cite>  
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Z &lt;- matrix(runif(9), ncol = 3)
+U &lt;- eigen(Z %*% t(Z))$vectors
+D1 &lt;- diag(runif(3))
+D2 &lt;- diag(runif(3))
+D3 &lt;- diag(runif(3))
+D4 &lt;- diag(runif(3))
+
+X.matrix &lt;- rbind(t(U) %*% D1 %*% U, t(U) %*% D2 %*% U,
+                  t(U) %*% D3 %*% U, t(U) %*% D4 %*% U)
+res.matrix &lt;- rjd(X.matrix)
+res.matrix$V
+round(U %*% res.matrix$V, 4) # should be a signed permutation 
+                             # matrix if V is correct.
+
+round(res.matrix$D, 4)
+
+# compare to C version
+
+#res.matrix.C &lt;- frjd(X.matrix)
+#res.matrix.C$V
+#round(U %*% res.matrix.C$V, 4)
+#round(res.matrix.C$D, 4)
+
+X.array &lt;- aperm(array(t(X.matrix), dim = c(3,3,4)), c(2,1,3))
+
+res.array &lt;- rjd(X.array)
+round(res.array$D, 4)
+
+res.array.C &lt;- frjd(X.array)
+round(res.array.C$D, 4)
+
+res.array.C2 &lt;- frjd.int(X.array)
+round(res.array.C2$D, 4)
+</code></pre>
+
+
+</div>

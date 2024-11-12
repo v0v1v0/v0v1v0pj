@@ -1,0 +1,156 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>label_vars_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Label columns / variables in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Label columns / variables in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">label_vars_omv(
+  dtaInp = NULL,
+  fleOut = "",
+  varLbl = NULL,
+  psvAnl = FALSE,
+  usePkg = c("foreign", "haven"),
+  selSet = "",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtaInp</code></td>
+<td>
+<p>Either a data frame or the name of a data file to be read (including the path, if required; "FILENAME.ext"; default: NULL); files can be of
+any supported file type, see Details below</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fleOut</code></td>
+<td>
+<p>Name of the data file to be written (including the path, if required; "FILE_OUT.omv"; default: ""); if empty, the resulting data frame is
+returned instead</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varLbl</code></td>
+<td>
+<p>Variable (default: NULL) containing either a character (a file name; the file must contain two columns one with variable names, the other with
+the labels), a data frame (one column the variable names, the other the labels), or a character vector (with the same length as the data set,
+containing the variable labels). See Details for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psvAnl</code></td>
+<td>
+<p>Whether analyses that are contained in the input file shall be transferred to the output file (default: FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>usePkg</code></td>
+<td>
+<p>Name of the package: "foreign" or "haven" that shall be used to read SPSS, Stata and SAS files; "foreign" is the default (it comes with
+base R), but "haven" is newer and more comprehensive</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selSet</code></td>
+<td>
+<p>Name of the data set that is to be selected from the workspace (only applies when reading .RData-files)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li> <p><code>varLbl</code> can be either (1) a character with a file name to read (the file must contain to columns, one with the variable names, the other with the
+variable labels); (2) a data frame with two columns (one with the variable names, the other with the variable labels), or (3) a character vector
+containing the variable labels (with a length equal to the number of variables in the input data set).
+</p>
+</li>
+<li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the functions that are used for reading and writing the data. By clicking
+on the respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take. The functions are:
+<code>read_omv</code> and <code>write_omv</code> (for jamovi-files), <code>read.table</code> (for CSV / TSV files; using similar defaults as <code>read.csv</code> for CSV and <code>read.delim</code> for TSV
+which both are based upon <code>read.table</code>), <code>load</code> (for .RData-files), <code>readRDS</code> (for .rds-files), <code>read_sav</code> (needs the R-package <code>haven</code>) or <code>read.spss</code>
+(needs the R-package <code>foreign</code>) for SPSS-files, <code>read_dta</code> (<code>haven</code>) / <code>read.dta</code> (<code>foreign</code>) for Stata-files, <code>read_sas</code> (<code>haven</code>) for SAS-data-files,
+and <code>read_xpt</code> (<code>haven</code>) / <code>read.xport</code> (<code>foreign</code>) for SAS-transport-files. If you would like to use <code>haven</code>, you may need to install it using
+<code>install.packages("haven", dep = TRUE)</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>a data frame (only returned if <code>fleOut</code> is empty) where the order of variables / columns of the input data set is re-arranged
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>label_vars_omv</code> internally uses the following functions for reading and writing data files in different formats: <code>read_omv()</code> and
+<code>write_omv()</code> for jamovi-files, <code>utils::read.table()</code> for CSV / TSV files, <code>load()</code> for reading .RData-files, <code>readRDS()</code> for .rds-files,
+<code>haven::read_sav()</code> or <code>foreign::read.spss()</code> for SPSS-files, <code>haven::read_dta()</code> or <code>foreign::read.dta()</code> for Stata-files, <code>haven::read_sas()</code> for
+SAS-data-files, and <code>haven::read_xpt()</code> or <code>foreign::read.xport()</code> for SAS-transport-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# use one of the data files included in the package, but only the first 28 columns
+# (the latter columns contain data for testing calculations, etc.)
+nmeInp &lt;- system.file("extdata", "bfi_sample.omv", package = "jmvReadWrite")
+dtaInp &lt;- jmvReadWrite::read_omv(nmeInp)[1:28]
+nmeOut &lt;- tempfile(fileext = ".omv")
+# in the original file, the variable labels – attr(*, "jmv-desc") - are empty
+lapply(dtaInp, attr, "jmv-desc")
+# the definition of the variable labels can be read from a file with two columns,
+# the first containing the variable name, the second the variable labels
+# you can easily create such a file in Excel and save it as CSV
+# if your CSV contains column names (e.g., varNme and varLbl) in the first row are they ignored
+lblFle &lt;- system.file("extdata", "label_example.csv", package = "jmvReadWrite")
+lblDtF &lt;- utils::read.csv(lblFle, header = FALSE)
+str(lblDtF)
+
+# there are three options to give the varLbl parameter:
+# (1) as file name, ...
+jmvReadWrite::label_vars_omv(dtaInp = dtaInp, fleOut = nmeOut, varLbl = lblFle)
+lapply(jmvReadWrite::read_omv(nmeOut), attr, "jmv-desc")
+unlink(nmeOut)
+
+# (2) as data frame (using lblDtF from above), or ...
+jmvReadWrite::label_vars_omv(dtaInp = dtaInp, fleOut = nmeOut, varLbl = lblDtF)
+lapply(jmvReadWrite::read_omv(nmeOut), attr, "jmv-desc")
+unlink(nmeOut)
+
+# (3) as character vector (with the same length as there are columns in the input data set)
+lblChr &lt;- lblDtF[[2]]
+head(lblChr)
+jmvReadWrite::label_vars_omv(dtaInp = dtaInp, fleOut = nmeOut, varLbl = lblChr)
+lapply(jmvReadWrite::read_omv(nmeOut), attr, "jmv-desc")
+unlink(nmeOut)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

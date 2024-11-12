@@ -1,0 +1,289 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logRegMulti</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multinomial Logistic Regression</h2>
+
+<h3>Description</h3>
+
+<p>Multinomial Logistic Regression
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">logRegMulti(data, dep, covs = NULL, factors = NULL,
+  blocks = list(list()), refLevels = NULL, modelTest = FALSE,
+  dev = TRUE, aic = TRUE, bic = FALSE, pseudoR2 = list("r2mf"),
+  omni = FALSE, ci = FALSE, ciWidth = 95, OR = FALSE,
+  ciOR = FALSE, ciWidthOR = 95, emMeans = list(list()),
+  ciEmm = TRUE, ciWidthEmm = 95, emmPlots = TRUE,
+  emmTables = FALSE, emmWeights = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+<p>a string naming the dependent variable from <code>data</code>,
+variable must be a factor</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covs</code></td>
+<td>
+<p>a vector of strings naming the covariates from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>a vector of strings naming the fixed factors from
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>blocks</code></td>
+<td>
+<p>a list containing vectors of strings that name the predictors
+that are added to the model. The elements are added to the model according
+to their order in the list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refLevels</code></td>
+<td>
+<p>a list of lists specifying reference levels of the
+dependent variable and all the factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTest</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the model
+comparison between the models and the NULL model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the deviance (or
+-2LogLikelihood) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide Aikaike's
+Information Criterion (AIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bic</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Bayesian
+Information Criterion (BIC) for the models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pseudoR2</code></td>
+<td>
+<p>one or more of <code>'r2mf'</code>, <code>'r2cs'</code>, or
+<code>'r2n'</code>; use McFadden's, Cox &amp; Snell, and Nagelkerke pseudo-R²,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omni</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the omnibus
+likelihood ratio tests for the predictors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficient estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>OR</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the exponential of
+the log-odds ratio estimate, or the odds ratio estimate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciOR</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a confidence
+interval for the model coefficient odds ratio estimates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthOR</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emMeans</code></td>
+<td>
+<p>a list of lists specifying the variables for which the
+estimated marginal means need to be calculate. Supports up to three
+variables per term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciEmm</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide a confidence
+interval for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthEmm</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlots</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimated
+marginal means plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmTables</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide estimated
+marginal means tables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmWeights</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, weigh each cell
+equally or weigh them according to the cell frequency</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelFit</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$modelComp</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$models</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of model specific results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$modelFit$asDF</code>
+</p>
+<p><code>as.data.frame(results$modelFit)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('birthwt', package='MASS')
+
+dat &lt;- data.frame(
+            race = factor(birthwt$race),
+            age = birthwt$age,
+            low = factor(birthwt$low))
+
+logRegMulti(data = dat, dep = race,
+            covs = age, factors = low,
+            blocks = list(list("age", "low")),
+            refLevels = list(
+                list(var="race", ref="1"),
+                list(var="low", ref="0")))
+
+#
+#  MULTINOMIAL LOGISTIC REGRESSION
+#
+#  Model Fit Measures
+#  --------------------------------------
+#    Model    Deviance    AIC    R²-McF
+#  --------------------------------------
+#        1         360    372    0.0333
+#  --------------------------------------
+#
+#
+#  MODEL SPECIFIC RESULTS
+#
+#  MODEL 1
+#
+#  Model Coefficients
+#  ---------------------------------------------------------------
+#    race     Predictor    Estimate    SE        Z         p
+#  ---------------------------------------------------------------
+#    2 - 1    Intercept      0.8155    1.1186     0.729    0.466
+#             age           -0.1038    0.0487    -2.131    0.033
+#             low:
+#             1 – 0          0.7527    0.4700     1.601    0.109
+#    3 - 1    Intercept      1.0123    0.7798     1.298    0.194
+#             age           -0.0663    0.0324    -2.047    0.041
+#             low:
+#             1 – 0          0.5677    0.3522     1.612    0.107
+#  ---------------------------------------------------------------
+#
+#
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>translate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conversion of confidence levels between intervals and ellipses</h2>
+
+<h3>Description</h3>
+
+<p>Translates the confidence level of a joint 100(1 – alpha)% confidence ellipse into that of the corresponding marginal confidence interval when projecting the ellipse's boundary onto the axes. Also does the "inverse operation" i.e., calculates the confidence level of a joint confidence ellipse so that its perpendicular shadows onto the axes are 100(1 – alpha)% confidence intervals.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">translate(level=0.95, ddf, direction)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>A numeric value giving the confidence level.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ddf</code></td>
+<td>
+<p>An integer specifying the denominator degrees of freedom. Setting this to <code>0</code> enforces an asymptotic computation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>direction</code></td>
+<td>
+<p>A character string indicating what is to be computed. Choose either <code>ci2cr</code> or <code>cr2ci</code> (see details).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Setting <code>direction="ci2cr"</code> calculates the confidence level of a confidence interval generating ellipse (CIGE) whose perpendicular shadows onto the axes are 100(1 – alpha)% confidence intervals with a marginal confidence level (1 – alpha) as specified in <code>level</code>; see p. 205 of Fox (2008).
+</p>
+<p>On the other hand, setting <code>direction="cr2ci"</code> computes the marginal confidence level of the intervals obtained by projecting a joint 100(1 – alpha)% confidence ellipse with (1 – alpha) as specified in <code>level</code>; see p. 254 of Monette (1990). These marginal intervals can be viewed as including a Scheffe penalty (Scheffe 1953).
+</p>
+<p>For <code>ddf=0</code> the F-distribution used for calculating the confidence levels is replaced with an asymptotic chi-square distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric value giving the calculated confidence level.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Philip Pallmann (<a href="mailto:p.pallmann@lancaster.ac.uk">p.pallmann@lancaster.ac.uk</a>)</p>
+
+
+<h3>References</h3>
+
+<p>John Fox (2008) Applied Linear Regression and Generalized Linear Models. Second Edition. SAGE, Thousand Oaks, CA.
+</p>
+<p>Georges Monette (1990). Geometry of multiple regression and interactive 3-D graphics. In: John Fox &amp; J. Scott Long (eds.) Modern Methods of Data Analysis. SAGE, Newbury Park, CA.
+</p>
+<p>Henry Scheffe (1953) A method for judging all contrasts in the analysis of variance. Biometrika, 40(1–2), 87–104.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get CIGE level
+translate(0.95, ddf=1, "ci2cr")
+translate(0.95, ddf=9999, "ci2cr")
+translate(0.95, ddf=0, "ci2cr")
+
+# Get Scheffe CI level
+translate(0.95, ddf=1, "cr2ci")
+translate(0.95, ddf=9999, "cr2ci")
+translate(0.95, ddf=0, "cr2ci")
+</code></pre>
+
+
+</div>

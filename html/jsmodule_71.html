@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>timerocUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>timerocUI: shiny module UI for time-dependent roc analysis</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for time-dependent roc analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">timerocUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Shiny module UI for time-dependent roc analysis
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for time-dependent roc analysis
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+library(ggplot2)
+library(timeROC)
+library(survIDINRI)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      timerocUI("timeroc")
+    ),
+    mainPanel(
+      plotOutput("plot_timeroc"),
+      ggplotdownUI("timeroc"),
+      DTOutput("table_timeroc")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- jstable::mk.lev(mtcars)
+
+  out_timeroc &lt;- callModule(timerocModule, "timeroc",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$plot_timeroc &lt;- renderPlot({
+    print(out_timeroc()$plot)
+  })
+
+  output$table_timeroc &lt;- renderDT({
+    datatable(out_timeroc()$tb,
+      rownames = F, editable = F, extensions = "Buttons",
+      caption = "ROC results",
+      options = c(jstable::opt.tbreg("roctable"), list(scrollX = TRUE))
+    )
+  })
+}
+</code></pre>
+
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sim_data_from_bn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate data from a Bayesian network</h2>
+
+<h3>Description</h3>
+
+<p>Simulate data from a Bayesian network
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sim_data_from_bn(
+  net,
+  lvls,
+  nsims = 1000,
+  increasing_prob = FALSE,
+  p1 = 0.8,
+  p2 = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>net</code></td>
+<td>
+<p>A Bayesian network as an igraph object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lvls</code></td>
+<td>
+<p>Named integer vector where each element is the size of the
+statespace of the corresponding variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsims</code></td>
+<td>
+<p>Number of simulations
+distributions from which the simulatios are drawn.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>increasing_prob</code></td>
+<td>
+<p>Logical. If true, probabilities in the underlying CPTs
+increases with as the number of levels increses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p1</code></td>
+<td>
+<p>Probability</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p2</code></td>
+<td>
+<p>Probability</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">net &lt;- igraph::graph(as.character(c(1,2,1,3,3,4,3,5,5,4,2,6,6,7,5,7)), directed = TRUE)
+nodes_net &lt;- igraph::V(net)$name
+lvls_net  &lt;- structure(sample(3:9, length(nodes_net)), names = nodes_net)
+lvls_net  &lt;- structure(rep(3, length(nodes_net)), names = nodes_net)
+sim_data_from_bn(net, lvls_net, 10)
+</code></pre>
+
+
+</div>

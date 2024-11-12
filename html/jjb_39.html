@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rgb_to_hex</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert RGB Value to Hexadecimal</h2>
+
+<h3>Description</h3>
+
+<p>This function converts an RGB value to the hexadecimal numbering system.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rgb_to_hex(R, G, B, pound = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>A <code>int</code> that is between 0 and 255 for the Red value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>A <code>int</code> that is between 0 and 255 for the Green value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>A <code>int</code> that is between 0 and 255 for the Blue value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pound</code></td>
+<td>
+<p>A <code>bool</code> that indicates whether a pound sign should be
+prepended to the hexadecimal.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>string</code> containing the hexadecimal information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Hexadecimal with pound sign
+rgb_to_hex(255,255,255)
+
+# Heaxadecimal without pound sign
+rgb_to_hex(255,255,255,FALSE)
+</code></pre>
+
+
+</div>

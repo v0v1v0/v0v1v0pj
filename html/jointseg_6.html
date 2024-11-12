@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doGFLars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Group fused Lars segmentation</h2>
+
+<h3>Description</h3>
+
+<p>High-level function for multivariate fused Lars (GFLars) segmentation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doGFLars(Y, K, stat = NULL, ..., verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A <code>n*p</code> signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The number of change points to find</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of
+<code>Y</code> to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to 'segmentByGFLars'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around the lower-level segmentation function
+<code>segmentByGFLars</code>. It can be run on p-dimensional,
+piecewise-constant data in order to defined a set of candidate change
+points. It is recommended to prune this list of candidates using dynamic
+programming (<code>pruneByDP</code>), combined with a selection of the best
+number of change points. The <code>jointSeg</code> function provides a
+convenient wrapper for performing segmentation, pruning and model selection.
+</p>
+<p>For the specific case of DNA copy number data segmentation, see the
+dedicated wrapper <code>PSSeg</code>.
+</p>
+<p>The default weights <code class="reqn">\sqrt{n/(i*(n-i))}</code> are calibrated as suggested by
+Bleakley and Vert (2011).  Using this calibration, the first breakpoint
+maximizes the likelihood ratio test (LRT) statistic.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of the same structure as the output of
+<code>segmentByGFLars</code>
+</p>
+
+
+<h3>Note</h3>
+
+<p>This implementation is derived from the MATLAB code by Vert and
+Bleakley: <a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+</p>
+<p>Vert, J. P., &amp; Bleakley, K. (2010). Fast detection of multiple change-points
+shared by many signals using group LARS. Advances in Neural Information
+Processing Systems, 23, 2343-2351.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+p &lt;- 2
+trueK &lt;- 10
+sim &lt;- randomProfile(1e4, trueK, 1, p)
+Y &lt;- sim$profile
+K &lt;- 2*trueK
+res &lt;- doGFLars(Y, K)
+print(res$bkp)
+print(sim$bkp)
+plotSeg(Y, res$bkp)
+
+## a toy example with missing values
+sim &lt;- randomProfile(1e2, 1, 0.1, 2)
+Y &lt;- sim$profile
+Y[3:50, 2] &lt;- NA
+
+res &lt;- doGFLars(Y, 10, 2, verbose=TRUE)
+print(res$bkp)
+print(sim$bkp)
+plotSeg(Y, res$bkp)
+
+</code></pre>
+
+
+</div>

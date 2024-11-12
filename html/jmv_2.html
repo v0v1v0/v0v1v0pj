@@ -1,0 +1,345 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ANOVA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ANOVA</h2>
+
+<h3>Description</h3>
+
+<p>The Analysis of Variance (ANOVA) is used to explore the relationship
+between a continuous dependent variable, and one or more categorical
+explanatory variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ANOVA(data, dep, factors = NULL, effectSize = NULL,
+  modelTest = FALSE, modelTerms = NULL, ss = "3", homo = FALSE,
+  norm = FALSE, qq = FALSE, contrasts = NULL, postHoc = NULL,
+  postHocCorr = list("tukey"), postHocES = list(),
+  postHocEsCi = FALSE, postHocEsCiWidth = 95, emMeans = list(list()),
+  emmPlots = TRUE, emmPlotData = FALSE, emmPlotError = "ci",
+  emmTables = FALSE, emmWeights = TRUE, ciWidthEmm = 95, formula)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+<p>the dependent variable from <code>data</code>, variable must be
+numeric (not necessary when providing a formula, see examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>the explanatory factors in <code>data</code> (not necessary when
+providing a formula, see examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effectSize</code></td>
+<td>
+<p>one or more of <code>'eta'</code>, <code>'partEta'</code>, or
+<code>'omega'</code>; use eta², partial eta², and omega² effect sizes,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTest</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default); perform an overall
+model test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modelTerms</code></td>
+<td>
+<p>a formula describing the terms to go into the model (not
+necessary when providing a formula, see examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ss</code></td>
+<td>
+<p><code>'1'</code>, <code>'2'</code> or <code>'3'</code> (default), the sum of
+squares to use</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>homo</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform homogeneity
+tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Shapiro-Wilk
+tests of normality</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+<p>a list of lists specifying the factor and type of contrast
+to use, one of <code>'deviation'</code>, <code>'simple'</code>, <code>'difference'</code>,
+<code>'helmert'</code>, <code>'repeated'</code> or <code>'polynomial'</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHoc</code></td>
+<td>
+<p>a formula containing the terms to perform post-hoc tests on
+(see the examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHocCorr</code></td>
+<td>
+<p>one or more of <code>'none'</code>, <code>'tukey'</code>,
+<code>'scheffe'</code>, <code>'bonf'</code>, or <code>'holm'</code>; provide no, Tukey,
+Scheffe, Bonferroni, and Holm Post Hoc corrections respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHocES</code></td>
+<td>
+<p>a possible value of <code>'d'</code>; provide cohen's d measure
+of effect size for the post-hoc tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHocEsCi</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide
+confidence intervals for the post-hoc effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postHocEsCiWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the
+width of confidence intervals for the post-hoc effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emMeans</code></td>
+<td>
+<p>a formula containing the terms to estimate marginal means
+for (see the examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlots</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide estimated
+marginal means plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlotData</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), plot the data on
+top of the marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmPlotError</code></td>
+<td>
+<p><code>'none'</code>, <code>'ci'</code> (default), or <code>'se'</code>.
+Use no error bars, use confidence intervals, or use standard errors on the
+marginal mean plots, respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmTables</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide estimated
+marginal means tables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>emmWeights</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, weigh each cell
+equally or weigh them according to the cell frequency</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthEmm</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95) specifying the
+confidence interval width for the estimated marginal means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>(optional) the formula to use, see the examples</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>ANOVA assumes that the residuals are normally distributed, and that the
+variances of all groups are equal. If one is unwilling to assume that
+the variances are equal, then a Welch's test can be used instead
+(However, the Welch's test does not support more than one explanatory
+factor). Alternatively, if one is unwilling to assume that the data is
+normally distributed, a non-parametric approach (such as Kruskal-Wallis)
+can be used.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$main</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of ANOVA results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$model</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> The underlying <code>aov</code> object </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$homo</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of homogeneity tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$norm</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of normality tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$qq</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a q-q plot </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$contrasts</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of contrasts tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$postHoc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of post-hoc tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$emm</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of the estimated marginal means plots + tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$residsOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$main$asDF</code>
+</p>
+<p><code>as.data.frame(results$main)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('ToothGrowth')
+
+ANOVA(formula = len ~ dose * supp, data = ToothGrowth)
+
+#
+#  ANOVA
+#
+#  ANOVA
+#  -----------------------------------------------------------------------
+#                 Sum of Squares    df    Mean Square    F        p
+#  -----------------------------------------------------------------------
+#    dose                   2426     2         1213.2    92.00    &lt; .001
+#    supp                    205     1          205.4    15.57    &lt; .001
+#    dose:supp               108     2           54.2     4.11     0.022
+#    Residuals               712    54           13.2
+#  -----------------------------------------------------------------------
+#
+
+ANOVA(
+    formula = len ~ dose * supp,
+    data = ToothGrowth,
+    emMeans = ~ supp + dose:supp, # est. marginal means for supp and dose:supp
+    emmPlots = TRUE,              # produce plots of those marginal means
+    emmTables = TRUE)             # produce tables of those marginal means
+
+</code></pre>
+
+
+</div>

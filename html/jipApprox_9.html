@@ -1,0 +1,176 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jip_approx</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Approximate Joint-Inclusion Probabilities</h2>
+
+<h3>Description</h3>
+
+<p>Approximations of joint-inclusion probabilities by means of first-order
+inclusion probabilities.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jip_approx(pik, method)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pik</code></td>
+<td>
+<p>numeric vector of first-order inclusion probabilities for all
+population units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>string representing one of the available approximation methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Available methods are <code>"Hajek"</code>, <code>"HartleyRao"</code>, <code>"Tille"</code>,
+<code>"Brewer1"</code>,<code>"Brewer2"</code>,<code>"Brewer3"</code>, and <code>"Brewer4"</code>.
+Note that these methods were derived for high-entropy sampling designs,
+therefore they could have low performance under different designs.
+</p>
+<p>Hájek (1964) approximation [<code>method="Hajek"</code>] is derived under Maximum Entropy sampling design
+and is given by
+</p>
+<p style="text-align: center;"><code class="reqn">\tilde{\pi}_{ij} = \pi_i\pi_j \frac{1 - (1-\pi_i)(1-\pi_j)}{d} </code>
+</p>
+
+<p>where <code class="reqn">d = \sum_{i\in U} \pi_i(1-\pi_i) </code>
+</p>
+<p>Hartley and Rao (1962) proposed the following approximation under
+randomised systematic sampling [<code>method="HartleyRao"</code>]:
+</p>
+<p style="text-align: center;"><code class="reqn">\tilde{\pi}_{ij} = \frac{n-1}{n} \pi_i\pi_j + \frac{n-1}{n^2} (\pi_i^2 \pi_j + \pi_i \pi_j^2)
+      - \frac{n-1}{n^3}\pi_i\pi_j \sum_{i\in U} \pi_j^2</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn"> + \frac{2(n-1)}{n^3} (\pi_i^3 \pi_j + \pi_i\pi_j^3 + \pi_i^2 \pi_j^2)
+      - \frac{3(n-1)}{n^4} (\pi_i^2 \pi_j + \pi_i\pi_j^2) \sum_{i \in U}\pi_i^2</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">+ \frac{3(n-1)}{n^5} \pi_i\pi_j \biggl( \sum_{i\in U} \pi_i^2 \biggr)^2
+      - \frac{2(n-1)}{n^4} \pi_i\pi_j \sum_{i \in U} \pi_j^3  </code>
+</p>
+
+<p>Tillé (1996) proposed the approximation <code class="reqn">\tilde{\pi}_{ij} = \beta_i\beta_j</code>,
+where the coefficients <code class="reqn">\beta_i</code> are computed iteratively through the
+following procedure [<code>method="Tille"</code>]:
+</p>
+
+<ol>
+<li> <p><code class="reqn">\beta_i^{(0)} = \pi_i, \,\, \forall i\in U</code>
+</p>
+</li>
+<li> <p><code class="reqn"> \beta_i^{(2k-1)} = \frac{(n-1)\pi_i}{\beta^{(2k-2)} - \beta_i^{(2k-2)}}  </code>
+</p>
+</li>
+<li> <p><code class="reqn">\beta_i^{2k} = \beta_i^{(2k-1)}
+        \Biggl( \frac{n(n-1)}{(\beta^(2k-1))^2 - \sum_{i\in U} (\beta_k^{(2k-1)})^2 } \Biggr)^(1/2) </code>
+</p>
+</li>
+</ol>
+<p>with <code class="reqn">\beta^{(k)} = \sum_{i\in U} \beta_i^{i}, \,\, k=1,2,3, \dots </code>
+</p>
+<p>Finally, Brewer (2002) and Brewer and Donadio (2003) proposed four approximations,
+which are defined by the general form
+</p>
+<p style="text-align: center;"><code class="reqn">\tilde{\pi}_{ij} = \pi_i\pi_j (c_i + c_j)/2  </code>
+</p>
+
+<p>where the <code class="reqn">c_i</code> determine the approximation used:
+</p>
+
+<ul>
+<li>
+<p> Equation (9)  [<code>method="Brewer1"</code>]:
+</p>
+<p style="text-align: center;"><code class="reqn">c_i = (n-1) / (n-\pi_i)</code>
+</p>
+
+</li>
+<li>
+<p> Equation (10) [<code>method="Brewer2"</code>]:
+</p>
+<p style="text-align: center;"><code class="reqn">c_i = (n-1) / \Bigl(n- n^{-1}\sum_{i\in U}\pi_i^2 \Bigr)</code>
+</p>
+
+</li>
+<li>
+<p> Equation (11) [<code>method="Brewer3"</code>]:
+</p>
+<p style="text-align: center;"><code class="reqn">c_i = (n-1) / \Bigl(n - 2\pi_i + n^{-1}\sum_{i\in U}\pi_i^2 \Bigr)</code>
+</p>
+
+</li>
+<li>
+<p> Equation (18) [<code>method="Brewer4"</code>]:
+</p>
+<p style="text-align: center;"><code class="reqn">c_i = (n-1) / \Bigl(n - (2n-1)(n-1)^{-1}\pi_i + (n-1)^{-1}\sum_{i\in U}\pi_i^2 \Bigr)</code>
+</p>
+
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>A symmetric matrix of inclusion probabilities, which diagonal is the
+vector of first-order inclusion probabilities.
+</p>
+
+
+<h3>References</h3>
+
+<p>Hartley, H.O.; Rao, J.N.K., 1962. Sampling With Unequal Probability and Without Replacement.
+The Annals of Mathematical Statistics 33 (2), 350-374.
+</p>
+<p>Hájek, J., 1964. Asymptotic Theory of Rejective Sampling with Varying Probabilities from a Finite Population.
+The Annals of Mathematical Statistics 35 (4), 1491-1523.
+</p>
+<p>Tillé, Y., 1996. Some Remarks on Unequal Probability Sampling Designs Without Replacement.
+Annals of Economics and Statistics 44, 177-189.
+</p>
+<p>Brewer, K.R.W.; Donadio, M.E., 2003. The High Entropy Variance of the Horvitz-Thompson Estimator.
+Survey Methodology 29 (2), 189-196.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+### Generate population data ---
+N &lt;- 20; n&lt;-5
+
+set.seed(0)
+x &lt;- rgamma(N, scale=10, shape=5)
+y &lt;- abs( 2*x + 3.7*sqrt(x) * rnorm(N) )
+
+pik  &lt;- n * x/sum(x)
+
+### Approximate joint-inclusion probabilities ---
+pikl &lt;- jip_approx(pik, method='Hajek')
+pikl &lt;- jip_approx(pik, method='HartleyRao')
+pikl &lt;- jip_approx(pik, method='Tille')
+pikl &lt;- jip_approx(pik, method='Brewer1')
+pikl &lt;- jip_approx(pik, method='Brewer2')
+pikl &lt;- jip_approx(pik, method='Brewer3')
+pikl &lt;- jip_approx(pik, method='Brewer4')
+
+
+
+</code></pre>
+
+
+</div>

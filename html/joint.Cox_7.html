@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>F.KM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction of death using the Kaplan-Meier estimator</h2>
+
+<h3>Description</h3>
+
+<p>Dynamic prediction of death using using the Kaplan-Meier estimator. 
+Probability of death between t and t+w is calculated. The prediction probability is F(t,t+w)=1-S(t+w)/S(t), where S is the Kaplan-Meier estimator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">F.KM(time, widths, t.death, death)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>prediction time (=t)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>widths</code></td>
+<td>
+<p>length of window (=w)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.death</code></td>
+<td>
+<p>a vector object for overall survival (OS), i.e., time-to-death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>death</code></td>
+<td>
+<p>a vector object for death indicator(=1 if death; =0 if not death)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Prediction probability of death is calculated without covariates.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>time </code></td>
+<td>
+<p>t</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>widths </code></td>
+<td>
+<p>w</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F </code></td>
+<td>
+<p>F(t,t+w)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Takeshi Emura</p>
+
+
+<h3>References</h3>
+
+<p>Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+time=1
+widths=c(0,0.5,1,1.5,2)
+t.death=c(0.5,1,1.5,2,2.5,3)
+death=c(1,1,1,1,1,1)
+F.KM(time=time,width=widths,t.death=t.death,death=death)
+</code></pre>
+
+
+</div>

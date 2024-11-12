@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>HallPolynomials</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hall polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Hall polynomials <code class="reqn">g^{\lambda}_{\mu,\nu}(t)</code> for given
+integer partitions <code class="reqn">\mu</code> and <code class="reqn">\nu</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">HallPolynomials(mu, nu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>mu, nu</code></td>
+<td>
+<p>integer partitions</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list of lists. Each of these lists has two elements: an integer
+partition <code class="reqn">\lambda</code> in the field <code>lambda</code>, and a univariate
+<code>qspray</code> polynomial in the field <code>polynomial</code>, the Hall
+polynomial <code class="reqn">g^{\lambda}_{\mu,\nu}(t)</code>. Every coefficient of a
+Hall polynomial is an integer.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function is slow.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">HallPolynomials(c(2, 1), c(1, 1))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export_justification</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export justification as YAML</h2>
+
+<h3>Description</h3>
+
+<p>Export justification as YAML
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">export_justification(
+  x,
+  file = NULL,
+  encoding = "UTF-8",
+  append = TRUE,
+  preventOverwriting = TRUE,
+  silent = justifier::opts$get("silent")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The justification, either loaded from one or more files or
+programmatically constructed. This can be one or more decisions,
+justifications, assertions, or sources.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>If specified, the file to export the justification to.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>The encoding to use when writing the file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>append</code></td>
+<td>
+<p>Whether to append to the file, or replace its contents.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preventOverwriting</code></td>
+<td>
+<p>Whether to prevent overwriting an existing file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be silent or chatty.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The generated YAML, invisibly, unless file is NULL.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Programmatically create a simple justification object
+justifierObject &lt;-
+  justifier::asrt(
+    "assertion",
+    source = c(
+      justifier::srce('source1'),
+      justifier::srce('source2')));
+
+### Export to YAML
+justifierYAML &lt;-
+  justifier::export_justification(
+    justifierObject,
+    file=NULL);
+
+### Show YAML
+cat(justifierYAML, sep="\n");
+</code></pre>
+
+
+</div>

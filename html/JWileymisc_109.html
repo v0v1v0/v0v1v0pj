@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>VAObject-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An S4 class to hold visual acuity data</h2>
+
+<h3>Description</h3>
+
+<p>A class to hold Visual Acuity data for the oculus sinister (OS; left eye)
+and oculus dexter (OD; right eye)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S4 method for signature 'VAObject,ANY,ANY,ANY'
+x[i, j, ..., drop = TRUE]
+
+## S4 method for signature 'VAObject'
+print(x, ...)
+
+## S4 method for signature 'VAObject'
+show(object)
+
+## S4 method for signature 'VAObject'
+summary(object, weightbest = TRUE, w = c(0.75, 0.25))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the object to subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i</code></td>
+<td>
+<p>the rows to subset (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>j</code></td>
+<td>
+<p>the columns to subset (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to lower functions</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop</code></td>
+<td>
+<p>should be missing</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A VAObject class object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weightbest</code></td>
+<td>
+<p>Logical whether to upweight the best seeing eye.
+Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w</code></td>
+<td>
+<p>A numeric vector of the weights, first for the best seeing
+then the worst seeing eye. Defaults to <code>c(.75, .25)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Methods (by generic)</h3>
+
+
+<ul>
+<li> <p><code>x[i</code>: extract method
+</p>
+</li>
+<li> <p><code>print(VAObject)</code>: print method
+</p>
+</li>
+<li> <p><code>show(VAObject)</code>: show method
+</p>
+</li>
+<li> <p><code>summary(VAObject)</code>: summary method
+</p>
+</li>
+</ul>
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>originalOS</code></dt>
+<dd>
+<p>the original visual acuity data for the left (ocular sinister) eye</p>
+</dd>
+<dt><code>originalOD</code></dt>
+<dd>
+<p>the original visual acuity data for the right (ocular dexter) eye</p>
+</dd>
+<dt><code>logMAROS</code></dt>
+<dd>
+<p>Logarithm of the minimum angle of resolution data for OS</p>
+</dd>
+<dt><code>logMAROD</code></dt>
+<dd>
+<p>Logarithm of the minimum angle of resolution data for OD</p>
+</dd>
+<dt><code>chart.values</code></dt>
+<dd>
+<p>the snellen values for each line of the chart used
+to measure visual acuity.  Used for the linear interpolation in the
+case of partially correct line readings.</p>
+</dd>
+<dt><code>chart.nletters</code></dt>
+<dd>
+<p>the number of letters on each line of the chart
+used to measure visual acuity.  Used for the linear interpolation
+in the case of partially correct line readings (+2 is 2/4 of the
+way to the next line if there are four letters, but only 2/6 if
+there are six, etc.)</p>
+</dd>
+<dt><code>zero</code></dt>
+<dd>
+<p>the logMAR value chosen to represent "zero" visual acuity
+when creating the combined logMAR values for both eyes or taking
+the arithmetic mean.</p>
+</dd>
+</dl>
+</div>

@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>qtKostkaPolynomials</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>qt-Kostka polynomials</h2>
+
+<h3>Description</h3>
+
+<p>qt-Kostka polynomials, aka Kostka-Macdonald polynomials.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">qtKostkaPolynomials(mu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>integer partition</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list. The qt-Kostka polynomials are usually denoted by
+<code class="reqn">K_{\lambda, \mu}(q, t)</code> where <code class="reqn">q</code> and <code class="reqn">t</code> denote the two
+variables and <code class="reqn">\lambda</code> and <code class="reqn">\mu</code> are two integer partitions.
+One obtains the Kostka-Foulkes polynomials by substituting <code class="reqn">q</code>
+with <code class="reqn">0</code>.
+For a given partition <code class="reqn">\mu</code>, the function returns the
+polynomials <code class="reqn">K_{\lambda, \mu}(q, t)</code> as <code>qspray</code> objects
+for all partitions <code class="reqn">\lambda</code> of the same weight as <code class="reqn">\mu</code>. The
+generated list is a list of lists with two elements: the integer
+partition <code class="reqn">\lambda</code> and the polynomial.
+</p>
+
+
+</div>

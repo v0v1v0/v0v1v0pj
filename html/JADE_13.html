@@ -1,0 +1,111 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>FOBI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Function to perform FOBI for ICA
+</h2>
+
+<h3>Description</h3>
+
+<p>The FOBI method for independent component analysis (ICA). We assume that all components have different kurtosis values.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">FOBI(X, na.action = na.fail)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a numeric matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>A function which indicates what should happen when the data
+contain 'NA's.  Default is to fail.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EV</code></td>
+<td>
+<p>eigenvectors of autocovariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xmu</code></td>
+<td>
+<p>the original mean of the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>estimated sources as time series objected standardized to have mean 0 and unit variances.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>More general is the function <code>ics</code> in the <span class="pkg">ICS</span> package. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Cardoso, J.-F. (1989), Source separation using higher order moments, in Proceedings of IEEE International Conference
+on Accoustics, Speech and Signal Processing, 2109–2112.</cite>
+</p>
+<p><cite>Miettinen, J., Taskinen S., Nordhausen, K. and Oja, H. (2015), Fourth Moments and Independent
+Component Analysis, <em>Statistical Science</em>, 30, 372–390.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ics</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 3 source and 3 signals
+
+S &lt;- cbind(rt(1000, 4), rnorm(1000), runif(1000))
+A &lt;- matrix(rnorm(9), ncol = 3)
+X &lt;- S %*% t(A)
+res&lt;-FOBI(X)
+MD(coef(res),A)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pf_sv_test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Test whether sampling weights are needed</h2>
+
+<h3>Description</h3>
+
+<p>Use the test proposed in Pfeffermann and Sverchkov (1999) to check whether
+a regression model is specified correctly without weights.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pf_sv_test(
+  model,
+  data = NULL,
+  weights,
+  sims = 1000,
+  digits = getOption("jtools-digits", default = 3)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The fitted model, without weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data frame with the data fed to the fitted model and the
+weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>The name of the weights column in <code>model</code>'s data frame
+or a vector of weights equal in length to the number of observations
+included in <code>model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sims</code></td>
+<td>
+<p>The number of bootstrap simulations to use in estimating the
+variance of the residual correlation. Default is 1000, but for publications
+or when computing power/time is sufficient, a higher number is better.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer specifying the number of digits past the decimal to
+report in the output. Default is 3. You can change the default number of
+digits for all jtools functions with
+<code>options("jtools-digits" = digits)</code> where digits is the desired number.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This is a test described by Pfeffermann and Sverchkov (1999) that is
+designed to help analysts decide whether they need to use sample weights
+in their regressions to avoid biased parameter estimation.
+</p>
+<p>It first checks the correlation of the residuals of the model with the
+weights. It then uses bootstrapping to estimate the variance of the
+correlation, ending with a t-test of whether the correlation differs from
+zero. This is done for the squared residuals and cubed residuals as well.
+If anyone of them are statistically significant (at whatever level you
+feel appropriate), it is best to do a weighted regression. Note that in
+large samples, a very small correlation may have a low p-value without a
+large bias in the unweighted regression.
+</p>
+
+
+<h3>References</h3>
+
+<p>Pfeffermann, D., &amp; Sverchkov, M. (1999). Parametric and semi-parametric
+estimation of regression models fitted to survey data.
+<em>Sankhya: The Indian Journal of Statistics</em>, <em>61</em>. 166-186.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other survey tools: 
+<code>svycor()</code>,
+<code>svysd()</code>,
+<code>weights_tests()</code>,
+<code>wgttest()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Note: This is a contrived example to show how the function works,
+# not a case with actual sammpling weights from a survey vendor
+if (requireNamespace("boot")) {
+  states &lt;- as.data.frame(state.x77)
+  set.seed(100)
+  states$wts &lt;- runif(50, 0, 3)
+  fit &lt;- lm(Murder ~ Illiteracy + Frost, data = states)
+  pf_sv_test(model = fit, data = states, weights = wts, sims = 100)
+}
+
+</code></pre>
+
+
+</div>

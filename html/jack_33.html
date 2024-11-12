@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>skewKostkaJackNumbers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Kostka-Jack numbers with given Jack parameter</h2>
+
+<h3>Description</h3>
+
+<p>Skew Kostka-Jack numbers associated to a given skew partition
+and a given Jack parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">skewKostkaJackNumbers(lambda, mu, alpha = NULL, output = "vector")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the Jack parameter, a <code>bigq</code> number or an object coercible
+to a <code>bigq</code> number; setting <code>alpha=NULL</code> is equivalent to set
+<code>alpha=1</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>the format of the output, either <code>"vector"</code> or
+<code>"list"</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The skew Kostka-Jack number <code class="reqn">K_{\lambda/\mu,\nu}(\alpha)</code> is
+the coefficient of the monomial symmetric polynomial <code class="reqn">m_\nu</code> in the
+expression of the skew <code class="reqn">P</code>-Jack polynomial
+<code class="reqn">P_{\lambda/\mu}(\alpha)</code> as a linear combination of monomial
+symmetric polynomials. For <code class="reqn">\alpha=1</code> it is the ordinary skew Kostka
+number.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>output="vector"</code>, the function returns a named vector.
+This vector is made of the non-zero skew Kostka-Jack numbers
+<code class="reqn">K_{\lambda/\mu,\nu}(\alpha)</code> given as character strings and its names
+encode the partitions <code class="reqn">\nu</code>.
+If <code>ouput="list"</code>, the function returns a list. Each element of this
+list is a named list with two elements: an integer partition <code class="reqn">\nu</code>
+in the field named <code>"nu"</code>, and the corresponding skew Kostka-Jack
+number <code class="reqn">K_{\lambda/\mu,\nu}(\alpha)</code> in the field named <code>"value"</code>.
+Only the non-null skew Kostka-Jack numbers are provided by this list.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The skew Kostka-Jack numbers <code class="reqn">K_{\lambda/\mu,\nu}(\alpha)</code> are
+well defined when the Jack parameter <code class="reqn">\alpha</code> is zero, however this
+function does not work with <code>alpha=0</code>. A possible way to get the
+skew Kostka-Jack numbers <code class="reqn">K_{\lambda/\mu,\nu}(0)</code> is to use the
+function <code>symbolicSkewKostkaJackNumbers</code> to get the skew
+Kostka-Jack numbers with a symbolic Jack parameter <code class="reqn">\alpha</code>, and then
+to substitute <code class="reqn">\alpha</code> with <code class="reqn">0</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>symbolicSkewKostkaJackNumbers</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">skewKostkaJackNumbers(c(4,2,2), c(2,2))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cooling.df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Does insulation make a difference?</h2>
+
+<h3>Description</h3>
+
+<p>This data arose from an experiment conducted by David
+to testing the insulation of the ground floor bedroom
+of his house–The Spinney. The idea was that the better the insulation
+the slower the rate cooling, so for some exponential model
+y(t) = y(0) exp(-lambda t) - the value of lambda should go down
+for a better insulated room
+In the experiment, David ran two extension cords into the room
+through a service port to power two electric heaters and a fan.
+He then sealed up the room by shutting windows and door. The
+heaters were left to heat up the room as much as they could. This
+happened to be about 24.6 C. He then turned the heaters and fan off
+and the recorded the rate of cooling by observing a temperture probe
+from outside the room for about two hours.
+Standard theory says that the rate of cooling is proportional to
+the temperature differential between the indoor and outdoor temperatures.
+To control for this days were selected which had approximately the
+same external temperatures. The room has walls which are external and
+internal. It was assumed that the outside and internal house (no heating)
+had reached an equilibrium so that we only need to know the outside room,
+but inside house temperature rather than both
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cooling.df
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data.frame with 47 rows and 3 columns:
+</p>
+
+<dl>
+<dt>time</dt>
+<dd>
+<p>The time since turning off the heaters and fan</p>
+</dd>
+<dt>uninsulated</dt>
+<dd>
+<p>The recorded temperature with absolutely no insulation
+in the room whatsoever—outside temperature 8.0 C.</p>
+</dd>
+<dt>insulated</dt>
+<dd>
+<p>The recorded temperature with part of a wall and the floor insulated—
+outside temperature 8.1 C</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>David Lucy
+</p>
+
+
+</div>

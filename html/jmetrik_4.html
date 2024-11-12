@@ -1,0 +1,125 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmetrikWrite</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Writes a file in *.jmetrik format.</h2>
+
+<h3>Description</h3>
+
+<p>'jMetrik' is a stand alone program written in Java. It defines a file format that is just a plain text
+file with a header and comma delimited values. The header contains information about the variables
+in the file. There is one row in the header for each variable in the file. The header also includes
+meta information about the data such as the number of rows. This function will create a *.jmetrik
+file from a data frame. The jMetrik program and other informaiton is available at
+<a href="http://www.Itemanalysis.com">http://www.Itemanalysis.com</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmetrikWrite(x, fileName, scoring = NULL, codes = NULL, group = NULL,
+  labels = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fileName</code></td>
+<td>
+<p>The complete path and name of the file to be written. The file siffix must be .jmetrik.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scoring</code></td>
+<td>
+<p>An optional character vector of item scoring. Each element in this vector has two sets 
+of parentheses. The first set contains the response option codes. The second set contains the scores 
+assigned to each option. There is a correspondence between each set of parentheses such that the first 
+element in the code list corresponds to the first element in the score list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>codes</code></td>
+<td>
+<p>An optional character vector of special codes. Each element in this vector has two sets 
+of parentheses. The first set contains the missing data, omitted, and not reached codes. 
+The second set contains the scores assigned to each code. There is a correspondence between 
+each set of parentheses such that the first element in the code list corresponds to the first 
+element in the score list.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>a character vector of codes that define the group membership of an item. One 
+element for eahc item.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>An optional character vector of variable labels</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>J. Patrick Meyer <a href="mailto:support@itemanalysis.com">support@itemanalysis.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+#Create some data
+id&lt;-100+seq(1:10)
+x&lt;-sample(c("A", "B", "C", "D"), 10, replace=TRUE)
+y&lt;-sample(c("A", "B", "C", "D"), 10, replace=TRUE)
+z&lt;-sample(c(0,1,2,3), 10, replace=TRUE)
+sc&lt;-rnorm(10)
+exdata&lt;-as.data.frame(cbind(id, x, y, z, sc))
+names(exdata)&lt;-c("id", "item1", "item2", "item3", "score")
+
+#A is the correct answer
+aOK&lt;- "(A,B,C,D)(1,0,0,0)"
+
+#B is the correct answer
+bOK&lt;-"(A,B,C,D)(0,1,0,0)"
+
+#polytomous item scoring
+poly&lt;-"(0,1,2,3)(0,1,2,3)"
+
+#Special data codes e.g. missing and not reached responses
+#These can be unique to each item or the same. Here they
+#are the same.
+datCodes&lt;-"(NA,OM,NR)(0,0,0)"
+
+#Create scoring, special data codes, and labels
+scoring&lt;-c("", aOK, bOK, poly, "")
+codes&lt;-c("", rep(datCodes, 3), "")
+labels&lt;-c("ID variable", "Test item 1", "Test item 2", "Test item 3", "Test score")
+
+#write the file
+jmetrikWrite(x=exdata, 
+             fileName=file.path(tempdir(), "test-write.jmetrik"),
+             codes=codes, 
+             scoring=scoring, 
+             labels=labels)
+            
+
+
+</code></pre>
+
+
+</div>

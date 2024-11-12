@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extract_empirical_clusters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detect largest clusters from a time sequence of predictor statistics</h2>
+
+<h3>Description</h3>
+
+<p>Detect largest clusters from a time sequence of predictor statistics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">extract_empirical_clusters(
+  empirical_statistics,
+  threshold,
+  binned = FALSE,
+  top_n = Inf
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>empirical_statistics</code></td>
+<td>
+<p>A predictor-by-time matrix of empirical timewise statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>The threshold value that the statistic must pass to contribute to cluster mass.
+Interpretation differs on the choice of statistic (more below):
+</p>
+
+<ul>
+<li>
+<p> If <code>statistic = "t"</code>, the threshold for t-value (beta/std.err) from the regression model.
+</p>
+</li>
+<li>
+<p> If <code>statistic = "chisq"</code>, the threshold for the p-value of chi-squared statistics from likelihood ratio tests.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>Whether the data has been aggregated/collapsed into time bins. Defaults to <code>FALSE</code>,
+which requires a cluster to span at least two time points. If <code>TRUE</code>, allows length-1 clusters to exist.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top_n</code></td>
+<td>
+<p>How many clusters to return, in the order of the size of the cluster-mass statistic.
+Defaults to <code>Inf</code> which return all detected clusters.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An <code>empirical_clusters</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>compute_timewise_statistics()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+library(dplyr, warn.conflicts = FALSE)
+
+# Specification object
+spec &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, filter(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec
+
+# Empirical clusters are derived from the timewise statistics
+empirical_statistics &lt;- compute_timewise_statistics(spec)
+empirical_clusters &lt;- extract_empirical_clusters(empirical_statistics, threshold = 2)
+empirical_clusters
+
+# Collect as dataframe with `tidy()`
+empirical_clusters_df &lt;- tidy(empirical_clusters)
+empirical_clusters_df
+
+# Changing the `threshold` value identifies different clusters
+extract_empirical_clusters(empirical_statistics, threshold = 1)
+
+# A predictor can have zero or multiple clusters associated with it
+extract_empirical_clusters(empirical_statistics, threshold = 3)
+
+
+
+
+</code></pre>
+
+
+</div>

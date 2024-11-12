@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>APAStyler.modelTest.vglm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>APAStyler method for model tests from a vglm multinomial model</h2>
+
+<h3>Description</h3>
+
+<p>APAStyler method for model tests from a vglm multinomial model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'modelTest.vglm'
+APAStyler(
+  object,
+  format = list(FixedEffects = c("%s%s [%s, %s]"), EffectSizes =
+    c("Chi-square (df=%s) = %s, %s")),
+  digits = 2,
+  pcontrol = list(digits = 3, stars = TRUE, includeP = FALSE, includeSign = FALSE,
+    dropLeadingZero = TRUE),
+  OR = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>modelTest.vglm</code> class object,
+results from running <code>modelTest()</code> function on a
+class <code>vglm</code> object with a multinomial family</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>A list giving the formatting style to be used for
+the fixed effects and effect sizes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>A numeric value indicating the number of digits to print.
+This is still in early implementation stages and currently does not
+change all parts of the output (which default to 2 decimals per
+APA style).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcontrol</code></td>
+<td>
+<p>A list controlling how p values are formatted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>OR</code></td>
+<td>
+<p>a logical value whether to report odds ratios and
+95 percent confidence intervals, if <code>TRUE</code>, or
+regression coefficients on the logit scale with standard
+errors, if <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Styled results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars$cyl &lt;- factor(mtcars$cyl)
+m &lt;- VGAM::vglm(cyl ~ qsec,
+  family = VGAM::multinomial(), data = mtcars)
+mt &lt;- modelTest(m)
+
+APAStyler(mt)
+
+APAStyler(mt, OR = FALSE)
+
+## clean up
+rm(m, mt, mtcars)
+
+## Not run: 
+mtcars$cyl &lt;- factor(mtcars$cyl)
+mtcars$am &lt;- factor(mtcars$am)
+m &lt;- VGAM::vglm(cyl ~ qsec,
+  family = VGAM::multinomial(), data = mtcars)
+APAStyler(modelTest(m))
+
+m &lt;- VGAM::vglm(cyl ~ scale(qsec),
+  family = VGAM::multinomial(), data = mtcars)
+APAStyler(modelTest(m))
+
+m2 &lt;- VGAM::vglm(cyl ~ factor(vs) * scale(qsec),
+  family = VGAM::multinomial(), data = mtcars)
+APAStyler(modelTest(m2))
+
+m &lt;- VGAM::vglm(Species ~ Sepal.Length,
+  family = VGAM::multinomial(), data = iris)
+APAStyler(modelTest(m))
+
+set.seed(1234)
+sampdata &lt;- data.frame(
+  Outcome = factor(sample(letters[1:3], 20 * 9, TRUE)),
+  C1 = rnorm(20 * 9),
+  D3 = sample(paste0("L", 1:3), 20 * 9, TRUE))
+
+m &lt;- VGAM::vglm(Outcome ~ factor(D3),
+  family = VGAM::multinomial(), data = sampdata)
+APAStyler(modelTest(m))
+
+m &lt;- VGAM::vglm(Outcome ~ factor(D3) + C1,
+  family = VGAM::multinomial(), data = sampdata)
+APAStyler(modelTest(m))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

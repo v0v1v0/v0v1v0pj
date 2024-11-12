@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>press</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mean Sea Level pressure files</h2>
+
+<h3>Description</h3>
+
+<p>Data from a ERA-Interim reanalysis data set downloaded from ECMWF
+(<a href="http://apps.ecmwf.int/datasets/data/interim-full-daily/levtype=sfc/">http://apps.ecmwf.int/datasets/data/interim-full-daily/levtype=sfc/</a>).
+This data corresponds to global daily values of mean sea level pressure with 2.5 x 2.5 resolution for January 2000.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(press)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list with values of pressure and coordinates (longitude, latitude, time)
+</p>
+
+<dl>
+<dt>msl</dt>
+<dd>
+<p>mean sea level pressure values, "Pa"</p>
+</dd>
+<dt>longitude</dt>
+<dd>
+<p>144</p>
+</dd>
+<dt>latitude</dt>
+<dd>
+<p>73</p>
+</dd>
+<dt>times</dt>
+<dd>
+<p>366, one year (2000)</p>
+</dd>
+</dl>
+<h3>References</h3>
+
+<p>Dee et al. (2011)
+<em>The ERA-Interim reanalysis: configuration and performance of the data assimilation system.
+Q.J.R. Meteorol. Soc., 137: 553–597. doi:10.1002/qj.828</em>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(press)
+mslp  &lt;- press$msl
+loni  &lt;- press$loni
+lati  &lt;- press$lati
+times &lt;- press$dates
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jamendoOAuth</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create OAuth token to access jamendo web API</h2>
+
+<h3>Description</h3>
+
+<p><code>jamendoOAuth</code> creates a long-lived OAuth access token that enables R to make
+authenticated calls to the Jamendo API. The token can be saved as a
+file in disk to be re-used in future sessions. This function relies on the
+<code>httr</code> package to create the OAuth token
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jamendoOAuth(
+  app_name,
+  client_id = Sys.getenv("JAMENDO_CLIENT_ID"),
+  client_secret = Sys.getenv("JAMENDO_CLIENT_SECRET")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>app_name</code></td>
+<td>
+<p>App name (this is an internal identification for token if you wish to save authorization)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_secret</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_SECRET"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns an OAuth access token as environment
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Example
+ app_name = ""
+ if(app_name != "") {
+  my_oauth &lt;- jamendoOAuth(app_name=app_name)
+  filedir &lt;- tempdir()
+  save(my_oauth, file=file.path(filedir, "my_oauth"))
+ }
+
+
+
+</code></pre>
+
+
+</div>

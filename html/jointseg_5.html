@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doDynamicProgramming</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run segmentation by dynamic programming</h2>
+
+<h3>Description</h3>
+
+<p>High-level function for univariate or multivariate segmentation by dynamic
+programming
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doDynamicProgramming(Y, K, stat = NULL, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A numeric vector or a matrix, the signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The number of change points to find</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of
+<code>Y</code> to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If the signal is uni-dimensional, this function simply uses the segmentation
+method provided in the <code>cghseg</code> package reshapes the results.
+</p>
+<p>If the signal is multi-dimensional, this function applies the
+<code>pruneByDP</code> function and reshapes the results.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>bkp</code></td>
+<td>
+<p>A vector of <code>K</code> indices for candidate change points</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpseg</code></td>
+<td>
+<p>A list of two elements </p>
+ <dl>
+<dt>bkp</dt>
+<dd>
+<p>A list of vectors
+of change point positions for the best model with k change points, for k=1,
+2, ... K</p>
+</dd> <dt>rse</dt>
+<dd>
+<p>A vector of K+1 residual squared errors</p>
+</dd> </dl>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This is essentially a wrapper for convenient segmentation by dynamic
+programming using the <code>PSSeg</code> function.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Rigaill, G. (2015). A pruned dynamic programming algorithm to recover the best segmentations with 1 to K_max change-points. Journal de la Societe Francaise de Statistique, 156(4), 180-205.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=1)
+
+## generate a synthetic CN profile
+K &lt;- 10
+len &lt;- 1e4
+sim &lt;- getCopyNumberDataByResampling(len, K, minLength=100, regData=affyDat)
+datS &lt;- sim$profile
+
+## run pruned DPA segmentation
+resDP &lt;- doDynamicProgramming(datS[["c"]], K=K)
+getTpFp(resDP$bkp, sim$bkp, tol=5, relax = -1)   ## true and false positives
+plotSeg(datS, breakpoints=list(sim$bkp, resDP$bkp))
+
+## run 2d dynamic programming segmentation
+K &lt;- 2
+len &lt;- 1e3
+sim &lt;- getCopyNumberDataByResampling(len, K, minLength=100, regData=affyDat)
+datS &lt;- sim$profile
+datS$d &lt;- 2*abs(datS$b-1/2)
+datS[which(datS$genotype!=0.5),"d"] &lt;- NA
+Y = cbind(datS$c,datS$d)
+resDP2d &lt;- doDynamicProgramming(Y, K = K)
+
+</code></pre>
+
+
+</div>

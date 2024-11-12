@@ -1,0 +1,100 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Fpsn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pruned dynamic programming algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Low-level API for the pruned dynamic programming algorithm (pDPA)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Fpsn(x, Kmax, mini = min(x), maxi = max(x))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector of double : the signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Kmax</code></td>
+<td>
+<p>Max number of segments</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mini</code></td>
+<td>
+<p>Min value for the mean parameter of the segment</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxi</code></td>
+<td>
+<p>Max value for the mean parameter of the segment</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This implementation uses functional pruning and segment neighborhood, and the L2-loss function
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with a vector containing the position of the change-points
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Guillem Rigaill
+</p>
+
+
+<h3>References</h3>
+
+<p>Rigaill, G. (2015). A pruned dynamic programming algorithm to recover the best segmentations with 1 to K_max change-points. Journal de la Societe Francaise de Statistique, 156(4), 180-205.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>doDynamicProgramming</code> for a higher-level function
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=1)
+
+## generate a synthetic CN profile
+K &lt;- 10
+len &lt;- 1e4
+sim &lt;- getCopyNumberDataByResampling(len, K, minLength=100, regData=affyDat)
+datS &lt;- sim$profile
+
+## run pruned DPA segmentation
+res &lt;- Fpsn(datS[["c"]], Kmax=2*K+1)
+
+## plot segmentation results for the true number of breakpoints
+bkp &lt;- res$t.est[K+1, 1:K]
+plotSeg(datS, breakpoints=bkp)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,591 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jSDM_binomial_probit_long_format</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Binomial probit regression on long format data</h2>
+
+<h3>Description</h3>
+
+<p>The <code>jSDM_binomial_probit_long_format</code> function performs a Binomial probit regression in a Bayesian framework. 
+The function calls a Gibbs sampler written in 'C++' code which uses conjugate priors to estimate the conditional posterior distribution of model's parameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jSDM_binomial_probit_long_format(
+  burnin = 5000,
+  mcmc = 10000,
+  thin = 10,
+  data,
+  site_formula,
+  n_latent = 0,
+  site_effect = "none",
+  alpha_start = 0,
+  gamma_start = 0,
+  beta_start = 0,
+  lambda_start = 0,
+  W_start = 0,
+  V_alpha = 1,
+  shape_Valpha = 0.5,
+  rate_Valpha = 5e-04,
+  mu_gamma = 0,
+  V_gamma = 10,
+  mu_beta = 0,
+  V_beta = 10,
+  mu_lambda = 0,
+  V_lambda = 10,
+  seed = 1234,
+  verbose = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>burnin</code></td>
+<td>
+<p>The number of burnin iterations for the sampler.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc</code></td>
+<td>
+<p>The number of Gibbs iterations for the sampler. Total number of Gibbs iterations is equal to <code>burnin+mcmc</code>.<code>burnin+mcmc</code> must be divisible by 10 and superior or equal to 100 so that the progress bar can be displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thin</code></td>
+<td>
+<p>The thinning interval used in the simulation. The number of mcmc iterations must be divisible by this value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A <code>data.frame</code> with at least the following columns : </p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>Y</code> </td>
+<td style="text-align: left;"> <code class="reqn">n_{obs}</code>-length vector indicating the presence by a 1 (or absence by a 0), </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+<td style="text-align: left;"> of the species observed during each visit of the sites.</td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+<code>site</code> </td>
+<td style="text-align: left;"> numeric or character <code class="reqn">n_{obs}</code>-length vector indicating the visited site, </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+<td style="text-align: left;">  (sites can be visited several times).</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>species</code> </td>
+<td style="text-align: left;"> numeric or character eqnn_obsn_obs-length vector indicating the species observed, </td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+</td>
+<td style="text-align: left;"> (species may not have been recorded at all sites).</td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+<code>x1,...,xp</code> </td>
+<td style="text-align: left;"> columns of explanatory variables for the suitability process of the model.</td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>site_formula</code></td>
+<td>
+<p>A one-sided formula, as the formulas used by the <code>lm</code> function, of the form: '~ x1 + ... + xd + species:x1 + ... + species:xp' with <code class="reqn">p</code> terms related to species effects <code class="reqn">\beta</code>,
+specifying the explanatory variables for the suitability process of the model, including the intercept, different from the <code class="reqn">d</code> terms related to <code class="reqn">\gamma</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_latent</code></td>
+<td>
+<p>An integer which specifies the number of latent variables to generate. Defaults to <code class="reqn">0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>site_effect</code></td>
+<td>
+<p>A string indicating whether row effects are included as fixed effects (<code>"fixed"</code>), as random effects (<code>"random"</code>), or not included (<code>"none"</code>) in the model. 
+If fixed effects, then for parameter identifiability the first row effect is set to zero, which analogous to acting as a reference level when dummy variables are used.
+If random effects, they are drawn from a normal distribution with mean zero and unknown variance, analogous to a random intercept in mixed models. Defaults to <code>"none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha_start</code></td>
+<td>
+<p>Starting values for random site effect parameters must be either a scalar or a <code class="reqn">n_{site}</code>-length vector, ignored if <code>site_effect="none"</code>.
+If <code>alpha_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\alpha</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_start</code></td>
+<td>
+<p>Starting values for gamma parameters of the suitability process must be either a scalar or a <code class="reqn">d</code>-length vector. If <code>gamma_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\gamma</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta_start</code></td>
+<td>
+<p>Starting values for beta parameters of the suitability process for each species must be either a scalar or a <code class="reqn">p \times n_{species}</code> matrix. If <code>beta_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\beta</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda_start</code></td>
+<td>
+<p>Starting values for lambda parameters corresponding to the latent variables for each species must be either a scalar or a <code class="reqn">n_{latent} \times n_{species}</code> upper triangular matrix with strictly positive values on the diagonal, ignored if <code>n_latent=0</code>.
+If <code>lambda_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">\lambda</code> parameters except those concerned by the constraints explained above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W_start</code></td>
+<td>
+<p>Starting values for latent variables must be either a scalar or a <code class="reqn">nsite \times n_latent</code> matrix, ignored if <code>n_latent=0</code>.
+If <code>W_start</code> takes a scalar value, then that value will serve for all of the <code class="reqn">W_{il}</code> with <code class="reqn">i=1,\ldots,n_{site}</code> and <code class="reqn">l=1,\ldots,n_{latent}</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_alpha</code></td>
+<td>
+<p>Starting value for variance of random site effect if <code>site_effect="random"</code>  or constant variance of the Gaussian prior distribution for the fixed site effect if
+<code>site_effect="fixed"</code>. Must be a strictly positive scalar, ignored if <code>site_effect="none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape_Valpha</code></td>
+<td>
+<p>Shape parameter of the Inverse-Gamma prior for the random site effect variance <code>V_alpha</code>, ignored if <code>site_effect="none"</code> or <code>site_effect="fixed"</code>. 
+Must be a strictly positive scalar. Default to 0.5 for weak informative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rate_Valpha</code></td>
+<td>
+<p>Rate parameter of the Inverse-Gamma prior for the random site effect variance <code>V_alpha</code>, ignored if <code>site_effect="none"</code> or <code>site_effect="fixed"</code>
+Must be a strictly positive scalar. Default to 0.0005 for weak informative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_gamma</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\gamma</code> parameters of the suitability process. <code>mu_gamma</code> must be either a scalar or a <code class="reqn">d</code>-length vector.
+If <code>mu_gamma</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\gamma</code> parameters. The default value is set to 0 for an uninformative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_gamma</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\gamma</code> parameters of the suitability process. <code>V_gamma</code> must be either a scalar or a <code class="reqn">d \times d</code> symmetric positive semi-definite square matrix.
+If <code>V_gamma</code> takes a scalar value, then that value will serve as the prior variance for all of the <code class="reqn">\gamma</code> parameters, so the variance covariance matrix used in this case is diagonal with the specified value on the diagonal. 
+The default variance is large and set to <code>1e+06</code> for an uninformative flat prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_beta</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\beta</code> parameters of the suitability process. <code>mu_beta</code> must be either a scalar or a <code class="reqn">p</code>-length vector.
+If <code>mu_beta</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\beta</code> parameters. The default value is set to 0 for an uninformative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_beta</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\beta</code> parameters of the suitability process. <code>V_beta</code> must be either a scalar or a <code class="reqn">p \times p</code> symmetric positive semi-definite square matrix.
+If <code>V_beta</code> takes a scalar value, then that value will serve as the prior variance for all of the <code class="reqn">\beta</code> parameters, so the variance covariance matrix used in this case is diagonal with the specified value on the diagonal. 
+The default variance is large and set to <code>1e+06</code> for an uninformative flat prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu_lambda</code></td>
+<td>
+<p>Means of the Normal priors for the <code class="reqn">\lambda</code> parameters corresponding to the latent variables. 
+<code>mu_lambda</code> must be either a scalar or a <code class="reqn">n_{latent}</code>-length vector. 
+If <code>mu_lambda</code> takes a scalar value, then that value will serve as the prior mean for all of the <code class="reqn">\lambda</code> parameters. The default value is set to 0 for an uninformative prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V_lambda</code></td>
+<td>
+<p>Variances of the Normal priors for the <code class="reqn">\lambda</code> parameters corresponding to the latent variables. <code>V_lambda</code> must be either a scalar or a <code class="reqn">n_{latent} \times n_{latent}</code> symmetric positive semi-definite square matrix.
+If <code>V_lambda</code> takes a scalar value, then that value will serve as the prior variance for all of <code class="reqn">\lambda</code> parameters, so the variance covariance matrix used in this case is diagonal with the specified value on the diagonal.
+The default variance is large and set to 10 for an uninformative flat prior.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>The seed for the random number generator. Default to 1234.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A switch (0,1) which determines whether or not the progress of the sampler is printed to the screen. Default is 1: a progress bar is printed, indicating the step (in %) reached by the Gibbs sampler.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>We model an ecological process where the presence or absence of species <code class="reqn">j</code> on site <code class="reqn">i</code> is explained by habitat suitability.
+</p>
+<p><b>Ecological process:</b>
+</p>
+<p style="text-align: center;"><code class="reqn">y_n \sim \mathcal{B}ernoulli(\theta_n)</code>
+</p>
+<p> such as <code class="reqn">species_n=j</code> and <code class="reqn">site_n=i</code>,
+where :
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="none"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma + X_n \beta_j</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="none"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma+ X_n \beta_j + W_i \lambda_j</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="fixed"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma + X_n \beta_j  + \alpha_i</code>  and <code class="reqn">\alpha_i \sim \mathcal{N}(0,V_\alpha)</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="fixed"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma + X_n \beta_j + W_i \lambda_j + \alpha_i</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent=0</code> and <code>site_effect="random"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma  + X_n \beta_j  + \alpha_i</code> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+ if <code>n_latent&gt;0</code> and <code>site_effect="random"</code> </td>
+<td style="text-align: left;"> probit<code class="reqn">(\theta_n) = D_n \gamma + X_n \beta_j + W_i \lambda_j + \alpha_i</code> and <code class="reqn">\alpha_i \sim \mathcal{N}(0,V_\alpha)</code> 
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>"jSDM"</code> acting like a list including :
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mcmc.alpha</code></td>
+<td>
+<p>An mcmc object that contains the posterior samples for site effects <code class="reqn">\alpha_i</code>, not returned if <code>site_effect="none"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.V_alpha</code></td>
+<td>
+<p>An mcmc object that contains the posterior samples for variance of random site effect, not returned if <code>site_effect="none"</code> or <code>site_effect="fixed"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.latent</code></td>
+<td>
+<p>A list by latent variable of mcmc objects that contains the posterior samples for latent variables  <code class="reqn">W_l</code> with <code class="reqn">l=1,\ldots,n_{latent}</code>, not returned if <code>n_latent=0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.sp</code></td>
+<td>
+<p>A list by species of mcmc objects that contains the posterior samples for species effects <code class="reqn">\beta</code> and the loading factors <code class="reqn">\lambda</code> if <code>n_latent&gt;0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.gamma</code></td>
+<td>
+<p>An mcmc objects that contains the posterior samples for parameters <code class="reqn">\gamma</code> not returned if <code>d=0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.Deviance</code></td>
+<td>
+<p>The posterior sample of the deviance <code class="reqn">D</code> is also provided, with <code class="reqn">D</code> defined as:<code class="reqn">D=-2\log(\prod_{n} P(y_{n}|\beta_j,\lambda_j, \alpha_i, W_i))</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z_latent</code></td>
+<td>
+<p>Predictive posterior mean of the latent variable Z. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probit_theta_latent</code></td>
+<td>
+<p>Predictive posterior mean of the probability to each species to be present on each site, transformed by probit link function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta_latent</code></td>
+<td>
+<p>Predictive posterior mean of the probability to each species to be present on each site.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_spec</code></td>
+<td>
+<p>Various attributes of the model fitted, including the response and model matrix used, distributional assumptions as link function, family and number of latent variables, hyperparameters used in the Bayesian estimation and mcmc, burnin and thin.</p>
+</td>
+</tr>
+</table>
+<p>The <code>mcmc.</code> objects can be summarized by functions provided by the <code>coda</code> package.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ghislain Vieilledent &lt;ghislain.vieilledent@cirad.fr&gt; 
+</p>
+<p>Jeanne Clément &lt;jeanne.clement16@laposte.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Chib, S. and Greenberg, E. (1998) Analysis of multivariate probit models. <em>Biometrika</em>, 85, 347-361. 
+</p>
+<p>Warton, D. I.; Blanchet, F. G.; O'Hara, R. B.; O'Hara, R. B.; Ovaskainen, O.; Taskinen, S.; Walker, S. C. and Hui, F. K. C. (2015) So Many Variables: Joint Modeling in Community Ecology. <em>Trends in Ecology &amp; Evolution</em>, 30, 766-779.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.mcmc</code>, <code>summary.mcmc</code> <code>jSDM_binomial_probit</code>
+<code>jSDM_binomial_logit</code> <code>jSDM_poisson_log</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#==============================================
+# jSDM_binomial_probit_long_format()
+# Example with simulated data
+#==============================================
+
+#=================
+#== Load libraries
+library(jSDM)
+
+#==================
+#== Data simulation
+
+#= Number of sites
+nsite &lt;- 50
+
+#= Set seed for repeatability
+seed &lt;- 1234
+set.seed(seed)
+
+#' #= Number of species
+nsp &lt;- 25
+
+#= Number of latent variables
+n_latent &lt;- 2
+#'
+# Ecological process (suitability)
+## X
+x1 &lt;- rnorm(nsite,0,1)
+x1.2 &lt;- scale(x1^2)
+X &lt;- cbind(rep(1,nsite),x1,x1.2)
+colnames(X) &lt;- c("Int","x1","x1.2")
+np &lt;- ncol(X)
+## W
+W &lt;- matrix(rnorm(nsite*n_latent,0,1),nrow=nsite,byrow=TRUE)
+## D
+SLA &lt;- runif(nsp,-1,1)
+D &lt;- data.frame(x1.SLA= scale(c(x1 %*% t(SLA))))
+nd &lt;- ncol(D)
+## parameters
+beta.target &lt;- t(matrix(runif(nsp*np,-2,2), byrow=TRUE, nrow=nsp))
+mat &lt;- t(matrix(runif(nsp*n_latent,-2,2), byrow=TRUE, nrow=nsp))
+diag(mat) &lt;- runif(n_latent,0,2)
+lambda.target &lt;- matrix(0,n_latent,nsp)
+gamma.target &lt;-runif(nd,-1,1)
+lambda.target[upper.tri(mat,diag=TRUE)] &lt;- mat[upper.tri(mat,
+                                                         diag=TRUE)]
+#= Variance of random site effect 
+V_alpha.target &lt;- 0.5
+#= Random site effect 
+alpha.target &lt;- rnorm(nsite,0,sqrt(V_alpha.target))
+## probit_theta
+probit_theta &lt;- c(X %*% beta.target) + c(W %*% lambda.target) +
+                as.matrix(D) %*% gamma.target + rep(alpha.target, nsp)
+# Supplementary observation (each site have been visited twice)
+# Environmental variables at the time of the second visit
+x1_supObs &lt;- rnorm(nsite,0,1)
+x1.2_supObs &lt;- scale(x1^2)
+X_supObs &lt;- cbind(rep(1,nsite),x1_supObs,x1.2_supObs)
+D_supObs &lt;- data.frame(x1.SLA=scale(c(x1_supObs %*% t(SLA))))
+probit_theta_supObs &lt;- c(X_supObs%*%beta.target) + c(W%*%lambda.target) + 
+                       as.matrix(D_supObs) %*% gamma.target + alpha.target
+probit_theta &lt;- c(probit_theta, probit_theta_supObs)
+nobs &lt;- length(probit_theta)
+e &lt;- rnorm(nobs,0,1)
+Z_true &lt;- probit_theta + e
+Y&lt;-rep(0,nobs)
+for (n in 1:nobs){
+  if ( Z_true[n] &gt; 0) {Y[n] &lt;- 1}
+}
+Id_site &lt;- rep(1:nsite,nsp)
+Id_sp &lt;- rep(1:nsp,each=nsite)
+data &lt;- data.frame(site=rep(Id_site,2), species=rep(Id_sp,2), Y=Y,
+                   x1=c(rep(x1,nsp),rep(x1_supObs,nsp)),
+                   x1.2=c(rep(x1.2,nsp),rep(x1.2_supObs,nsp)),
+                   x1.SLA=c(D$x1.SLA,D_supObs$x1.SLA))
+# missing observation
+data &lt;- data[-1,]
+
+#==================================
+#== Site-occupancy model
+
+# Increase number of iterations (burnin and mcmc) to get convergence
+mod&lt;-jSDM_binomial_probit_long_format( # Iteration
+  burnin=500,
+  mcmc=500,
+  thin=1,
+  # Response variable
+  data=data,
+  # Explanatory variables
+  site_formula=~ (x1 + x1.2):species + x1.SLA,
+  n_latent=2,
+  site_effect="random",
+  # Starting values
+  alpha_start=0,
+  gamma_start=0,
+  beta_start=0,
+  lambda_start=0,
+  W_start=0,
+  V_alpha=1,
+  # Priors
+  shape_Valpha=0.5, rate_Valpha=0.0005,
+  mu_gamma=0, V_gamma=10,
+  mu_beta=0, V_beta=10,
+  mu_lambda=0, V_lambda=10,
+  seed=1234, verbose=1)
+
+#= Parameter estimates
+oldpar &lt;- par(no.readonly = TRUE) 
+# gamma 
+par(mfrow=c(2,2))
+for(d in 1:nd){
+ coda::traceplot(mod$mcmc.gamma[,d])
+ coda::densplot(mod$mcmc.gamma[,d],
+                main = colnames(mod$mcmc.gamma)[d])
+ abline(v=gamma.target[d],col='red')
+}
+## beta_j
+mean_beta &lt;- matrix(0,nsp,ncol(X))
+pdf(file=file.path(tempdir(), "Posteriors_beta_jSDM_probit.pdf"))
+par(mfrow=c(ncol(X),2))
+for (j in 1:nsp) {
+  mean_beta[j,] &lt;- apply(mod$mcmc.sp[[j]]
+                         [,1:ncol(X)], 2, mean)
+  for (p in 1:ncol(X)){
+    coda::traceplot(mod$mcmc.sp[[j]][,p])
+    coda::densplot(mod$mcmc.sp[[j]][,p],
+      main = paste0(colnames(mod$mcmc.sp[[j]])[p],"_sp",j))
+    abline(v=beta.target[p,j],col='red')
+  }
+}
+dev.off()
+
+## lambda_j
+mean_lambda &lt;- matrix(0,nsp,n_latent)
+pdf(file=file.path(tempdir(), "Posteriors_lambda_jSDM_probit.pdf"))
+par(mfrow=c(n_latent*2,2))
+for (j in 1:nsp) {
+  mean_lambda[j,] &lt;- apply(mod$mcmc.sp[[j]]
+                           [,(ncol(X)+1):(ncol(X)+n_latent)], 2, mean)
+  for (l in 1:n_latent) {
+    coda::traceplot(mod$mcmc.sp[[j]][,ncol(X)+l])
+    coda::densplot(mod$mcmc.sp[[j]][,ncol(X)+l],
+                   main=paste0(colnames(mod$mcmc.sp[[j]])[ncol(X)+l], "_sp",j))
+    abline(v=lambda.target[l,j],col='red')
+  }
+}
+dev.off()
+
+# Species effects beta and factor loadings lambda
+par(mfrow=c(1,2))
+plot(t(beta.target), mean_beta,
+     main="species effect beta",
+     xlab ="obs", ylab ="fitted")
+abline(a=0,b=1,col='red')
+plot(t(lambda.target), mean_lambda,
+     main="factor loadings lambda",
+     xlab ="obs", ylab ="fitted")
+abline(a=0,b=1,col='red')
+
+## W latent variables
+par(mfrow=c(1,2))
+for (l in 1:n_latent) {
+  plot(W[,l],
+       summary(mod$mcmc.latent[[paste0("lv_",l)]])[[1]][,"Mean"],
+       main = paste0("Latent variable W_", l),
+       xlab ="obs", ylab ="fitted")
+  abline(a=0,b=1,col='red')
+}
+
+## alpha
+par(mfrow=c(1,3))
+plot(alpha.target, summary(mod$mcmc.alpha)[[1]][,"Mean"],
+     xlab ="obs", ylab ="fitted", main="site effect alpha")
+abline(a=0,b=1,col='red')
+## Valpha
+coda::traceplot(mod$mcmc.V_alpha, main="Trace V_alpha")
+coda::densplot(mod$mcmc.V_alpha,main="Density V_alpha")
+abline(v=V_alpha.target,col='red')
+
+## Deviance
+summary(mod$mcmc.Deviance)
+plot(mod$mcmc.Deviance)
+
+#= Predictions
+
+## probit_theta
+par(mfrow=c(1,2))
+plot(probit_theta[-1],mod$probit_theta_latent,
+     main="probit(theta)",xlab="obs",ylab="fitted")
+abline(a=0,b=1,col='red')
+
+## Z
+plot(Z_true[-1],mod$Z_latent,
+     main="Z_latent", xlab="obs", ylab="fitted")
+abline(a=0,b=1,col='red')
+
+## theta
+par(mfrow=c(1,1))
+plot(pnorm(probit_theta[-1]),mod$theta_latent,
+     main="theta",xlab="obs",ylab="fitted")
+abline(a=0,b=1,col='red')
+par(oldpar)
+
+</code></pre>
+
+
+</div>

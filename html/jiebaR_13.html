@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>filter_segment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Filter segmentation result</h2>
+
+<h3>Description</h3>
+
+<p>This function helps remove some words in the segmentation result.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">filter_segment(input, filter_words, unit = 50)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>a string vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filter_words</code></td>
+<td>
+<p>a string vector of words to be removed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unit</code></td>
+<td>
+<p>the length of word unit to use in regular expression, 
+and the default is 50. Long list of a words forms a big regular expressions,
+it may or may not be accepted: the POSIX standard only requires up to 256 
+bytes. So we use unit to split the words in units.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">filter_segment(c("abc","def"," ","."), c("abc"))
+</code></pre>
+
+
+</div>

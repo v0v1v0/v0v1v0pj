@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hist_jack_step</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Histogram with Jackstrap Efficiency Indicators:  This function builds a graphic with indicator distributions
+without outliers and complete sample. The outliers are defined by heaviside step function method.</h2>
+
+<h3>Description</h3>
+
+<p>Histogram with Jackstrap Efficiency Indicators:  This function builds a graphic with indicator distributions
+without outliers and complete sample. The outliers are defined by heaviside step function method.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hist_jack_step(efficiency, model_hist_step)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>efficiency</code></td>
+<td>
+<p>is the jackstrap object created by jackstrap function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_hist_step</code></td>
+<td>
+<p>is the desired graphic model. There are four kinds: 1- Density Histogram of efficiency indicators with
+complete sample and without outliers by heaviside step function; 2 - Histogram of efficiency with complete sample and without outliers
+by heaviside step function; 3 - Histogram of efficiency without ouliers by heaviside step function; 4 - Histogram of efficiency with complete sample.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return the plot with efficiency indicators with complete sample and/or without outliers by heaviside step function;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+ 
+    #Build charts with efficiency indicators with jackstrap method and heaviside criterion
+    hist_jack_step(efficiency, 1)
+    hist_jack_step(efficiency, 2)
+    hist_jack_step(efficiency, 3)
+    hist_jack_step(efficiency, 4)
+ 
+</code></pre>
+
+
+</div>

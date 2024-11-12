@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts R Markdown file into HTML fragment with inline styles</h2>
+
+<h3>Description</h3>
+
+<p>This function facilitates writing contents in R Markdown formats for CMS the
+source editor of which silently removes style tags. When run interactively,
+the resulting HTML code will be copied to the clipboard.
+</p>
+<p>It basically does three things:
+</p>
+
+<ol>
+<li>
+<p> it converts (R) Markdown file into a HTML file with
+<code>knitr::knit()</code> + <code>markdown::mark()</code>,
+</p>
+</li>
+<li>
+<p> embed CSS information in style atribute with <code>juicyjuice::css_inline()</code>,
+and then
+</p>
+</li>
+<li>
+<p> extracts article/div element that is ready for copying and pasting into
+CMS's source editor.
+</p>
+</li>
+</ol>
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert(
+  file = NULL,
+  dir = NULL,
+  tag = NULL,
+  id = NULL,
+  clip = TRUE,
+  full_html = NULL,
+  remove_script = NULL,
+  stylesheet = NULL,
+  template = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>character. Path to the (R)markdown file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dir</code></td>
+<td>
+<p>character. Output directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tag</code></td>
+<td>
+<p>character. Surrounding tag for the HTML block, "article" and "div"
+are allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>character. ID attribute for the surrounding tag.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clip</code></td>
+<td>
+<p>logical. Whether or not copy the result to clipboard. Ignored
+(set to FALSE) if <code>full_html = TRUE</code>. Default is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>full_html</code></td>
+<td>
+<p>logical. Produce the complete HTML or HTML block only?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove_script</code></td>
+<td>
+<p>logical. Whether or not remove script tags. Ignored
+(set to FALSE) if <code>full_html = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stylesheet</code></td>
+<td>
+<p>character. Paths to the CSS files used in markdown::mark()</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>template</code></td>
+<td>
+<p>character. Path to the template used in markdown::mark()</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Invisibly returns a character vector identical to the result file.
+</p>
+
+
+<h3>Details</h3>
+
+
+
+<h4>Change default behaviors with <code>options()</code>
+</h4>
+
+<p>Currently, three global defaults are available. You can set these defaults to
+alter the appearance of the result.
+</p>
+
+<ul>
+<li> <p><code>juicedown.template</code>: Defaults to <code>juicedown:::pkg_file("xml", "template.html")</code>
+</p>
+</li>
+<li> <p><code>juicedown.article.css</code>: Defaults to <code>juicedown:::pkg_file("css", "article.scss")</code>
+</p>
+</li>
+<li> <p><code>juicedown.div.css</code>: <code>juicedown:::pkg_file("css", "div.scss")</code>
+</p>
+</li>
+</ul>
+<h4>Priority order</h4>
+
+<p>You can pass conversion parameters in function argument and YAML metadata
+(under <code>juicedown</code> key) and for some parameters, global options, with priority
+given in that order. For instance, if the <code>stylesheet</code> parameter exists in the
+function call, it is used. If not and if YAML metadata has stylesheet key
+under juicedown key, then that will be used. In the below example, some.css
+used.
+</p>
+<div class="sourceCode markdown"><pre>---
+juicedown:
+  stylesheet:
+     some.css
+---
+</pre></div>
+<p>If neither the function argument nor missing YAML metadata exist, then
+the global option (such as <code>juicedown.article.css</code>) will be used.
+</p>
+
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">file &lt;- juicedown_example("markdown", "sample.md")
+tdir &lt;- tempdir()
+convert(file, dir = tdir, clip = FALSE)
+unlink(file.path(tdir, "sample.html"))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cjd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint Diagonalization of Complex Matrices</h2>
+
+<h3>Description</h3>
+
+<p>This is an <span class="pkg">R</span> version of Cardoso's joint_diag matlab function for joint diagonalization of k complex-valued square matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cjd(X, eps = 1e-06, maxiter = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix of k stacked pxp complex matrices with dimension c(kp,p) or an array with dimension c(p,p,k).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p> Convergence tolerance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p> Maximum number of iterations.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>V </code></td>
+<td>
+<p>An orthogonal matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D </code></td>
+<td>
+<p>A stacked matrix with the diagonal matrices or an array with the diagonal matrices. The form of the output
+depends on the form of the input.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jean-Francois Cardoso. Ported to <span class="pkg">R</span> by Klaus Nordhausen.</p>
+
+
+<h3>References</h3>
+
+<p><cite>Cardoso, J.-F. and Souloumiac, A., (1996), Jacobi angles for simultaneous diagonalization, <em>SIAM J. Mat. Anal. Appl.</em>, <b>17</b>,  161–164.</cite>  
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>rjd</code>, <code>rjd.fortran</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">D1 &lt;- diag(complex(real=runif(3,0,2), imaginary=runif(3)))
+D2 &lt;- diag(complex(real=runif(3,0,2), imaginary=runif(3)))
+D3 &lt;- diag(complex(real=runif(3,0,2), imaginary=runif(3)))
+D4 &lt;- diag(complex(real=runif(3,0,2), imaginary=runif(3)))
+
+Z &lt;- matrix(runif(9), ncol = 3)
+V &lt;- eigen(Z %*% t(Z))$vectors
+
+M1 &lt;- t(V)%*%D1%*%V
+M2 &lt;- t(V)%*%D2%*%V
+M3 &lt;- t(V)%*%D3%*%V
+M4 &lt;- t(V)%*%D4%*%V
+MS &lt;- rbind(M1,M2,M3,M4)
+Ms &lt;- array(0,dim=c(3,3,4))
+Ms[,,1]&lt;-M1
+Ms[,,3]&lt;-M3
+Ms[,,2]&lt;-M2
+Ms[,,4]&lt;-M4
+res.array &lt;- cjd(Ms)
+res.mat &lt;- cjd(MS)
+Re(res.array$V)
+V
+round(V%*%Re(res.array$V),2)
+round(V%*%Re(res.mat$V),2)
+</code></pre>
+
+
+</div>

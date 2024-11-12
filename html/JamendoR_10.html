@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getArtists</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search Jamendo database for several artists</h2>
+
+<h3>Description</h3>
+
+<p>Search Jamendo database for several artists
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getArtists(artist_ids, client_id = Sys.getenv("JAMENDO_CLIENT_ID"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>artist_ids</code></td>
+<td>
+<p>List of artist IDs to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains information about several albums.
+See <a href="https://developer.jamendo.com/v3.0/artists">https://developer.jamendo.com/v3.0/artists</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Example
+ IDs &lt;- c(1510,338873)
+ artists &lt;- getArtists(IDs)
+
+</code></pre>
+
+
+</div>

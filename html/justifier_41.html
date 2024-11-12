@@ -1,0 +1,142 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parse_justifications</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parsing justifications</h2>
+
+<h3>Description</h3>
+
+<p>This function is normally called by <code>load_justifications()</code>; however,
+sometimes it may be desirable to parse justifications embedded in more
+complex objects, for example as provided by <code>yum::load_and_simplify()</code>.
+Therefore, this function can also be called directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">parse_justifications(
+  x,
+  justifierFields = "^date$|^framework$",
+  fromFile = NULL,
+  path = NULL,
+  storeDecisionGraphSvg = FALSE,
+  silent = TRUE
+)
+
+## S3 method for class 'justifierDecisionGraph'
+print(x, ...)
+
+## S3 method for class 'justifierDecisionGraph'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object resulting from a call to <code>yum::load_and_simplify()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>justifierFields</code></td>
+<td>
+<p>Which fields to copy from <code>justifier</code> metadata to
+the elements within the specified scope.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fromFile</code></td>
+<td>
+<p>The file from which the <code>justifier</code> specifications were read.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>The path holding these <code>justifier</code> specifications (not necessary
+if <code>fromFile</code> is provided).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>storeDecisionGraphSvg</code></td>
+<td>
+<p>Whether to also produce (and return) the SVG
+for the decision graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be chatty or quiet.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments are passed on to <code>graphics::plot()</code> for the
+<code>print</code> method or to <code>DiagrammeR::render_graph()</code> for the <code>plot</code> method.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>While there is some flexibility in how justifications can be specified,
+they are most easily processed further if they all follow the same
+conventions. This function ensures this. The convention is as follows:
+</p>
+
+<ul>
+<li>
+<p> all specifications are provided in four 'flat' lists, named after the
+types of elements they contain;
+</p>
+</li>
+<li>
+<p> all elements have  a unique identifier
+</p>
+</li>
+<li>
+<p> all references to other elements are indeed only references to the other
+elements' id's in these 'flat lists'
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>The parsed <code>justifier</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Specify an example text
+exampleFile &lt;-
+  system.file("extdata",
+              "simple-example.jmd",
+              package="justifier");
+
+### Show contents
+cat(readLines(exampleFile), sep="\n");
+
+### Load it with yum::load_and_simplify()
+loadedMinutes &lt;- yum::load_and_simplify(exampleFile);
+
+### Show contents
+names(loadedMinutes);
+
+### Parse 'manually'
+parsedJustifications &lt;- justifier::parse_justifications(loadedMinutes);
+
+### Show contents
+names(parsedJustifications);
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>md_table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print attractive data frames in the console</h2>
+
+<h3>Description</h3>
+
+<p>This function takes data frame input and prints to the console
+as an ASCII/markdown table for better readability.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">md_table(
+  x,
+  format = getOption("md_table_format", "grid"),
+  digits = getOption("jtools-digits", 2),
+  sig.digits = TRUE,
+  row.names = rownames(x),
+  col.names = colnames(x),
+  align = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame or matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>The style, which can be one of the following: "multiline",
+"grid", "simple" (also "pandoc"), "rmarkdown" (also "markdown").
+Default: "markdown"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>How many digits to print for numbers.
+Default: 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig.digits</code></td>
+<td>
+<p>Should each number be printed with <code>digits</code> number of
+digits or only when there are at least that many significant digits? Default
+is TRUE, meaning only print <code>digits</code> number of <em>significant</em> digits.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row.names</code></td>
+<td>
+<p>if FALSE, row names are suppressed. A character vector of
+row names can also be specified here. By default, row names are included if
+rownames(t) is neither NULL nor identical to 1:nrow(x).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.names</code></td>
+<td>
+<p>a character vector of column names to be used in the table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>align</code></td>
+<td>
+<p>Column alignment: a character vector consisting of ‘'l'’
+(left), ‘'c'’ (center) and/or ‘'r'’ (right). By default or if
+‘align = NULL’, numeric columns are right-aligned, and other
+columns are left-aligned.</p>
+</td>
+</tr>
+</table>
+</div>

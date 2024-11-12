@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>boxServer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>boxServer: shiny module server for boxplot.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module server for boxplot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">boxServer(id, data, data_label, data_varStruct = NULL, nfactor.limit = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>Reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>Reactive List of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit in factor variable, Default: 10</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module server for boxplot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module server for boxplot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(ggplot2)
+library(ggpubr)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      boxUI("box")
+    ),
+    mainPanel(
+      optionUI("box"),
+      plotOutput("box_plot"),
+      ggplotdownUI("box")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_box &lt;- boxServer("box",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$box_plot &lt;- renderPlot({
+    print(out_box())
+  })
+}
+</code></pre>
+
+
+</div>

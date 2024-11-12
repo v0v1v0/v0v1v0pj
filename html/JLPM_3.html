@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conversion</h2>
+
+<h3>Description</h3>
+
+<p>This function converts a jointLPM object to an object of type <code>multlcmm</code> or
+<code>Jointlcmm</code> from lcmm package.
+The conversion to <code>multlcmm</code> unable the use of the dedicated postfit and
+predictions functions implemented in the lcmm package (plot, predictL, predictY,
+predictlink, predictYcond, fitY, VarExpl).
+The conversion to <code>Jointlcmm</code> permits the use of functions cuminc and
+plot (with options "baselinerisk" or "survival").
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert(object, to)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>jointLPM</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to</code></td>
+<td>
+<p>character. Either "multlcmm" or "Jointlcmm", indicating to which type the object should be converted.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an object of class <code>multlcmm</code> or <code>Jointlcmm</code>.
+</p>
+
+
+</div>

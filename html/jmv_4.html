@@ -1,0 +1,260 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anovaOneW</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>One-Way ANOVA</h2>
+
+<h3>Description</h3>
+
+<p>The Analysis of Variance (ANOVA) is used to explore the relationship
+between a continuous dependent variable, and one or more categorical
+explanatory variables. This 'One-Way ANOVA' is a simplified version of
+the 'normal' ANOVA, allowing only a single explanatory factor, however
+also providing a Welch's ANOVA. The Welch's ANOVA has the advantage that
+it need not assume that the variances of all groups are equal.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anovaOneW(data, deps, group, welchs = TRUE, fishers = FALSE,
+  miss = "perAnalysis", desc = FALSE, descPlot = FALSE,
+  norm = FALSE, qq = FALSE, eqv = FALSE, phMethod = "none",
+  phMeanDif = TRUE, phSig = TRUE, phTest = FALSE, phFlag = FALSE,
+  formula)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deps</code></td>
+<td>
+<p>a string naming the dependent variables in <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>a string naming the grouping or independent variable in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>welchs</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, perform Welch's
+one-way ANOVA which does not assume equal variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fishers</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Fisher's
+one-way ANOVA which assumes equal variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>miss</code></td>
+<td>
+<p><code>'perAnalysis'</code> or <code>'listwise'</code>, how to handle
+missing values; <code>'perAnalysis'</code> excludes missing values for individual
+dependent variables, <code>'listwise'</code> excludes a row from all analyses if
+one of its entries is missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>descPlot</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Shapiro-Wilk
+test of normality</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eqv</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Levene's test for
+homogeneity of variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phMethod</code></td>
+<td>
+<p><code>'none'</code>, <code>'gamesHowell'</code> or <code>'tukey'</code>,
+which post-hoc tests to provide; <code>'none'</code> shows no post-hoc tests,
+<code>'gamesHowell'</code> shows Games-Howell post-hoc tests where no equivalence
+of variances is assumed, and <code>'tukey'</code> shows Tukey post-hoc tests
+where equivalence of variances is assumed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phMeanDif</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide mean
+differences for post-hoc tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phSig</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide significance
+levels for post-hoc tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phTest</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide test results
+(t-value and degrees of freedom) for post-hoc tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phFlag</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), flag significant
+post-hoc comparisons</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>(optional) the formula to use, see the examples</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For convenience, this method allows specifying multiple dependent
+variables, resulting in multiple independent tests.
+</p>
+<p>Note that the Welch's ANOVA is the same procedure as the Welch's
+independent samples t-test.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$anova</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$desc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the group descriptives </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$norm</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the normality tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$eqv</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of homogeneity of variances tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$plots</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of groups of plots </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$postHoc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of post-hoc tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$anova$asDF</code>
+</p>
+<p><code>as.data.frame(results$anova)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('ToothGrowth')
+dat &lt;- ToothGrowth
+dat$dose &lt;- factor(dat$dose)
+
+anovaOneW(formula = len ~ dose, data = dat)
+
+#
+#  ONE-WAY ANOVA
+#
+#  One-Way ANOVA (Welch's)
+#  ----------------------------------------
+#           F       df1    df2     p
+#  ----------------------------------------
+#    len    68.4      2    37.7    &lt; .001
+#  ----------------------------------------
+#
+
+</code></pre>
+
+
+</div>

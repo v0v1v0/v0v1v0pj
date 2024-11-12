@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>findSigRegions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to find significant regions from an interaction</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the <code>contrast</code> function from <span class="pkg">rms</span> to
+find the threshold for significance from interactions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">findSigRegions(
+  object,
+  l1,
+  l2,
+  name.vary,
+  lower,
+  upper,
+  alpha = 0.05,
+  starts = 50
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted rms object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l1</code></td>
+<td>
+<p>the first set of values to fix for the contrast function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>l2</code></td>
+<td>
+<p>the second set of values to fix for the contrast function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name.vary</code></td>
+<td>
+<p>the name of the model parameter to vary values for
+to find the threshold.  Note that this should not be included in
+<code>l1</code> or <code>l2</code> arguments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>The lower bound to search for values for the varying value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>The upper bound to search for values for the varying value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>The significance threshold, defaults to <code>.05</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>starts</code></td>
+<td>
+<p>Number of starting values to try between the
+lower and upper bounds.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data table with notes if no convergence or significance
+thresholds (if any).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## make me
+</code></pre>
+
+
+</div>

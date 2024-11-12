@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Sugar</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sugar Processing Data</h2>
+
+<h3>Description</h3>
+
+<p>Sugar was sampled continuously during eight hours to make
+a mean sample representative for one "shift"
+(eight hour period). Samples were taken during the
+three months of operation (the so-called campaign) in
+late autumn from a sugar plant in Scandinavia giving a
+total of 268 samples. The sugar was sampled directly
+from the final unit operation (centrifuge) of the process.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(Sugar)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list consisting of the following:
+</p>
+
+<dl>
+<dt><code>y</code></dt>
+<dd>
+<p>a 268 x 3 matrix of quality parameters: <code>date</code>, <code>color</code>, <code>ash</code>*1000</p>
+</dd>
+<dt><code>X</code></dt>
+<dd>
+<p>fluoresence array, 268 (observations) x [571 (emission channels) x 7 (excitation channels)]</p>
+</dd>
+<dt><code>Lab</code></dt>
+<dd>
+<p>Lab information</p>
+</dd>
+<dt><code>DimX</code></dt>
+<dd>
+<p>array dimension for <code>X</code></p>
+</dd>
+<dt><code>Yidx</code></dt>
+<dd>
+<p>names (id) for <code>y</code></p>
+</dd>
+<dt><code>EmAx</code></dt>
+<dd>
+<p>Emmission levels for axis (nm)</p>
+</dd>
+<dt><code>ExAx</code></dt>
+<dd>
+<p>Excitation levels for axis (nm)</p>
+</dd>
+<dt><code>time</code></dt>
+<dd> </dd>
+<dt><code>readmetime</code></dt>
+<dd> </dd>
+<dt><code>Lname</code></dt>
+<dd> </dd>
+<dt><code>LabNumber</code></dt>
+<dd> </dd>
+<dt><code>ProcNumber</code></dt>
+<dd> </dd>
+<dt><code>Proc</code></dt>
+<dd> </dd>
+<dt><code>DimLab</code></dt>
+<dd> </dd>
+<dt><code>DimProc</code></dt>
+<dd> </dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://ucphchemometrics.com/sugar-process-data/">https://ucphchemometrics.com/sugar-process-data/</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>R. Bro, Exploratory study of sugar production using fluorescence spectroscopy and multi-way analysis,
+<em>Chemom. Intell. Lab. Syst.</em>, 1999, (46), 133-147.
+</p>
+
+
+</div>

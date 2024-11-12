@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ZonalR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of zonal polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a zonal polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ZonalR(x, lambda, algorithm = "DK")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric or complex vector or bigq vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>the algorithm used, either <code>"DK"</code> (Demmel-Koev)
+or <code>"naive"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric or complex scalar or a <code>bigq</code> rational number.
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li>
+<p> Robb Muirhead. <em>Aspects of multivariate statistical theory</em>.
+Wiley series in probability and mathematical statistics.
+Probability and mathematical statistics.
+John Wiley &amp; Sons, New York, 1982.
+</p>
+</li>
+<li>
+<p> Akimichi Takemura. <em>Zonal Polynomials</em>,
+volume 4 of Institute of Mathematical Statistics Lecture Notes –
+Monograph Series.
+Institute of Mathematical Statistics, Hayward, CA, 1984.
+</p>
+</li>
+<li>
+<p> Lin Jiu &amp; Christoph Koutschan.
+<em>Calculation and Properties of Zonal Polynomials</em>.
+<a href="http://koutschan.de/data/zonal/">http://koutschan.de/data/zonal/</a>
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>ZonalPolR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lambda &lt;- c(2,2)
+ZonalR(c(1,1), lambda)
+ZonalR(c(gmp::as.bigq(1),gmp::as.bigq(1)), lambda)
+##
+x &lt;- c(3,1)
+ZonalR(x, c(1,1)) + ZonalR(x, 2) # sum(x)^2
+ZonalR(x, 3) + ZonalR(x, c(2,1)) + ZonalR(x, c(1,1,1)) # sum(x)^3
+</code></pre>
+
+
+</div>

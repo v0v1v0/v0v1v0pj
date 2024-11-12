@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mesh_to_coords</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get from mesh code to latitude and longitude</h2>
+
+<h3>Description</h3>
+
+<p>mesh centroid
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mesh_to_coords(meshcode, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meshcode</code></td>
+<td>
+<p><code>character</code>. mesh code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Akio Takenaka: <a href="http://takenaka-akio.org/etc/j_map/index.html">http://takenaka-akio.org/etc/j_map/index.html</a> # nolint
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coords_to_mesh()</code> for convert from coordinates to meshcode.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mesh_to_coords("64414277")
+mesh_to_coords(c("64414277", "64414278"))
+</code></pre>
+
+
+</div>

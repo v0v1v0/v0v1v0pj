@@ -1,0 +1,231 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>long2wide_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>) from long to wide format</h2>
+
+<h3>Description</h3>
+
+<p>Converts .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>) from long to wide format
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">long2wide_omv(
+  dtaInp = NULL,
+  fleOut = "",
+  varTgt = c(),
+  varExc = c(),
+  varID = "ID",
+  varTme = c(),
+  varSep = "_",
+  varOrd = c("times", "vars"),
+  varAgg = c("mean", "first"),
+  varSrt = c(),
+  usePkg = c("foreign", "haven"),
+  selSet = "",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtaInp</code></td>
+<td>
+<p>Either a data frame or the name of a data file to be read (including the path, if required; "FILENAME.ext"; default: NULL); files can be of
+any supported file type, see Details below</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fleOut</code></td>
+<td>
+<p>Name of the data file to be written (including the path, if required; "FILE_OUT.omv"; default: ""); if empty, the resulting data frame is
+returned instead</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varTgt</code></td>
+<td>
+<p>Names of one or more variables to be transformed / reshaped (other variables are excluded, if empty(c()) all variables except <code>varTme</code>,
+<code>varID</code> and <code>varExc</code> are included; default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varExc</code></td>
+<td>
+<p>Name of the variable(s) should be excluded from the transformation, typically this will be between-subject-variable(s) (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varID</code></td>
+<td>
+<p>Names of one or more variables that identify the same group / individual (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varTme</code></td>
+<td>
+<p>Name of the variable(s) that differentiates multiple records from the same group / individual (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varSep</code></td>
+<td>
+<p>Separator character when concatenating the fixed and time-varying part of the variable name ("VAR1_1", "VAR1_2"; default: "_")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varOrd</code></td>
+<td>
+<p>How variables / columns are organized: for "times" (default) the steps of the time varying variable are adjacent, for "vars" the steps of
+the original columns in the long dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varAgg</code></td>
+<td>
+<p>How multiple occurrences of particular combinations of time varying variables are aggregated: either "mean" (calculate the mean over
+occurrences), or "first" (take the first occurrence)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varSrt</code></td>
+<td>
+<p>Variable(s) that are used to sort the data frame (see Details; if empty, the order returned from reshape is kept; default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>usePkg</code></td>
+<td>
+<p>Name of the package: "foreign" or "haven" that shall be used to read SPSS, Stata and SAS files; "foreign" is the default (it comes with
+base R), but "haven" is newer and more comprehensive</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>selSet</code></td>
+<td>
+<p>Name of the data set that is to be selected from the workspace (only applies when reading .RData-files)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul>
+<li>
+<p> If <code>varTgt</code> is empty, it is tried to generate it using all variables in the data frame except those defined by <code>varID</code>, <code>varTme</code> and <code>varExc</code>. The
+variable(s) in <code>varID</code> need to be unique identifiers (in the original dataset), those in <code>varExc</code> don't have this requirement. It is generally recommended
+that the variable names in <code>varExc</code> and <code>varID</code> should not contain the variable separator (defined in <code>varSep</code>; default: "_").
+</p>
+</li>
+<li> <p><code>varSrt</code> can be either a character or a character vector (with one or more variables respectively). The sorting order for a particular variable can be
+inverted with preceding the variable name with "-". Please note that this doesn't make sense and hence throws a warning for certain variable types (e.g.,
+factors).
+</p>
+</li>
+<li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the functions that are used for transforming, reading or writing the data.
+By clicking on the respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take.
+</p>
+</li>
+<li>
+<p> The transformation from long to wide uses <code>reshape</code>. <code>varTgt</code> matches (~) <code>v.names</code> in <code>reshape</code>, <code>varID</code> ~ <code>idvar</code>, <code>varTme</code> ~ <code>timevar</code>, and <code>varSep</code> ~
+<code>sep</code>. The help for <code>reshape</code> is very explanatory, click on the link under “See also” to access it, particularly what is explained under “Details”.
+</p>
+</li>
+<li>
+<p> The functions for reading and writing the data are: <code>read_omv</code> and <code>write_omv</code> (for jamovi-files), <code>read.table</code> (for CSV / TSV files; using similar
+defaults as <code>read.csv</code> for CSV and <code>read.delim</code> for TSV which both are based upon <code>read.table</code>), <code>load</code> (for .RData-files), <code>readRDS</code> (for .rds-files),
+<code>read_sav</code> (needs R-package <code>haven</code>) or <code>read.spss</code> (needs R-package <code>foreign</code>) for SPSS-files, <code>read_dta</code> (<code>haven</code>) / <code>read.dta</code> (<code>foreign</code>) for
+Stata-files, <code>read_sas</code> (<code>haven</code>) for SAS-data-files, and <code>read_xpt</code> (<code>haven</code>) / <code>read.xport</code> (<code>foreign</code>) for SAS-transport-files. If you would like to
+use <code>haven</code>, you may need to install it using <code>install.packages("haven", dep = TRUE)</code>.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>a data frame (only returned if <code>fleOut</code> is empty) where the input data set is converted from long to wide format
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>long2wide_omv</code> internally uses the following functions: The transformation from long to wide uses <code>stats::reshape()</code>. For reading and writing data
+files in different formats: <code>read_omv()</code> and <code>write_omv()</code> for jamovi-files, <code>utils::read.table()</code> for CSV / TSV files,
+<code>load()</code> for reading .RData-files, <code>readRDS()</code> for .rds-files, <code>haven::read_sav()</code> or <code>foreign::read.spss()</code> for SPSS-files, <code>haven::read_dta()</code> or
+<code>foreign::read.dta()</code> for Stata-files, <code>haven::read_sas()</code> for SAS-data-files, and <code>haven::read_xpt()</code> or <code>foreign::read.xport()</code> for SAS-transport-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# generate a test dataframe with 100 (imaginary) participants / units of
+#  observation (ID), 8 measurement (measure) of one variable (X)
+dtaInp &lt;- data.frame(ID = rep(as.character(seq(1, 100)), each = 8),
+                     measure = rep(seq(1, 8), times = 100),
+                     X = runif(800, -10, 10))
+cat(str(dtaInp))
+# the output should look like this
+# 'data.frame': 800 obs. of  3 variables:
+#  $ ID     : chr  "1" "1" "1" "1" ...
+#  $ measure: int  1 2 3 4 5 6 7 8 1 2 ...
+#  $ X      : num  ...
+# this data set is stored as (temporary) RDS-file and later processed by long2wide
+nmeInp &lt;- tempfile(fileext = ".rds")
+nmeOut &lt;- tempfile(fileext = ".omv")
+saveRDS(dtaInp, nmeInp)
+jmvReadWrite::long2wide_omv(dtaInp = nmeInp, fleOut = nmeOut, varTgt = "X", varID = "ID",
+  varTme = "measure")
+# it is required to give at least the arguments dtaInp, varID and varTme
+# check whether the file was created and its size
+cat(list.files(dirname(nmeOut), basename(nmeOut)))
+# -&gt; "file[...].omv" ([...] contains a random combination of numbers / characters
+cat(file.info(nmeOut)$size)
+# -&gt; 6851 (approximate size; size may differ in every run [in dependence of
+#          how well the generated random data can be compressed])
+cat(str(jmvReadWrite::read_omv(nmeOut, sveAtt = FALSE)))
+# the data set is now transformed into wide (and each the measurements is now
+# indicated as a suffix to X; X_1, X_2, ...)
+# 'data.frame':	100 obs. of  9 variables:
+#  $ ID : chr  "1" "2" "3" "4" "5" "6" "7" "8" "9" "10" ...
+#   ..- attr(*, "jmv-id")= logi TRUE
+#   ..- attr(*, "missingValues")= list()
+#  $ X_1: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_2: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_3: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_4: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_5: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_6: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_7: num  ...
+#   ..- attr(*, "missingValues")= list()
+#  $ X_8: num  ...
+#   ..- attr(*, "missingValues")= list()
+
+unlink(nmeInp)
+unlink(nmeOut)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getMessageIds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get IDs of all stored messages</h2>
+
+<h3>Description</h3>
+
+<p>Returns IDs of all currently stored messages.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getMessageIds(sessionId = NULL, simplify = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session for which to return message IDs. Can also be a vector of multiple session IDs.
+If <code>NULL</code>, returns message IDs for all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simplify</code></td>
+<td>
+<p>If <code>TRUE</code> and only one session ID is provided (or there is only one active session), returns
+a vector of message IDs. Otherwise returns a named list with one vector for each requested session.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For security reasons, most of the messages that are received
+from web pages require manual authorization in the R session with <code>authorize</code> function. Until that happens,
+messages are given randomly generated IDs and are stored in memory. 
+</p>
+<p>This function is a wrapper around method <code>getMessageIds</code> of class <code>Session</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Either a named list or a vector with message IDs.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>getSessionIds</code>.
+</p>
+
+
+</div>

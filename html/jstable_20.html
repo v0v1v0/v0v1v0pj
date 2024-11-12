@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lmer.display</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>lmer.display: table for "lmerMod" or "glmerMod" object (lme4 package)</h2>
+
+<h3>Description</h3>
+
+<p>Make mixed effect model results from "lmerMod" or "glmerMod" object (lme4 package)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lmer.display(lmerMod.obj, dec = 2, ci.ranef = F)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lmerMod.obj</code></td>
+<td>
+<p>"lmerMod" or "glmerMod" object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>Decimal, Default: 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci.ranef</code></td>
+<td>
+<p>Show confidence interval of random effects?, Default: F</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table: fixed &amp; random effect
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(geepack)
+data(dietox)
+dietox$Cu &lt;- as.factor(dietox$Cu)
+l1 &lt;- lme4::lmer(Weight ~ Time + Cu + (1 | Pig) + (1 | Evit), data = dietox)
+lmer.display(l1)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getArtistTracks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get tracks from an artist</h2>
+
+<h3>Description</h3>
+
+<p>Search Jamendo database for an artist. You can search for either an artist ID or an artist name.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getArtistTracks(
+  artist_id = NULL,
+  artist_name = NULL,
+  limit = 10,
+  client_id = Sys.getenv("JAMENDO_CLIENT_ID")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>artist_id</code></td>
+<td>
+<p>Artist ID to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>artist_name</code></td>
+<td>
+<p>Artist name to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>limit</code></td>
+<td>
+<p>Integer to set the number of displayed search results. Maximum value is 200.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains information about tracks from an artist.
+See <a href="https://developer.jamendo.com/v3.0/artists/tracks">https://developer.jamendo.com/v3.0/artists/tracks</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Example
+ tracksFromID &lt;- getArtistTracks(artist_id="1510",limit=3)
+ tracksFromName &lt;- getArtistTracks(artist_name="Judas Priestley",limit=3)
+
+</code></pre>
+
+
+</div>

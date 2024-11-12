@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_start_pos</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determine good starting postions</h2>
+
+<h3>Description</h3>
+
+<p>This is a simple dispatch function returns good starting positions
+based on the provided <code>init_method</code>. The different methods are
+explained on <code>jaatha</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_start_pos(
+  model,
+  data,
+  reps,
+  sim,
+  init_method,
+  cores,
+  sim_cache,
+  block_width,
+  zoom_in_steps = 3
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The model used for the estimation. 
+See <code>create_jaatha_model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data used for the estimation.
+See <code>create_jaatha_data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reps</code></td>
+<td>
+<p>The number of independent repetitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim</code></td>
+<td>
+<p>The number of simulations conducted for each step.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init_method</code></td>
+<td>
+<p>Determines how the starting position of each 
+repetition is chosen.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cores</code></td>
+<td>
+<p>The number of CPU cores that will be used for the simulations.
+The relies on the <span class="pkg">parallel</span> package, and consequently only one
+core is supported on Windows.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim_cache</code></td>
+<td>
+<p>The simulation cache used in the jaatha analysis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>block_width</code></td>
+<td>
+<p>The relative width of a block within jaatha will fit its
+local GLM. The default value is usually fine. Increasing this value may 
+help in case jaatha fails to converge, while you can try decreasing it if 
+the estimates of the likelihoods differ from the corrected values in the 
+'Correcting likelihoods for best estimates' phase.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zoom_in_steps</code></td>
+<td>
+<p>The number of steps conducted in the <code>zoom-in</code>
+initialization method. Has no effect if a different initialization method
+is used. Using the default value is usually fine.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The starting positions, as a matrix. Each row corresponds
+to a starting positions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Staab
+</p>
+
+
+</div>

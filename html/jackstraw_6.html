@@ -1,0 +1,169 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstraw_cluster</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jackstraw for the User-Defined Clustering Algorithm</h2>
+
+<h3>Description</h3>
+
+<p>Test the cluster membership using a user-defined clustering algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstraw_cluster(
+  dat,
+  k,
+  cluster,
+  centers,
+  algorithm = function(x, centers, ...) stats::kmeans(x, centers, ...),
+  s = 1,
+  B = 1000,
+  center = TRUE,
+  noise = NULL,
+  covariate = NULL,
+  pool = TRUE,
+  verbose = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a data matrix with <code>m</code> rows as variables and <code>n</code> columns as observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>a number of clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>a vector of cluster assignments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centers</code></td>
+<td>
+<p>a matrix of all cluster centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>a clustering algorithm to use, where an output must include 'cluster' and 'centers'. For exact specification, see <code>kmeans</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>a number of “synthetic” null variables. Out of <code>m</code> variables, <code>s</code> variables are independently permuted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a number of resampling iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>a logical specifying to center the rows. By default, <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noise</code></td>
+<td>
+<p>specify a parametric distribution to generate a noise term. If <code>NULL</code>, a non-parametric jackstraw test is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariate</code></td>
+<td>
+<p>a model matrix of covariates with <code>n</code> observations. Must include an intercept in the first column.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pool</code></td>
+<td>
+<p>a logical specifying to pool the null statistics across all clusters. By default, <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical specifying to print the computational progress. By default, <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional, optional arguments to 'algorithm'.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The clustering algorithms assign <code>m</code> rows into <code>K</code> clusters. This function enable statistical
+evaluation if the cluster membership is correctly assigned. Each of <code>m</code> p-values refers to
+the statistical test of that row with regard to its assigned cluster.
+Its resampling strategy accounts for the over-fitting characteristics due to direct computation of clusters from the observed data
+and protects against an anti-conservative bias.
+</p>
+<p>The user is expected to explore the data with a given clustering algorithm and
+determine the number of clusters <code>k</code>.
+Furthermore, provide <code>cluster</code> and <code>centers</code> as given by applying <code>algorithm</code> onto <code>dat</code>.
+The rows of <code>centers</code> correspond to <code>k</code> clusters, as well as available levels in <code>cluster</code>.
+This function allows you to specify a parametric distribution of a noise term. It is an experimental feature.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>jackstraw_cluster</code> returns a list consisting of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>F.obs</code></td>
+<td>
+<p><code>m</code> observed F statistics between variables and cluster centers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F.null</code></td>
+<td>
+<p>F null statistics between null variables and cluster centers, from the jackstraw method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.F</code></td>
+<td>
+<p><code>m</code> p-values of membership.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Neo Christopher Chung <a href="mailto:nchchung@gmail.com">nchchung@gmail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Chung (2020) Statistical significance of cluster membership for unsupervised evaluation of cell identities. Bioinformatics, 36(10): 3107–3114 <a href="https://doi.org/10.1093/bioinformatics/btaa087">doi:10.1093/bioinformatics/btaa087</a>
+</p>
+
+
+</div>

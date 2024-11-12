@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>variogram</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Empirical variogram for longitudinal data</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the variogram for observed measurements, with two
+components, the total variability in the data, and the variogram for all
+time lags in all individuals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">variogram(indv, time, Y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>indv</code></td>
+<td>
+<p>vector of individual identification, as in the longitudinal data,
+repeated for each time point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>vector of observation time, as in the longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>vector of observed measurements. This can be a vector of 
+longitudinal data, or residuals after fitting a model for the mean
+response.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The empirical variogram in this function is calculated from observed
+half-squared-differences between pairs of measurements, <code class="reqn">v_ijk = 0.5 *
+  (r_ij-r_ik)^2</code> and the corresponding time differences
+<code class="reqn">u_ijk=t_ij-t_ik</code>. The variogram is plotted for averages of each time
+lag for the <code class="reqn">v_ijk</code> for all <code class="reqn">i</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>vargm</code> and <code>list</code> with two elements.
+The first <code>svar</code> is a matrix with columns for all values
+<code class="reqn">(u_ijk,v_ijk)</code>, and the second <code>sigma2</code> is the total variability
+in the data.
+</p>
+
+
+<h3>Note</h3>
+
+<p>There is a function <code>plot.vargm</code> which should be used to 
+plot the empirical variogram.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ines Sousa
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(mental)
+mental.unbalanced &lt;- to.unbalanced(mental, id.col = 1, 
+                                   times = c(0, 1, 2, 4, 6, 8),
+                                   Y.col = 2:7, 
+                                   other.col = c(8, 10, 11))
+names(mental.unbalanced)[3] &lt;- "Y"
+
+vgm &lt;- variogram(indv = tail(mental.unbalanced[, 1], 30),
+                 time = tail(mental.unbalanced[, 2], 30),
+                 Y = tail(mental.unbalanced[, 3], 30))
+</code></pre>
+
+
+</div>

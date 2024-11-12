@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jVaRLim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Value at Risk Function(under price limit condition)
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute VaR under price limit condition.
+</p>
+<p>See the report: Value at Risk.&lt;researchgate.net&gt;
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jVaRLim(Ret, L, U, alpha, type, h)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Ret</code></td>
+<td>
+
+<p>A return series that computed from price series.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+
+<p>Lower limit.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>U</code></td>
+<td>
+
+<p>Upper limit.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+
+<p>Given probability of the event that loss exceeds VaR.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Computing method.
+</p>
+<p>'model': Garch(1,1) method.
+</p>
+<p>'histl': Historical method with return series adjusted by Garch(1,1) method.
+</p>
+<p>'simul': Simulation method.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+
+<p>Time point of VaR computing (...,-1,0,1,...)
+</p>
+<p>. -1 : previous day 
+</p>
+<p>.  0 : present
+</p>
+<p>.  1 : next day
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Value at Risk at the time point.
+</p>
+
+
+<h3>Note</h3>
+
+<p>viet-hung.vu@jvn.edu.vn
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Hung Vu
+</p>
+
+
+<h3>References</h3>
+
+<p>Value at Risk.(reserchgate.net)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>https://www.researchgate.net/profile/Vu_Hung4
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(11, 12, 10, 13, 12, 14, 13, 15, 13, 14, 12)
+s &lt;- jReturn(y)
+alpha &lt;- 0.2
+h &lt;- 0
+L &lt;- -0.13
+U &lt;- 0.16
+v &lt;- jVaRLim(s,L,U,alpha,'model',h)
+</code></pre>
+
+
+</div>

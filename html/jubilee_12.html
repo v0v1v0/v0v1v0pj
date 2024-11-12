@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.locate_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal utility to locate static file</h2>
+
+<h3>Description</h3>
+
+<p>This utility returns the path to internal file
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.locate_file(local_file, stop = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>local_file</code></td>
+<td>
+<p>character, the file name of an internal file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stop</code></td>
+<td>
+<p>logical, whether to stop if file can't be located. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The path to the file, or else, an empty string
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  jubilee.locate_file("UNRATE.csv")
+
+</code></pre>
+
+
+</div>

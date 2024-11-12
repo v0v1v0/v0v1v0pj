@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_unify_journal_id</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Unify journal IDs</h2>
+
+<h3>Description</h3>
+
+<p>This function is a simple wrapper to unify journal ids.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_unify_journal_id(meta_data, remove_cols = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meta_data</code></td>
+<td>
+<p>Data which was processed via <code>jst_get_article()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove_cols</code></td>
+<td>
+<p>Should the original columns be removed after unifying?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Date on journal ids can be found in three columns:
+<code>journal_pub_id</code>, <code>journal_jcode</code> and <code>journal_doi</code>. From my experience,
+most of the time the relevant dat ais present in <code>journal_pub_id</code> or
+<code>journal_jcode</code>, with <code>journal_jcode</code> being to most common identifier.
+This function takes the value from <code>journal_pub_id</code>, and if it is missing,
+that from <code>journal_jcode</code>. <code>journal_doi</code> is currently disregarded.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A modified <code>tibble</code>.
+</p>
+<p>A modified tibble.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">article &lt;- jst_get_article(jst_example("article_with_references.xml"))
+
+jst_unify_journal_id(article)
+
+
+# per default, original columns with data on the journal are removed
+library(dplyr)
+
+jst_unify_journal_id(article) %&gt;% 
+  select(contains("journal")) %&gt;% 
+  names()
+  
+# you can keep them by setting `remove_cols` to `FALSE`
+jst_unify_journal_id(article, remove_cols = FALSE) %&gt;%  
+  select(contains("journal")) %&gt;%
+  names()
+</code></pre>
+
+
+</div>

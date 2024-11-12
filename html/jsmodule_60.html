@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scatterUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>scatterUI: shiny module UI for scatterplot</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for scatterplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scatterUI(id, label = "scatterplot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module UI for scatterplot
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for scatterplot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(ggplot2)
+library(ggpubr)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      scatterUI("scatter")
+    ),
+    mainPanel(
+      plotOutput("scatter_plot"),
+      ggplotdownUI("scatter")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_scatter &lt;- scatterServer("scatter",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$scatter_plot &lt;- renderPlot({
+    print(out_scatter())
+  })
+}
+</code></pre>
+
+
+</div>

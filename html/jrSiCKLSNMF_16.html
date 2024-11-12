@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SetLambdasandRowReg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set lambda values and type of row regularization for an object of class SickleJr</h2>
+
+<h3>Description</h3>
+
+<p>Provide the values for the graph regularization <code class="reqn">\lambda_{\textbf{W}^v}</code>
+for each modality as a list, provide the value for the sparsity constraint <code class="reqn">\lambda_{\mathbf{H}}</code>,
+and select whether to use L2 norm regularization.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SetLambdasandRowReg(
+  SickleJr,
+  lambdaWlist = list(10, 50),
+  lambdaH = 500,
+  rowReg = "None"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdaWlist</code></td>
+<td>
+<p>A list of graph regularization constraints for the <code class="reqn">\mathbf{W}^v</code> matrices:
+defaults to 2 modalities with the RNA modality constraint equal to 10 and the ATAC modality constraint equal to 50</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdaH</code></td>
+<td>
+<p>A numeric holding the sparsity constraint on <code class="reqn">\mathbf{H}</code>: defaults to 500.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowReg</code></td>
+<td>
+<p>A string that is equal to <code>"None"</code> for no constraints on the rows of <code class="reqn">\mathbf{H}</code> and <code>"L2Norm"</code>
+to set the L2 norms of the rows of <code class="reqn">\mathbf{H}</code> to be equal to 1: defaults to "None"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with the lambda hyperparameter values added to its <code>lambdaWlist</code> and <code>lambdaH</code> slots and with the
+row regularization value added to its <code>rowRegularization</code> slot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-SetLambdasandRowReg(SimSickleJrSmall,
+lambdaWlist=list(10,50),lambdaH=500,rowReg="None")
+SimSickleJrSmall&lt;-SetLambdasandRowReg(SimSickleJrSmall,
+lambdaWlist=list(3,15),lambdaH=0,rowReg="L2Norm")
+</code></pre>
+
+
+</div>

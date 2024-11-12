@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gzjson</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gzipped JSON</h2>
+
+<h3>Description</h3>
+
+<p>Wrapper to generate and parse gzipped JSON, in order to save some disk or
+network space. This is mainly effective for larger json objects with many
+repeated keys, as is common in serialized data frames.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">as_gzjson_raw(x, ...)
+
+as_gzjson_b64(x, ...)
+
+parse_gzjson_raw(buf, ...)
+
+parse_gzjson_b64(b64, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>R data object to be converted to JSON</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>passed down to toJSON or fromJSON</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>buf</code></td>
+<td>
+<p>raw vector with gzip compressed data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b64</code></td>
+<td>
+<p>base64 encoded string containing gzipped json data</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The as_gzjson_raw and parse_gzjson_raw functions work with raw (binary)
+vectors of compressed data. To use this in a place where only text is allowed
+you can wrap the output again in base64 as done by as_gzjson_b64 and
+parse_gzjson_b64. This increases the size again with about 33%.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">str &lt;- as_gzjson_b64(iris[1:5,])
+cat(str)
+parse_gzjson_b64(str)
+</code></pre>
+
+
+</div>

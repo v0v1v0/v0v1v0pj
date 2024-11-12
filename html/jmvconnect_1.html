@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reads a data set from jamovi</h2>
+
+<h3>Description</h3>
+
+<p>Reads a data set from jamovi
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read(id, columns)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>the number, or the title of the data set to read</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>columns</code></td>
+<td>
+<p>(optional) only reads the columns named</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the data set as a data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+jmvconnect::what()
+
+#  Available Data Sets
+#  -------------------------------------
+#         Title           Rows    Cols
+#  -------------------------------------
+#    1    iris             150       5
+#    2    Tooth Growth      60       3
+#  -------------------------------------
+
+data &lt;- jmvconnect::read('Tooth Growth')
+
+# or
+
+data &lt;- jmvconnect::read(2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

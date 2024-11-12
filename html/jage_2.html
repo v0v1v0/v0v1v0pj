@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mfh_collapse</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A function for collapsing Moorrees et al. (1963) dental development stages for use in find_fuzzies.f and mvcp_est.f</h2>
+
+<h3>Description</h3>
+
+<p>WARNING: this function is based on scoring with an additional crypt stage. Pre-collapse staging: 0-no crypt, 1-crypt, 2-Ci, 3-Cco, 4-Coc, 5-Cr1/2, 6-Cr3/4, 7-Crc, 8-Ri, 9-Cli, 10-R1/4, 11-R1/2, 12-R3/4, 13-Rc, 14-A1/2, 15-Ac
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mfh_collapse(cases)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>cases</code></td>
+<td>
+<p>as input data.table of Moorrees et al. dental development scores, or vector of scores from single individual</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>returns data.table of collapsed scores
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mfh_collapse(c(NA,NA,15,15,14,12,11,15,11,8))
+</code></pre>
+
+
+</div>

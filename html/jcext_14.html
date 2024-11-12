@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_freqmap_wtypes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot_freqmap_wtypes</h2>
+
+<h3>Description</h3>
+
+<p>Visualises absolute frequencies of the 11 main types from
+the extended_jc over the period.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_freqmap_wtypes(mat, loni, lati, all.types = TRUE, mytype = NULL,
+  center = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mat</code></td>
+<td>
+<p>Matrix output from extended_jc [loni,lati,time]</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loni</code></td>
+<td>
+<p>Vector with longitude values must be -180, 180</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lati</code></td>
+<td>
+<p>Latitude values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>all.types</code></td>
+<td>
+<p>Logical. If TRUE all weather types are plotted in the same plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mytype</code></td>
+<td>
+<p>Character with the name of the weather type wanted (i.g. N,NE,E,SE,S,SW,W,A,C and U)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Logical. If TRUE a center map is plotted</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A ggplot2 map
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>extended_jc</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+library(jcext)
+# This is a long running example for plotting results for all types globally
+cwtGlobal &lt;- extended_jc(press$msl, press$loni,press$lati, press$dates, gale=FALSE, num_cores=2)
+wtypesGlobal &lt;- cwtGlobal$wtypes
+plot_freqmap_wtypes(wtypesGlobal,press$loni, press$lati, all.types = TRUE,mytype = NULL ,center = T)
+# Plot the global results only for one type
+plot_freqmap_wtypes(wtypesGlobal,press$loni, press$lati, all.types = FALSE,mytype = "C" ,center = T)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,425 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>descriptives</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Descriptives</h2>
+
+<h3>Description</h3>
+
+<p>Descriptives are an assortment of summarising statistics, and 
+visualizations which allow exploring the shape and distribution of data. It 
+is good practice to explore your data with descriptives before proceeding 
+to more formal tests.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">descriptives(data, vars, splitBy = NULL, freq = FALSE,
+  desc = "columns", hist = FALSE, dens = FALSE, bar = FALSE,
+  barCounts = FALSE, box = FALSE, violin = FALSE, dot = FALSE,
+  dotType = "jitter", boxMean = FALSE, boxLabelOutliers = TRUE,
+  qq = FALSE, n = TRUE, missing = TRUE, mean = TRUE,
+  median = TRUE, mode = FALSE, sum = FALSE, sd = TRUE,
+  variance = FALSE, range = FALSE, min = TRUE, max = TRUE,
+  se = FALSE, ci = FALSE, ciWidth = 95, iqr = FALSE,
+  skew = FALSE, kurt = FALSE, sw = FALSE, pcEqGr = FALSE,
+  pcNEqGr = 4, pc = FALSE, pcValues = "25,50,75", extreme = FALSE,
+  extremeN = 5, formula)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>a vector of strings naming the variables of interest in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>splitBy</code></td>
+<td>
+<p>a vector of strings naming the variables used to split
+<code>vars</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide frequency tables
+(nominal, ordinal variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p><code>'rows'</code> or <code>'columns'</code> (default), display the
+variables across the rows or across the columns (default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hist</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide histograms
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dens</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide density plots
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bar</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide bar plots
+(nominal, ordinal variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>barCounts</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), add counts to the
+bar plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>box</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide box plots
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>violin</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide violin plots
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dot</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide dot plots
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dotType</code></td>
+<td>
+<p>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxMean</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), add mean to box plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxLabelOutliers</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, add labels
+with the row number to the outliers in the box plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Q-Q plots
+(continuous variables only)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the sample size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>missing</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the number of
+missing values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the mean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the median</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the mode</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the sum</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide the standard
+deviation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variance</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the variance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>range</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the range</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the minimum</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the maximum</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the standard error</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide confidence
+intervals for the mean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the width of
+confidence intervals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iqr</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the interquartile
+range</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skew</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the skewness</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kurt</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the kurtosis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sw</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Shapiro-Wilk
+p-value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcEqGr</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide quantiles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcNEqGr</code></td>
+<td>
+<p>an integer (default: 4) specifying the number of equal
+groups</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pc</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide percentiles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcValues</code></td>
+<td>
+<p>a comma-sepated list (default: 25,50,75) specifying the
+percentiles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extreme</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide N most
+extreme (highest and lowest) values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extremeN</code></td>
+<td>
+<p>an integer (default: 5) specifying the number of extreme
+values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>(optional) the formula to use, see the examples</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$descriptives</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the descriptive statistics </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$descriptivesT</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the descriptive statistics </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$frequencies</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of frequency tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$extremeValues</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of extreme values tables </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$plots</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of descriptive plots </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$descriptives$asDF</code>
+</p>
+<p><code>as.data.frame(results$descriptives)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data('mtcars')
+dat &lt;- mtcars
+
+# frequency tables can be provided for factors
+dat$gear &lt;- as.factor(dat$gear)
+
+descriptives(dat, vars = vars(mpg, cyl, disp, gear), freq = TRUE)
+
+#
+#  DESCRIPTIVES
+#
+#  Descriptives
+#  -------------------------------------------
+#               mpg     cyl     disp    gear
+#  -------------------------------------------
+#    N            32      32      32      32
+#    Missing       0       0       0       0
+#    Mean       20.1    6.19     231    3.69
+#    Median     19.2    6.00     196    4.00
+#    Minimum    10.4    4.00    71.1       3
+#    Maximum    33.9    8.00     472       5
+#  -------------------------------------------
+#
+#
+#  FREQUENCIES
+#
+#  Frequencies of gear
+#  --------------------
+#    Levels    Counts
+#  --------------------
+#    3             15
+#    4             12
+#    5              5
+#  --------------------
+#
+
+# spliting by a variable
+descriptives(formula = disp + mpg ~ cyl, dat,
+    median=F, min=F, max=F, n=F, missing=F)
+
+# providing histograms
+descriptives(formula = mpg ~ cyl, dat, hist=T,
+    median=F, min=F, max=F, n=F, missing=F)
+
+# splitting by multiple variables
+descriptives(formula = mpg ~ cyl:gear, dat,
+    median=F, min=F, max=F, missing=F)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juliaExpr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mark a string as Julia expression</h2>
+
+<h3>Description</h3>
+
+<p>A given R character vector is marked as a Julia expression.
+It will be executed and evaluated when passed to Julia.
+This allows to pass a Julia object that is defined by complex Julia syntax
+as an argument without needing the round-trip to R via <code>juliaEval</code>
+or <code>juliaLet</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juliaExpr(expr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>a character vector which should contain one string</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+
+   # Create complicated objects like version strings in Julia, and compare them
+   v1 &lt;- juliaExpr('v"1.0.1"')
+   v2 &lt;- juliaExpr('v"1.2.0"')
+   juliaCall("&lt;", v1, v2)
+
+}
+
+
+</code></pre>
+
+
+</div>

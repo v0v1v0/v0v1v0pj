@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getTpFp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the number of true positives and false positives</h2>
+
+<h3>Description</h3>
+
+<p>Calculate the number of true positives and false positives among candidate
+breakpoints
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getTpFp(candidates, trueBkp, tol, relax = -1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>candidates</code></td>
+<td>
+<p>Breakpoints found by the methods</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trueBkp</code></td>
+<td>
+<p>True breakpoints</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>Tolerance on the position of candidate breakpoints called true</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>relax</code></td>
+<td>
+<p>Controls the way multiple breapoints within tolerance area are
+recorded.  </p>
+ <dl>
+<dt>1</dt>
+<dd>
+<p>count one true positive if there is at least
+one breakpoint within tolerance area</p>
+</dd> <dt>0</dt>
+<dd>
+<p>count one true positive only
+if there is exactly one breakpoint within tolerance area</p>
+</dd> <dt>-1</dt>
+<dd>
+<p>count
+only one true positive if there is exactly one breakpoint within tolerance
+area; other breakpoints are counted as false positives </p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with elements: </p>
+<dl>
+<dt>TP</dt>
+<dd>
+<p>The number of true positives</p>
+</dd>
+<dt>FP</dt>
+<dd>
+<p>The number of false positives</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=0.7)
+
+## generate a synthetic CN profile
+K &lt;- 10
+len &lt;- 2e4
+sim &lt;- getCopyNumberDataByResampling(len, K, minLength=100, regData=affyDat)
+datS &lt;- sim$profile
+
+## (group-)fused Lasso segmentation
+res &lt;- PSSeg(data=datS, K=2*K, method="GFLars", stat="c", profile=TRUE)
+
+## results of the initial (group-)fused lasso segmentation
+getTpFp(res$initBkp, sim$bkp, tol=10, relax=-1)
+getTpFp(res$initBkp, sim$bkp, tol=10, relax=0)
+getTpFp(res$initBkp, sim$bkp, tol=10, relax=1)
+plotSeg(datS, breakpoints=list(sim$bkp, res$initBkp))
+
+## results after pruning (group-)fused Lasso candidates by dynamic programming)
+getTpFp(res$bestBkp, sim$bkp, tol=10, relax=-1)
+getTpFp(res$bestBkp, sim$bkp, tol=10, relax=0)
+getTpFp(res$bestBkp, sim$bkp, tol=10, relax=1)
+plotSeg(datS, breakpoints=list(sim$bkp, res$bestBkp))
+</code></pre>
+
+
+</div>

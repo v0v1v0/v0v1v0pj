@@ -1,0 +1,185 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jcp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jcp</h2>
+
+<h3>Description</h3>
+
+<p>Joint change point detection - expectation and variance - via bivariate moving sum statistics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jcp(x, H = NA, q = NA, alpha = 0.05, sim = 1000, region = "square")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric vector. Input sequence of random variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>NA or numeric vector. Window set. If NA (default), then H is automatically set. If not NA, then H must an increasing vector of positive integers with maximum =&lt; length(x)/2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>NA or numeric value. Rejection threshold. If NA (default), then the rejection boundary is derived in simulations (from Gaussian process limit) according to sim and alpha. If not NA, then q is considered predefined and must be set a postive real number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>numeric value. Significance level. Must be in (0,1), default = 0.05. In case of predefined q, alpha is set to NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim</code></td>
+<td>
+<p>numeric value. Number of simulations of limit process for approximation of q. Must be positive integer, default = 1000. In case of predefined q, sim is set to NA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>region</code></td>
+<td>
+<p>character string. Defines rejection region, default = "square". Must be chosen either "square", "circle" or "ellipse".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>invisible list
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>changepoints</code></td>
+<td>
+<p>detected change points (increasingly ordered)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean_sd</code></td>
+<td>
+<p>matrix of estimated means and standard deviations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>test statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>rejection threshold</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>window set</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sim</code></td>
+<td>
+<p>number of simulations of the limit process (approximation of q)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>significance level</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>region</code></td>
+<td>
+<p>rejection region</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>derivation of threshold q, either asymptotic or predefined</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>input sequence</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EVrho</code></td>
+<td>
+<p>list containing the auxiliary processes E, V and correlation rho, for each element of H one list entry</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>CP_meta</code></td>
+<td>
+<p>matrix containing meta information of estimation. Estimated change points (increasingly ordered), responsible window h, components E, V and rho of joint statistic at estimated change points (regarding responsible window)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SFA</code></td>
+<td>
+<p>detected change points of single filter algorithms</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Michael Messer
+</p>
+
+
+<h3>References</h3>
+
+<p>Michael Messer (2021) Bivariate change point detection - joint detection of changes in expectation and variance, Scandinavian Journal of Statistics, DOI 10.1111/sjos.12547.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.jcp, summary.jcp</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Normal distributed sequence with 3 change points at
+# c1=250 (change in expectation), 
+# c2=500 (change in variance) and 
+# c3=750 (change in expectation and variance) 
+set.seed(0)
+m      &lt;- c(8,10,10,3);   s  &lt;- c(4,4,10,5)
+x      &lt;- rnorm(1000, mean=rep(m,each=250), sd=rep(s,each=250))
+result &lt;- jcp(x)
+summary(result)
+plot(result)
+
+# Set additional parameters (window set)
+result2 &lt;- jcp(x,H=c(80,160,240))
+summary(result2)
+plot(result2)
+
+
+</code></pre>
+
+
+</div>

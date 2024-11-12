@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>formatMedIQR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to format the median and IQR of a variable</h2>
+
+<h3>Description</h3>
+
+<p>Function to format the median and IQR of a variable
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">formatMedIQR(x, d = 2, na.rm = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the data to have the median and IQR calculated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>How many digits to display. Defaults to 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>Logical whether to remove missing values. Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string with results
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">formatMedIQR(mtcars$mpg)
+</code></pre>
+
+
+</div>

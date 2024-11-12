@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>floor_and_cap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Floor and Cap a Numeric Variable</h2>
+
+<h3>Description</h3>
+
+<p>Determine the floor and cap of a numeric variable by taking quantiles.
+Using the quantiles, values in the data found to be <em>lower</em> or <em>higher</em> than
+the floor or cap are replaced.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">floor_and_cap(x, probs = c(0.025, 0.975))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>vector</code> that has length <code class="reqn">N</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probs</code></td>
+<td>
+<p>A <code>vector</code> containing two values between 0 and 1, with the
+first being less than the second.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>vector</code> with the values floored and capped.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# One case version
+n = 100
+
+x = rnorm(n)
+
+x[n - 1] = -99999
+x[n] = 10000
+
+y = floor_and_cap(x)
+
+# Dataset example
+
+d = data.frame(x, y = rnorm(n))
+
+o = sapply(d, floor_and_cap)
+</code></pre>
+
+
+</div>

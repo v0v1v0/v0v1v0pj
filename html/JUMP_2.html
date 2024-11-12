@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jump_cutoff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate threshold of maximum p-values across two studies to control FDR.</h2>
+
+<h3>Description</h3>
+
+<p>Estimate threshold of maximum p-values across two studies to control FDR.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jump_cutoff(pa_in, pb_in, xi_in, alpha_in)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pa_in</code></td>
+<td>
+<p>A numeric vector of p-values from study 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pb_in</code></td>
+<td>
+<p>A numeric vector of p-values from study 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi_in</code></td>
+<td>
+<p>The estimates of proportions of three null components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha_in</code></td>
+<td>
+<p>The FDR level to control, default is 0.05.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list including the maximum of p-values and estimated threshold for FDR control.
+</p>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>grid_as_stars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converting data frame containing regional grids to stars</h2>
+
+<h3>Description</h3>
+
+<p>Converting data frame containing regional grids to stars
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">grid_as_stars(
+  x,
+  coords = NULL,
+  crs = sf::NA_crs_,
+  grid_column_name = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data frame or a <code>grid</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coords</code></td>
+<td>
+<p>The column names or indices that form the cube dimensions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>crs</code></td>
+<td>
+<p>Coordinate reference system.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_column_name</code></td>
+<td>
+<p>A scalar character.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed on to <code>stars::st_as_stars()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>stars</code> object.
+</p>
+
+
+</div>

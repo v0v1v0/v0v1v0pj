@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>I.spline</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> I-spline basis function </h2>
+
+<h3>Description</h3>
+
+<p> Calculate the I-spline basis functions (the integrals of the M-spline basis functions). </p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">I.spline(time, xi1, xi3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p> a vector of time points </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi1</code></td>
+<td>
+<p> lower bound of time points </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi3</code></td>
+<td>
+<p> upper bound of time points </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The output shows the values of the 5 basis functions at "time",
+giving a matrix with nrow=length(time) and ncol=5.
+The five basis functions were originally given in the Supplementary Material of Emura et al. (2017).
+More details can be found in Emura and Chen (2018), Emura et al. (2019), and Shih and Emura (2021). 
+The "time" argument should be a vector satisfying the contraints xi1&lt;=time&lt;=xi3.
+If "time" does not meet the constraints, error messages are shown.
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>NULL </code></td>
+<td>
+<p>A matrix with nrow=length(time) and ncol=5, containing the values of the 5 I-spline basis functions at "time".</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Takeshi Emura</p>
+
+
+<h3>References</h3>
+
+<p>Emura T, Chen YH (2018). Analysis of Survival Data with Dependent Censoring, 
+Copula-Based Approaches, JSS Research Series in Statistics, Springer, Singapore.
+</p>
+<p>Emura T, Matsui S, Rondeau V (2019), Survival Analysis with Correlated Endpoints; Joint Frailty-Copula Models,
+JSS Research Series in Statistics, Springer
+</p>
+<p>Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
+Stat Methods Med Res 26(6): 2649-66: Supplementary Material. 
+</p>
+<p>Shih JH, Emura T (2021) Penalized Cox regression with a five-parameter spline model, Commun Stat-Theor 50(16):3749-68
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">I.spline(time=c(1,2,3),xi1=1,xi3=3)
+</code></pre>
+
+
+</div>

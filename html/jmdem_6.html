@@ -1,0 +1,221 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmdem.control</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Auxiliary for Controlling JMDEM Fitting
+</h2>
+
+<h3>Description</h3>
+
+<p>Auxiliary function for <code>jmdem</code> fitting. Typically only used internally by <code>jmdem.fit</code>, but may be used to construct a <code>control</code> argument to either function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmdem.control(maxit = 100, epsilon = 1e-8, prefit.trace = FALSE, 
+              fit.trace = FALSE, null.approx = 1e-8, trace = 0, 
+              fnscale = -1, parscale = 1, ndeps = 0.001, 
+              abstol = -Inf, reltol = sqrt(.Machine$double.eps), 
+              alpha = 1, beta = 0.5, gamma = 2, REPORT = 10, 
+              type = 1, lmm = 5, factr = 1e+07, pgtol = 0, 
+              temp = 10, tmax = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>maxit</code></td>
+<td>
+<p>integer giving the maximal number of optimisation iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>epsilon</code></td>
+<td>
+<p>positive convergence tolerance <code class="reqn">\epsilon</code>; the iterations converge when <code class="reqn">|dev - dev_{old}|/(|dev| + 0.1) &lt; \epsilon</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefit.trace</code></td>
+<td>
+<p>logical indicating if output should be produced for each iteration in the <code>prefit</code> process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit.trace</code></td>
+<td>
+<p>logical indicating if output should be produced for each iteration in the <code>jmdem.fit</code> process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.approx</code></td>
+<td>
+<p>approximisation of zeros to avoid estimation abortion in the case of <code class="reqn">log(0)</code> or <code class="reqn">1/0</code>.</p>
+</td>
+</tr>
+</table>
+<p>The following control arguments are used by <code>optim</code>. Please refer to <code>optim</code> for details
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>non-negative integer. If positive, tracing information on the progress of the optimisation is produced. Higher values may produce more tracing information: for method "<code>L-BFGS-B</code>" there are six levels of tracing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fnscale</code></td>
+<td>
+<p>An overall scaling to be applied to the value of <code>fn</code> and <code>gr</code> during optimisation. If negative, turns the problem into a maximisation problem. Optimisation is performed on <code>fn(par)/fnscale</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parscale</code></td>
+<td>
+<p>A vector of scaling values for the parameters. Optimisation is performed on <code>par/parscale</code> and these should be comparable in the sense that a unit change in any element produces about a unit change in the scaled value. Not used (nor needed) for <code>method = "Brent"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ndeps</code></td>
+<td>
+<p>A vector of step sizes for the finite-difference approximation to the gradient, on <code>par/parscale</code> scale. Defaults to <code>1e-3</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abstol</code></td>
+<td>
+<p>The absolute convergence tolerance. Only useful for non-negative functions, as a tolerance for reaching zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reltol</code></td>
+<td>
+<p>Relative convergence tolerance. The algorithm stops if it is unable to reduce the value by a factor of <code>reltol * (abs(val) + reltol)</code> at a step. Defaults to <code>sqrt(.Machine$double.eps)</code>, typically about <code>1e-8</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha, beta, gamma</code></td>
+<td>
+<p>Scaling parameters for the "<code>Nelder-Mead</code>" method. <code>alpha</code> is the reflection factor (default 1.0), <code>beta</code> the contraction factor (0.5) and <code>gamma</code> the expansion factor (2.0).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>REPORT</code></td>
+<td>
+<p>The frequency of reports for the "<code>BFGS</code>", "<code>L-BFGS-B</code>" and "<code>SANN</code>" methods if <code>control$trace</code> is positive. Defaults to every 10 iterations for "<code>BFGS</code>" and "<code>L-BFGS-B</code>", or every 100 temperatures for "<code>SANN</code>".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>for the conjugate-gradients ("<code>CG</code>") method. Takes value <code>1</code> for the Fletcher-Reeves update, <code>2</code> for Polak-Ribiere and <code>3</code> for Beale-Sorenson.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lmm</code></td>
+<td>
+<p>is an integer giving the number of <code>BFGS</code> updates retained in the "<code>L-BFGS-B</code>" method, It defaults to <code>5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factr</code></td>
+<td>
+<p>controls the convergence of the "<code>L-BFGS-B</code>" method. Convergence occurs when the reduction in the objective is within this factor of the machine tolerance. Default is <code>1e7</code>, that is a tolerance of about <code>1e-8</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pgtol</code></td>
+<td>
+<p>helps control the convergence of the "<code>L-BFGS-B</code>" method. It is a tolerance on the projected gradient in the current search direction. This defaults to zero, when the check is suppressed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tmax</code></td>
+<td>
+<p>controls the "<code>SANN</code>" method. It is the starting temperature for the cooling schedule. Defaults to <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>temp</code></td>
+<td>
+<p>is the number of function evaluations at each temperature for the "<code>SANN</code>" method. Defaults to <code>10</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The control argument of <code>jmdem</code> is by default passed to the control argument of jmdem.fit, which uses its elements as arguments to jmdem.control: the latter provides defaults and sanity checking.
+</p>
+<p>When <code>trace</code> is true, calls to <code>cat</code> produce the output for each iteration. Hence, <code>options(digits = *)</code> can be used to increase the precision, see the example.</p>
+
+
+<h3>Value</h3>
+
+<p>A list with components named as the arguments.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Belisle, C.J.P. (1992). <em>Convergence theorems for a class of simulated annealing algorithms on Rd</em>. Journal of Applied Probability, <strong>29</strong>, 885-895.
+</p>
+<p>Byrd, R. H., Lu, P., Nocedal, J. and Zhu, C. (1995). <em>A limited memory algorithm for bound constrained optimisation</em>. SIAM Journal on Scientific Computing, <strong>16</strong>, 1190-1208.
+</p>
+<p>Fletcher, R. and Reeves, C.M. (1964). <em>Function minimization by conjugate gradients</em>. Computer Journal, <strong>7</strong>, 148-154.
+</p>
+<p>Hastie, T. J. and Pregibon, D. (1992). <em>Generalized linear models</em>. Chapter 6 of Statistical Models in S eds J. M. Chambers and T. J. Hastie, Wadsworth &amp; Brooks/Cole.
+</p>
+<p>Nash, J.C. (1990). <em>Compact Numerical Methods for Computers. Linear Algebra and Function Minimisation</em>. Adam Hilger.
+</p>
+<p>Nelder, J.A., Mead, R. (1965). <em>A simplex algorithm for function minimization</em>. Computer Journal, <strong>7</strong>, 308-313.
+</p>
+<p>Nocedal, J., Wright, S.J. (1999). <em>Numerical Optimisation</em>. Springer.
+</p>
+<p>Smyth, G.K. (1989). <em>Generalised linear models with varying dispersion</em>. J. R. Statist. Soc. B, <strong>51</strong> (1), 47-60.
+</p>
+<p>Smyth, G.K., Verbyla, A.P. (1999). <em>Adjusted likelihood methods for modelling dispersion in generalised linear models</em>. Environmetrics, <strong>10</strong>, 695-709.
+</p>
+<p>Wu, K.Y.K., Li, W.K. (2016). <em>On a dispersion model with Pearson residual responses</em>. Comput. Statist. Data Anal., <strong>103</strong>, 17-27.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmdem.fit</code>, the fitting procedure used by <code>jmdem</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example in jmdem(...). Limit maximum iteration number to 20 and 
+## trace the deviance development in the fitting process
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x, dformula = ~ s, 
+                            mfamily = poisson(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4), 
+                            lambda.true = c(2.5, 3), n = 100)
+                            
+fit &lt;- jmdem(mformula = y ~ x, dformula = ~ s, data = MyData, 
+             mfamily = poisson, dfamily = Gamma(link = "log"), 
+             dev.type = "deviance", method = "CG",
+             control = list(maxit = 20, fit.trace = TRUE))
+
+## Change to a small convergence tolerance and trace the optimisation 
+## process in optim
+jmdem.control(list(epsilon = 1e-14, trace = 1))
+</code></pre>
+
+
+</div>

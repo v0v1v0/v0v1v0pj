@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_augment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clean data from DfR</h2>
+
+<h3>Description</h3>
+
+<p>This function takes data from <code>jst_get_article()</code> and
+applies helper functions for cleaning the data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_augment(meta_data, quietly = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meta_data</code></td>
+<td>
+<p>Data which was processed via <code>jst_get_article()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quietly</code></td>
+<td>
+<p>Should warnings from converting page ranges be suppressed?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Data from DfR is inherently messy. For many examples see
+<code>vignette("known-quirks", package = "jstor")</code>. <code>jst_augment()</code> is a
+convenience function that tries to deal with a few common tasks to
+clean the data.
+</p>
+<p>For journal articles, it calls <code>jst_clean_page()</code> to convert first and last
+page, <code>jst_unify_journal_id()</code> and <code>jst_add_total_pages()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A cleaned tibble.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jst_clean_page()</code> <code>jst_unify_journal_id()</code> <code>jst_add_total_pages()</code>
+<code>jst_get_total_pages()</code>
+</p>
+
+
+</div>

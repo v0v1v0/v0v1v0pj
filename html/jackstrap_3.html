@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jackstrap Method: Tool identifies outliers in Nonparametric Frontier.
+This function applies the developed technique by Sousa and Stosic (2005)
+Technical Efficiency of the Brazilian Municipalities: Correcting Nonparametric
+Frontier Measurements for Outliers.</h2>
+
+<h3>Description</h3>
+
+<p>Jackstrap Method: Tool identifies outliers in Nonparametric Frontier.
+This function applies the developed technique by Sousa and Stosic (2005)
+Technical Efficiency of the Brazilian Municipalities: Correcting Nonparametric
+Frontier Measurements for Outliers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstrap(
+  data,
+  ycolumn,
+  xcolumn,
+  bootstrap = 1000,
+  perc_sample_bubble = 0.1,
+  dea_method = "vrs",
+  orientation_dea = "in",
+  n_seed = NULL,
+  repos = FALSE,
+  num_cores = 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>is the dataset with input and output used to measure efficiency; Dataset need to have this form: 1th column: name of DMU (string); 2th column: code of DMU (integer); n columns of output variables; n columns of input variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ycolumn</code></td>
+<td>
+<p>is the quantity of y columns of dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xcolumn</code></td>
+<td>
+<p>is the quantity of x columns of dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bootstrap</code></td>
+<td>
+<p>is the quantity of applied resampling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perc_sample_bubble</code></td>
+<td>
+<p>is the percentage of sample in each bubble.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dea_method</code></td>
+<td>
+<p>is the dea method: "crs" is DEA with constant returns to scale (CCR); "vrs" is DEA with variable returns to scale; and "fdh" is Free Disposal Hull (FDH) with variable returns to scale.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>orientation_dea</code></td>
+<td>
+<p>is the direction of the DEA: "in" for focus on inputs; and "out" for focus on outputs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_seed</code></td>
+<td>
+<p>is the code as seed used to get new random samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>repos</code></td>
+<td>
+<p>identify if the resampling method is with reposition TRUE or not FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_cores</code></td>
+<td>
+<p>is the number of cores available to process.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return the jackstrap object with information as follows: "mean_leverage" is leverage average for each DMU;
+"mean_geral_leverage" is general average of leverage and step function threshold;
+"sum_leverage" is accrued leverage on all resampling for each DMU; "count_dmu" is amount of each DMU was selected by bootstrap.
+"count_dmu_zero" is amount of each DMU was selected by bootstrap but it did not influence in others. "ycolumn" is the number of output variables;
+"xcolumn" is the number of input variables; "perc_sample_bubble" is the percentage of sample used in each bubble;"dea_method" is the model used in DEA analysis;
+"orientation_dea" is the orientation of DEA; ""bootstrap" is the amount of bubble used by jackstrap method;
+"type_obj" is type of object; "size_bubble" is the amount of DMU used in each bubble.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+ 
+    # Examples with the municipalities data.
+    #Load package jackstrap
+    library(jackstrap)
+
+    #Load data example
+    municipalities &lt;- jackstrap::municipalities
+
+    #Command measures efficiency with jackstrap method and heaviside criterion
+    efficiency &lt;- jackstrap (data=municipalities, ycolumn=2, xcolumn=1, bootstrap=1000,
+                      perc_sample_bubble=0.20, dea_method="vrs", orientation_dea="in",
+                      n_seed = 2000, repos=FALSE, num_cores=4)
+ 
+</code></pre>
+
+
+</div>

@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KostaFoulkesPolynomial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kostka-Foulkes polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Kostka-Foulkes polynomial for two given partitions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KostaFoulkesPolynomial(lambda, mu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions; in order for the Kostka-Foulkes
+polynomial to be non-zero, a necessary condition is that <code>lambda</code>
+and <code>mu</code> have the same weight; more precisely, <code>mu</code> must
+be dominated by <code>lambda</code></p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The Kostka-Foulkes polynomial associated to <code>lambda</code> and
+<code>mu</code>. This is a univariate <code>qspray</code> polynomial whose value
+at <code>1</code> is the Kostka number associated to <code>lambda</code> and
+<code>mu</code>.
+</p>
+
+
+</div>

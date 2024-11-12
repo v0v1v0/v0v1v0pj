@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot diagnostics from an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Plot diagnostics from an <code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+plot(x, type = "convergence", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model of
+time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>currently the only option is <code>type='convergence'</code> for
+graphical examination of convergence over MCEM iteration.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters passed to <code>plotConvergence</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.default</code>, <code>par</code>,
+<code>abline</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Fit a classical univariate joint model with a single longitudinal outcome
+# and a single time-to-event outcome
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+set.seed(1)
+fit1 &lt;- mjoint(formLongFixed = log.lvmi ~ time + age,
+    formLongRandom = ~ time | num,
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = hvd,
+    timeVar = "time",
+    control = list(nMCscale = 2, burnin = 5)) # controls for illustration only
+
+plot(fit1, param = "beta")  # LMM fixed effect parameters
+plot(fit1, param = "gamma") # event model parameters
+
+## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    control = list(burnin = 50),
+    verbose = TRUE)
+
+plot(fit2, type = "convergence", params = "gamma")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>randomProfile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a random multi-dimensional profile with breakpoints and noise</h2>
+
+<h3>Description</h3>
+
+<p>Generate a random multi-dimensional profile with breakpoints and noise
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">randomProfile(length, nBkp, noiseLevel, dim, minLength = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>length</code></td>
+<td>
+<p>length of the profile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nBkp</code></td>
+<td>
+<p>number of breakpoints</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noiseLevel</code></td>
+<td>
+<p>variance of the signal between two breakpoints</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim</code></td>
+<td>
+<p>dimension of the profile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLength</code></td>
+<td>
+<p>minimum length of region between breakpoints by default
+minLength = 0</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Generate a random profile (vector) of length <code>length</code>, with <code>nBkp</code>
+breakpoints randomly chosen. Between two breakpoints, the profile is
+constant, uniformly chosen between 0 and 1, and a Gaussian noice of variance
+<code>noiseLevel</code> is added.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a <code>list</code> with elements </p>
+
+<dl>
+<dt>profile</dt>
+<dd>
+<p>the profile (a <code>length</code> by <code>dim</code> matrix)</p>
+</dd>
+<dt>bkp</dt>
+<dd>
+<p>the list of breakpoints positions (the last position at the left
+of a breakpoint)</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>This implementation is derived from the MATLAB code by Vert and
+Bleakley: <a href="http://cbio.ensmp.fr/GFLseg">http://cbio.ensmp.fr/GFLseg</a>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+len &lt;- 1e4
+nBkp &lt;- 10
+noiseLevel &lt;- 1
+dim &lt;- 2
+
+sim &lt;- randomProfile(len, nBkp, noiseLevel, dim)
+res &lt;- doGFLars(sim$profile, K=5*nBkp)
+str(res)
+
+</code></pre>
+
+
+</div>

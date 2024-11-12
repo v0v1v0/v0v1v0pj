@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make_jlmer_spec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a specifications object for fitting regression models in Julia</h2>
+
+<h3>Description</h3>
+
+<p>Create a specifications object for fitting regression models in Julia
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">make_jlmer_spec(
+  formula,
+  data,
+  subject = NULL,
+  trial = NULL,
+  time = NULL,
+  drop_terms = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>Model formula in R syntax</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subject</code></td>
+<td>
+<p>Column for subjects in the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trial</code></td>
+<td>
+<p>Column for trials in the data. Must uniquely identify a time series within subject
+(for example, the column for items in a counterbalanced design where each subject sees exactly one item).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>Column for time in the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>drop_terms</code></td>
+<td>
+<p>(Optional) any terms to drop from the reconstructed model formula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unused, for extensibility.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>jlmer_spec</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Bare specification object (minimal spec for fitting a global model)
+spec &lt;- make_jlmer_spec(weight ~ 1 + Diet, ChickWeight)
+spec
+
+# Constraints on specification for CPA:
+# 1) The combination of `subject`, `trial`, and `time` must uniquely identify rows in the data
+# 2) `time` must have constant sampling rate (i.e., evenly spaced values)
+spec_wrong &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, ChickWeight,
+  time = "Time"
+)
+unique(ChickWeight$Time)
+
+# Corrected specification for the above
+spec_correct &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, subset(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec_correct
+
+</code></pre>
+
+
+</div>

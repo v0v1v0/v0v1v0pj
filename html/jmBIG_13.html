@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>print</h2>
+
+<h3>Description</h3>
+
+<p>print
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">print(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>others</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>prints table containing various parameter estimates,
+SE, P- value for both survival and longitudinal submodel,
+if the model is bayesian it includes their credible interval too.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ 
+##
+library(survival)
+library(dplyr)
+fit7&lt;-jmstanBig(dtlong=long2,dtsurv = surv2,longm=y~ x7+visit+(1|id),
+survm=Surv(time,status)~x1+visit,samplesize=200,time_var='visit',id='id')
+################################
+fit8&lt;-jmcsBig(dtlong=data.frame(long2),dtsurv = data.frame(surv2),
+longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,rd= ~ visit|id,
+samplesize=200,id='id')
+#################################
+fit9&lt;-jmbayesBig(dtlong=long2,dtsurv = surv2 ,
+longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,timeVar='visit',nchain=1,samplesize=200,id='id')
+#################################
+
+fit10&lt;-joinRMLBig(dtlong=long2,dtsurv = surv2,
+longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,
+rd=~ visit|id,timeVar='visit',samplesize=200,id='id')
+
+</code></pre>
+
+
+</div>

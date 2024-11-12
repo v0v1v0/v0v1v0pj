@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>postSurvfit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction using <code>rstanarm</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>posterior survival probability estimates from rstanarm for BIG data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">postSurvfit(model, ids, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>value of id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameter option, see <code>posterior_survfit</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of predicted value for the given id
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+##
+library(survival)
+library(dplyr)
+jmstan&lt;-jmstanBig(dtlong=long2,
+         dtsurv = surv2,
+         longm=y~ x7+visit+(1|id),
+         survm=Surv(time,status)~x1+visit,
+         samplesize=200,
+         time_var='visit',id='id')
+mod1&lt;-jmstan
+P2&lt;-postSurvfit(model&lt;-mod1,ids&lt;-c(1,2,210))
+pp1&lt;-plot(P2$p1[[1]])
+pp1
+pp2&lt;-plot(P2$p1[[2]])
+pp2
+pp3&lt;-plot(P2$p1[[3]])
+pp3
+ ##
+   
+</code></pre>
+
+
+</div>

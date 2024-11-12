@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>counter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Counter factory.</h2>
+
+<h3>Description</h3>
+
+<p>Define a counter with <code>cnt &lt;- counter("type")</code>. Add cross-referenced label
+in your document with <code>cnt$set("ref")</code>. Refer to "ref" with <code>cnt$get("ref")</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">counter(label, open = NULL, close = NULL, sep = " ", link = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>character. Default prefix for the counter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>open</code></td>
+<td>
+<p>character. Opening bracket such as "(" or "["</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>close</code></td>
+<td>
+<p>character. Closing bracket such as ")" or "]"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>character. Separator between label and counter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>logical. If TRUE, get() method returns a counter
+surrounded by a tag, linked to the referenced id.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>List of functions to set and get counters with label.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">cnt &lt;- counter("Quiz")
+cnt$set("aaa")
+cnt$set()
+cnt$set("bbb", quiet = TRUE)
+cnt$get("aaa")
+cnt$get("bbb")
+cnt$get("aaa", type = "bare")
+cnt$dump()
+</code></pre>
+
+
+</div>

@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaccard.test.pairwise</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pair-wise tests for Jaccard/Tanimoto similarity coefficients</h2>
+
+<h3>Description</h3>
+
+<p>Given a data matrix, it computes pair-wise Jaccard/Tanimoto similarity coefficients
+and p-values among rows (variables). For fine controls, use <code>"jaccard.test"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaccard.test.pairwise(dat, method = "mca", verbose = TRUE,
+  compute.qvalue = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a data matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>a method to compute a p-value (<code>"mca"</code>, <code>"bootstrap"</code>, <code>"asymptotic"</code>, or <code>"exact"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>whether to print progress messages</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compute.qvalue</code></td>
+<td>
+<p>whether to compute q-values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for specific computational methods</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>jaccard.test.pairwise</code> returns a list of matrices
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>statistics</code></td>
+<td>
+<p>Jaccard/Tanimoto similarity coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvalues</code></td>
+<td>
+<p>p-values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qvalues</code></td>
+<td>
+<p>q-values</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p>jaccard.test
+</p>
+
+
+</div>

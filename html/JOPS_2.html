@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bbase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a B-spline basis matrix</h2>
+
+<h3>Description</h3>
+
+<p>Compute a B-spline basis matrix using evenly spaced knots.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bbase(x, xl = min(x), xr = max(x), nseg = 10, bdeg = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of argument values, at which the B-spline basis functions
+are to be evaluated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl</code></td>
+<td>
+<p>the lower limit of the domain of x; default is <code>min(x)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xr</code></td>
+<td>
+<p>the upper limit of the domain of x; default is <code>max(x)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of equally sized segments between xl and xr; default is 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the splines, usually 1, 2, or 3 (default).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>xl</code> is larger than <code>min(x)</code>, it will be adjusted to <code>min(x)</code> and a warning wil be given.
+If <code>xr</code> is smaller than <code>max(x)</code>, it will be adjusted to <code>max(x)</code> and a warning wil be given.
+The values of the design parameters <code>x, xl, xr, ndeg, bdeg</code> and <code>type = 'bbase'</code> are added to the list of attributes of the matrix.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A matrix with  <code>length(x)</code> rows and <code>nseg + bdeg</code> columns.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (1996). Flexible smoothing with
+B-splines and penalties (with comments and rejoinder), <em>Statistical Science</em>,
+11: 89-121.
+</p>
+<p>Eilers, P.H.C. and B.D. Marx (2010).
+Splines, knots and penalties. Wiley Interdisciplinary
+Reviews: Computational Statistics. Wiley: NY. DOI: 10.1002/wics.125
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Compute and plot a B-spline basis matrix
+x = seq(0, 360, by = 2)
+B = bbase(x, 0, 360, nseg = 8, bdeg = 3)
+matplot(x, B, type = 'l', lty = 1, lwd = 2, xlab = 'x', ylab = '')
+
+</code></pre>
+
+
+</div>

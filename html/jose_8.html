@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jwt_claim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate claim</h2>
+
+<h3>Description</h3>
+
+<p>Helper function to create a named list used as the claim of a JWT payload.
+See <a href="https://datatracker.ietf.org/doc/html/rfc7519#section-4.1">https://datatracker.ietf.org/doc/html/rfc7519#section-4.1</a> for details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jwt_claim(
+  iss = NULL,
+  sub = NULL,
+  aud = NULL,
+  exp = NULL,
+  nbf = NULL,
+  iat = Sys.time(),
+  jti = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>iss</code></td>
+<td>
+<p>(Issuer) Claim, should be rfc7519 'StringOrURI' value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sub</code></td>
+<td>
+<p>(Subject) Claim, should be rfc7519 'StringOrURI' value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aud</code></td>
+<td>
+<p>(Audience) Claim, should contain one or rfc7519 'StringOrURI' values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exp</code></td>
+<td>
+<p>(Expiration Time) Claim, should be rfc7519 'NumericDate' value; R
+<code>POSIXct</code> values are automatically coerced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nbf</code></td>
+<td>
+<p>(Not Before) Claim, should be rfc7519 'NumericDate' value; R
+<code>POSIXct</code> values are automatically coerced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iat</code></td>
+<td>
+<p>(Issued At) Claim, should be rfc7519 'NumericDate' value; R
+<code>POSIXct</code> values are automatically coerced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jti</code></td>
+<td>
+<p>(JWT ID) Claim, optional unique identifier for the JWT</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional custom claims to include</p>
+</td>
+</tr>
+</table>
+</div>

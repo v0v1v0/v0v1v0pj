@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare_df_cols_same</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Do the the data.frames have the same columns &amp; types?</h2>
+
+<h3>Description</h3>
+
+<p>Check whether a set of data.frames are row-bindable.  Calls
+<code>compare_df_cols()</code>and returns TRUE if there are no mis-matching rows.  '
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare_df_cols_same(
+  ...,
+  bind_method = c("bind_rows", "rbind"),
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>A combination of data.frames, tibbles, and lists of
+data.frames/tibbles.  The values may optionally be named arguments; if
+named, the output column will be the name; if not named, the output column
+will be the data.frame name (see examples section).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bind_method</code></td>
+<td>
+<p>What method of binding should be used to determine
+matches? With "bind_rows", columns missing from a data.frame would be
+considered a match (as in <code>dplyr::bind_rows()</code>; with "rbind", columns
+missing from a data.frame would be considered a mismatch (as in
+<code>base::rbind()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Print the mismatching columns if binding will fail.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>TRUE</code> if row binding will succeed or <code>FALSE</code> if it will
+fail.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other Data frame type comparison: 
+<code>compare_df_cols()</code>,
+<code>describe_class()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">compare_df_cols_same(data.frame(A=1), data.frame(A=2))
+compare_df_cols_same(data.frame(A=1), data.frame(B=2))
+compare_df_cols_same(data.frame(A=1), data.frame(B=2), verbose=FALSE)
+compare_df_cols_same(data.frame(A=1), data.frame(B=2), bind_method="rbind")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>intSigRegGraph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to find significant regions from an interaction</h2>
+
+<h3>Description</h3>
+
+<p>This function uses the <code>contrast</code> function from <span class="pkg">rms</span> to
+find the threshold for significance from interactions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">intSigRegGraph(
+  object,
+  predList,
+  contrastList,
+  xvar,
+  varyvar,
+  varyvar.levels,
+  xlab = xvar,
+  ylab = "Predicted Values",
+  ratio = 1,
+  xlim,
+  ylim,
+  xbreaks,
+  xlabels = xbreaks,
+  scale.x = c(m = 0, s = 1),
+  scale.y = c(m = 0, s = 1),
+  starts = 50
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted rms object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predList</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrastList</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xvar</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varyvar</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>varyvar.levels</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>optional</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratio</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xbreaks</code></td>
+<td>
+<p>TODO</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlabels</code></td>
+<td>
+<p>optional</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.x</code></td>
+<td>
+<p>optional</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.y</code></td>
+<td>
+<p>optional</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>starts</code></td>
+<td>
+<p>Number of starting values to try between the
+lower and upper bounds.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data table with notes if no convergence or significance
+thresholds (if any).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## make me
+</code></pre>
+
+
+</div>

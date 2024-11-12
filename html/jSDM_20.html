@@ -1,0 +1,247 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_associations</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot_associations
+plot species-species associations</h2>
+
+<h3>Description</h3>
+
+<p>plot_associations
+plot species-species associations
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_associations(
+  R,
+  radius = 5,
+  main = NULL,
+  cex.main = NULL,
+  circleBreak = FALSE,
+  top = 10L,
+  occ = NULL,
+  env_effect = NULL,
+  cols_association = c("#FF0000", "#BF003F", "#7F007F", "#3F00BF", "#0000FF"),
+  cols_occurrence = c("#BEBEBE", "#8E8E8E", "#5F5F5F", "#2F2F2F", "#000000"),
+  cols_env_effect = c("#1B9E77", "#D95F02", "#7570B3", "#E7298A", "#66A61E", "#E6AB02",
+    "#A6761D", "#666666"),
+  lwd_occurrence = 1,
+  species_order = "abundance",
+  species_indices = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>matrix of correlation <code class="reqn">R</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>radius</code></td>
+<td>
+<p>circle's radius</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.main</code></td>
+<td>
+<p>title's character size. NULL and NA are equivalent to 1.0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>circleBreak</code></td>
+<td>
+<p>circle break or not</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top</code></td>
+<td>
+<p>number of top negative and positive associations to consider</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>occ</code></td>
+<td>
+<p>species occurence data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>env_effect</code></td>
+<td>
+<p>environmental species effects <code class="reqn">\beta</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols_association</code></td>
+<td>
+<p>color gradient for association lines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols_occurrence</code></td>
+<td>
+<p>color gradient for species</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cols_env_effect</code></td>
+<td>
+<p>color gradient for environmental effect</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd_occurrence</code></td>
+<td>
+<p>lwd for occurrence lines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>species_order</code></td>
+<td>
+<p>order species according to : </p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code>"abundance"</code> </td>
+<td style="text-align: left;"> their mean abundance at sites by default) </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>"frequency"</code> </td>
+<td style="text-align: left;"> the number of sites where they occur </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+<code>"main environmental effect"</code> </td>
+<td style="text-align: left;"> their most important environmental coefficients </td>
+</tr>
+</table>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>species_indices</code></td>
+<td>
+<p>indices for sorting species</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>After fitting the jSDM with latent variables, the <b>fullspecies residual correlation matrix</b> : <code class="reqn">R=(R_{ij})</code> with <code class="reqn">i=1,\ldots, n_{species}</code> and <code class="reqn">j=1,\ldots, n_{species}</code> can be derived from the covariance in the latent variables such as : 
+can be derived from the covariance in the latent variables such as : 
+<code class="reqn">\Sigma_{ij}=\lambda_i' .\lambda_j</code>, in the case of a regression with probit, logit or poisson link function and 
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+<code class="reqn">\Sigma_{ij}</code> </td>
+<td style="text-align: left;"> <code class="reqn">= \lambda_i' .\lambda_j + V</code> </td>
+<td style="text-align: left;"> if i=j </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+         </td>
+<td style="text-align: left;"> <code class="reqn">= \lambda_i' .\lambda_j</code> </td>
+<td style="text-align: left;"> else, </td>
+</tr>
+</table>
+<p>this function represents the correlations computed from covariances :
+</p>
+<p style="text-align: center;"><code class="reqn">R_{ij} = \frac{\Sigma_{ij}}{\sqrt{\Sigma_ii\Sigma _jj}}</code>
+</p>
+<p>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>No return value. Displays species-species associations.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ghislain Vieilledent &lt;ghislain.vieilledent@cirad.fr&gt;
+</p>
+<p>Jeanne Clément &lt;jeanne.clement16@laposte.net&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>Pichler M. and Hartig F. (2021) A new method for faster and more accurate inference of species associations from big community data. <br><em>Methods in Ecology and Evolution</em>, 12, 2159-2173 <a href="https://doi.org/10.1111/2041-210X.13687">doi:10.1111/2041-210X.13687</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jSDM-package</code> <code>get_residual_cor</code> <br><code>jSDM_binomial_probit</code> <code>jSDM_binomial_probit_long_format</code> <br><code>jSDM_binomial_probit_sp_constrained</code> <code>jSDM_binomial_logit</code>  <code>jSDM_poisson_log</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jSDM)
+# frogs data
+data(mites, package="jSDM")
+# Arranging data
+PA_mites &lt;- mites[,1:35]
+# Normalized continuous variables
+Env_mites &lt;- cbind(mites[,36:38], scale(mites[,39:40]))
+colnames(Env_mites) &lt;- colnames(mites[,36:40])
+Env_mites &lt;- as.data.frame(Env_mites)
+# Parameter inference
+# Increase the number of iterations to reach MCMC convergence
+mod &lt;- jSDM_poisson_log(# Response variable
+                        count_data=PA_mites,
+                        # Explanatory variables
+                        site_formula = ~  water + topo + density,
+                        site_data = Env_mites,
+                        n_latent=2,
+                        site_effect="random",
+                        # Chains
+                        burnin=100,
+                        mcmc=100,
+                        thin=1,
+                        # Starting values
+                        alpha_start=0,
+                        beta_start=0,
+                        lambda_start=0,
+                        W_start=0,
+                        V_alpha=1,
+                        # Priors
+                        shape=0.5, rate=0.0005,
+                        mu_beta=0, V_beta=10,
+                        mu_lambda=0, V_lambda=10,
+                        # Various
+                        seed=1234, verbose=1)
+# Calcul of residual correlation between species
+R &lt;- get_residual_cor(mod)$cor.mean
+plot_associations(R, circleBreak = TRUE, occ = PA_mites, species_order="abundance")
+# Average of MCMC samples of species enrironmental effect beta except the intercept
+env_effect &lt;- t(sapply(mod$mcmc.sp,
+                       colMeans)[grep("beta_", colnames(mod$mcmc.sp[[1]]))[-1],])
+colnames(env_effect) &lt;-  gsub("beta_", "", colnames(env_effect))
+plot_associations(R, env_effect = env_effect, species_order="main env_effect")
+</code></pre>
+
+
+</div>

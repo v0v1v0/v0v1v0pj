@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>distance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hamming distance of words</h2>
+
+<h3>Description</h3>
+
+<p>This function uses Simhash worker to do keyword extraction and finds 
+the keywords from two inputs, and then computes Hamming distance 
+between them.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">distance(codel, coder, jiebar)
+
+vector_distance(codel, coder, jiebar)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>codel</code></td>
+<td>
+<p>For <code>distance</code>, a Chinese sentence or the path of a text file, 
+For <code>vector_distance</code>, a character vector of segmented words.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coder</code></td>
+<td>
+<p>For <code>distance</code>, a Chinese sentence or the path of a text file, 
+For <code>vector_distance</code>, a character vector of segmented words.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jiebar</code></td>
+<td>
+<p>jiebaR worker</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="http://en.wikipedia.org/wiki/Hamming_distance">http://en.wikipedia.org/wiki/Hamming_distance</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+
+words = "hello world"
+simhasher = worker("simhash", topn = 1)
+simhasher &lt;= words
+distance("hello world" , "hello world!" , simhasher)
+
+vector_distance(c("hello","world") , c("hello", "world","!") , simhasher)
+
+
+## End(Not run)
+</code></pre>
+
+
+</div>

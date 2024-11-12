@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jshintr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Lint a Javascript file</h2>
+
+<h3>Description</h3>
+
+<p>HTML widget which runs 'jshint' on the given JavaScript file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jshintr(filepath, width = NULL, height = "auto", elementId = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>filepath</code></td>
+<td>
+<p>path to a JavaScript file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width, height</code></td>
+<td>
+<p>dimensions (CSS properties)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>elementId</code></td>
+<td>
+<p>a HTML id for the widget (usually useless)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>htmlwidget</code> object.
+</p>
+
+
+<h3>Note</h3>
+
+<p>You can also run this widget as a RStudio addin.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jsfile &lt;- system.file("jsexample.js", package = "jshintr")
+cat(readLines(jsfile), sep = "\n")
+jshintr(jsfile)
+</code></pre>
+
+
+</div>

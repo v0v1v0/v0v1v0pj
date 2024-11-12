@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>multscatter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Function to Compute Several Scatter Matrices for the Same Data 
+</h2>
+
+<h3>Description</h3>
+
+<p>The function can be used to compute several scatter matrices for the same data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">multscatter(scatterlist, X, toshape = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>scatterlist</code></td>
+<td>
+
+<p>a vector with the names of the scatter matrices to be computed. Note that each of these functions should only return a matrix of size p times p.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>the n times p data matrix for which the scatter should be computed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toshape</code></td>
+<td>
+
+<p>logical, whether scatter matrices should be converted to shape matrices. If TRUE, all matrices will have determinant 1.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>It is important that the functions do not need any additional imput and that they return only the p times p scatter matrix. Hence it might be sometimes necessary
+to write wrappers for some of the functions. See examples.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An array of dimension c(p,p,k) where k is the number of scatter matrices.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># example requires the packages ICS and ICSNP
+library(ICSNP)
+X &lt;- cbind(rexp(1000), rt(1000,6), runif(1000)) 
+
+my.tM1 &lt;- function(X,df=1) tM(X,)$V
+my.tM2 &lt;- function(X,df=2) tM(X,)$V
+
+multscatter(c("cov","cov4","HP1.shape","my.tM1", "my.tM2"), X)
+multscatter(c("cov","cov4","HP1.shape","my.tM1", "my.tM2"), X, toshape=FALSE)
+</code></pre>
+
+
+</div>

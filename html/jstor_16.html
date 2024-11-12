@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_ngram</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read ngram data</h2>
+
+<h3>Description</h3>
+
+<p>Read in data on ngrams via <code>readr::read_tsv()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_ngram(file)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>A path to a file or a zip location from <code>jst_subset_ngrams()</code>.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function is mainly useful when it is used in together with
+jst_import_zip, where you can use it to specify reading in ngram data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble::tibble()</code> with two columns:
+</p>
+
+<ul>
+<li> <p><em>ngram</em>: the ngram term (unigram, bigram, trigram)
+</p>
+</li>
+<li> <p><em>n</em>: an integer for the number of times the term occurred in the original
+file
+</p>
+</li>
+</ul>
+</div>

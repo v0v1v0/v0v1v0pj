@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>haps_theta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Organize information to create haplotypes using theta parameter</h2>
+
+<h3>Description</h3>
+
+<p>This function organizes higher-level information for creating haplotypes from
+the population-scaled mutation rate and a desired number of haplotypes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">haps_theta(theta, n_haps)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>Population-scaled mutation rate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_haps</code></td>
+<td>
+<p>Number of desired haplotypes.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>haps_theta_info</code> object containing information used in <code>create_haplotypes</code>
+to create variant haplotypes.
+This class is just a wrapper around a list containing the phylogenetic tree
+and <code>theta</code> parameter, which you can view (but not change) using the object's
+<code>phylo()</code> and <code>theta()</code> methods, respectively.
+</p>
+
+
+</div>

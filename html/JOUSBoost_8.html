@@ -1,0 +1,228 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jous</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jittering with Over/Under Sampling</h2>
+
+<h3>Description</h3>
+
+<p>Perform probability estimation using jittering with over or undersampling.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jous(X, y, class_func, pred_func, type = c("under", "over"), delta = 10,
+  nu = 1, X_pred = NULL, keep_models = FALSE, verbose = FALSE,
+  parallel = FALSE, packages = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix of continuous predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector of responses with entries in <code>c(-1, 1)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class_func</code></td>
+<td>
+<p>Function to perform classification.  This function definition must be
+exactly of the form <code>class_func(X, y)</code> where X is a matrix and y is a
+vector with entries in <code>c(-1, 1)</code>, and it must return an object on which
+<code>pred_func</code> can create predictions.  See examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred_func</code></td>
+<td>
+<p>Function to create predictions.  This function definition must be
+exactly of the form <code>pred_func(fit_obj, X)</code> where <code>fit_obj</code>
+is an object returned by class_func and X is a matrix of new data
+values, and it must return a vector with entries in <code>c(-1, 1)</code>.
+See examples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Type of sampling: "over" for oversampling,  or "under" for
+undersampling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delta</code></td>
+<td>
+<p>An integer (greater than 3) to control the number of quantiles to
+estimate:</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>The amount of noise to apply to predictors when oversampling data.
+The noise level is controlled by <code>nu * sd(X[,j])</code> for each
+predictor - the default of <code>nu = 1</code> works well.  Such "jittering"
+of the predictors is essential when applying <code>jous</code> to boosting
+type methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_pred</code></td>
+<td>
+<p>A matrix of predictors for which to form probability estimates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_models</code></td>
+<td>
+<p>Whether to store all of the models used to create
+the probability estimates.  If <code>type=FALSE</code>, the user will need
+to re-run <code>jous</code> when creating probability estimates for test data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If <code>TRUE</code>, print the function's progress to the terminal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parallel</code></td>
+<td>
+<p>If <code>TRUE</code>, use parallel <code>foreach</code> to fit models.
+Must register parallel before hand, such as <code>doParallel</code>.  See
+examples below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>packages</code></td>
+<td>
+<p>If <code>parallel = TRUE</code>, a vector of strings containing the
+names of any packages used in <code>class_func</code> or <code>pred_func</code>.
+See examples below.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a list containing information about the
+parameters used in the <code>jous</code> function call, as well as the following
+additional components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>The vector of target quantiles estimated by <code>jous</code>.  Note that
+the estimated probabilities will be located at the midpoints of the values in
+<code>q</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phat_train</code></td>
+<td>
+<p>The in-sample probability estimates <code class="reqn">p(y=1|x)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>phat_test</code></td>
+<td>
+<p>Probability estimates for the optional test data in <code>X_test</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>models</code></td>
+<td>
+<p>If <code>keep_models=TRUE</code>, a list of models fitted to
+the resampled data sets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confusion_matrix</code></td>
+<td>
+<p>A confusion matrix for the in-sample fits.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The <code>jous</code> function runs the classifier <code>class_func</code> a total
+of <code>delta</code> times on the data, which can be computationally expensive.
+Also,<code>jous</code> cannot yet be applied to categorical predictors - in the
+oversampling case, it is not clear how to "jitter" a categorical variable.
+</p>
+
+
+<h3>References</h3>
+
+<p>Mease, D., Wyner, A. and Buja, A. (2007). Costweighted
+boosting with jittering and over/under-sampling:
+JOUS-boost. J. Machine Learning Research 8 409-439.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Generate data from Friedman model #
+set.seed(111)
+dat = friedman_data(n = 500, gamma = 0.5)
+train_index = sample(1:500, 400)
+
+# Apply jous to adaboost classifier
+class_func = function(X, y) adaboost(X, y, tree_depth = 2, n_rounds = 200)
+pred_func = function(fit_obj, X_test) predict(fit_obj, X_test)
+
+jous_fit = jous(dat$X[train_index,], dat$y[train_index], class_func,
+                pred_func, keep_models = TRUE)
+# get probability
+phat_jous = predict(jous_fit, dat$X[-train_index, ], type = "prob")
+
+# compare with probability from AdaBoost
+ada = adaboost(dat$X[train_index,], dat$y[train_index], tree_depth = 2,
+               n_rounds = 200)
+phat_ada = predict(ada, dat$X[train_index,], type = "prob")
+
+mean((phat_jous - dat$p[-train_index])^2)
+mean((phat_ada - dat$p[-train_index])^2)
+
+## Example using parallel option
+
+library(doParallel)
+cl &lt;- makeCluster(4)
+registerDoParallel(cl)
+
+# n.b. the packages='rpart' is not really needed here since it gets
+# exported automatically by JOUSBoost, but for illustration
+jous_fit = jous(dat$X[train_index,], dat$y[train_index], class_func,
+                pred_func, keep_models = TRUE, parallel = TRUE,
+                packages = 'rpart')
+phat = predict(jous_fit, dat$X[-train_index,], type = 'prob')
+stopCluster(cl)
+
+## Example using SVM
+
+library(kernlab)
+class_func = function(X, y) ksvm(X, as.factor(y), kernel = 'rbfdot')
+pred_func = function(obj, X) as.numeric(as.character(predict(obj, X)))
+jous_obj = jous(dat$X[train_index,], dat$y[train_index], class_func = class_func,
+           pred_func = pred_func, keep_models = TRUE)
+jous_pred = predict(jous_obj, dat$X[-train_index,], type = 'prob')
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_vcf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write haplotype info from a <code>haplotypes</code> object to a VCF file.</h2>
+
+<h3>Description</h3>
+
+<p>Compression in this function always uses <code>"bgzip"</code> for compatibility with <code>"tabix"</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write_vcf(
+  haps,
+  out_prefix,
+  compress = FALSE,
+  sample_matrix = NULL,
+  show_progress = FALSE,
+  overwrite = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>haps</code></td>
+<td>
+<p>A <code>haplotypes</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_prefix</code></td>
+<td>
+<p>Prefix for the output file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compress</code></td>
+<td>
+<p>Logical specifying whether or not to compress output file, or
+an integer specifying the level of compression, from 1 to 9.
+If <code>TRUE</code>, a compression level of <code>6</code> is used.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample_matrix</code></td>
+<td>
+<p>Matrix to specify how haplotypes are grouped into samples
+if samples are not haploid. There should be one row for each sample, and
+each row should contain indices or names for the haplotypes present in that sample.
+Indices/names for haplotypes cannot be repeated.
+Instead of repeating indices here, you should use the <code>dup_haps</code>
+method of the <code>haplotypes</code> class to duplicate the necessary haplotype(s).
+The number of columns indicates the ploidy level: 2 columns for diploid,
+3 for triploid, 4 for tetraploid, and so on;
+there is no limit to the ploidy level.
+If this argument is <code>NULL</code>, it's assumed that each haplotype is its own
+separate sample.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_progress</code></td>
+<td>
+<p>Logical for whether to show a progress bar.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Logical for whether to overwrite existing file(s) of the
+same name, if they exist. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+</div>

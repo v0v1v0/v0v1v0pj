@@ -1,0 +1,170 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clusterpermute</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conduct a cluster-based permutation test</h2>
+
+<h3>Description</h3>
+
+<p>Conduct a cluster-based permutation test
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clusterpermute(
+  jlmer_spec,
+  family = c("gaussian", "binomial"),
+  statistic = c("t", "chisq"),
+  threshold,
+  nsim = 100L,
+  predictors = NULL,
+  binned = FALSE,
+  top_n = Inf,
+  add1 = TRUE,
+  ...,
+  progress = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jlmer_spec</code></td>
+<td>
+<p>Data prepped for jlmer from <code>make_jlmer_spec()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>A GLM family. Currently supports "gaussian" and "binomial".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>Test statistic for calculating cluster mass.
+Can be one of <code>"t"</code> (default) from the regression model output or
+<code>"chisq"</code> from a likelihood ratio test (takes about twice as long to calculate).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>The threshold value that the statistic must pass to contribute to cluster mass.
+Interpretation differs on the choice of statistic (more below):
+</p>
+
+<ul>
+<li>
+<p> If <code>statistic = "t"</code>, the threshold for t-value (beta/std.err) from the regression model.
+</p>
+</li>
+<li>
+<p> If <code>statistic = "chisq"</code>, the threshold for the p-value of chi-squared statistics from likelihood ratio tests.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsim</code></td>
+<td>
+<p>Number of simulations description</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predictors</code></td>
+<td>
+<p>(Optional) a subset of predictors to test. Defaults to <code>NULL</code> which tests all predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>Whether the data has been aggregated/collapsed into time bins. Defaults to <code>FALSE</code>,
+which requires a cluster to span at least two time points. If <code>TRUE</code>, allows length-1 clusters to exist.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>top_n</code></td>
+<td>
+<p>How many clusters to return, in the order of the size of the cluster-mass statistic.
+Defaults to <code>Inf</code> which return all detected clusters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add1</code></td>
+<td>
+<p>Whether to add 1 to the numerator and denominator when calculating the p-value.
+Use <code>TRUE</code> to effectively count the observed statistic as part of the permuted
+null distribution (recommended with larger <code>nsim</code> prior to publishing results).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments passed to Julia for model fitting.
+Defaults to <code>fast = TRUE</code> (when <code>family = "binomial"</code>) and <code>progress = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress</code></td>
+<td>
+<p>Defaults to <code>TRUE</code>, which prints progress on each step of the cluster permutation test.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of <code>null_cluster_dists</code> and <code>empirical_clusters</code> with p-values
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>compute_timewise_statistics()</code>, <code>permute_timewise_statistics()</code>,
+<code>extract_empirical_clusters()</code>, <code>extract_null_cluster_dists()</code>,
+<code>calculate_clusters_pvalues()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+library(dplyr, warn.conflicts = FALSE)
+
+# Specification object
+spec &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, filter(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec
+
+# Should minimally provide `threshold` and `nsim`, in addition to the spec object
+reset_rng_state()
+CPA &lt;- clusterpermute(spec, threshold = 2, nsim = 100, progress = FALSE)
+CPA
+
+# CPA is a list of `&lt;null_cluster_dists&gt;` and `&lt;empirical_clusters&gt;` objects
+sapply(CPA, class)
+
+# You can extract the individual components for further inspection
+CPA$null_cluster_dists
+CPA$empirical_clusters
+
+
+
+
+</code></pre>
+
+
+</div>

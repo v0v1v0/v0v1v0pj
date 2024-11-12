@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaccard.ev</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute an expected Jaccard/Tanimoto similarity coefficient under independence</h2>
+
+<h3>Description</h3>
+
+<p>Compute an expected Jaccard/Tanimoto similarity coefficient under independence
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaccard.ev(x, y, px = NULL, py = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>px</code></td>
+<td>
+<p>probability of successes in <code>x</code> (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>py</code></td>
+<td>
+<p>probability of successes in <code>y</code> (optional)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>jaccard.ev</code> returns an expected value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+x = rbinom(100,1,.5)
+y = rbinom(100,1,.5)
+jaccard.ev(x,y)
+</code></pre>
+
+
+</div>

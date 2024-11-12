@@ -1,0 +1,193 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>openPage</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a server</h2>
+
+<h3>Description</h3>
+
+<p><code>openPage</code> starts a server and opens a new page with a WebSocket connection between it and the current
+R session. After that, messages can be exchanged between R session and the web page to generate content on the
+web page and to trigger calculations in R as a response to user activity on the page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">openPage(
+  useViewer = TRUE,
+  rootDirectory = NULL,
+  startPage = NULL,
+  port = NULL,
+  browser = NULL,
+  allowedFunctions = NULL,
+  allowedVariables = NULL,
+  allowedDirectories = getwd(),
+  connectionNumber = Inf,
+  sessionVars = NULL,
+  onStart = NULL,
+  onClose = NULL,
+  onlyServer = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>useViewer</code></td>
+<td>
+<p>If <code>TRUE</code>, the new web page will be opened in the RStudio Viewer. If <code>FALSE</code>,
+a default web browser will be used (if other is not specified with the <code>browser</code> argument).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rootDirectory</code></td>
+<td>
+<p>A path to the root directory for the server. Any file, requested by the server
+will be searched for in this directory. If <code>rootDirectory</code> is not 
+defined, the <code>http_root</code> in the package directory will be used as a root directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>startPage</code></td>
+<td>
+<p>A path to an HTML file that should be used as a starting page of the app.
+It can be an absolute path to a local file, or it can be relative to the <code>rootDirectory</code>
+or to the current R working directory. If <code>startPage</code> is not defined, an empty page will be used.
+The file must have <em>.html</em> extension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>port</code></td>
+<td>
+<p>Defines which TCP port the server will listen to. If not defined, random available port
+will be used (see <code>randomPort</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>browser</code></td>
+<td>
+<p>A browser in which to open a new web page.
+If not defined, default browser will be used. For more information check <code>browseURL</code>.
+If this argument is specified, <code>useViewer</code> will be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allowedFunctions</code></td>
+<td>
+<p>List of functions that can be called from a web page without any additional actions 
+on the R side. All other functions will require authorization in the current R session before they are called. 
+This argument should be a vector of R function names. Check <code>authorize</code> and <code>allowFunctions</code>
+for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allowedVariables</code></td>
+<td>
+<p>List of variables that can be modified from a web page without any additional actions 
+on the R side. All other variable reassignments must be confirmed in the current R session. 
+This argument should be a vector of variable names. Check <code>authorize</code> and <code>allowVariables</code>
+for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allowedDirectories</code></td>
+<td>
+<p>List of directories that can be accessed by the server. This argument should be a vector of
+paths (absolute or relative to the current working directory) to existing directories. Check <code>allowDirectories</code>
+for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>connectionNumber</code></td>
+<td>
+<p>Maximum number of connections that is allowed to be active simultaneously.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionVars</code></td>
+<td>
+<p>Named list of variables, that will be declared for each session, when a new connection is opened.
+Any changes to these variables will affect only a certain session. Thus they can be used, for instance, to 
+store a state of each session. For more information, please, check <code>setSessionVariables</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>onStart</code></td>
+<td>
+<p>A callback function that will be executed, when a new connection is opened. This function gets a single 
+argument, which is an object of class <code>Session</code>. General purpose of the function is to populate each 
+new web page with some default content.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>onClose</code></td>
+<td>
+<p>A callback function that will be executed, when a connection is closed. This function gets a single
+argument, which is an object of class <code>Session</code>. General purpose of the function is to store session 
+variables if needed or in any other form to finalize user's interaction with the app.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>onlyServer</code></td>
+<td>
+<p>If <code>TRUE</code>, then an app will initialise without trying to open a new page in a browser.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>jrc</code> supports four types of messages:
+</p>
+
+<ul>
+<li>
+<p>Commands are pieces of R or JavaScript code that will be evaluated on the receiving side. Note, 
+that any command from a web page must be authorized in the R session for security reasons. A message 
+with information about how to do that is printed in the console each time a command is received. For more
+information, please, check <code>sendCommand</code>.
+</p>
+</li>
+<li>
+<p>Data is any variable that is sent to or from the R session. It must always come with a 
+name of the variable to which it should be assigned on the receiving side. For more information, please,
+check <code>sendData</code>.
+</p>
+</li>
+<li>
+<p>Function calls can be triggered on each side of the WebSocket connection. Alongside the function name,
+one can also send a list of arguments and name of a variable to which the returned value of the function will
+be assigned. For more information, please, check <code>callFunction</code>.
+</p>
+</li>
+<li>
+<p>Unlike other types of messages, HTML code can be sent only from the R session to a web page. This code will
+be added to the body of the page.
+</p>
+</li>
+</ul>
+<p><code>openPage</code> function is a wrapper around several methods of class <code>App</code>. First, it creates an
+instance of this class. Then it starts a server that listens to the given port. And finally, it attempts
+to open a new web page. It also stores a new app object in the package namespace, which allows other
+wrapper functions to access it.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>App</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>closePage</code>, <code>setEnvironment</code>, <code>setLimits</code>, <code>allowVariables</code>,
+<code>allowFunctions</code>, <code>setSessionVariables</code>.
+</p>
+
+
+</div>

@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>filter_table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply query to a dataframe</h2>
+
+<h3>Description</h3>
+
+<p>Filter a dataframe using the output of a queryBuilder. The <code>return_value</code>
+Should be set to <code>r_rules</code>, and the list of filters should contain column names
+that are present in the data as their id value.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">filter_table(data = NULL, filters = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p><code>data.frame</code> to filter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>filters</code></td>
+<td>
+<p>output from queryBuilder when <code>return_value = "r_rules"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A filtered version of the input <code>data.frame</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(shiny)
+library(jqbr)
+
+filters &lt;- list(
+  list(
+    id = "cyl",
+    type = "integer",
+    input = "radio",
+    values = list(
+      4,
+      6,
+      8
+    )
+  )
+)
+
+ui &lt;- fluidPage(
+  queryBuilderInput(
+    inputId = "r_filter",
+    filters = filters,
+    return_value = "r_rules"
+  ),
+  tableOutput("cars")
+)
+
+server &lt;- function(input, output) {
+  output$cars &lt;- renderTable({
+    filter_table(mtcars, input$r_filter)
+  })
+}
+
+
+if (interactive()) {
+  shinyApp(ui, server)
+}
+</code></pre>
+
+
+</div>

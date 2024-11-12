@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Jacobi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Jacobi Algorithm using Rcpp</h2>
+
+<h3>Description</h3>
+
+<p>The Classical Jacobi Algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Jacobi(x, symmetric = TRUE, only.values = FALSE, eps = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A real symmetric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symmetric</code></td>
+<td>
+<p>a logical value.  Is the matrix symmetric?  (Only symmetric matrices are allowed.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>only.values</code></td>
+<td>
+<p>A logical value: do you want only the eigenvalues?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>an error tolerance. 0.0 implies <code>.Machine$double.eps</code> and
+<code>sqrt(.Machine$double.eps)</code> if <code>only.values = TRUE</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Eigenvalues and optionally, eigenvectore, of a real symmetric matrix using the
+classical Jacobi algorithm, (Jacobi, 1854)
+</p>
+
+
+<h3>Value</h3>
+
+<p>a list of two components as for <code>base::eigen</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">V &lt;- crossprod(matrix(runif(40, -1, 1), 8))
+Jacobi(V)
+identical(Jacobi(V), JacobiR(V))
+all.equal(Jacobi(V)$values, base::eigen(V)$values)
+</code></pre>
+
+
+</div>

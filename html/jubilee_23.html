@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.repo-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The jubilee repository class</h2>
+
+<h3>Description</h3>
+
+<p>This S4 class stores the raw data for the jubilee package
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>call</code></dt>
+<dd>
+<p>The match.call slot</p>
+</dd>
+<dt><code>ie</code></dt>
+<dd>
+<p>data.table, contains the combined data from <code>ie.raw</code>, <code>ws</code>, and <code>inflation</code>.</p>
+</dd>
+<dt><code>yield.inversion</code></dt>
+<dd>
+<p>numeric, the fractions of yield curve inversion</p>
+</dd>
+<dt><code>raw.ie</code></dt>
+<dd>
+<p>data.table, contains the data from <code>ie_data.xls</code> of Robert Shiller</p>
+</dd>
+<dt><code>ws</code></dt>
+<dd>
+<p>data.table, contains the historical market return data from William Schwert</p>
+</dd>
+<dt><code>inflation</code></dt>
+<dd>
+<p>data.table, contains the historical inflation data from Minneapolis FED</p>
+</dd>
+<dt><code>comm.int</code></dt>
+<dd>
+<p>data.table, contains the historical commercial interest rate</p>
+</dd>
+<dt><code>tb3ms</code></dt>
+<dd>
+<p>data.table, contains the historical 3-month Treasury bill rate</p>
+</dd>
+<dt><code>gold</code></dt>
+<dd>
+<p>data.table, contains the historical monthly gold prices</p>
+</dd>
+<dt><code>gold2</code></dt>
+<dd>
+<p>data.table, contains the historical annual gold prices</p>
+</dd>
+<dt><code>create.time</code></dt>
+<dd>
+<p><code>POSIXct</code>, records the creation time of this object.</p>
+</dd>
+</dl>
+</div>

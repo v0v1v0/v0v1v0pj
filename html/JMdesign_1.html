@@ -1,0 +1,348 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>powerLongSurv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Power calculation in joint modeling of longitudinal and 
+survival data - k-th Order Trajectories and Unknown Sigma</h2>
+
+<h3>Description</h3>
+
+<p>Compute the power in joint modeling of longitudinal and survival data 
+when the variance-covariance matrix Sigma_Theta is unknown and the 
+trajectories are order k.
+</p>
+<p>The function computes power for a one-sided test, either
+</p>
+<p style="text-align: center;"><code class="reqn"> H_0: \beta = 0 \quad \mbox{ and } \quad H_{1A}: \beta &gt; 0</code>
+</p>
+
+<p>or 
+</p>
+<p style="text-align: center;"><code class="reqn"> H_0: \beta = 0 \quad \mbox{ and } \quad H_{1B}: \beta &lt; 0</code>
+</p>
+
+<p>with Type I error <code class="reqn">\alpha</code>. The choice of the alternative is 
+determined by the sign of <code class="reqn">\beta</code>. Negative values for <code class="reqn">\beta</code> indicate that 
+the alternative hypothesis is <code class="reqn">H_{1B}</code>, while <code class="reqn">\beta \ge 0</code> indicates that it is 
+<code class="reqn">H_{1A}</code>.
+</p>
+<p>It creates a <code>powerLongSurv</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">powerLongSurv(
+  N,
+  nevents,
+  tmedian,
+  meantf,
+  p,
+  t,
+  SigmaTheta,
+  sigmae_2,
+  ordtraj,
+  beta = 0,
+  alpha = 0.05,
+  tol = 1.5e-08
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>numeric specifying the total sample size; minimum 20.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nevents</code></td>
+<td>
+<p>numeric specifying the number of events; at least 20 and at 
+most N.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tmedian</code></td>
+<td>
+<p>numeric specifying the median survival time; positive</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meantf</code></td>
+<td>
+<p>numeric specifying the mean follow-up time; positive and no 
+greater than max(t).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>numeric vector of estimated subject proportions with 2,3,... 
+measurements, respectively, zero proportions allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>numeric vector of measurement times, distinct positive components; 
+same length as <code>p</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SigmaTheta</code></td>
+<td>
+<p>numeric matrix specifying the covariance matrix Sigma_Theta</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigmae_2</code></td>
+<td>
+<p>numeric specifying the measurement error; positive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordtraj</code></td>
+<td>
+<p>integer specifying the order of trajectories, must be less 
+the order of Sigma_Theta</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>numeric specifying the effect of the trajectory; default value 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>numeric, strictly between 0.0 and 1.0, specifying the Type-I 
+Error (2-sided), default value 0.05.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>numeric, For floating point objects x and y, if |x-y| &lt;= tol, x==y. 
+Passed to R function all.equal.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function <code>powerLongSurv</code> is used to calculate the power in joint 
+modeling of longitudinal and survival data.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of S4 class <code>powerLongSurv</code>,
+which has the following 12 components
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>title </code></td>
+<td>
+<p>character string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subtitle </code></td>
+<td>
+<p>character string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t </code></td>
+<td>
+<p>numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p </code></td>
+<td>
+<p>numeric vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N </code></td>
+<td>
+<p>integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nevents </code></td>
+<td>
+<p>integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>censr </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tmedian </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meantf </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>SigmaTheta </code></td>
+<td>
+<p>numeric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ordtraj </code></td>
+<td>
+<p>integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>BSigma </code></td>
+<td>
+<p>numeric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power </code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Emil A. Cornea, Liddy M. Chen, Bahjat F. Qaqish, Haitao Chu, and 
+Joseph G. Ibrahim
+</p>
+
+
+<h3>References</h3>
+
+<p>L. M. Chen, J. G. Ibrahim, and H. Chu. Sample size and power determination
+in joint modeling of longitudinal and survival data.
+Statist. Med. 2011, 30 2295-2309
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>powerLongSurv-class</code>, <code>show-methods</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> ## Example 1.
+ ## **********
+ ## Input elements of Sigma_theta in forumula 4.6;
+ SigmaTheta &lt;- matrix(c(1.2,0.0,0.0,0.0,0.7,0.0,0.0,0.0,0.8),nrow=3,ncol=3)
+ 
+ N        &lt;-  200; # Total sample size;
+ nevents  &lt;-  140; # Number of events;
+ tmedian  &lt;-  0.7; # median survival;
+ meantf   &lt;-  1.4; # mean follow-up time;
+ beta     &lt;-  0.2; # Effect of the trajectory;
+ alpha    &lt;-  0.05;# Type-I Error (2-sided);
+ sigmae_2 &lt;-  0.09; # measurement error;
+ 
+ ## schedule of measurement;
+ t &lt;- c(0.4, 0.8, 1.2, 1.6, 2) ; # maximum 2 year follow-up;
+ 
+ ## Input estimated proportion subjects with 2,3,4,5,6 measurements;
+ ## This is \xi in formula 4.6;
+ ## The data is obtained from the simulated data for the calculation in table 2;
+ p &lt;- c(0.3, 0.4, 0.15, 0.1, 0.05);
+ 
+ ## Input the order of trajectories
+ ordtraj &lt;- 1 ## linear trajectories
+ 
+ ## Call function
+ ## Linear Trajectories
+ pLSl &lt;- powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta,
+                       sigmae_2, ordtraj, beta, alpha=0.05)
+ pLSl
+ show(pLSl)
+ unclass(pLSl)
+ 
+ ## Constant Trajectories
+ powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta, sigmae_2,
+               ordtraj=0, beta, alpha=0.05)
+ 
+ ## Quadratic Trajectories
+ powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta, sigmae_2,
+               ordtraj=2, beta, alpha=0.05)
+ 
+ ## ***************************************************************************
+ 
+ ## Example 2.
+ ## **********
+ ## Input elements of Sigma_theta in forumula 4.6;
+ SigmaTheta &lt;- matrix(c(1.2,0.0,0.0,0.0,0.7,0.0,0.0,0.0,0.8),nrow=3,ncol=3)
+ 
+ N        &lt;-  200; # Total sample size;
+ nevents  &lt;-  140; # Number of events;
+ tmedian  &lt;-  0.7; # median survival;
+ meantf   &lt;-  1.4; # mean follow-up time;
+ beta     &lt;-  0.2; # Effect of the trajectory;
+ alpha    &lt;-  0.05;# Type-I Error (2-sided);
+ sigmae_2 &lt;-  0.09; # measurement error;
+ 
+ ## schedule of measurement;
+ t &lt;- c(0.4, 0.8, 1.2, 1.6);
+ 
+ ## Input estimated proportion subjects with 2,3,4,5,6 measurements;
+ ## This is \xi in formula 4.6;
+ ## The data is obtained from the simulated data for the calculation in table 2;
+ p &lt;- c(0.3, 0.4, 0.2, 0.1);
+ 
+ ## Input the order of trajectories
+ ordtraj &lt;- 2 ## quadratic trajectories
+ 
+ ## Call function
+ ## Quadratic Trajectories
+ pLSq &lt;- powerLongSurv(N,nevents,tmedian,meantf,p,t,SigmaTheta,sigmae_2,ordtraj,beta, alpha = 0.05)
+ pLSq
+ show(pLSq)
+ unclass(pLSq)
+ 
+ ## Constant Trajectories
+ powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta, sigmae_2,
+               ordtraj=0, beta, alpha=0.05)
+ 
+ ## Linear Trajectories
+ powerLongSurv(N, nevents, tmedian, meantf, p, t, SigmaTheta, sigmae_2,
+               ordtraj=1, beta, alpha=0.05)
+
+</code></pre>
+
+
+</div>

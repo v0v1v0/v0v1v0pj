@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cox2.display</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>cox2.display: table for coxph.object with model option: TRUE - allow "frailty" or "cluster" model</h2>
+
+<h3>Description</h3>
+
+<p>Table for coxph.object with model option: TRUE - allow "frailty" or "cluster" model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cox2.display(cox.obj.withmodel, dec = 2, msm = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cox.obj.withmodel</code></td>
+<td>
+<p>coxph.object with model option: TRUE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>Decimal point, Default: 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>msm</code></td>
+<td>
+<p>Multi state model, Default: NULL</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>GEE like - cluster, Mixed effect model like - frailty
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table, cluster/frailty info, metrics, caption
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+data(lung)
+fit1 &lt;- coxph(Surv(time, status) ~ ph.ecog + age + cluster(inst), data = lung, model = TRUE)
+fit2 &lt;- coxph(Surv(time, status) ~ ph.ecog + age + frailty(inst), data = lung, model = TRUE)
+cox2.display(fit1)
+cox2.display(fit2)
+</code></pre>
+
+
+</div>

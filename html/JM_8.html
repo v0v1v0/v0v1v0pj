@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>crLong</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Transform Competing Risks Data in Long Format </h2>
+
+<h3>Description</h3>
+
+<p>In a competing risks setting this function expands the data frame with a
+single row per subject to the a data frame in long format in which each
+subject has as many rows as the number of competing events.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">crLong(data, statusVar, censLevel,
+    nameStrata = "strata", nameStatus = "status2")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data frame containing the competing risk data with a single
+row per subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statusVar</code></td>
+<td>
+<p>a character string denoting the name of the variable in
+<code>data</code> that identifies the status variable which equals 1 if the
+subject had any of the competing events and 0 otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>censLevel</code></td>
+<td>
+<p>a character string or a scalar denoting the censoring level
+in the <code>statusVar</code> variable of <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameStrata</code></td>
+<td>
+<p>a character string denoting the variable that will be added
+in the long version of <code>data</code> denoting the various causes of event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameStatus</code></td>
+<td>
+<p>a character string denoting the variable that will be added
+in the long version of <code>data</code> denoting if the subject experience any
+of the competing events.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame in the long format with multiple rows per subject.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Putter, H., Fiocco, M., and Geskus, R. (2007). Tutorial in biostatistics:
+Competing risks and multi-state models. <em>Statistics in Medicine</em> <b>26</b>,
+2389–2430.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(crLong(pbc2.id, "status", "alive"))
+</code></pre>
+
+
+</div>

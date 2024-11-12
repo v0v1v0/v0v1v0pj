@@ -1,0 +1,273 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sub_models</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Construct necessary information for substitution models.</h2>
+
+<h3>Description</h3>
+
+<p>For a more detailed explanation, see <code>vignette("sub-models")</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sub_JC69(lambda, mu = 1, gamma_shape = NULL, gamma_k = 5, invariant = 0)
+
+sub_K80(alpha, beta, mu = 1, gamma_shape = NULL, gamma_k = 5, invariant = 0)
+
+sub_F81(pi_tcag, mu = 1, gamma_shape = NULL, gamma_k = 5, invariant = 0)
+
+sub_HKY85(
+  pi_tcag,
+  alpha,
+  beta,
+  mu = 1,
+  gamma_shape = NULL,
+  gamma_k = 5,
+  invariant = 0
+)
+
+sub_F84(
+  pi_tcag,
+  beta,
+  kappa,
+  mu = 1,
+  gamma_shape = NULL,
+  gamma_k = 5,
+  invariant = 0
+)
+
+sub_TN93(
+  pi_tcag,
+  alpha_1,
+  alpha_2,
+  beta,
+  mu = 1,
+  gamma_shape = NULL,
+  gamma_k = 5,
+  invariant = 0
+)
+
+sub_GTR(
+  pi_tcag,
+  abcdef,
+  mu = 1,
+  gamma_shape = NULL,
+  gamma_k = 5,
+  invariant = 0
+)
+
+sub_UNREST(Q, mu = 1, gamma_shape = NULL, gamma_k = 5, invariant = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>Substitution rate for all possible substitutions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>Total rate of substitutions. Defaults to <code>1</code>, which makes branch lengths
+in units of substitutions per site. Passing <code>NULL</code> results in no scaling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_shape</code></td>
+<td>
+<p>Numeric shape parameter for discrete Gamma distribution used for
+among-site variability. Values must be greater than zero.
+If this parameter is <code>NULL</code>, among-site variability is not included.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma_k</code></td>
+<td>
+<p>The number of categories to split the discrete Gamma distribution
+into. Values must be an integer in the range <code style="white-space: pre;">⁠[2,255]⁠</code>.
+This argument is ignored if <code>gamma_shape</code> is <code>NA</code>.
+Defaults to <code>5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>invariant</code></td>
+<td>
+<p>Proportion of sites that are invariant.
+Values must be in the range <code style="white-space: pre;">⁠[0,1)⁠</code>.
+Defaults to <code>0</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Substitution rate for transitions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>Substitution rate for transversions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pi_tcag</code></td>
+<td>
+<p>Vector of length 4 indicating the equilibrium distributions of
+T, C, A, and G respectively. Values must be &gt;= 0, and
+they are forced to sum to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa</code></td>
+<td>
+<p>The transition/transversion rate ratio.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha_1</code></td>
+<td>
+<p>Substitution rate for T &lt;-&gt; C transition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha_2</code></td>
+<td>
+<p>Substitution rate for A &lt;-&gt; G transition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abcdef</code></td>
+<td>
+<p>A vector of length 6 that contains the off-diagonal elements
+for the substitution rate matrix.
+See <code>vignette("sub-models")</code> for how the values are ordered in the matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>Matrix of substitution rates for "T", "C", "A", and "G", respectively.
+Item <code>Q[i,j]</code> is the rate of substitution from nucleotide <code>i</code> to nucleotide <code>j</code>.
+Do not include indel rates here!
+Values on the diagonal are calculated inside the function so are ignored.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>sub_info</code> object, which is an R6 class that wraps the info needed for
+the <code>create_haplotypes</code> function.
+It does not allow the user to directly manipulate the info inside, as that
+should be done using the <code>sub_models</code> functions.
+You can use the following methods from the class to view information:
+</p>
+
+<dl>
+<dt><code>Q()</code></dt>
+<dd>
+<p>View a list of substitution rate matrices,
+one for each Gamma category.</p>
+</dd>
+<dt><code>pi_tcag()</code></dt>
+<dd>
+<p>View the equilibrium nucleotide frequencies.</p>
+</dd>
+<dt><code>gammas()</code></dt>
+<dd>
+<p>View the discrete Gamma-class values.</p>
+</dd>
+<dt><code>invariant()</code></dt>
+<dd>
+<p>View the proportion of invariant sites.</p>
+</dd>
+<dt><code>model()</code></dt>
+<dd>
+<p>View the substitution model.</p>
+</dd>
+<dt><code>U()</code></dt>
+<dd>
+<p>View list of the <code>U</code> matrices (one matrix per Gamma category)
+used for calculating transition-probability matrices.
+This is empty for UNREST models.</p>
+</dd>
+<dt><code>Ui()</code></dt>
+<dd>
+<p>View list of the <code>U^-1</code> matrices (one matrix per Gamma category)
+used for calculating transition-probability matrices.
+This is empty for UNREST models.</p>
+</dd>
+<dt><code>L()</code></dt>
+<dd>
+<p>View list of the lambda vectors (one vector per Gamma category)
+used for calculating transition-probability matrices.
+This is empty for UNREST models.</p>
+</dd>
+</dl>
+<h3>Functions</h3>
+
+
+<ul>
+<li> <p><code>sub_JC69()</code>: JC69 model.
+</p>
+</li>
+<li> <p><code>sub_K80()</code>: K80 model.
+</p>
+</li>
+<li> <p><code>sub_F81()</code>: F81 model.
+</p>
+</li>
+<li> <p><code>sub_HKY85()</code>: HKY85 model.
+</p>
+</li>
+<li> <p><code>sub_F84()</code>: F84 model.
+</p>
+</li>
+<li> <p><code>sub_TN93()</code>: TN93 model.
+</p>
+</li>
+<li> <p><code>sub_GTR()</code>: GTR model.
+</p>
+</li>
+<li> <p><code>sub_UNREST()</code>: UNREST model.
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>create_haplotypes</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Same substitution rate for all types:
+obj_JC69 &lt;- sub_JC69(lambda = 0.1)
+
+# Transitions 2x more likely than transversions:
+obj_K80 &lt;- sub_K80(alpha = 0.2, beta = 0.1)
+
+# Incorporating equilibrium frequencies:
+obj_HKY85 &lt;- sub_HKY85(pi_tcag = c(0.1, 0.2, 0.3, 0.4),
+                       alpha = 0.2, beta = 0.1)
+
+# 10-category Gamma distribution for among-site variability:
+obj_K80 &lt;- sub_K80(alpha = 0.2, beta = 0.1,
+                   gamma_shape = 1, gamma_k = 10)
+
+# Invariant sites:
+obj_K80 &lt;- sub_K80(alpha = 0.2, beta = 0.1,
+                   invariant = 0.25)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juliaEval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate a Julia expression</h2>
+
+<h3>Description</h3>
+
+<p>This function evaluates Julia code, given as a string, in Julia,
+and translates the result back to R.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juliaEval(expr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>Julia code, given as a one-element character vector</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>If the code needs to use R variables, consider using <code>juliaLet</code>
+instead.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The value returned from Julia, translated to an R data structure.
+If Julia returns <code>nothing</code>, an invisible <code>NULL</code> is returned.
+This is also the case if the last non-whitespace character of <code>expr</code>
+is a semicolon.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+   juliaEval("1 + 2")
+   juliaEval('using Random; Random.seed!(5);')
+
+## Not run: 
+   juliaEval('using Pkg; Pkg.add("BoltzmannMachines")')
+
+## End(Not run)
+}
+
+</code></pre>
+
+
+</div>

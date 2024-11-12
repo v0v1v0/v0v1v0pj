@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_colors</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get colors for plotting functions</h2>
+
+<h3>Description</h3>
+
+<p>This is a helper function that provides hex color codes for
+<code>jtools</code>, <code>interactions</code>, and perhaps other packages.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_colors(colors, num.colors = 1, reverse = FALSE, gradient = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>colors</code></td>
+<td>
+<p>The name of the desired color class or a vector of colors.
+See details of jtools_colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.colors</code></td>
+<td>
+<p>How many colors should be returned? Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse</code></td>
+<td>
+<p>Should the colors be returned in reverse order, compared to
+normal? Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gradient</code></td>
+<td>
+<p>Return endpoints for a gradient? Default is FALSE. If TRUE,
+<code>num.colors</code> is ignored.</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>evalFunctionOnList</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate Function Under Local Variables</h2>
+
+<h3>Description</h3>
+
+<p>This function evaluates a function <code>x</code> under an
+environment which is created by a list. All elements of the
+list is local to the function; other words all elements of
+the list can be accessed directly by the function. A new
+environment is created and each element of <code>variables</code>
+is assigned to the new environment. Then the environment
+associated with the <code>x</code> is updated with the new
+environment. Finally <code>x(...)</code> is evaluated and return
+the result.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">evalFunctionOnList(x, variables = list(), ..., parent_env)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A function to be called</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>A list to be converted to an
+environment</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to <code>x</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parent_env</code></td>
+<td>
+<p>parent environment</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return value of the <code>x(...)</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>TszKin Julian Chan <a href="mailto:ctszkin@gmail.com">ctszkin@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>environment</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">evalFunctionOnList(function() rnorm(n,mean,sd),list(n=5,mean=5,sd=1))
+</code></pre>
+
+
+</div>

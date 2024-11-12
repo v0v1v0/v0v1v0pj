@@ -1,0 +1,48 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaccard.rahman</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute p-value using an extreme value distribution</h2>
+
+<h3>Description</h3>
+
+<p>Rahman et al. (2014) proposes a method to compute a p-value of 
+a Jaccard/Tanimoto coefficient using an extreme value distribution.
+Their paper provides the following description:
+The mean (mu) and s.d. (sigma) of the similarity scores are used to
+define the z score, z = (Tw - mu)/sigma. For the purpose of calculating
+the P value, only hits with T &gt; 0 are considered. The P value w
+is derived from the z score using an extreme value distribution
+P = 1 - exp(-e-z*pi/sqrt(6) - G'(1)), where the Euler=Mascheroni constant G'(1)=0.577215665.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaccard.rahman(j)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>j</code></td>
+<td>
+<p>a numeric vector of observed Jaccard coefficients (uncentered)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>jaccard.rahman</code> returns a numeric vector of p-values
+</p>
+
+
+<h3>References</h3>
+
+<p>Rahman, Cuesta, Furnham, Holliday, and Thornton (2014) EC-BLAST: a tool to automatically search and compare enzyme reactions. Nature Methods, 11(2) <a href="http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2803.html">http://www.nature.com/nmeth/journal/v11/n2/full/nmeth.2803.html</a>
+</p>
+
+
+</div>

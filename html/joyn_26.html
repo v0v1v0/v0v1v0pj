@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joyn_report</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print JOYn report table</h2>
+
+<h3>Description</h3>
+
+<p>Print JOYn report table
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joyn_report(verbose = getOption("joyn.verbose"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical: if FALSE, it won't display any message (programmer's
+option). Default is TRUE.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>invisible table of frequencies
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Messages functions
+<code>clear_joynenv()</code>,
+<code>joyn_msg()</code>,
+<code>joyn_msgs_exist()</code>,
+<code>msg_type_dt()</code>,
+<code>store_msg()</code>,
+<code>style()</code>,
+<code>type_choices()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(data.table)
+x1 = data.table(id = c(1L, 1L, 2L, 3L, NA_integer_),
+t  = c(1L, 2L, 1L, 2L, NA_integer_),
+x  = 11:15)
+
+y1 = data.table(id = 1:2,
+                y  = c(11L, 15L))
+
+d &lt;- joyn(x1, y1, match_type = "m:1")
+joyn_report(verbose = TRUE)
+</code></pre>
+
+
+</div>

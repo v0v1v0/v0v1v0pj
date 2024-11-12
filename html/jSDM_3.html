@@ -1,0 +1,148 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>birds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>birds dataset</h2>
+
+<h3>Description</h3>
+
+<p>The Swiss breeding bird survey ("Monitoring Häufige Brutvögel" MHB) has monitored the populations of 158 common species since 1999.   
+</p>
+<p>The MHB sample from <code>data(MHB2014, package="AHMbook")</code> consists of 267 1-km squares that are laid out as a grid across Switzerland. Fieldwork is conducted by about 200 skilled birdwatchers, most of them volunteers. Avian populations are monitored using a simplified territory mapping protocol, where each square is surveyed up to three times during the breeding season (only twice above the tree line).  
+</p>
+<p>Surveys are conducted along a transect that does not change over the years. The <code>birds</code> dataset has the data for 2014, except one quadrat not surveyed in 2014. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("birds")</code></pre>
+
+
+<h3>Format</h3>
+
+<p> A data frame with 266 observations on the following 166 variables.
+</p>
+<p><b>158 bird species</b> named in latin and whose occurrences are indicated as the number of visits to each site during which the species was observed, including 13 species not recorded in the year 2014 and <b>5 covariates</b> collected on the 266 1x1 km quadrat as well as their identifiers and coordinates : 
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+    <b><code>siteID</code></b> </td>
+<td style="text-align: left;"> an alphanumeric site identifier </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>coordx</code></b> </td>
+<td style="text-align: left;"> a numeric vector indicating the x coordinate of the centre of the quadrat.</td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+    </td>
+<td style="text-align: left;"> The coordinate reference system is not specified intentionally. </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>coordy</code></b> </td>
+<td style="text-align: left;"> a numeric vector indicating the y coordinate of the centre of the quadrat.</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+        </td>
+<td style="text-align: left;">  </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>elev</code></b> </td>
+<td style="text-align: left;"> a numeric vector indicating the mean elevation of the quadrat (m).</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+        </td>
+<td style="text-align: left;">  </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>rlength</code></b> </td>
+<td style="text-align: left;">  the length of the route walked in the quadrat (km).</td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    </td>
+<td style="text-align: left;">  </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>nsurvey</code></b> </td>
+<td style="text-align: left;"> a numeric vector indicating the number of replicate surveys planned in the quadrat; </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    </td>
+<td style="text-align: left;"> above the tree-line 2, otherwise 3. </td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+            </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+    <b><code>forest</code></b> </td>
+<td style="text-align: left;"> a numeric vector indicating the percentage of forest cover in the quadrat.</td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+    </td>
+<td style="text-align: left;"> </td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+    <b><code>obs14</code></b> </td>
+<td style="text-align: left;"> a categorical vector indicating the identifying number of the observer.</td>
+</tr>
+<tr>
+<td style="text-align: left;"> 
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Only the Latin names of bird species are given in this dataset but you can find the corresponding English names in the original dataset : <code>data(MHB2014, package="AHMbook")</code>. 
+</p>
+
+
+<h3>Source</h3>
+
+<p>Swiss Ornithological Institute</p>
+
+
+<h3>References</h3>
+
+<p>Kéry and Royle (2016) Applied Hierarachical Modeling in Ecology Section 11.3 
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(birds, package="jSDM")
+head(birds)
+# find species not recorded in 2014
+which(colSums(birds[,1:158])==0)
+</code></pre>
+
+
+</div>

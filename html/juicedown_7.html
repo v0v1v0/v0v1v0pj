@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>includeAudio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Include Audio media.</h2>
+
+<h3>Description</h3>
+
+<p>Include Audio media.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">includeAudio(
+  url,
+  preload = c("metadata", "auto", "none"),
+  alt = "Your browser does not support the audio element."
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>character. URL of the audio. The media must not be gated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>preload</code></td>
+<td>
+<p>character. One of metadata, auto and none.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alt</code></td>
+<td>
+<p>character. Message displayed when the browser does not support
+the audio tag.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An R object of class "knit_asis" (defined in the knitr package),
+the data of which is the HTML audio tag to insert into the document.
+</p>
+
+
+</div>

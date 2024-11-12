@@ -1,0 +1,221 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PSSeg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parent-Specific copy number segmentation</h2>
+
+<h3>Description</h3>
+
+<p>This function splits (bivariate) copy number signals into parent-specific 
+(PS) segments using recursive binary segmentation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PSSeg(data, method, stat = NULL, dropOutliers = TRUE,
+  rankTransform = FALSE, ..., profile = FALSE, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data frame containing the following columns: </p>
+ 
+<dl>
+<dt>c:</dt>
+<dd>
+<p>Total copy number (logged or non-logged)</p>
+</dd> <dt>b:</dt>
+<dd>
+<p>Allele B 
+fraction</p>
+</dd> <dt>genotype:</dt>
+<dd>
+<p>(germline) genotype of the SNP, coded as 0 for 
+AA, 1/2 for AB, 1 for BB</p>
+</dd> </dl>
+<p> These data are assumed to be ordered by genome 
+position.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+ <dl>
+<dt>"RBS"</dt>
+<dd>
+<p>Recursive Binary Segmentation, see 
+<code>doRBS</code></p>
+</dd> <dt>"GFLars"</dt>
+<dd>
+<p>Group fused LARS as described in 
+Bleakley and Vert (2011).</p>
+</dd> <dt>"DP"</dt>
+<dd>
+<p>Univariate pruned dynamic 
+programming Rigaill et al (2010) or bivariate dynamic programming</p>
+</dd> 
+<dt>"PSCBS"</dt>
+<dd>
+<p>Parent-specific copy number in paired tumor-normal studies 
+using circular binary segmentation by Olshen A. et al (2011)</p>
+</dd> 
+<dt>"other"</dt>
+<dd>
+<p>The segmentation method is passed as a function using 
+argument <code>segFUN</code> (see examples in directory <code>otherMethods</code>).</p>
+</dd> </dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of 
+<code>Y</code> to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dropOutliers</code></td>
+<td>
+<p>If TRUE, outliers are droped by using DNAcopy package</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rankTransform</code></td>
+<td>
+<p>If TRUE, data are replaced by their ranks before 
+segmentation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to <code>jointSeg</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile</code></td>
+<td>
+<p>Trace time and memory usage ?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ? 
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Before segmentation, the decrease in heterozygosity <code>d=2|b-1/2|</code> defined
+in Bengtsson et al, 2010 is calculated from the input data. <code>d</code> is only 
+defined for heterozygous SNPs, that is, SNPs for which 
+<code>data$genotype==1/2</code>. <code>d</code> may be seen as a "mirrored" version of 
+allelic ratios (<code>b</code>): it converts them to a piecewise-constant signals 
+by taking advantage of the bimodality of <code>b</code> for heterozygous SNPs. The 
+rationale for this transformation is that allelic ratios (<code>b</code>) are only 
+informative for heterozygous SNPs (see e.g. Staaf et al, 2008).
+</p>
+<p>Before segmentation, the outliers in the copy number signal are droped 
+according the method explained by Venkatraman, E. S. and Olshen, A. B., 2007.
+</p>
+<p>The resulting data are then segmented using the <code>jointSeg</code> 
+function, which combines an initial segmentation according to argument 
+<code>method</code> and pruning of candidate change points by dynamic programming 
+(skipped when the initial segmentation *is* dynamic programming).
+</p>
+<p>If argument <code>stat</code> is not provided, then dynamic programming is run on 
+the two dimensional statistic <code>"(c,d)"</code>.
+</p>
+<p>If argument <code>stat</code> is provided, then dynamic programming is run on 
+<code>stat</code>; in this case we implicitly assume that <code>stat</code> is a 
+piecewise-constant signal.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements </p>
+ <dl>
+<dt>bestBkp</dt>
+<dd>
+<p>Best set of 
+breakpoints after dynamic programming</p>
+</dd> <dt>initBkp</dt>
+<dd>
+<p>Results of the 
+initial segmentation, using 'doNnn', where 'Nnn' corresponds to argument 
+<code>method</code></p>
+</dd> <dt>dpBkpList</dt>
+<dd>
+<p>Results of dynamic programming, a list of 
+vectors of breakpoint positions for the best model with k breakpoints for 
+k=1, 2, ... K where <code>K=length(initBkp)</code></p>
+</dd> <dt>prof</dt>
+<dd>
+<p>a <code>matrix</code> 
+providing time usage (in seconds) and memory usage (in Mb) for the main 
+steps of the program.  Only defined if argument <code>profile</code> is set to 
+<code>TRUE</code></p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bengtsson, H., Neuvial, P., &amp; Speed, T. P. (2010). TumorBoost: 
+Normalization of allele-specific tumor copy numbers from a single pair of 
+tumor-normal genotyping microarrays. BMC bioinformatics, 11(1), 245.
+</p>
+<p>Staaf, J., Lindgren, D., Vallon-Christersson, et al. (2008). 
+Segmentation-based detection of allelic imbalance and 
+loss-of-heterozygosity in cancer cells using whole genome SNP arrays. 
+Genome Biol, 9(9), R136.
+</p>
+<p>Pierre-Jean, M, Rigaill, G. J. and Neuvial, P. (2015). "Performance
+Evaluation of DNA Copy Number Segmentation Methods." *Briefings in
+Bioinformatics*, no. 4: 600-615.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointSeg</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## load known real copy number regions
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=0.5)
+
+## generate a synthetic CN profile
+K &lt;- 10
+len &lt;- 1e4
+sim &lt;- getCopyNumberDataByResampling(len, K, regData=affyDat)
+datS &lt;- sim$profile
+
+## run binary segmentation (+ dynamic programming)
+resRBS &lt;- PSSeg(data=datS, method="RBS", stat=c("c", "d"), K=2*K, profile=TRUE)
+resRBS$prof
+
+getTpFp(resRBS$bestBkp, sim$bkp, tol=5)
+plotSeg(datS, breakpoints=list(sim$bkp, resRBS$bestBkp))
+</code></pre>
+
+
+</div>

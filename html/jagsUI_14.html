@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>whiskerplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Whisker plots of parameter posterior distributions</h2>
+
+<h3>Description</h3>
+
+<p>Displays whisker plots for specified parameters on the same plot, with a point at the mean value for the posterior distribution and whiskers extending to the specified quantiles of the distribution.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  whiskerplot(x, parameters, quantiles=c(0.025,0.975), zeroline=TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A jagsUI object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A vector of names (as characters) of parameters to include in the plot. Parameter names must match parameters included in the model. Calling non-scalar parameters without subsetting (e.g. <code>alpha</code>) will plot all values of <code>alpha</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quantiles</code></td>
+<td>
+<p>A vector with two values specifying the quantile values (lower and upper).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zeroline</code></td>
+<td>
+<p>If TRUE, a horizontal line at zero is drawn on the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to plot.default</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+#Analyze Longley economic data in JAGS
+#Number employed as a function of GNP
+#See ?jags for a more detailed example
+
+#Get data
+data(longley)
+gnp &lt;- longley$GNP
+employed &lt;- longley$Employed
+n &lt;- length(employed)
+data &lt;- list(gnp=gnp,employed=employed,n=n)
+
+#Identify filepath of model file
+modfile &lt;- tempfile()
+
+writeLines("
+model{
+
+  #Likelihood
+  for (i in 1:n){ 
+
+    employed[i] ~ dnorm(mu[i], tau)     
+    mu[i] &lt;- alpha + beta*gnp[i]
+
+  }
+    
+  #Priors
+  alpha ~ dnorm(0, 0.00001)
+  beta ~ dnorm(0, 0.00001)
+  sigma ~ dunif(0,1000)
+  tau &lt;- pow(sigma,-2)
+
+}
+", con=modfile)
+
+#Set parameters to monitor
+params &lt;- c('alpha','beta','sigma','mu')
+
+#Run analysis
+
+out &lt;- jags(data = data,
+            inits = NULL,
+            parameters.to.save = params,
+            model.file = modfile,
+            n.chains = 3,
+            n.adapt = 100,
+            n.iter = 1000,
+            n.burnin = 500,
+            n.thin = 2)
+
+#Examine output summary
+
+out
+
+#Generate whisker plots
+
+#Plot alpha
+
+whiskerplot(out,parameters=c('alpha'))
+
+#Plot all values of mu
+
+whiskerplot(out,parameters='mu')
+
+#Plot a subset of mu
+
+whiskerplot(out,parameters=c('mu[1]','mu[7]'))
+
+#Plot mu and alpha together
+
+whiskerplot(out,parameters=c('mu','alpha'))
+
+</code></pre>
+
+
+</div>

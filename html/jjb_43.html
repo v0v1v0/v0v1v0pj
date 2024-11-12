@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>system_graphic_driver</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Natural Graphics Driver for Operating System</h2>
+
+<h3>Description</h3>
+
+<p>Provides the default operating system graphics utility
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">system_graphic_driver()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>A <code>string</code> that is either:
+</p>
+
+<ul>
+<li> <p><code>"quartz"</code>: if on MacOS
+</p>
+</li>
+<li> <p><code>"windows"</code>: if on Windows
+</p>
+</li>
+<li> <p><code>"x11"</code>: if on Linux or Solaris
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>James Balamuta
+</p>
+
+
+<h3>See Also</h3>
+
+<p>is_rstudio
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Returns a string depending on test platform
+system_graphic_driver()
+</code></pre>
+
+
+</div>

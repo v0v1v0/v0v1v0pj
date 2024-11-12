@@ -1,0 +1,146 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>residualDiagnostics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Residual Diagnostics Functions</h2>
+
+<h3>Description</h3>
+
+<p>A set of functions to calculate
+residual diagnostics on models, including constructors,
+a generic function, a test of whether an object is of the
+<code>residualDiagnostics</code> class, and methods.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">residualDiagnostics(object, ...)
+
+as.residualDiagnostics(x)
+
+is.residualDiagnostics(x)
+
+## S3 method for class 'lm'
+residualDiagnostics(
+  object,
+  ev.perc = 0.001,
+  robust = FALSE,
+  distr = "normal",
+  standardized = TRUE,
+  cut = 4L,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted model object, with methods for
+<code>model.frame</code>, <code>resid</code> and <code>fitted</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments, not currently used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A object (e.g., list or a modelDiagnostics object) to
+test or attempt coercing to a residualDiagnostics object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ev.perc</code></td>
+<td>
+<p>A real number between 0 and 1 indicating the
+proportion of the theoretical distribution beyond which
+values are considered extreme values (possible outliers).
+Defaults to .001.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>Whether to use robust mean and standard deviation estimates
+for normal distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distr</code></td>
+<td>
+<p>A character string given the assumed distribution.
+Passed on to <code>testDistribution</code>.
+Defaults to “normal”.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>standardized</code></td>
+<td>
+<p>A logical whether to use standardized residuals.
+Defaults to <code>TRUE</code> generally where possible but may depend on
+method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut</code></td>
+<td>
+<p>An integer, how many unique predicted values
+there have to be at least for predicted values to be
+treated continuously, otherwise they are treated as discrete values.
+Defaults to 4.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical (<code>is.residualDiagnostics</code>) or
+a residualDiagnostics object (list) for
+<code>as.residualDiagnostics</code> and <code>residualDiagnostics</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">testm &lt;- stats::lm(mpg ~ hp * factor(cyl), data = mtcars)
+
+resm &lt;- residualDiagnostics(testm)
+plot(resm$testDistribution)
+
+resm &lt;- residualDiagnostics(testm, standardized = FALSE)
+plot(resm$testDistribution)
+
+## clean up
+rm(testm, resm)
+## Not run: 
+
+testdat &lt;- data.frame(
+  y = c(1, 2, 2, 3, 3, NA, 9000000, 2, 2, 1),
+  x = c(1, 2, 3, 4, 5, 6, 5, 4, 3, 2))
+
+residualDiagnostics(
+  lm(y ~ x, data = testdat, na.action = "na.omit"),
+  ev.perc = .1)$Residuals
+
+residualDiagnostics(
+  lm(y ~ x, data = testdat, na.action = "na.exclude"),
+  ev.perc = .1)$Residuals
+
+residualDiagnostics(
+  lm(sqrt(mpg) ~ hp, data = mtcars, na.action = "na.omit"),
+  ev.perc = .1)$Residuals
+
+## End(Not run)
+</code></pre>
+
+
+</div>

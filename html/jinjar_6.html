@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>loader</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Template loaders</h2>
+
+<h3>Description</h3>
+
+<p>Loaders are responsible for exposing templates to the templating engine.
+</p>
+<p><code>path_loader()</code> loads templates from a directory in the file system.
+</p>
+<p><code>package_loader()</code> loads templates from a directory in an R package.
+</p>
+<p><code>list_loader()</code> loads templates from a named list.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">path_loader(...)
+
+package_loader(package, ...)
+
+list_loader(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Strings specifying path components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>package</code></td>
+<td>
+<p>Name of the package in which to search.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Named list mapping template names to template sources.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>"jinjar_loader"</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The loader is an argument to <code>jinjar_config()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">path_loader(getwd())
+
+package_loader("base", "demo")
+
+list_loader(list(
+  header = "Title: {{ title }}",
+  content = "Hello {{ person }}!"
+))
+</code></pre>
+
+
+</div>

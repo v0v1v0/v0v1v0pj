@@ -1,0 +1,321 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jskm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creates a Kaplan-Meier plot for survfit object.</h2>
+
+<h3>Description</h3>
+
+<p>Creates a Kaplan-Meier plot with at risk tables below for survfit object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jskm(
+  sfit,
+  table = FALSE,
+  xlabs = "Time-to-event",
+  ylabs = NULL,
+  xlims = c(0, max(sfit$time)),
+  ylims = c(0, 1),
+  surv.scale = c("default", "percent"),
+  ystratalabs = names(sfit$strata),
+  ystrataname = "Strata",
+  timeby = signif(max(sfit$time)/7, 1),
+  main = "",
+  pval = FALSE,
+  pval.size = 5,
+  pval.coord = c(NULL, NULL),
+  pval.testname = F,
+  marks = TRUE,
+  shape = 3,
+  legend = TRUE,
+  legendposition = c(0.85, 0.8),
+  ci = FALSE,
+  subs = NULL,
+  label.nrisk = "Numbers at risk",
+  size.label.nrisk = 10,
+  linecols = "Set1",
+  dashed = FALSE,
+  cumhaz = F,
+  cluster.option = "None",
+  cluster.var = NULL,
+  data = NULL,
+  cut.landmark = NULL,
+  showpercent = F,
+  status.cmprsk = NULL,
+  linewidth = 0.75,
+  theme = NULL,
+  nejm.infigure.ratiow = 0.6,
+  nejm.infigure.ratioh = 0.5,
+  nejm.infigure.ylim = c(0, 1),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sfit</code></td>
+<td>
+<p>a survfit object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>table</code></td>
+<td>
+<p>logical: Create a table graphic below the K-M plot, indicating at-risk numbers?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlabs</code></td>
+<td>
+<p>x-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylabs</code></td>
+<td>
+<p>y-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlims</code></td>
+<td>
+<p>numeric: list of min and max for x-axis. Default = c(0,max(sfit$time))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylims</code></td>
+<td>
+<p>numeric: list of min and max for y-axis. Default = c(0,1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv.scale</code></td>
+<td>
+<p>scale transformation of survival curves. Allowed values are "default" or "percent".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ystratalabs</code></td>
+<td>
+<p>character list. A list of names for each strata. Default = names(sfit$strata)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ystrataname</code></td>
+<td>
+<p>The legend name. Default = "Strata"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeby</code></td>
+<td>
+<p>numeric: control the granularity along the time-axis; defaults to 7 time-points. Default = signif(max(sfit$time)/7, 1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>plot title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval</code></td>
+<td>
+<p>logical: add the pvalue to the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval.size</code></td>
+<td>
+<p>numeric value specifying the p-value text size. Default is 5.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval.coord</code></td>
+<td>
+<p>numeric vector, of length 2, specifying the x and y coordinates of the p-value. Default values are NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pval.testname</code></td>
+<td>
+<p>logical: add '(Log-rank)' text to p-value. Default = F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marks</code></td>
+<td>
+<p>logical: should censoring marks be added?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape</code></td>
+<td>
+<p>what shape should the censoring marks be, default is a vertical line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+<p>logical. should a legend be added to the plot?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legendposition</code></td>
+<td>
+<p>numeric. x, y position of the legend if plotted. Default=c(0.85,0.8)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>logical. Should confidence intervals be plotted. Default = FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subs</code></td>
+<td>
+<p>= NULL,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label.nrisk</code></td>
+<td>
+<p>Numbers at risk label. Default = "Numbers at risk"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size.label.nrisk</code></td>
+<td>
+<p>Font size of label.nrisk. Default = 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linecols</code></td>
+<td>
+<p>Character or Character vector. Colour brewer pallettes too colour lines. Default ="Set1", "black" for black with dashed line, character vector for the customization of line colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dashed</code></td>
+<td>
+<p>logical. Should a variety of linetypes be used to identify lines. Default = FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cumhaz</code></td>
+<td>
+<p>Show cumulative incidence function, Default: F</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster.option</code></td>
+<td>
+<p>Cluster option for p value, Option: "None", "cluster", "frailty", Default: "None"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster.var</code></td>
+<td>
+<p>Cluster variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>select specific data - for reactive input, Default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut.landmark</code></td>
+<td>
+<p>cut-off for landmark analysis, Default = NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showpercent</code></td>
+<td>
+<p>Shows the percentages on the right side.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>status.cmprsk</code></td>
+<td>
+<p>Status value when competing risk analysis, Default = 2nd level of status variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>linewidth</code></td>
+<td>
+<p>Line witdh, Default = 0.75</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theme</code></td>
+<td>
+<p>Theme of the plot, Default = NULL, "nejm" for NEJMOA style, "jama" for JAMA style</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nejm.infigure.ratiow</code></td>
+<td>
+<p>Ratio of infigure width to total width, Default = 0.6</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nejm.infigure.ratioh</code></td>
+<td>
+<p>Ratio of infigure height to total height, Default = 0.5</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nejm.infigure.ylim</code></td>
+<td>
+<p>y-axis limit of infigure, Default = c(0,1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>PARAM_DESCRIPTION</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>Plot
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jinseob Kim, but heavily modified version of a script created by Michael Way.
+<a href="https://github.com/michaelway/ggkm/">https://github.com/michaelway/ggkm/</a>
+I have packaged this function, added functions to namespace and included a range of new parameters.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+data(colon)
+fit &lt;- survfit(Surv(time, status) ~ rx, data = colon)
+jskm(fit, timeby = 500)
+</code></pre>
+
+
+</div>

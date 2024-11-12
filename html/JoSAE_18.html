@@ -1,0 +1,316 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sae.ul.f</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Unit-level small area estimation under heteroscedasticity.
+</h2>
+
+<h3>Description</h3>
+
+<p>The only function that should be used is <code>sae.ul.f</code> which wraps
+the data preparation (<code>ul.data.prep.f</code>), parameter estimation
+(<code>ul.reml.f</code>), and EBLUP and MSE 
+estimation (<code>ul.est.f</code>) functions. The other functions
+are helpers that do not need to be called by the user directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sae.ul.f(...)
+
+ul.data.prep.f(k.ij, samp.data, population.data, formula, domain.col,
+sample.id.col, neg.sfrac, pop.r, sum.i.k.ij.sq.r, N.i, ...)
+
+ul.reml.f(samp.data, formula, samp.agg.X.pop, y.name, X.names, ...)
+
+ul.est.f(samp.data, samp.agg.X.pop, X.names, y.name, beta.hat,
+cov.beta.hat, sig.sq.e, sig.sq.v, V.bar.ee, V.bar.vv, V.bar.ve,
+neg.sfrac, resid = F, ...) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>samp.data</code></td>
+<td>
+
+<p>Data frame of unit-level sample data of the response and explanatory
+variables. Transformations of x have to be calculated before hand,
+not using formula.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k.ij</code></td>
+<td>
+
+<p>Vector of the same length and corresponding to <code>samp.data</code>
+containing 
+the <code>k_ij</code> values for modeling heteroscedasticity. A vector of
+1's if heteroscedasticity is not 
+considered. <code>k_ij</code> is squared and used as the input to the
+<code>varFix</code> variance function in <code>lme</code>. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>population.data</code></td>
+<td>
+
+<p>Data frame of domain-level means of the explanatory variables. Names
+have to match to sample data.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+
+<p>The fixed effects formula to be used in the mixed model using <code>lme</code>.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>domain.col</code></td>
+<td>
+
+<p>Character string identifying the column name in <code>sample.data</code>
+and <code>population.data</code>
+containing unique domain IDs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sample.id.col</code></td>
+<td>
+
+<p>Character string identifying the column name in <code>sample.data</code>
+containing unique sample IDs.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>neg.sfrac</code></td>
+<td>
+
+<p>Boolean. Are sampling fractions negligible?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pop.r</code></td>
+<td>
+
+<p>Only required if <code>neg.sfrac</code> is FALSE. Same as
+<code>population.data</code> but calculated with the sample elements
+removed. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum.i.k.ij.sq.r</code></td>
+<td>
+
+<p>Only required if <code>neg.sfrac</code> is FALSE. Same as the values in the
+<code>population.k.column</code> but calculated with the sample elements
+removed.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N.i</code></td>
+<td>
+
+<p>Only required if <code>neg.sfrac</code> is FALSE. Number of elements
+within domain i.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samp.agg.X.pop</code></td>
+<td>
+
+<p>Data frame containing the aggregated sample data and domain-level
+explanatory variables. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y.name</code></td>
+<td>
+
+<p>Character string identifying the column name of the response.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X.names</code></td>
+<td>
+
+<p>Vector of character strings identifying the column names of the
+explanatory variables.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta.hat</code></td>
+<td>
+
+<p>Vector of estimated fixed effects.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.beta.hat</code></td>
+<td>
+
+<p>Covariance matrix of fixed effects.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig.sq.e</code></td>
+<td>
+
+<p>Residual variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig.sq.v</code></td>
+<td>
+
+<p>Random effect variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V.bar.ee</code></td>
+<td>
+
+<p>Assymptotic variance of the residual variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V.bar.vv</code></td>
+<td>
+
+<p>Assymptotic variance of the random effect variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>V.bar.ve</code></td>
+<td>
+
+<p>Assymptotic covariance of the residual and random effect variance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resid</code></td>
+<td>
+
+<p>Boolean. Should residuals be returned?
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Parameters forwarded to other functions.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<p>These functions can also be used for eblups
+without heteroskedasticity as the 
+the older functions around <code>eblup.mse.f.wrap</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>est </code></td>
+<td>
+<p>List of point estimates and standard errors based on
+different estimators. <code>est</code>: Point estimates of EBLUP, SRS, GREG,
+Survey regression (svreg), and EBLUP synthetic estimators. Also
+contains random effects. <code>se</code>: Standard errors. EBLUP global was used
+in the reference publication. <code>resids</code>: Different forms of
+raw and transformed residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.pars </code></td>
+<td>
+<p>List of estimated variance parameters. Among others
+the lme object fitted to the data. See list of arguments above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data </code></td>
+<td>
+<p>List of data frames in the format required by the other
+functions.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Johannes Breidenbach
+</p>
+
+
+<h3>References</h3>
+
+<p>Breidenbach et al. (2018) Unit-level and area-level small area
+estimation under heteroscedasticity using digital aerial photogrammetry
+data. Remote Sensing of Environment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(nlme)
+#sample data
+data(ulal.sub.samp.dat)
+#domain means of x
+data(ulal.sub.dom.dat)
+
+#eblup under homoskedasticity
+res &lt;-
+    sae.ul.f(samp.data=ulal.sub.samp.dat,
+             population.data=ulal.sub.dom.dat,
+             k.ij=ulal.sub.samp.dat[,"k.ij.one"],
+             formula=w.VMPRHA ~ elev.mean + elev.mean.sq,
+             domain.col="stand.ID",
+             sample.id.col="plot.ID",
+             neg.sfrac=TRUE)
+
+#eblup under heteroskedasticity
+res &lt;-
+    sae.ul.f(samp.data=ulal.sub.samp.dat,
+             population.data=ulal.sub.dom.dat,
+             k.ij=ulal.sub.samp.dat[,"k.ij.em.0.48"],
+             formula=w.VMPRHA ~ elev.mean + elev.mean.sq,
+             domain.col="stand.ID",
+             sample.id.col="plot.ID",
+             neg.sfrac=TRUE)
+</code></pre>
+
+
+</div>

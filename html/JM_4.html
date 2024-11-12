@@ -1,0 +1,214 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anova</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Anova Method for Fitted Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Produces marginal Wald tests or Performs a likelihood 
+ratio test between two nested joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointModel'
+anova(object, object2, test = TRUE, 
+   process = c("both", "Longitudinal", "Event"), L = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>, nested in <code>object2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>object2</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the likelihood ratio test is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>for which of the two submodels to produce the marginal Wald tests table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L</code></td>
+<td>
+<p>a numeric matrix of appropriate dimensions defining the contrasts of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>aov.jointModel</code> with components,
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>nam0</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L0</code></td>
+<td>
+<p>the log-likelihood under the null hypothesis (<code>object</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic0</code></td>
+<td>
+<p>the AIC value for the model given by <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bic0</code></td>
+<td>
+<p>the BIC value for the model given by <code>object</code>. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nam1</code></td>
+<td>
+<p>the name of <code>object2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>L1</code></td>
+<td>
+<p>the log-likelihood under the alternative hypothesis (<code>object2</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic1</code></td>
+<td>
+<p>the AIC value for the model given by <code>object2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bic1</code></td>
+<td>
+<p>the BIC value for the model given by <code>object2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>the degrees of freedom for the test (i.e., the difference in the number of parameters).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>LRT</code></td>
+<td>
+<p>the value of the Likelihood Ratio Test statistic (returned if <code>test = TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p>the <code class="reqn">p</code>-value of the test (returned if <code>test = TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aovTab.Y</code></td>
+<td>
+<p>a data.frame with the marginal Wald tests for the longitudinal process; 
+produced only when <code>object2</code> is missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aovTab.T</code></td>
+<td>
+<p>a data.frame with the marginal Wald tests for the event process; 
+produced only when <code>object2</code> is missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aovTab.L</code></td>
+<td>
+<p>a data.frame with the marginal Wald tests for the user-defined contrasts matrix; 
+produced only when <code>object2</code> is missing and <code>L</code> is not <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Warning</h3>
+
+<p>The code minimally checks whether the models are nested! The user is responsible to supply nested models in
+order the LRT to be valid.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2010) JM: An R Package for the Joint Modelling of Longitudinal and Time-to-Event Data. 
+<em>Journal of Statistical Software</em> <b>35</b> (9), 1–33. <a href="https://doi.org/10.18637/jss.v035.i09">doi:10.18637/jss.v035.i09</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit without treatment effect
+fitLME.null &lt;- lme(sqrt(CD4) ~ obstime, 
+    random = ~ 1 | patient, data = aids)
+# cox model fit without treatment effect
+fitCOX.null &lt;- coxph(Surv(Time, death) ~ 1, 
+    data = aids.id, x = TRUE)
+# joint model fit without treatment effect
+fitJOINT.null &lt;- jointModel(fitLME.null, fitCOX.null, 
+    timeVar = "obstime", method = "weibull-PH-aGH")
+
+# linear mixed model fit with treatment effect
+fitLME.alt &lt;- lme(sqrt(CD4) ~ obstime * drug - drug, 
+    random = ~ 1 | patient, data = aids)
+# cox model fit with treatment effect
+fitCOX.alt &lt;- coxph(Surv(Time, death) ~ drug, 
+    data = aids.id, x = TRUE)
+# joint model fit with treatment effect
+fitJOINT.alt &lt;- jointModel(fitLME.alt, fitCOX.alt, timeVar = "obstime", 
+    method = "weibull-PH-aGH")
+
+# likelihood ratio test for treatment effect
+anova(fitJOINT.null, fitJOINT.alt)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

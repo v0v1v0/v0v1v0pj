@@ -1,0 +1,157 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>logLik.JMbayes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Log-Likelihood for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Computes the log-likelihood for a fitted joint model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JMbayes'
+logLik(object, thetas, b, priors = TRUE, marginal.b = TRUE, 
+    marginal.thetas = FALSE, full.Laplace = FALSE, useModes = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>JMBayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thetas</code></td>
+<td>
+<p>a list with values for the joint model's parameters. This should have the same structure as
+the <code>coefficients</code> component of a fitted joint model. If missing <code>object$postMeans</code> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>a numeric matrix with random effects value. This should have the same structure as
+the <code>ranef</code> component of a fitted joint model. If missing <code>ranef(object)</code> is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>logical, if <code>TRUE</code> the priors are also included in the computation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marginal.b</code></td>
+<td>
+<p>logical, if <code>TRUE</code> the marginal log-likelihood over the random effects is returned.
+This marginalization is done using a Laplace approximation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>marginal.thetas</code></td>
+<td>
+<p>logical, if <code>TRUE</code> the marginal log-likelihood over the parameters is returned.
+This marginalization is done using a Laplace approximation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>full.Laplace</code></td>
+<td>
+<p>logical, if <code>FALSE</code> the posterior means and posterior variances are used in the Laplace
+approximation instead of the posterior modes and posterior hessian matrix of the random effects. Sacrificing a bit of
+accuracy, this will be much faster than calculating the posterior modes. Relevant only when <code>marginal.b = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>useModes</code></td>
+<td>
+<p>logical, if <code>TRUE</code> the modes are used in the Laplace approximation otherwise the means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>extra arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Let <code class="reqn">y_i</code> denote the vectors of longitudinal responses, <code class="reqn">T_i</code> the observed event time, and <code class="reqn">\delta_i</code> 
+the event indicator for subject <code class="reqn">i</code> (<code class="reqn">i = 1, \ldots, n</code>). Let also <code class="reqn">p(y_i | b_i; \theta)</code> denote the probability
+density function (pdf) for the linear mixed model, <code class="reqn">p(T_i, \delta_i | b_i; \theta)</code> the pdf for the survival submodel, and
+<code class="reqn">p(b_i; \theta)</code> the multivariate normal pdf for the random effects, where <code class="reqn">\theta</code> denotes the full parameter vector. Then,
+if <code>priors = TRUE</code>, and <code>marginal.b = TRUE</code>, function <code>logLik()</code> computes 
+</p>
+<p style="text-align: center;"><code class="reqn">\log \int p(y_i | b_i; \theta) p(T_i, \delta_i | b_i; \theta) p(b_i; \theta) db_i + \log p(\theta),</code>
+</p>
+
+<p>where <code class="reqn">p(\theta)</code> denotes the prior distribution for the parameters. If <code>priors = FALSE</code> the prior is excluded from the
+computation, i.e., </p>
+<p style="text-align: center;"><code class="reqn">\log \int p(y_i | b_i; \theta) p(T_i, \delta_i | b_i; \theta) p(b_i; \theta) db_i,</code>
+</p>
+<p> and when 
+<code>marginal.b = FALSE</code>, then the conditional on the random effects log-likelihood is computed, i.e.,
+</p>
+<p style="text-align: center;"><code class="reqn">\log p(y_i | b_i; \theta) + \log p(T_i, \delta_i | b_i; \theta) + \log p(b_i; \theta) + \log p(\theta),</code>
+</p>
+<p> when 
+<code>priors = TRUE</code> and </p>
+<p style="text-align: center;"><code class="reqn">\log p(y_i | b_i; \theta) + \log p(T_i, \delta_i | b_i; \theta) + \log p(b_i; \theta),</code>
+</p>
+
+<p>when <code>priors = FALSE</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a numeric scalar of class <code>logLik</code> with the value of the log-likelihood. It also has
+the attributes <code>df</code> the number of parameter (excluding the random effects), and <code>nobs</code>
+the number of subjects. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D., Hatfield, L., Carlin, B. and Takkenberg, J. (2014). Combining dynamic predictions from joint models for longitudinal and time-to-event data using Bayesian model averaging. <em>Journal of the American Statistical Association</em>. to appear.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 2), data = pbc2, 
+    random = ~ ns(year, 2) | id)
+survFit &lt;- coxph(Surv(years, status2) ~ 1, data = pbc2.id, x = TRUE)
+
+jointFit &lt;- jointModelBayes(lmeFit, survFit, timeVar = "year")
+
+logLik(jointFit)
+logLik(jointFit, priors = FALSE)
+logLik(jointFit, marginal.b = FALSE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

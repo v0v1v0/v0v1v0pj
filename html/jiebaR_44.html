@@ -1,0 +1,250 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>worker</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Initialize jiebaR worker</h2>
+
+<h3>Description</h3>
+
+<p>This function can initialize jiebaR workers. You can initialize different
+kinds of workers including <code>mix</code>, <code>mp</code>, <code>hmm</code>,
+<code>query</code>, <code>full</code>, <code>tag</code>, <code>simhash</code>, and <code>keywords</code>.
+see Detail for more information.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">worker(type = "mix", dict = DICTPATH, hmm = HMMPATH,
+  user = USERPATH, idf = IDFPATH, stop_word = STOPPATH, write = T,
+  qmax = 20, topn = 5, encoding = "UTF-8", detect = T,
+  symbol = F, lines = 1e+05, output = NULL, bylines = F,
+  user_weight = "max")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of jiebaR workers including <code>mix</code>, <code>mp</code>, <code>hmm</code>, <code>full</code>,
+<code>query</code>, <code>tag</code>, <code>simhash</code>, and <code>keywords</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dict</code></td>
+<td>
+<p>A path to main dictionary, default value is <code>DICTPATH</code>,
+and the value is used for <code>mix</code>, <code>mp</code>, <code>query</code>, <code>full</code>,
+<code>tag</code>, <code>simhash</code> and <code>keywords</code> workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hmm</code></td>
+<td>
+<p>A path to Hidden Markov Model, default value is <code>HMMPATH</code>, <code>full</code>,
+and the value is used for <code>mix</code>, <code>hmm</code>, <code>query</code>,
+<code>tag</code>, <code>simhash</code> and <code>keywords</code> workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>user</code></td>
+<td>
+<p>A path to user dictionary, default value is <code>USERPATH</code>,
+and the value is used for <code>mix</code>, <code>full</code>,  <code>tag</code> and <code>mp</code>  workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idf</code></td>
+<td>
+<p>A path to inverse document frequency, default value is <code>IDFPATH</code>,
+and the value is used for <code>simhash</code> and <code>keywords</code> workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stop_word</code></td>
+<td>
+<p>A path to stop word dictionary, default value is <code>STOPPATH</code>,
+and the value is used for <code>simhash</code>, <code>keywords</code>, <code>tagger</code> and <code>segment</code> workers. Encoding of this file is checked by <code>file_coding</code>, and it should be UTF-8 encoding. For <code>segment</code> workers, the default <code>STOPPATH</code> will not be used, so you should provide another file path.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write</code></td>
+<td>
+<p>Whether to write the output to a file, or return
+a the result in a object. This value will only be used when
+the input is a file path. The default value is TRUE. The value
+is used for segment and speech tagging workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qmax</code></td>
+<td>
+<p>Max query length of words, and the value
+is used for <code>query</code> workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>topn</code></td>
+<td>
+<p>The number of keywords, and the value is used for
+<code>simhash</code> and <code>keywords</code> workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>The encoding of the input file. If encoding
+detection is enable, the value of <code>encoding</code> will be
+ignore.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>detect</code></td>
+<td>
+<p>Whether to detect the encoding of input file
+using <code>file_coding</code> function. If encoding
+detection is enable, the value of <code>encoding</code> will be
+ignore.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p>Whether to keep symbols in the sentence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lines</code></td>
+<td>
+<p>The maximal number of lines to read at one
+time when input is a file. The value
+is used for segmentation and speech tagging  workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>A path to the output file, and default worker will
+generate file name by system time stamp, the value
+is used for segmentation and speech tagging  workers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bylines</code></td>
+<td>
+<p>return the result by the lines of input files</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>user_weight</code></td>
+<td>
+<p>the weight of the user dict words. "min" "max" or "median".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The package uses initialized engines for word segmentation, and you
+can initialize multiple engines simultaneously. You can also reset the model
+public settings using <code>$</code> such as
+<code> WorkerName$symbol = T </code>. Some private settings are fixed
+when a engine is initialized, and you can get then by
+<code>WorkerName$PrivateVarible</code>.
+</p>
+<p>Maximum probability segmentation model uses Trie tree to construct
+a directed acyclic graph and uses dynamic programming algorithm. It
+is the core segmentation algorithm. <code>dict</code> and <code>user</code>
+should be provided when initializing jiebaR worker.
+</p>
+<p>Hidden Markov Model uses HMM model to determine status set and
+observed set of words. The default HMM model is based on People's Daily
+language library. <code>hmm</code> should be provided when initializing
+jiebaR worker.
+</p>
+<p>MixSegment model uses both Maximum probability segmentation model
+and Hidden Markov Model to construct segmentation.  <code>dict</code>
+<code>hmm</code> and <code>user</code> should be provided when initializing
+jiebaR worker.
+</p>
+<p>QuerySegment model uses MixSegment to construct segmentation and then
+enumerates all the possible long words in the dictionary.  <code>dict</code>,
+<code>hmm</code> and <code>qmax</code> should be provided when initializing
+jiebaR worker.
+</p>
+<p>FullSegment model will enumerates all the possible words in the dictionary.
+</p>
+<p>Speech Tagging worker uses MixSegment model to cut word and
+tag each word after segmentation using labels compatible with
+ictclas.  <code>dict</code>,
+<code>hmm</code> and <code>user</code> should be provided when initializing
+jiebaR worker.
+</p>
+<p>Keyword Extraction worker uses MixSegment model to cut word and use
+TF-IDF algorithm to find the keywords.  <code>dict</code> ,<code>hmm</code>,
+<code>idf</code>, <code>stop_word</code> and <code>topn</code> should be provided when initializing
+jiebaR worker.
+</p>
+<p>Simhash worker uses the keyword extraction worker to find the keywords
+and uses simhash algorithm to compute simhash.  <code>dict</code>
+<code>hmm</code>, <code>idf</code> and <code>stop_word</code> should be provided when initializing
+jiebaR worker.
+</p>
+
+
+<h3>Value</h3>
+
+<p>This function returns an environment containing segmentation
+settings and worker. Public settings can be modified
+using <code>$</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Note: Can not display Chinese characters here.
+## Not run: 
+words = "hello world"
+engine1 = worker()
+segment(words, engine1)
+
+# "./temp.txt" is a file path
+
+segment("./temp.txt", engine1)
+
+engine2 = worker("hmm")
+segment("./temp.txt", engine2)
+
+engine2$write = T
+segment("./temp.txt", engine2)
+
+engine3 = worker(type = "mix", dict = "dict_path",symbol = T)
+segment("./temp.txt", engine3)
+ 
+## End(Not run)
+
+## Not run: 
+### Keyword Extraction
+engine = worker("keywords", topn = 1)
+keywords(words, engine)
+
+### Speech Tagging
+tagger = worker("tag")
+tagging(words, tagger)
+
+### Simhash
+simhasher = worker("simhash", topn = 1)
+simhash(words, simhasher)
+distance("hello world" , "hello world!" , simhasher)
+
+show_dictpath()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

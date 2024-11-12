@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SkewJackSymPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Jack polynomial with symbolic Jack parameter</h2>
+
+<h3>Description</h3>
+
+<p>Computes a skew Jack polynomial with a symbolic Jack parameter.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SkewJackSymPol(n, lambda, mu, which = "J")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>positive integer, the number of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>outer integer partition of the skew partition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>inner integer partition of the skew partition; it must be a
+subpartition of <code>lambda</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which skew Jack polynomial, <code>"J"</code>, <code>"P"</code>, <code>"Q"</code>
+or <code>"C"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>symbolicQspray</code> polynomial.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SkewJackSymPol(3, c(3,1), c(2))
+</code></pre>
+
+
+</div>

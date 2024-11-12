@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>AccessMutate.JuliaProxy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access or mutate Julia objects via proxy objects</h2>
+
+<h3>Description</h3>
+
+<p>Apply the R operators <code>$</code> and <code>$&lt;-</code>, <code>[</code> and <code>[&lt;-</code>, <code>[[</code>
+and <code>[[&lt;-</code> to access or modify parts of Julia objects via their proxy objects.
+For an intuitive understanding, best see the examples below.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JuliaStructProxy'
+x$name
+
+## S3 replacement method for class 'JuliaStructProxy'
+x$name &lt;- value
+
+## S3 method for class 'JuliaProxy'
+x[...]
+
+## S3 replacement method for class 'JuliaProxy'
+x[i, j, k] &lt;- value
+
+## S3 method for class 'JuliaSimpleArrayProxy'
+x[...]
+
+## S3 method for class 'JuliaArrayProxy'
+x[[...]]
+
+## S3 replacement method for class 'JuliaArrayProxy'
+x[[i, j, k]] &lt;- value
+
+## S3 method for class 'JuliaStructProxy'
+x[[name]]
+
+## S3 replacement method for class 'JuliaStructProxy'
+x[[name]] &lt;- value
+
+## S3 method for class 'JuliaArrayProxy'
+length(x)
+
+## S3 method for class 'JuliaArrayProxy'
+dim(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a Julia proxy object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>the field of a struct type, the name of a member in a <code>NamedTuple</code>,
+or a key in a Julia dictionary (type <code>AbstractDict</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>a suitable replacement value.
+When replacing a range of elements in an array type, it is possible to
+replace multiple elements with single elements. In all other cases,
+the length of the replacement must match the number of elements to replace.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i, j, k, ...</code></td>
+<td>
+<p>index(es) for specifying the elements to extract or replace</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The operators <code>$</code> and <code>[[</code> allow to access properties of Julia <code>struct</code>s
+and <code>NamedTuple</code>s via their proxy objects.
+For dictionaries (Julia type <code>AbstractDict</code>), <code>$</code> and <code>[[</code>
+can also be used to look up string keys.
+Fields of <code>mutable struct</code>s and dictionary elements with string keys
+can be set via <code>$&lt;-</code> and <code>[[&lt;-</code>.
+</p>
+<p>For <code>AbstractArray</code>s, the <code>[</code>, <code>[&lt;-</code>, <code>[[</code>, and <code>[[&lt;-</code>
+operators relay to the <code>getindex</code> and <code>setindex!</code> Julia functions.
+The <code>[[</code> and <code>[[&lt;-</code> operators are used to access or mutate a single element.
+With <code>[</code> and <code>[&lt;-</code>, a range of objects is accessed or mutated.
+The elements of <code>Tuple</code>s can also be accessed via <code>[</code> and <code>[[</code>.
+</p>
+<p>The dimensions of proxy objects for Julia <code>AbstractArray</code>s and <code>Tuple</code>s
+can be queried via <code>length</code> and <code>dim</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: #'
+# (Mutable) struct
+juliaEval("mutable struct MyStruct
+              x::Int
+           end")
+
+MyStruct &lt;- juliaFun("MyStruct")
+s &lt;- MyStruct(1L)
+s$x
+s$x &lt;- 2
+s[["x"]]
+
+# Array
+x &lt;- juliaCall("map", MyStruct, c(1L, 2L, 3L))
+x
+length(x)
+x[[1]]
+x[[1]]$x
+x[[1]] &lt;- MyStruct(2L)
+x[2:3]
+x[2:3] &lt;- MyStruct(2L)
+x
+
+# Tuple
+x &lt;- juliaEval("(1, 2, 3)")
+x[[1]]
+x[1:2]
+length(x)
+
+# NamedTuple
+x &lt;- juliaEval("(a=1, b=2)")
+x$a
+
+# Dictionary
+strDict &lt;- juliaEval('Dict("hi" =&gt; 1, "hello" =&gt; 2)')
+strDict
+strDict$hi
+strDict$hi &lt;- 0
+strDict[["hi"]] &lt;- 2
+strDict["howdy", "greetings"] &lt;- c(2, 3)
+strDict["hi", "howdy"]
+
+
+## End(Not run)
+</code></pre>
+
+
+</div>

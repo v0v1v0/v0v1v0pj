@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parse</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parse a template</h2>
+
+<h3>Description</h3>
+
+<p>Sometimes you want to render multiple copies of a template, using different
+sets of data variables. <code>parse_template()</code> returns an intermediate version
+of the template, so you can <code>render()</code> repeatedly without re-parsing the
+template syntax.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">parse_template(.x, .config)
+
+## S3 method for class 'character'
+parse_template(.x, .config = default_config())
+
+## S3 method for class 'fs_path'
+parse_template(.x, .config = default_config())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.x</code></td>
+<td>
+<p>The template. Choices:
+</p>
+
+<ul>
+<li>
+<p> A template string.
+</p>
+</li>
+<li>
+<p> A path to a template file (use <code>fs::path()</code>).
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.config</code></td>
+<td>
+<p>The engine configuration. The default matches Jinja defaults,
+but you can use <code>jinjar_config()</code> to customize things like syntax delimiters,
+whitespace control, and loading auxiliary templates.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>"jinjar_template"</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+
+<ul>
+<li> <p><code>render()</code> to render the final document using data variables.
+</p>
+</li>
+<li> <p><code>print()</code> for pretty printing.
+</p>
+</li>
+<li> <p><code>vignette("template-syntax")</code> describes how to write templates.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- parse_template("Hello {{ name }}!")
+
+render(x, name = "world")
+</code></pre>
+
+
+</div>

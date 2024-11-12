@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Update a JAGS model</h2>
+
+<h3>Description</h3>
+
+<p>This function updates a JAGS model created by created by function <code>jags</code> in package <code>jagsUI</code> for a specified number of iterations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  
+  ## S3 method for class 'jagsUI'
+update(object, parameters.to.save=NULL, n.adapt=NULL, 
+  n.iter, n.thin=NULL, modules=c('glm'), factories=NULL, DIC=NULL, 
+  codaOnly=FALSE, verbose=TRUE, ...)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>jagsUI</code> or <code>jagsUIbasic</code>-class object to update.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters.to.save</code></td>
+<td>
+<p>Character vector of the names of the
+parameters in the model which should be monitored. Defaults to the saved parameter set from the original model run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.adapt</code></td>
+<td>
+<p>Number of iterations to run in the <code>JAGS</code> adaptive phase. The default is <code>NULL</code>, which will result in the function running groups of 100 adaptation iterations (to a max of 10,000) until <code>JAGS</code> reports adaptation is sufficient. If you set <code>n.adapt</code> manually, 1000 is the recommended minimum value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.iter</code></td>
+<td>
+<p>Number of iterations to update for each chain.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.thin</code></td>
+<td>
+<p>Thinning rate. Must be a positive integer. Defaults to the thinning rate of the original model run.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modules</code></td>
+<td>
+<p>List of JAGS modules to load before analysis. By default only module 'glm' is loaded (in addition to 'basemod' and 'bugs'). To force no additional modules to load, set <code>modules=NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factories</code></td>
+<td>
+<p>Optional character vector of factories to enable or disable, in the format &lt;factory&gt; &lt;type&gt; &lt;setting&gt;. For example, to turn <code>TemperedMix</code> on you would provide <code>'mix::TemperedMix sampler TRUE'</code> (note spaces between parts). Make sure you have the corresponding modules loaded as well.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DIC</code></td>
+<td>
+<p>Option to report DIC and the estimated number of parameters (pD). Defaults to the same setting as the original model to updated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>codaOnly</code></td>
+<td>
+<p>Optional character vector of parameter names for which you do NOT want to calculate detailed statistics. This may be helpful when you have many output parameters (e.g., predicted values) and you want to save time. For these parameters, only the mean value will be calculated but the mcmc output will still be found in $sims.list and $samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If set to FALSE, all text output in the console will be suppressed as the function runs (including most warnings).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments pass to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+</div>

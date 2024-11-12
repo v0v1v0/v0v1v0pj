@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.macro_cost</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the cost function of the macro model</h2>
+
+<h3>Description</h3>
+
+<p>This utility calculates the cost function of the macro model according to
+the squared error sum with penaty parameter. This utility can be used to
+experiment more sophisticated optimization schemes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.macro_cost(dtb, rs, penalty = c(1, 1, 1), new.tb3ms = NA,
+  new.gs10 = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtb</code></td>
+<td>
+<p>data table, usually this is the reg.dtb of the jubilee object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rs</code></td>
+<td>
+<p>the list returned from <code>jubilee.macro_fit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>penalty</code></td>
+<td>
+<p>numeric, the penalty vector for the 6 models.
+Default is <code>c(1,1,1)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.tb3ms</code></td>
+<td>
+<p>numeric, vector of new <code>rate.tb3ms</code> with length equal to NROW of dtb.
+Default is <code>NA</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.gs10</code></td>
+<td>
+<p>numeric, vector of new <code>rate.gs10</code> with length equal to NROW of dtb.
+Default is <code>NA</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The data table containing the "macro.cost" column
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+</div>

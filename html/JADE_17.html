@@ -1,0 +1,140 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>k_JADE</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Fast Equivariant k-JADE Algorithm for ICA 
+</h2>
+
+<h3>Description</h3>
+
+<p>This algorithm generalizes the <code>JADE</code> algorithm, as it provides <code>JADE</code> when k is set to the number of dimensions. Otherwise k can be considered as a way to reduce the number of cumulant matrices to be jointly diagonalized. Hence small values of k speed up the method considerably in high-dimensional cases. In general, k can be considered as maximum number of underlying identical sources.  
+</p>
+<p>The function uses <code>FOBI</code> as an initial estimate and <code>frjd</code> for the joint diagonalization.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">k_JADE(X, k = 1, eps = 1e-06, maxiter = 100, na.action = na.fail)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Numeric data matrix or dataframe.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer value between 1 and the number of columns of X. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>Convergence tolerance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>Maximum number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>A function which indicates what should happen when the data
+contain 'NA's.  Default is to fail.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The order of the estimated components is fixed so that their fourth moments are in the decreasing order.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>The estimated mixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W </code></td>
+<td>
+<p>The estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S </code></td>
+<td>
+<p>Matrix with the estimated independent components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xmu </code></td>
+<td>
+<p>The location of the original data.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The function uses <code>FOBI</code> as initial estimate and <code>frjd</code> for the joint diagonalization.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jari Miettinen
+</p>
+
+
+<h3>References</h3>
+
+<p><cite>Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2013), Fast Equivariant JADE, 
+In the Proceedings of <em>38th IEEE International Conference on Acoustics, Speech, and Signal Processing (ICASSP 2013)</em>, 6153–6157.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>JADE</code>, <code>FOBI</code>, <code>frjd</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># 3 source and 3 signals
+
+S &lt;- cbind(rt(1000, 4), rnorm(1000), runif(1000))
+A &lt;- matrix(rnorm(9), ncol = 3)
+X &lt;- S %*% t(A)
+res_k1&lt;-k_JADE(X,1)
+res_k1$A
+res_k1$W
+res_k1$S[1:10,]
+
+MD(coef(res_k1),A) 
+
+</code></pre>
+
+
+</div>

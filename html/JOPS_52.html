@@ -1,0 +1,225 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>psNormal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smoothing scattered (normal) data using P-splines.</h2>
+
+<h3>Description</h3>
+
+<p><code>psNormal</code> is used to smooth scattered (normal) data using P-splines (with identity link function).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">psNormal(
+  x,
+  y,
+  xl = min(x),
+  xr = max(x),
+  nseg = 10,
+  bdeg = 3,
+  pord = 2,
+  lambda = 1,
+  wts = NULL,
+  xgrid = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the vector for the continuous regressor of <code>length(y)</code> and the abcissae used to build the B-spline basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the response vector, usually continuous data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl</code></td>
+<td>
+<p>the number for the min along <code>x</code> (default is min(<code>x</code>)) .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xr</code></td>
+<td>
+<p>the number for the max along <code>x</code> (default is max(<code>x</code>)).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of evenly spaced segments between <code>xl</code> and <code>xr</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the number of the degree of the basis, usually 1, 2 (default), or 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the number of the order of the difference penalty, usually 1, 2, or 3 (defalult).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the (positive) number for the tuning parameter for the penalty (default 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>the vector of general weights, default is 1; zero allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>a scalar or a vector that gives the <code>x</code> locations for prediction, useful for plotting.
+If a scalar (default 100) is used then a uniform grid of this size along (<code>xl</code>, <code>xr</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pcoeff</code></td>
+<td>
+<p>a vector of length <code>n</code> of estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>muhat</code></td>
+<td>
+<p>a vector of length <code>m</code> of smooth estimated means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a matrix of dimension <code>m</code> by <code>n</code> for the B-spline basis matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>a vector of length <code>m</code> of weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effdim</code></td>
+<td>
+<p>estimated effective dimension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ed_resid</code></td>
+<td>
+<p>approximate df residual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>square root of MSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>standard error of leave-one-out prediction or root average PRESS.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of B-spline segments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the B-spline basis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the order of the difference penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the positive tuning parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>gridded x values, useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ygrid</code></td>
+<td>
+<p>gridded fitted mean values, useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se_eta</code></td>
+<td>
+<p>gridded standard errors for the fitted mean values, useful for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>"half" of the penalty, such that <code>P'P= lambda D'D</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+library(MASS)
+data(mcycle)
+x &lt;- mcycle$times
+y &lt;- mcycle$accel
+fit1 &lt;- psNormal(x, y, nseg = 20, bdeg = 3, pord = 2, lambda = .8)
+plot(fit1, se = 2, xlab = "Time (ms)", ylab = "Acceleration")
+</code></pre>
+
+
+</div>

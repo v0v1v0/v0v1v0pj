@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predJRML</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction using <code>joineRML</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>prediction of survival probability and longitudinal marker using <code>joineRML</code> for BIG data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predJRML(model, ids, dtlong, dtsurv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>value of id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtlong</code></td>
+<td>
+<p>longitudinal data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtsurv</code></td>
+<td>
+<p>survival data</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of predicted values for the given id
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">   
+##
+library(survival)
+library(dplyr)
+jmcs1&lt;-joinRMLBig(dtlong=long2,
+dtsurv = surv2,
+longm=y~ x7+visit,
+survm=Surv(time,status)~x1+visit,
+rd=~ visit|id,
+timeVar='visit',
+samplesize=200,
+id='id')
+mod4&lt;-jmcs1
+P2&lt;-predJRML(model&lt;-mod4,ids&lt;-c(10),dtlong=long2,dtsurv=surv2)
+plot(P2$plong[[1]])
+plot(P2$psurv[[1]])
+##
+   
+</code></pre>
+
+
+</div>

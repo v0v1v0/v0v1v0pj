@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.psvcsignal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>psVCSignal</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns both linear
+predictor and inverse link predictions for an arbitrary matrix of
+signals with their vector of companion indexing covariates (using
+<code>psVCSignal</code> with <code>class psvcsignal</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'psvcsignal'
+predict(object, ..., X_pred, t_pred, type = "mu")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>psVCSignal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_pred</code></td>
+<td>
+<p>a matrix of <code>q</code> arbitrary signal vectors
+of dimension <code>q</code> by <code>p1</code> for desired prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t_pred</code></td>
+<td>
+<p>a <code>q</code> vector for the varying index variable associated with <code>X_pred</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the mean value <code>type = "mu"</code> (default) or linear predictor
+<code>type = "eta"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated mean (inverse link function) (default)
+or the linear predictor prediction with <code>type =
+"eta"</code>, at signals in matrix <code>X_pred</code> and covariates in vector <code>t_pred</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P. H. C. and Marx, B. D. (2003). Multivariate calibration with temperature
+interaction using two-dimensional penalized signal regression. <em>Chemometrics
+and Intellegent Laboratory Systems</em>, 66, 159–174.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(fds)
+data(nirc)
+iindex &lt;- nirc$x
+X &lt;- nirc$y
+sel &lt;- 50:650 # 1200 &lt;= x &amp; x&lt;= 2400
+X &lt;- X[sel, ]
+iindex &lt;- iindex[sel]
+dX &lt;- diff(X)
+diindex &lt;- iindex[-1]
+y &lt;- as.vector(labc[1, 1:40]) # percent fat
+t_var &lt;- as.vector(labc[4, 1:40]) # percent flour
+oout &lt;- 23
+dX &lt;- t(dX[, -oout])
+y &lt;- y[-oout]
+t_var = t_var[-oout]
+Pars = rbind(c(min(diindex), max(diindex), 25, 3, 1e-7, 2),
+c(min(t_var), max(t_var), 20, 3, 0.0001, 2))
+fit1 &lt;- psVCSignal(y, dX, diindex, t_var, Pars = Pars,
+family = "gaussian", link = "identity", int = TRUE)
+predict(fit1, X_pred = dX[1:5,], t_pred = t_var[1:5])
+</code></pre>
+
+
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getAlbumMusicinfo</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get tag list of an album</h2>
+
+<h3>Description</h3>
+
+<p>Get tag list of an album. You can search for either an album ID or an album name.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getAlbumMusicinfo(
+  album_id = NULL,
+  album_name = NULL,
+  client_id = Sys.getenv("JAMENDO_CLIENT_ID")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>album_id</code></td>
+<td>
+<p>Album ID to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>album_name</code></td>
+<td>
+<p>Album name to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains tag list of an album.
+See <a href="https://developer.jamendo.com/v3.0/albums/musicinfo">https://developer.jamendo.com/v3.0/albums/musicinfo</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Example
+ tagsFromID &lt;- getAlbumMusicinfo(album_id = "14866")
+ tagsFromName &lt;- getAlbumMusicinfo(album_name = "Deuteranopia Utopia")
+
+</code></pre>
+
+
+</div>

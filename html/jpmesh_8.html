@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export_mesh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export meshcode to geometry</h2>
+
+<h3>Description</h3>
+
+<p>Convert and export meshcode area to <code>sfc_POLYGON</code> and <code>sf</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">export_mesh(meshcode)
+
+export_meshes(meshcode, .keep_class = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meshcode</code></td>
+<td>
+<p><code>character</code>. mesh code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.keep_class</code></td>
+<td>
+<p>Do you want to assign a class to the meshcode column
+in data.frame? If <code>FALSE</code>, it will be treated as a character type.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>sfc object
+</p>
+<p>sf object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">export_mesh("6441427712")
+export_meshes("4128")
+find_neighbor_mesh("37250395") %&gt;%
+  export_meshes()
+</code></pre>
+
+
+</div>

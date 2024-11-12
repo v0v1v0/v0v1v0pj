@@ -1,0 +1,203 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weibull.frailty</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Weibull Model with Gamma Frailties </h2>
+
+<h3>Description</h3>
+
+<p>Fits a Weibull model with Gamma frailties for multivariate survival data under maximum likelihood
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weibull.frailty(formula = formula(data), data = parent.frame(), 
+    id = "id", subset, na.action, init, control = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p> an object of class <code>formula</code>: a symbolic description of the model to be fitted. The response must 
+be a survival object as returned by function <code>Surv()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p> an optional data frame containing the variables specified in the model. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p> either a character string denoting a variable name in <code>data</code> or a numeric vector specifying which event times belong to
+the same cluster (e.g., hospital, patient, etc.).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p> an optional vector specifying a subset of observations to be used in the fitting process. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p> what to do with missing values. </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p> a numeric vector of length <code class="reqn">p + 3</code> of initial values. The first <code class="reqn">p</code> elements should correspond to the regression coefficients 
+for the covariates, and the last <code class="reqn">3</code> to log-scale, log-shape, and log-frailty-variance, respectively. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values with components:
+</p>
+
+<dl>
+<dt>optimizer</dt>
+<dd>
+<p>a character string indicating which optimizer to use; options are "optim" (default) and
+"nlminb".</p>
+</dd>
+<dt>parscale</dt>
+<dd>
+<p>the <code>parscale</code> control argument for <code>optim()</code>, or the <code>scale</code> argument for 
+<code>nlminb()</code>. It should be a numeric vector of length equal to the number of parameters. Default is 0.01
+for all parameters.</p>
+</dd>
+<dt>maxit</dt>
+<dd>
+<p>the maximum number of iterations. Default is 500.</p>
+</dd>
+<dt>numeriDeriv</dt>
+<dd>
+<p>a character string indicating which type of numerical derivative to use to compute the
+Hessian matrix; options are "fd" denoting the forward difference approximation, and "cd" (default)
+denoting the central difference approximation.</p>
+</dd>
+<dt>eps.Hes</dt>
+<dd>
+<p>tolerance value used in the numerical derivative method. Default is 1e-03.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The fitted model is defined as follows: </p>
+<p style="text-align: center;"><code class="reqn">\lambda(t_i | \omega_i) = \lambda_0(t_i) \omega_i \exp(x_i^T \beta),</code>
+</p>
+<p> where <code class="reqn">i</code> denotes the subject, <code class="reqn">\lambda(\cdot)</code> 
+denotes the hazard function, conditionally on the frailty <code class="reqn">\omega_i</code>, <code class="reqn">x_i</code> is a vector of covariates with corresponding regression 
+coefficients <code class="reqn">\beta</code>, and <code class="reqn">\lambda_0(\cdot)</code> is the Weibull baseline hazard defined as <code class="reqn">\lambda_0(t) = shape * 
+  scale * t^{shape -1}</code>. Finally, for the frailties we assume <code class="reqn">\omega_i \sim Gamma(\eta, \eta)</code>, with 
+<code class="reqn">\eta^{-1}</code> denoting the unknown variance of <code class="reqn">\omega_i</code>'s.
+</p>
+
+
+<h3>Value</h3>
+
+<p>an object of class <code>weibull.frailty</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>a list with the estimated coefficients values. The components of this list are: <code>betas</code>, <code>scale</code>, <code>shape</code>, 
+and <code>var.frailty</code>, and correspond to the coefficients with the same name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hessian</code></td>
+<td>
+<p>the hessian matrix at convergence. For the shape, scale, and var-frailty parameters the Hessian is computed on the log scale.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logLik</code></td>
+<td>
+<p>the log-likelihood value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a copy of the <code>control</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>an object of class <code>Surv</code> containing the observed event times and the censoring indicator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the design matrix of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>a numeric vector specifying which event times belong to the same cluster.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nam.id</code></td>
+<td>
+<p>the value of argument <code>id</code>, if that was a character string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>terms</code></td>
+<td>
+<p>the term component of the fitted model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a copy of <code>data</code> or the created <code>model.frame</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the matched call.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p><code>weibull.frailty()</code> currently supports only right-censored data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">weibull.frailty(Surv(time, status) ~ age + sex, kidney)
+</code></pre>
+
+
+</div>

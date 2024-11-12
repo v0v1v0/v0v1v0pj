@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.weibull.frailty</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Summary Method for weibull.frailty Objects</h2>
+
+<h3>Description</h3>
+
+<p>Summarizes the fit of a Weibull model with Gamma frailties
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'weibull.frailty'
+summary(object, sand.se = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>weibull.frailty</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sand.se</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, sandwich standard errors are also produced.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p> additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>weibull.frailty</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fit &lt;- weibull.frailty(Surv(time, status) ~ age + sex, kidney)
+summary(fit)
+summary(fit, TRUE)
+</code></pre>
+
+
+</div>

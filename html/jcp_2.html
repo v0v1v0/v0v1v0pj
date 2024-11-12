@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.jcp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>plot.jcp</h2>
+
+<h3>Description</h3>
+
+<p>Plot method for class 'jcp'
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jcp'
+plot(x, cex = 1, cex.main = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>object of class jcp</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex</code></td>
+<td>
+<p>numeric, global sizes in plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.main</code></td>
+<td>
+<p>numeric, size of titles</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>No return value, called for side effects
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Michael Messer
+</p>
+
+
+<h3>References</h3>
+
+<p>Michael Messer (2021) Bivariate change point detection - joint detection of changes in expectation and variance, Scandinavian Journal of Statistics, DOI 10.1111/sjos.12547.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jcp, summary.jcp</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Normal distributed sequence with 3 change points at
+# c1=250 (change in expectation), 
+# c2=500 (change in variance) and 
+# c3=750 (change in expectation and variance) 
+set.seed(0)
+m      &lt;- c(8,10,10,3);   s  &lt;- c(4,4,10,5)
+x      &lt;- rnorm(1000, mean=rep(m,each=250), sd=rep(s,each=250))
+result &lt;- jcp(x)
+summary(result)
+plot(result)
+
+# Set additional parameters (window set)
+result2 &lt;- jcp(x,H=c(80,160,240))
+summary(result2)
+plot(result2)
+
+</code></pre>
+
+
+</div>

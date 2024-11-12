@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mafvector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate the Minor Allele Frequency (MAF) for a matrix with (0,1,2) genotype data
+</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>mafvector</code> calculates genotype counts columnwise and determines
+the minor allele frequency for each column.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mafvector(X)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix of with (0,1,2) genotype data, individuals in rows, markers in columns.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p><code>mafvector</code> calculates the frequency of the minor allele irrespective of the coding; i.e.,
+irrespective of whether the genotype data represent major or minor allele counts. Missing values
+are discarded for the calculation of the MAF.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  data(SimulatedPedigree)
+  p &lt;- mafvector(SimulatedPedigree[,1:10])
+  print(p)
+</code></pre>
+
+
+</div>

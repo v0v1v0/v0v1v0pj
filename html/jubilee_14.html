@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.macro_fit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The GUPTY macro model</h2>
+
+<h3>Description</h3>
+
+<p>This utility contains the macro regression models, covering GUPTY: three types of GDP,
+UNRATE (unemployment rate), Payroll, and Treasury yield curve.
+TCU (total capacity utilization) is also covered in the model but less recommended.
+Given the in-sample time periods, it will perform model regressions
+and return a list storing relavant information about the result. 
+The purpose of this method is to automate the regression and facilitate
+programatic cross validation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.macro_fit(dtb, N, K, unrate.frac.start, gdp.frac.start, frac.end,
+  cv.frac.end)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtb</code></td>
+<td>
+<p>data table, usually this is the reg.dtb of the jubilee object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>numeric, number of years for GDP log-return calculation in GDP models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>numeric, number of years for GDP log-return calculation in Payroll and TCU models</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unrate.frac.start</code></td>
+<td>
+<p>numeric, starting fraction of unrate regression time period</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gdp.frac.start</code></td>
+<td>
+<p>numeric, starting fraction of gdp regression time period</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>frac.end</code></td>
+<td>
+<p>numeric, ending fraction of regression time period.
+This is also the starting fraction of cross-validation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv.frac.end</code></td>
+<td>
+<p>numeric, ending fraction of cross-validation time period.
+Cross validation can be disabled by setting it to NA.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The list of data elements and their attributes.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>References</h3>
+
+<p>Stephen H.T. Lihn, "Business Cycles, Optimal Interest Rate,
+and Recession Forecast From Yield Curve, Unemployment, GDP, and Payrolls."
+Available at SSRN: <a href="https://ssrn.com/abstract=3422278">https://ssrn.com/abstract=3422278</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  repo &lt;- jubilee.repo()
+  ju &lt;- jubilee(repo@ie, 45, 20)
+  N &lt;- 4
+  K &lt;- 1.5
+  rs &lt;- jubilee.macro_fit(ju@reg.dtb, N, K, 1950, 1960, 2010, 2019)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

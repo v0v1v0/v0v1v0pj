@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>administration_mesh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract administration mesh code</h2>
+
+<h3>Description</h3>
+
+<p>Extract administration mesh code
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">administration_mesh(code, to_mesh_size)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>administration code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to_mesh_size</code></td>
+<td>
+<p>target mesh size.
+That is, 1 for 1km, and 0.5 for 500m. From 80km to 0.100km.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+administration_mesh(code = "35201", to_mesh_size = 1)
+administration_mesh(code = "08220", to_mesh_size = 80)
+administration_mesh(code = c("08220", "08221"), to_mesh_size = 10)
+administration_mesh(code = "35", to_mesh_size = 80)
+administration_mesh(code = c("33", "34"), to_mesh_size = 80)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

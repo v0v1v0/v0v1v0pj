@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-remove_indicators</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Manipulation de la liste des indicateurs</h2>
+
+<h3>Description</h3>
+
+<p>Permet de retirer des indicateurs (fonction <code>remove_indicators()</code>) ou de
+n'en retenir que certains (fonction <code>retain_indicators()</code>) d'objets
+<code>QR_matrix</code> ou <code>mQR_matrix</code>. Le nom des séries
+(colonne "series") ne peut être enlevé.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code> ou <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>noms des variables à retirer (ou conserver).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>remove_indicators()</code> renvoie le même objet <code>x</code> réduit par
+les drapeaux et les variables utilisés comme arguments ... Donc si l'entrée
+<code>x</code> est une matrice QR_matrix, un objet de la classe QR_matrix est
+renvoyé. Si le code d'entrée <code>x</code> est une matrice mQR, un objet de la
+classe mQR_matrix est renvoyé.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Chemin menant au fichier demetra_m.csv
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extraire le bilan qualité à partir du fichier demetra_m.csv
+QR &lt;- extract_QR(demetra_path)
+
+# Calculer le score
+QR &lt;- compute_score(x = QR, n_contrib_score = 5)
+
+# Retenir certains indicateurs
+retain_indicators(QR, "score", "m7") # Retiens les indicateurs "score" et "m7"
+retain_indicators(QR, c("score", "m7")) # Pareil
+
+# Retirer des indicateurs
+QR &lt;- remove_indicators(QR, "score") # removing "score"
+
+extract_score(QR) # est NULL car l'indicateur "score a été retiré
+
+</code></pre>
+
+
+</div>

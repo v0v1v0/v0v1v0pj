@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>js_validate_script</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Validate JavaScript</h2>
+
+<h3>Description</h3>
+
+<p>Simple wrapper for <code>ct$validate</code> in V8.
+Tests if code constitutes a syntactically valid JS script.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">js_validate_script(text, error = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>character vector with JavaScript code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error</code></td>
+<td>
+<p>raise error on invalid code</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">js_validate_script("function foo(x){2*x}") #TRUE
+js_validate_script("foo = function(x){2*x}") #TRUE
+
+# Anonymous functions in global scope are invalid
+js_validate_script("function(x){2*x}", error = FALSE) #FALSE
+
+# Use ! or () to check anonymous function syntax
+js_validate_script("!function(x){2*x}") #TRUE
+js_validate_script("(function(x){2*x})") #TRUE
+</code></pre>
+
+
+</div>

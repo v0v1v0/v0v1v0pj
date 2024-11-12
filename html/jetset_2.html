@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jscores</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve jetset scores for probe sets</h2>
+
+<h3>Description</h3>
+
+<p>This function retrieves jetset scores, which indicate the predicted quality of individual probe sets on selected Affymetrix microarrays.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jscores(chip, probeset, eg, symbol, alias, ensembl)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>chip</code></td>
+<td>
+<p> Chip name </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>probeset</code></td>
+<td>
+<p> A vector of probe set IDs (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eg</code></td>
+<td>
+<p> A vector of Entrez GeneIDs (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p> A vector of gene symbols (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alias</code></td>
+<td>
+<p> A vector of gene aliases (optional) </p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ensembl</code></td>
+<td>
+<p> A vector of Ensembl IDs (optional) </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Currently, <code>chip</code> can be <code>"hgu95av2"</code>, <code>"hgu133a"</code>, <code>"hgu133plus2"</code>, or <code>"u133x3p"</code>.  If no further arguments are specified, the scores for all probe sets on the chip are returned.
+</p>
+<p>If any of  <code>probeset</code>, <code>eg</code>, <code>symbol</code>, <code>alias</code>, or <code>ensembl</code> are specified, these are used to filter the resulting data frame in a logical OR sense.
+</p>
+<p>Details about the jetset algorithm are available in the vignette.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame in which each row corresponds to a probe set, with 8 columns:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>EntrezID</code></td>
+<td>
+<p>Entrez GeneID of the targeted gene (character).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nProbes</code></td>
+<td>
+<p>Number of probes in the probe set  (integer).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>Processivity requirement  (integer).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>specificity</code></td>
+<td>
+<p>Specificity score (numeric).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coverage</code></td>
+<td>
+<p>Coverage score (numeric).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>robust</code></td>
+<td>
+<p>Robustness score (numeric).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overall</code></td>
+<td>
+<p>Overall score (numeric).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p>HUGO gene symbol (character).</p>
+</td>
+</tr>
+</table>
+<p>The rows are sorted by decreasing overall score.
+</p>
+
+
+<h3>References</h3>
+
+<p>Qiyuan Li, Nicolai J. Birkbak, Balazs Gyorffy, Zoltan Szallasi and Aron C. Eklund. (2011) Jetset: selecting the optimal microarray probe set to represent a gene. BMC Bioinformatics. 12:474.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>The underlying data comes from (e.g.) <code>scores.hgu95av2</code>,
+with gene symbol lookups coming from <code>org.Hs.egSYMBOL</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  genes &lt;- c('MKI67', 'CHD5', 'ESR1', 'FGF19', 'ERBB2', 'NoSuchGene')
+
+  # This generates several informative warnings
+  jscores('hgu133a', symbol = genes)
+
+</code></pre>
+
+
+</div>

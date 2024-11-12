@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>f.K.fold</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Subset the data into K fold, training and test data.
+</h2>
+
+<h3>Description</h3>
+
+<p>K-fold subsetting.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">f.K.fold(Nobs, K = 5)</code></pre>
+
+
+<h3>Arguments</h3>
+
+  <table>
+<tr style="vertical-align: top;">
+<td><code>Nobs</code></td>
+<td>
+<p>n is number of observations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>K is number of folds, typically 5 fold.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>K-fold subset of observations into training and test data. </p>
+
+
+<h3>Value</h3>
+
+<p>Returns the index for K-fold training and test data subsets.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ashwini Maurya, Email: mauryaas@msu.edu
+</p>
+
+
+<h3>References</h3>
+
+<p>A Well Conditioned and Sparse Estimate of Covariance and Inverse Covariance Matrix Using Joint Penalty. Submitted.
+http://arxiv.org/pdf/1412.7907v2.pdf
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n=100;K=5;cv=f.K.fold(n,K);
+</code></pre>
+
+
+</div>

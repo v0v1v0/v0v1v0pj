@@ -1,0 +1,47 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>MinibatchDiagnosticPlot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot a diagnostic plot for the mini-batch algorithm</h2>
+
+<h3>Description</h3>
+
+<p>To ensure sufficient convergence of the loss for jrSiCKLSNMF with mini-batch updates, we
+plot the loss vs the number of iterations for the mini-batch algorithm.
+After a certain number of iterations, the loss should appear to oscillate
+around a value. Before continuing with downstream analyses, please ensure that
+the loss exhibits this sort of behavior. For the mini-batch algorithm, it is not
+possible to use the convergence criteria used for the batch version of the
+algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">MinibatchDiagnosticPlot(SickleJr)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with mini-batch diagnostic plots added to the <code>plots</code> slot.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-MinibatchDiagnosticPlot(SimSickleJrSmall)
+</code></pre>
+
+
+</div>

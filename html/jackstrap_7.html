@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary_jackstrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summary Jackstrap:  This function shows the main outcomes with outlier technique developed by
+Sousa and Stosic(2005).</h2>
+
+<h3>Description</h3>
+
+<p>Summary Jackstrap:  This function shows the main outcomes with outlier technique developed by
+Sousa and Stosic(2005).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">summary_jackstrap(object_jackstrap, data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object_jackstrap</code></td>
+<td>
+<p>is the jackstrap object created by jackstrap function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>is the dataset of research.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return the data frame with information as follows: "outliers_by_step_func" are the outliers by heaviside step function criterion;
+"outliers_by_ks" are the outliers by K-S test; "dmu_efficiency_by_step_func" are DMUs evaluated as efficient by heaviside step function criterion;
+"dmu_inefficiency_by_step_func" are the DMUs evaluated as maximum inefficient by heaviside step function criterion;
+"dmu_efficiency_ks" are DMUs evaluated as efficient by K-S test criterion; "dmu_inefficiency_by_ks" are the DMUs evaluated as maximum inefficient by K-S test criterion.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+ 
+    #Create object with the resume of efficiency measurement.
+    summary_efficiency &lt;- summary_jackstrap(efficiency_ks, municipalities)
+ 
+</code></pre>
+
+
+</div>

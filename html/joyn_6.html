@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_duplicate_names</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check if vars in dt have duplicate names</h2>
+
+<h3>Description</h3>
+
+<p>Check if vars in dt have duplicate names
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_duplicate_names(dt, name)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dt</code></td>
+<td>
+<p>data.frame to check</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>var name to check if has duplicates in dt</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>logical either TRUE, if any duplicates are found, or FALSE otherwise
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# When no duplicates
+x1 = data.table(id = c(1L, 1L, 2L, 3L, NA_integer_),
+                t  = c(1L, 2L, 1L, 2L, NA_integer_),
+                x  = 11:15)
+joyn:::check_duplicate_names(x1, "x")
+
+# When duplicates
+x1_duplicates = data.frame(id = c(1L, 1L, 2L, 3L, NA_integer_),
+                           x  = c(1L, 2L, 1L, 2L, NA_integer_),
+                           x  = 11:15,
+                           check.names = FALSE)
+joyn:::check_duplicate_names(x1_duplicates, "x")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

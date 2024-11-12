@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_qsegmodel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set quick mode model</h2>
+
+<h3>Description</h3>
+
+<p>Depreciated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_qsegmodel()
+
+set_qsegmodel(qsegmodel)
+
+reset_qsegmodel()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>qsegmodel</code></td>
+<td>
+<p>a list which has the same structure as the return value of get_qsegmodel</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>These function can get and modify quick mode model. <code>get_qsegmodel</code> returns
+the default model parameters. <code>set_qsegmodel</code> can modify quick mode model 
+using a list, which has the same structure as the return value of get_qsegmodel.
+<code>reset_qsegmodel</code> can reset the default model to origin <code>jiebaR</code> default
+model.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng &lt;<a href="http://qinwenfeng.com">http://qinwenfeng.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>qseg</code> <code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+qseg &lt;= "This is test"
+qseg &lt;= "This is the second test"
+
+## End(Not run)
+
+## Not run: 
+qseg &lt;= "This is test"
+qseg$detect = T
+qseg
+get_qsegmodel()
+model = get_qsegmodel()
+model$detect = F
+set_qsegmodel(model)
+reset_qsegmodel()
+
+## End(Not run)
+</code></pre>
+
+
+</div>

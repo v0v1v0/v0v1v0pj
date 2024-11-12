@@ -1,0 +1,164 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>callFunction</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Trigger a function call</h2>
+
+<h3>Description</h3>
+
+<p>Calls a function in a web page by its name. It can also pass a list of arguments for the function and 
+save the returned result to a variable.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">callFunction(
+  name,
+  arguments = NULL,
+  assignTo = NULL,
+  wait = 0,
+  sessionId = NULL,
+  thisArg = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>Name of the function. If the function is a method of some object
+its name must contain the full chain of calls (e.g. <code>myArray.sort</code> or 
+<code>Math.rand</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>arguments</code></td>
+<td>
+<p>List of arguments for the function. Note that in JavaScript 
+arguments must be given in a fixed order, naming is not necessary and will 
+be ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assignTo</code></td>
+<td>
+<p>Name of a variable to which will be assigned the returned value
+of the called function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wait</code></td>
+<td>
+<p>If <code>wait &gt; 0</code>, after sending the message, R will wait for a reply for a given number of seconds. 
+For this time (or until the reply is received), execution of other commands will be halted. Any incoming message 
+from the session will be considered as a reply.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>An ID of the session to which the function call should be sent. Can also be a vector of multiple
+session IDs. If <code>NULL</code>, the function call will be sent to all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thisArg</code></td>
+<td>
+<p>JavaScript functions (methods) can belong to some object, which 
+is referred to as <code>this</code> inside the function (e.g. in
+<code>someObject.myFunction()</code> function <code>myFunction</code> is a method of <code>someObject</code>).
+<code>thisArg</code> specifies object that will be known as <code>this</code> inside the function. If <code>NULL</code>,
+the function will use its parent as <code>this</code> object (as it happens in JavaScript by default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to <code>sendData</code>. It is used to send
+<code>arguments</code> to the web page.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>JavaScript counterpart is <code>jrc.callFunction(name, arguments, assignTo, package, internal)</code>.
+Its arguments are:
+</p>
+
+<dl>
+<dt><code>name</code></dt>
+<dd>
+<p>Name of an R function. If function name hasn't been previously added to the list
+of allowed functions (see <code>allowFunctions</code> or <code>allowedFunctions</code> argument of <code>openPage</code>),
+attempt to call it from a web page will require manual authorization on the R side.
+</p>
+</dd>
+<dt>
+<code>arguments</code> (optional)</dt>
+<dd>
+<p>arguments for the function. This should be an Array (for unnamed arguments) or an Object with argument names as keys
+(for named arguments).
+</p>
+</dd>
+<dt>
+<code>assignTo</code> (optional)</dt>
+<dd>
+<p>Name of the variable to which the returned value of the function will be assigned in the R session. 
+If the variable name hasn't been previously added to the list
+of allowed variables (see <code>allowVariables</code> or <code>allowedVariables</code> argument of <code>openPage</code>),
+attempt to assign it from a web page will require manual authorization on the R side.
+</p>
+</dd>
+<dt>
+<code>package</code> (optional)</dt>
+<dd>
+<p>If the function needs to be imported from an installed package, name of this package.
+</p>
+</dd>
+<dt>
+<code>internal</code> (optional)</dt>
+<dd>
+<p>Whether assignment of the function returned value should happen internally or not. If <code>true</code>, result will be stored
+in the session environment and can be accessed from the outside with <code>getSessionVariable</code>
+function. If <code>false</code>, result will be saved to the outer environment of the app (see <code>setEnvironment</code>).
+By default, uses <code>true</code> for variables that already exist in the session environment 
+(see <code>setSessionVariables</code> or <code>sessionVariables</code> argument of the <code>openPage</code> function)
+and <code>false</code> otherwise.
+</p>
+</dd>
+</dl>
+<p>This function is a wrapper
+around <code>callFunction</code> method of class <code>Session</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>allowFunctions</code>, <code>allowVariables</code>,
+<code>setEnvironment</code>, <code>getSessionIds</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+callFunction("alert", list("Some alertText"))
+callFunction("Math.random", assignTo = "randomNumber")
+sendCommand("alert(randomNumber)")
+closePage()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

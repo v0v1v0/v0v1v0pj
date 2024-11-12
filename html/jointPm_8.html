@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>a plot showing response variable levels versus return probabilities (ARI/AEP)</h2>
+
+<h3>Description</h3>
+
+<p>plot2 shows the univariate response variable levels versus return probabilities (ARI/AEP).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot2(obj,prob)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>is the output object from the binteg function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prob</code></td>
+<td>
+<p>is how the axes show the return probability, either ARI (annual recurrence interval) or annual exceed probability (AEP).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This figure include response variable levels estimated using the observed dependence, complete dependence (alpha=0) and complete independence (alpha=1) cases.
+</p>
+
+
+<h3>References</h3>
+
+<p>Zheng, F., Leonard M. and Westra S. (2014b). An efficient bivariate integration method for joint probability analysis of flood risk, Water Resources Research, under review.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> library(jointPm)
+ data(flood)
+ px=flood$px;py=flood$py;z=flood$flood_table;prm=flood$prm;pout=flood$pout
+ result=binteg(px,py,z,prm,pout,model="log",prob="ARI",nz=100,ninc=1000)
+ plot2(result,prob="ARI")
+</code></pre>
+
+
+</div>

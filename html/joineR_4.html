@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joineR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>joineR</h2>
+
+<h3>Description</h3>
+
+<p>The joineR package implements methods for analyzing data from
+longitudinal studies in which the response from each subject consists of a
+time-sequence of repeated measurements and a possibly censored
+time-to-event outcome. The modelling framework for the repeated
+measurements is the linear model with random effects and/or correlated
+error structure (Laird and Ware, 1982). The model for the time-to-event
+outcome is a: Cox proportional hazards model with log-Gaussian frailty
+(Cox, 1972). A cause-specific hazards model is used when competing risks
+are present. Stochastic dependence is captured by allowing the Gaussian
+random effects of the linear model to be correlated with the frailty term
+of the Cox proportional hazards model. The methodology used to fit the
+model is described in Henderson et al. (2002) in the case of a single event
+time, and by Williamson et al. (2008) in the case of competing risks data.
+Both models exploit the general methodology proposed by Wulfsohn and
+Tsiatis (1997).
+</p>
+<p>The package offers several types of functions for the analysis of joint data.
+</p>
+
+
+<h3>Data manipulation functions</h3>
+
+<p>There are several functions, including <code>jointdata</code>,
+<code>sample.jointdata</code>, <code>subset.jointdata</code>, <code>to.balanced</code>,
+<code>to.unbalanced</code>, and <code>UniqueVariables</code>, which offer the ability
+to construct a joint model dataset and manipulate it, e.g. take a sample
+according to a baseline covariate or outcome.
+</p>
+
+
+<h3>Plot functions</h3>
+
+<p>The plot function can be applied to <code>jointdata</code> and <code>vargm</code>
+(variogram) objects. In addition, <code>points</code> and <code>lines</code> can also
+be used with <code>jointplot</code> objects.
+</p>
+
+
+<h3>Model fitting functions</h3>
+
+<p>The primary function for fitting a joint model is <code>joint</code>. Standard
+errors can be estimated using <code>jointSE</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Further details on the package are given in the vignette. To access
+this, run <code>vignette("joineR")</code>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data 
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal 
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>: 
+465-480.
+</p>
+<p>Cox DR. Regression models and life-tables. <em>J R Stat Soc Ser B Stat
+Methodol.</em> 1972; <strong>34(2)</strong>: 187-220.
+</p>
+<p>Laird NM, Ware JH. Random-effects models for longitudinal data.
+<em>Biometrics.</em> 1982; <strong>38(4)</strong>: 963-974.
+</p>
+<p>Williamson PR, Kolamunnage-Dona R, Philipson P, Marson AG. Joint modelling of
+longitudinal and competing risks data. <em>Stat Med.</em> 2008; <strong>27</strong>:
+6426-6438.
+</p>
+
+
+</div>

@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>gcrit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate the critical value of the GGL objective funciton.  
+</h2>
+
+<h3>Description</h3>
+
+<p>gcrit() calculates the critical value of the GGL objective funciton.  It is used to confirm that the GGL algorithm is converging.  
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">gcrit(theta, S, n, lam1, lam2, penalize.diagonal)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+
+<p>A list of pXp inverse covariance matrices.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+
+<p>A list of pXp empirical covariance matrices.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+
+<p>A vector of sample sizes to attribute to each of the K data matrices.  n controls the relative weights of the classes: for example, with n==c(1,1), each class's theta will be penalized equally.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lam1</code></td>
+<td>
+
+<p>The tuning parameter for the graphical lasso penalty.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lam2</code></td>
+<td>
+
+<p>The tuning parameter for the group lasso penalty.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>penalize.diagonal</code></td>
+<td>
+
+<p>Logical, determining whether the penalties will be applied to the diagonal elements of the theta matrices.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A function called by GGL to calculate the critical value of the objective function.  
+</p>
+
+
+<h3>Value</h3>
+
+<p>crit, the critical value of the list of inverse covariance matrices.  
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Patrick Danaher</p>
+
+
+<h3>References</h3>
+
+<p>Patrick Danaher, Pei Wang and Daniela Witten (2011).  The joint graphical lasso for inverse covariance estimation across multiple classes.  http://arxiv.org/abs/1111.0324
+</p>
+
+
+</div>

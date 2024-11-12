@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getBIS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Download time series data from Bank of International Settlement</h2>
+
+<h3>Description</h3>
+
+<p>It downloads effective exchange rates from Bank of International Settlement.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getBIS(sheet="Real", type="broad")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sheet</code></td>
+<td>
+
+<p>The name of spreedsheet of effective exchange rates (EER)of BIS, it has two options: "Real" and "Nominal", the default is "Real" for REER.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of EER, it has two types: "broad" and "narrow". The default is "broad".
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function connects with &lt;"https://www.bis.org/statistics/eer/"&gt; and downloads the specified data. The rownames of downloaded data embeds the timestamp already, which can be directly transformed into time series via, as.timeSeries.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>country.info</code></td>
+<td>
+<p>The country information with abbreviated symbol.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.info</code></td>
+<td>
+<p>The information about effective exchange rates.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#To save time, the example below is commented.
+#output=getBIS(sheet=c("Nominal","Real")[1], type=c("broad","narrow")[1])
+#output$data
+#output$data.info
+#output$country.info
+
+</code></pre>
+
+
+</div>

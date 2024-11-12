@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>workspace</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Show your workspace contents</h2>
+
+<h3>Description</h3>
+
+<p>Show your workspace contents
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">workspace(silent = justifier::opts$get("silent"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be chatty or silent.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The workspace contents.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">justifier::clean_workspace(force = TRUE, silent=FALSE);
+justifier::log_decision(
+  "First we start using `justifier`.",
+  silent=FALSE
+);
+justifier::log_decision(
+  paste0("Then we start documenting our ",
+         "decisions and justifications."),
+  silent=FALSE
+);
+justifier::log_decision(
+  "Then we start learning from ourselves.",
+  silent=FALSE
+);
+justifier::workspace();
+</code></pre>
+
+
+</div>

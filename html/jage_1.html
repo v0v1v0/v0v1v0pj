@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_fuzzies.f</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A function for finding and correcting fuzzy posteriors produced by mvcp_est.f</h2>
+
+<h3>Description</h3>
+
+<p>A function for finding and correcting fuzzy posteriors produced by mvcp_est.f
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_fuzzies.f(cases, prior)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cases</code></td>
+<td>
+<p>as input data.table of rows of collapsed dental development scores, or vector of scores from single individual</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prior</code></td>
+<td>
+<p>as string argument for desired prior</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>for one case, list object with interpretation and data.table of true age, lower and upper bounds of HDR, mode, and posterior. If multiple cases are entered, only the data.table is returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">find_fuzzies.f(c(NA,NA,9,10,11,14,15,10,15,11),prior="jeff")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,337 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rocJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Predictive Accuracy Measures for Longitudinal Markers under a Joint Modelling Framework </h2>
+
+<h3>Description</h3>
+
+<p>It computes sensitivity, specificity, ROC and AUC measures for joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rocJM(object, dt, data, idVar = "id", directionSmaller = NULL, cc = NULL, min.cc = NULL,
+  max.cc = NULL, optThr = c("sens*spec", "youden"), 
+  diffType = c("absolute", "relative"), abs.diff = 0, rel.diff = 1, 
+  M = 300, burn.in = 100, scale = 1.6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dt</code></td>
+<td>
+<p>a numeric vector indicating the lengths of the time intervals of primary interest within which we want to 
+distinguish between subjects who died within the intervals from subjects who survived longer than that.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame that contains the baseline covariates for the longitudinal and survival submodels,
+including a case identifier (i.e., the variable denoted by the argument <code>idVar</code>), the time points on
+which longitudinal measurements are assumed to be taken (this should have the same name as in the argument
+<code>timeVar</code> of <code>jointModel</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idVar</code></td>
+<td>
+<p>the name of the variable in <code>data</code> that identifies the different generic subjects to be considered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>directionSmaller</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, then smaller values for the longitudinal outcome are associated 
+with higher risk for an event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cc</code></td>
+<td>
+<p>a numeric vector of threshold values for the longitudinal marker; if <code>NULL</code>, this is computed using 
+a regular sequence based on percentiles of the observed marker values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.cc</code></td>
+<td>
+<p>the start of the regular sequence for the threshold values for the longitudinal marker; 
+see argument <code>cc</code> above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.cc</code></td>
+<td>
+<p>the end of the regular sequence for the threshold values for the longitudinal marker; 
+see argument <code>cc</code> above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optThr</code></td>
+<td>
+<p>character string defining how the optimal threshold is to be computed. The default chooses the
+cut-point for the marker that maximizes the product of sensitivity and specificity. Option <code>"youden"</code>
+chooses the cut-point that maximizes Youden's index that equals sensitivity + specificity - 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diffType</code></td>
+<td>
+<p>character string defining the type of prediction rule. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abs.diff</code></td>
+<td>
+<p>a numeric vector of absolute differences in the definition of composite prediction rules.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rel.diff</code></td>
+<td>
+<p>a numeric vector of relative differences in the definition of composite prediction rules.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>a numeric scalar denoting the number of Monte Carlo samples.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>burn.in</code></td>
+<td>
+<p>a numeric scalar denoting the iterations to discard.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>a numeric scalar that controls the acceptance rate of the Metropolis-Hastings algorithm. See <b>Details</b>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>(<b>Note:</b> the following contain some math formulas, which are better viewed in the pdf version of the manual
+accessible at <a href="https://cran.r-project.org/package=JM">https://cran.r-project.org/package=JM</a>.)
+</p>
+<p>Assume that we have collected longitudinal measurements <code class="reqn">Y_i(t) = \{y_i(s); 0 \leq s \leq t\}</code> up to time point <code class="reqn">t</code> for
+subject <code class="reqn">i</code>. We are interested in events occurring in the medically relevant time frame <code class="reqn">(t, t + \Delta t]</code> within which the
+physician can take an action to improve the survival chance of the patient. Using an appropriate function of the marker history
+<code class="reqn">Y_i(t)</code>, we can define a prediction rule to discriminate between patients of high and low risk for an event.  For instance, 
+for in HIV infected patients, we could consider values of CD4 cell count smaller than a specific threshold as predictive for death. 
+Since we are in a longitudinal context, we have the flexibility of determining which values of the longitudinal history of the 
+patient will contribute to the specification of the prediction rule. That is, we could define a composite prediction rule that is not 
+based only on the last available measurement but rather on the last two or last three measurements of a patient. Furthermore, it 
+could be of relevance to consider different threshold values for each of these measurements, for instance, we could define as success 
+the event that the pre-last CD4 cell count is <code class="reqn">c</code> and the last one <code class="reqn">0.5c</code>, indicating that a 50% decrease is strongly 
+indicative for death. Under this setting we define sensitivity and specificity as,
+</p>
+<p style="text-align: center;"><code class="reqn">Pr \bigl \{ {\cal S}_i(t, k, c) \mid T_i^* &gt; t, T_i^* \in (t, t + \Delta t] \bigr \},</code>
+</p>
+ 
+<p>and </p>
+<p style="text-align: center;"><code class="reqn">Pr \bigl \{ {\cal F}_i(t, k, c) \mid T_i^* &gt; t, T_i^* &gt; t +
+\Delta t \bigr \},</code>
+</p>
+<p> respectively, where we term <code class="reqn">{\cal S}_i(t, k, c) = \{y_i(s) \leq c_s; k \leq s \leq t\}</code> as success 
+(i.e., occurrence of the event of interest), and <code class="reqn">{\cal F}_i(t, k, c) = \{y_i(s) &gt; c_s; k \leq s \leq t\}</code> as a failure,
+<code class="reqn">T_i^*</code> denotes the time-to-event, and <code class="reqn">\Delta t</code> the length of the medically relevant time window (specified by argument 
+<code>dt</code>). The cut values for the marker <code class="reqn">c</code> are specified by the <code>cc</code>, <code>min.cc</code> and <code>max.cc</code> arguments. Two types of
+composite prediction rules can be defined depending on the value of the <code>diffType</code> argument. Absolute prediction rules in which, between
+successive measurements there is an absolute difference of between the cut values, and relative prediction rules in which there is a 
+relative difference between successive measurements of the marker. The lag values for these differences are defined by the <code>abs.diff</code>
+and <code>rel.diff</code> arguments. Some illustrative examples:
+</p>
+
+<dl>
+<dt>Ex1:</dt>
+<dd>
+<p>keeping the defaults we define a simple rule that is only based on the last available marker measurement.</p>
+</dd>
+<dt>Ex2:</dt>
+<dd>
+<p>to define a prediction rule that is based on the last two available measurements using the same cut values (e.g.,
+if a patient had two successive measurements below a medically relevant threshold), we need to set <code>abs.diff = c(0, 0)</code>.</p>
+</dd>
+<dt>Ex3:</dt>
+<dd>
+<p>to define a prediction rule that is based on the last two available measurements using a drop of 5 units between the cut 
+values (e.g., the pre-last measurement is <code class="reqn">c</code> and the last <code class="reqn">c-5</code>), we need to set <code>abs.diff = c(0, -5)</code>.</p>
+</dd>
+<dt>Ex4:</dt>
+<dd>
+<p>to define a prediction rule that is based on the last two available measurements using a drop of 20% units between the cut 
+values (e.g., the pre-last measurement is <code class="reqn">c</code> and the last <code class="reqn">0.8c</code>), we need to set <code>diffType = "relative"</code> and 
+<code>rel.diff = c(0, 0.8)</code>.</p>
+</dd>
+</dl>
+<p>The estimation of the above defined probabilities is achieved with a Monte Carlo scheme similar to the one described in
+<code>survfitJM</code>. The number of Monte Carlo samples is defined by the <code>M</code> argument, and the burn-in iterations for
+the Metropolis-Hastings algorithm using the <code>burn.in</code> argument.
+</p>
+<p>More details can be found in Rizopoulos (2011).
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>rocJM</code> is a list with components,
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>MCresults</code></td>
+<td>
+<p>a list of length the number of distinct cases in <code>data</code>. Each component of this
+list is again a list with four components the estimated Sensitivity <code>Sens</code> and its standard 
+error <code>seSens</code>, and the estimated Specificity <code>Spec</code> and its standard error <code>seSpec</code>.
+All these four components are matrices with rows corresponding to the different <code>dt</code> values and
+columns corresponding to the different <code>cc</code> values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AUCs</code></td>
+<td>
+<p>a numeric vector of estimated areas under the ROC curves for the different values of <code>dt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optThr</code></td>
+<td>
+<p>a numeric vector with the optimal threshold values for the markers for the different
+<code>dt</code> under the choice made in argument <code>optThr</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>a list of length the number of distinct cases in <code>data</code> with components numeric vectors
+of the time points at which longitudinal measurements are supposed to be taken.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dt</code></td>
+<td>
+<p>a copy of the <code>dt</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>a copy of the <code>M</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diffType</code></td>
+<td>
+<p>a copy of the <code>diffType</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abs.diff</code></td>
+<td>
+<p>a copy of the <code>abs.diff</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rel.diff</code></td>
+<td>
+<p>a copy of the <code>rel.diff</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cc</code></td>
+<td>
+<p>a copy of the <code>cc</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>min.cc</code></td>
+<td>
+<p>a copy of the <code>min.cc</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.cc</code></td>
+<td>
+<p>a copy of the <code>max.cc</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>success.rate</code></td>
+<td>
+<p>a numeric matrix with the success rates of the Metropolis-Hastings algorithm described above.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Heagerty, P. and Zheng, Y. (2005). Survival model predictive accuracy and ROC curves.
+<em>Biometrics</em> <b>61</b>, 92–105.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for longitudinal 
+and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+<p>Rizopoulos, D. (2010) JM: An R package for the joint modelling of longitudinal and time-to-event data. 
+<em>Journal of Statistical Software</em> <b>35</b> (9), 1–33. <a href="https://doi.org/10.18637/jss.v035.i09">doi:10.18637/jss.v035.i09</a>
+</p>
+<p>Zheng, Y. and Heagerty, P. (2007). Prospective accuracy for longitudinal markers.
+<em>Biometrics</em> <b>63</b>, 332–341.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.rocJM</code>,
+<code>survfitJM</code>,
+<code>dynCJM</code>,
+<code>aucJM</code>,
+<code>prederrJM</code>,
+<code>jointModel</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(sqrt(CD4) ~ obstime * (drug + AZT + prevOI + gender), 
+    random = ~ obstime | patient, data = aids)
+fitSURV &lt;- coxph(Surv(Time, death) ~ drug + AZT + prevOI + gender, 
+    data = aids.id, x = TRUE)
+fit.aids &lt;- jointModel(fitLME, fitSURV, timeVar = "obstime", 
+    method = "piecewise-PH-aGH")
+
+# the following will take some time to execute...
+ND &lt;- aids[aids$patient == "7", ]
+roc &lt;- rocJM(fit.aids, dt = c(2, 4, 8), ND, idVar = "patient")
+roc
+
+## End(Not run)
+</code></pre>
+
+
+</div>

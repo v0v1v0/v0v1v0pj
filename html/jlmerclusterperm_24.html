@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_rng</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Interface to the Julia RNG</h2>
+
+<h3>Description</h3>
+
+<p>Interface to the Julia RNG
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">set_rng_state(i)
+
+reset_rng_state()
+
+get_rng_state()
+
+set_rng_seed(seed)
+
+get_rng_seed()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>i</code></td>
+<td>
+<p>Counter number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Seed</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The current seed or counter
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+# RNG initializes to seed=1 counter=0
+get_rng_seed()
+get_rng_state()
+
+# setter/getter for RNG counter
+set_rng_state(123)
+get_rng_state()
+
+# setter/getter for RNG seed
+set_rng_seed(2)
+get_rng_seed()
+
+# restore to initial setting (seed=1, counter=0)
+set_rng_seed(1)
+set_rng_state(0)
+
+
+
+
+</code></pre>
+
+
+</div>

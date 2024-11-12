@@ -1,0 +1,40 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>meanplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Fitted Mean Curves</h2>
+
+<h3>Description</h3>
+
+<p>plot fitted mean curves
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">meanplot(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a fitted joint mean covariance model of class "jmcmMod", i.e.,
+typically the result of jmcm().</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">cattleA &lt;- cattle[cattle$group=='A', ]
+fit.mcd &lt;- jmcm(weight | id | I(ceiling(day/14 + 1)) ~ 1 | 1, data=cattleA,
+  triple = c(8, 3, 4), cov.method = 'mcd')
+meanplot(fit.mcd)
+
+</code></pre>
+
+
+</div>

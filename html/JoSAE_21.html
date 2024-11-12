@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ulal.sub.samp.dat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+
+Unit-level sample data.
+</h2>
+
+<h3>Description</h3>
+
+
+<p>73 sample plots clustered in 15 stands in the
+municipality of Stokke, Norway.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("ulal.sub.samp.dat")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 73 observations on the following 7 variables.
+</p>
+
+<dl>
+<dt><code>plot.ID</code></dt>
+<dd>
+<p>a character vector with unique plot IDs.</p>
+</dd>
+<dt><code>w.VMPRHA</code></dt>
+<dd>
+<p>a numeric vector. Timber volume per hectare
+(m3/ha).</p>
+</dd>
+<dt><code>stand.ID</code></dt>
+<dd>
+<p>a factor with unique stand IDs.</p>
+</dd> </dl>
+<dl>
+<dt><code>elev.mean</code></dt>
+<dd>
+<p>a numeric vector. Mean height
+obtained from digital aerial photogrammetry.</p>
+</dd>
+<dt><code>elev.mean.sq</code></dt>
+<dd>
+<p>a numeric vector. Mean height squared
+obtained from digital aerial photogrammetry.</p>
+</dd>
+<dt><code>k.ij.one</code></dt>
+<dd>
+<p>a numeric vector of ones (used in cases where
+heteroscedasticity can be ignored)</p>
+</dd>
+<dt><code>k.ij.em.0.48</code></dt>
+<dd>
+<p>a numeric vector. <code>elev.mean</code> to the
+power of 0.48 for modeling heteroscedasticity.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Breidenbach et al. (2018) Unit-level and area-level small area
+estimation under heteroscedasticity using digital aerial photogrammetry
+data. Remote Sensing of Environment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(ulal.sub.samp.dat)
+</code></pre>
+
+
+</div>

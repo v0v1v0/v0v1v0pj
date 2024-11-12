@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_chapters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract information on book chapters</h2>
+
+<h3>Description</h3>
+
+<p><code>jst_get_chapters()</code> extracts meta-data from JSTOR-XML files for book
+chapters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_chapters(file_path, authors = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file_path</code></td>
+<td>
+<p>The path to a <code>.xml</code>-file for a book or research report.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>authors</code></td>
+<td>
+<p>Extracting the authors is an expensive operation which makes
+the function ~3 times slower, depending on the number of chapters and
+the number of authors. Defaults to <code>FALSE</code>. Use <code>authors = TRUE</code> to
+import the authors too.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Currently, <code>jst_get_chapters()</code> is quite a lot slower than most of the other
+functions. It is roughly 10 times slower than <code>jst_get_book</code>, depending on
+the number of chapters to extract.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble</code> containing the extracted meta-data with the following
+columns:
+</p>
+
+<ul>
+<li>
+<p> book_id <em>(chr)</em>: The book id of type "jstor", which is not a registered
+DOI.
+</p>
+</li>
+<li>
+<p> file_name <em>(chr)</em>: The filename of the original .xml-file. Can be used
+for joining with other data for the same file.
+</p>
+</li>
+<li>
+<p> part_id <em>(chr)</em>: The id of the part.
+</p>
+</li>
+<li>
+<p> part_label <em>(chr)</em>: A label for the part, if specified.
+</p>
+</li>
+<li>
+<p> part_title <em>(chr)</em>: The title of the part.
+</p>
+</li>
+<li>
+<p> part_subtitle <em>(chr)</em>: The subtitle of the part, if specified.
+</p>
+</li>
+<li>
+<p> authors <em>(list)</em>: A list-column with information on the authors. Can be
+unnested with <code>tidyr::unnest()</code>. See the examples and <code>jst_get_authors()</code>.
+</p>
+</li>
+<li>
+<p> abstract <em>(chr)</em>: The abstract to the part.
+</p>
+</li>
+<li>
+<p> part_first_page <em>(chr)</em>: The page where the part begins.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># extract parts without authors
+jst_get_chapters(jst_example("book.xml"))
+
+# import authors too
+parts &lt;- jst_get_chapters(jst_example("book.xml"), authors = TRUE)
+parts
+
+tidyr::unnest(parts)
+</code></pre>
+
+
+</div>

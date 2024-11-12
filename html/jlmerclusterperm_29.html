@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cluster_permutation_tidiers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tidiers for cluster permutation test objects</h2>
+
+<h3>Description</h3>
+
+<p>Tidiers for cluster permutation test objects
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'timewise_statistics'
+tidy(x, ...)
+
+## S3 method for class 'empirical_clusters'
+tidy(x, ...)
+
+## S3 method for class 'null_cluster_dists'
+tidy(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class <code style="white-space: pre;">⁠&lt;timewise_statistics&gt;⁠</code>, <code style="white-space: pre;">⁠&lt;empirical_clusters&gt;⁠</code>, or <code style="white-space: pre;">⁠&lt;null_cluster_dists&gt;⁠</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unused</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+library(dplyr, warn.conflicts = FALSE)
+
+# Specification object
+spec &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, filter(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec
+
+# Method for `&lt;timewise_statistics&gt;`
+empirical_statistics &lt;- compute_timewise_statistics(spec)
+class(empirical_statistics)
+tidy(empirical_statistics)
+
+reset_rng_state()
+null_statistics &lt;- permute_timewise_statistics(spec, nsim = 100)
+class(null_statistics)
+tidy(null_statistics)
+
+# Method for `&lt;empirical_clusters&gt;`
+empirical_clusters &lt;- extract_empirical_clusters(empirical_statistics, threshold = 2)
+class(empirical_clusters)
+tidy(empirical_clusters)
+
+# Method for `&lt;null_cluster_dists&gt;`
+null_cluster_dists &lt;- extract_null_cluster_dists(null_statistics, threshold = 2)
+class(null_cluster_dists)
+tidy(null_cluster_dists)
+
+
+
+
+</code></pre>
+
+
+</div>

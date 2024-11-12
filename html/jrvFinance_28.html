@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>equiv.rate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Equivalent Rates under different Compounding Conventions</h2>
+
+<h3>Description</h3>
+
+<p>Converts an interest rate from one compounding convention to
+another (for example from semi-annual to monthly compounding or
+from annual to continuous compounding)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">equiv.rate(rate, from.freq = 1, to.freq = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rate</code></td>
+<td>
+<p>The interest rate in decimal (0.10 or 10e-2 for 10%)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from.freq</code></td>
+<td>
+<p>Frequency of compounding of the given interest
+rate: 1 for annual, 2 for semi-annual, 12 for monthly, Inf for
+continuous compounding.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to.freq</code></td>
+<td>
+<p>Frequency of compounding to which the given
+interest rate is to be converted: 1 for annual, 2 for
+semi-annual, 12 for monthly, <code>Inf</code> for continuous
+compounding.</p>
+</td>
+</tr>
+</table>
+</div>

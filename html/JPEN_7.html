@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jpen.tune</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tuning parameter selection based on minimization of 5 fold mean square error. 
+</h2>
+
+<h3>Description</h3>
+
+<p> Returns optimal values of tuning parameters lambda and gamma which minimizes the K-fold crossvalidation error on
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jpen.tune(Ytr, gama, lambda=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Ytr</code></td>
+<td>
+
+<p>Ytr is matrix of observations.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gama</code></td>
+<td>
+
+<p>gama is vector of gamma values. gamma is non-negative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+
+<p>lambda is vector of lambda values. lambda is non-negative. 
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Returns the value of optimal tuning parameters. The function uses  K-fold cross validation to select the best tuning parameter from among a set of of values of lambda and gamma.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns the optimal values of lambda and gamma.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ashwini Maurya, Email: mauryaas@msu.edu.
+</p>
+
+
+<h3>References</h3>
+
+<p>A Well Conditioned and Sparse Estimate of Covariance and Inverse Covariance Matrix Using Joint Penalty. Submitted.
+http://arxiv.org/pdf/1412.7907v2.pdf
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jpen</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p=10;n=100;
+Sig=diag(p);
+y=rmvnorm(n,mean=rep(0,p),sigma=Sig);
+gama=c(0.5,1.0);
+opt=jpen.tune(Ytr=y,gama);
+</code></pre>
+
+
+</div>

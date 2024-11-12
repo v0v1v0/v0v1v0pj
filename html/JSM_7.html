@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitted</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Fitted Values for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p><code>fitted</code> is a generic function which extracts fitted values from objects returned by <code>jmodelTM()</code> or <code>jmodelMult()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmodelTM'
+fitted(object, process = c("Longitudinal", "Survival"), 
+        type = c("Marginal", "Conditional"), ...)
+## S3 method for class 'jmodelMult'
+fitted(object, process = c("Longitudinal", "Survival"), 
+        type = c("Marginal", "Conditional"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jmodelTM</code> or <code>jmodelMult</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>for which process the fitted values are calculated, i.e. the longitudinal or the survival process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>what type of fitted values to calculate for each process. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments required. None is used in this method.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>We have implemented the fitted value calculation for <code>process = "Longitudinal"</code> but not for <code>process = "Survival"</code> yet as they are not well defined under the joint modeling setting. There are two types of fitted values depending on whether to compute the values conditional on the random effects. With <code>type = "Marginal"</code>, the fitted values are <code class="reqn">\mathbf{X}_i^\top(t)\boldsymbol\beta</code> for objects returned by <code>jmodelTM()</code> and <code class="reqn">\mathbf{B}^\top(t)\boldsymbol\gamma</code> for objects returned by <code>jmodelMult()</code>. With <code>type = "Conditional"</code>, the fitted values are <code class="reqn">\mathbf{X}_i^\top(t)\boldsymbol\beta + \mathbf{Z}_i^\top(t)\mathbf{b}_i</code> for objects returned by <code>jmodelTM()</code> and <code class="reqn">b_i\times\mathbf{B}^\top(t)\boldsymbol\gamma</code> for objects returned by <code>jmodelMult()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector of fitted values.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(proth ~ Trt * obstime, random = ~ 1 | ID, data = liver)
+fitCOX &lt;- coxph(Surv(start, stop, event) ~ Trt, data = liver, x = TRUE)
+fitJT.ph &lt;- jmodelTM(fitLME, fitCOX, liver, timeVarY = 'obstime')
+
+# fitted values for the longitudinal process
+fitted(fitJT.ph, type = "Conditional")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ggplot2-scales</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scales to use for ggplot2</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_color_jma_absolute(type = "precipitation", ...)
+
+scale_color_jma_relative(type = "amedas", ...)
+
+scale_fill_jma_absolute(type = "precipitation", ...)
+
+scale_fill_jma_relative(type = "amedas", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>Display item</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments to pass on to ggplot2::scale_color_gradientn or
+ggplot2::scale_fill_gradientn</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>ScaleContinuous</code> object that can be added to a <code>ggplot</code> object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">d &lt;-
+data.frame(
+  date = as.Date(c(17410, 17411, 17412, 17413, 17414, 17415), origin = "1970-01-01"),
+  precipitation_sum = units::set_units(c(3.5, 9.5, 0, 0, 0, 5), "mm"))
+
+library(ggplot2)
+library(units)
+ggplot(d, aes(date, precipitation_sum,
+          color = drop_units(precipitation_sum),
+          fill = drop_units(precipitation_sum))) +
+  geom_bar(stat = "identity") +
+  scale_color_jma_absolute(type = "precipitation") +
+  scale_fill_jma_absolute(type = "precipitation")
+</code></pre>
+
+
+</div>

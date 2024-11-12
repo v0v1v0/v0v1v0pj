@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Schur</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of Schur polynomial - C++ implementation</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a Schur polynomial. The Schur polynomials are the
+Jack <code class="reqn">P</code>-polynomials with Jack parameter <code class="reqn">\alpha=1</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Schur(x, lambda)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>values of the variables, a vector of <code>bigq</code> numbers, or a
+vector that can be coerced as such (e.g. <code>c("2", "5/3")</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>bigq</code> number.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Schur(c("1", "3/2", "-2/3"), lambda = c(3, 1))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anova.jmdem</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Analysis of Deviance for Joint Mean and Dispersion Effect Models Fits
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute an analysis of deviance table for one or more double generalised linear model fits.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmdem'
+anova(object, ..., test = NULL, type = c("1", "3"), 
+      print.results = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object, ...</code></td>
+<td>
+<p>one or several objects of class <code>jmdem</code>, typically the result of a call to <code>jmdem</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>a character string, (partially) matching one of "<code>Rao</code>" or "<code>Wald</code>". See <code>stat.anova.jmdem</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>a character string or integer, specifying whether a type "<code>1</code>" (<em>sequential</em>) analysis or a type "<code>3</code>" (<em>partial</em>) analysis should be conducted. It is only relevant if a single object is specified in <code>object</code>. Both numeric and character inputs are allowed. See details for type 1 and type 3 analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>print.results</code></td>
+<td>
+<p>logical, <code>TRUE</code> if the result table should be printed directly, <code>FALSE</code> if the results should be saved in an user-defined object.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Specifying a single object gives a analysis of deviance table for that fit. If type <code>1</code> analysis is specified, a sequential analysis will be conducted. That is, the reductions in the residual deviance as each term of the formula is <em>added</em> in turn are given in as the rows of a table, plus the residual deviances themselves.
+</p>
+<p>Type <code>3</code> analysis gives the reduction in the residual deviance of the fitted model after <em>removing</em> each term of the formula individually, that in turn are given as the rows of a table.
+</p>
+<p>If more than one object is specified, the table has a row for the residual degrees of freedom and deviance for each model. For all but the first model, the change in degrees of freedom and deviance is also given. (This only makes statistical sense if the models are nested.) It is conventional to list the models from smallest to largest, but this is up to the user.
+</p>
+<p>The table will optionally contain "<code>Rao</code>" or "<code>Wald</code>" test statistics (and P values) comparing the model specified in the current row and the row above (type <code>1</code>) or the full model (type <code>3</code>). Both "<code>Rao</code>" and "<code>Wald</code>" test statistics are asymptotically chi-square distributed. "<code>LRT</code>" (Likelihood ratio test) and "<code>F</code>" ((F test) are not included in <code>anova.jmdem</code> because the comparison of the deviances of two joint mean and dispersion effects models is questionable, if not even invalid. One important argument is that the dependent variables of two different dispersion submodels given two different mean submodels are not the identical.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class "<code>anova</code>" inheriting from class "<code>data.frame</code>".
+</p>
+<p>If <code>print.results = TRUE</code>,
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>table.x</code></td>
+<td>
+<p>the <code>anova</code> table constructed for the mean submodel.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>table.z</code></td>
+<td>
+<p>the <code>anova</code> table constructed for the dispersion submodel.</p>
+</td>
+</tr>
+</table>
+<h3>Warning</h3>
+
+<p>The comparison between two or more models will only be valid if they are fitted to the same dataset. This may be a problem if there are missing values and <code>R</code>'s default of  <code>na.action = na.omit</code> is used, and  <code>anova</code> will detect this with an error.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Hastie, T. J. and Pregibon, D. (1992). <em>Generalized linear models</em>. Chapter 6 of Statistical Models in S eds J. M. Chambers and T. J. Hastie, Wadsworth &amp; Brooks/Cole.
+</p>
+<p>McCullagh P. and Nelder, J.A. (1989) <em>Generalized Linear Models</em>. London: Chapman and Hall.
+</p>
+<p>Smyth, G.K. (1989). <em>Generalized linear models with varying dispersion</em>. J. R. Statist. Soc. B, <strong>51</strong> (1), 47-60.
+</p>
+<p>Smyth, G.K., Verbyla, A.P. (1996). <em>A conditional likelihood approach to residual maximum linear estimation in generalized linear models</em>. J. R. Statist. Soc. B, <strong>58</strong> (3), 565-572.
+</p>
+<p>Smyth, G.K., Verbyla, A.P. (1999). <em>Adjusted likelihood methods for modelling dispersion in generalized linear models</em>. Environmetrics, <strong>10</strong>, 695-709.
+</p>
+<p>Wu, K.Y.K., Li, W.K. (2016). <em>On a dispersion model with Pearson residual responses</em>. Comput. Statist. Data Anal., <strong>103</strong>, 17-27.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmdem</code>, <code>anova</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example in jmdem(...)
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x, dformula = ~ z, 
+                            mfamily = poisson(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4), 
+                            lambda.true = c(2.5, 3), n = 100)
+                            
+fit &lt;- jmdem(mformula = y ~ x, dformula = ~ z, data = MyData, 
+             mfamily = poisson, dfamily = Gamma(link = "log"), 
+             dev.type = "deviance", method = "CG")
+              
+## Run a partial analysis (type 3) with Wald test
+anova(fit, test = "Wald", type = 3)
+</code></pre>
+
+
+</div>

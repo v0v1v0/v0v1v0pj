@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>what</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Lists the data sets available from jamovi</h2>
+
+<h3>Description</h3>
+
+<p>Lists the data sets available from jamovi. Data sets can then be read using
+the read() function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">what()
+</code></pre>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+jmvconnect::what()
+
+#  Available Data Sets
+#  -------------------------------------
+#         Title           Rows    Cols
+#  -------------------------------------
+#    1    iris             150       5
+#    2    Tooth Growth      60       3
+#  -------------------------------------
+
+data &lt;- jmvconnect::read('Tooth Growth')
+
+# or
+
+data &lt;- jmvconnect::read(2)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

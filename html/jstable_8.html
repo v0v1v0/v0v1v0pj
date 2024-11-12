@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extractAIC.coxme</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>extractAIC.coxme: Extract AIC from coxme.object</h2>
+
+<h3>Description</h3>
+
+<p>Extract AIC from coxme.object
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'coxme'
+extractAIC(fit, scale = NULL, k = 2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>coxme.object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>numeric specifying the 'weight' of the equivalent degrees of freedom (=: edf) part in the AIC formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments (currently unused in base R).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>AIC(Integreted, Penalized)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(coxme)
+fit &lt;- coxme(Surv(time, status) ~ ph.ecog + age + (1 | inst), lung)
+extractAIC(fit)
+</code></pre>
+
+
+</div>

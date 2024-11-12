@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>evaluatePerformance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of graph estimation method's performance if the true graph is known.</h2>
+
+<h3>Description</h3>
+
+<p>Function compares adjacency matrices of the true and estimated simple graphs and calculates the number of true positives (correctly estimated edges), true negatives (correctly estimated absence of edges), false positives (edges present in the estimator but not in the true graph) and false negatives (failure to identify an edge).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">evaluatePerformance(G, G_hat)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>true graph's adjacency matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G_hat</code></td>
+<td>
+<p>estimated graph's adjacency matrix. Must have the same dimensions as <code>G</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>performance - a numeric vector of length 4 with TP, TN, FP, FN.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">{
+K &lt;- 3
+p &lt;- 50
+n &lt;- 20
+data &lt;- generateData_rewire(K = K, p = p, n = n, ncores = 1, verbose = FALSE)
+G_common_true &lt;- data$CommonGraph
+X &lt;- data$Data
+res &lt;- jewel(X, lambda1 = 0.25)
+G_common_est &lt;- res$CommonG
+evaluatePerformance(G = G_common_true, G_hat = G_common_est)
+}
+</code></pre>
+
+
+</div>

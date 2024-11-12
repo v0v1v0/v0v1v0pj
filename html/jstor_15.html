@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_journal_overview</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get table with information on journals</h2>
+
+<h3>Description</h3>
+
+<p>Download most recent or display cached version of data on journals.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_journal_overview(most_recent = FALSE, quiet = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>most_recent</code></td>
+<td>
+<p>Should the most recent version be downloaded from DfR?
+(Currently disabled due to changes on the JSTOR-servers).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Should status messages about the download be printed?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When analysing your sample of articles from DfR, it might be helpful to have
+some context about the journals in your sample. This function provides a
+<code>tibble</code> with various information like the full name of the journal, the
+short version of the name (sometimes referred to as <code>JCODE</code>), dates on where
+the first
+and last (available) issues were published, etc.
+</p>
+<p>The data on journals might change. Therefore this function provides two
+sources of data: a cached version which gets updated with every release, and
+the ability to pull the most recent version directly from DfR (this had to
+be temporarily disabled.)
+</p>
+<p>The cached version was updated on 2020-04-03.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble</code> with various information about journals.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># use the function without arguments to get a tibble from disk
+jst_get_journal_overview()
+
+## Not run: 
+# download the most recent version from DfR
+jst_get_journal_overview(most_recent = TRUE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

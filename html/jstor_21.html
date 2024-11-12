@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_preview_zip</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Preview content of zip files</h2>
+
+<h3>Description</h3>
+
+<p>This function gives you a quick preview about what a .zip-file from DfR
+contains.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_preview_zip(zip_archive)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>zip_archive</code></td>
+<td>
+<p>A path to a .zip-file from DfR</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The function returns a tibble with three columns:
+</p>
+
+<ul>
+<li> <p><em>type</em>: metadata or some form of ngram
+</p>
+</li>
+<li> <p><em>meta_type</em>: which type of metadata (book_chapter, journal article, ...)
+</p>
+</li>
+<li> <p><em>n</em>: a count for each category
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_preview_zip(jst_example("pseudo_dfr.zip"))
+</code></pre>
+
+
+</div>

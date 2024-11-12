@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jm coda Methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Various Methods for Functions from the <em>coda</em> Package
+</h2>
+
+<h3>Description</h3>
+
+<p>Methods for an object of class <code>"jm"</code> for diagnostic functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">
+traceplot(object, ...)
+
+## S3 method for class 'jm'
+traceplot(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"), ...)
+
+ggtraceplot(object, ...)
+
+## S3 method for class 'jm'
+ggtraceplot(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"),
+  size = 1, alpha = 0.8,
+  theme = c('standard', 'catalog', 'metro',
+                'pastel', 'beach', 'moonlight', 'goo', 'sunset', 'custom'),
+  grid = FALSE, gridrows = 3, gridcols = 1, custom_theme = NULL, ...)
+
+gelman_diag(object, ...)
+
+## S3 method for class 'jm'
+gelman_diag(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"), ...)
+
+densplot(object, ...)
+
+## S3 method for class 'jm'
+densplot(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"), ...)
+
+ggdensityplot(object, ...)
+
+## S3 method for class 'jm'
+ggdensityplot(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"),
+  size = 1, alpha = 0.6,
+  theme = c('standard', 'catalog', 'metro', 'pastel',
+                'beach', 'moonlight', 'goo', 'sunset', 'custom'),
+  grid = FALSE, gridrows = 3, gridcols = 1, custom_theme = NULL, ...)
+
+cumuplot(object, ...)
+
+## S3 method for class 'jm'
+cumuplot(object,
+  parm = c("all", "betas", "sigmas", "D", "bs_gammas",
+           "tau_bs_gammas", "gammas", "alphas"), ...)
+
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>"jm"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parm</code></td>
+<td>
+<p>a character string specifying which parameters of the joint model to plot. Possible options are <code>'all'</code>, <code>'betas'</code>, <code>'alphas'</code>, <code>'sigmas'</code>, <code>'D'</code>, <code>'bs_gammas'</code>, <code>'tau_bs_gammas'</code>, or <code>'gammas'</code>.<br></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>size</code></td>
+<td>
+<p>the width of the traceplot line in mm. Defaults to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the opacity level of the traceplot line. Defaults to 0.8.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theme</code></td>
+<td>
+<p>a character string specifying the color theme to be used. Possible options are <code>'standard'</code>, <code>'catalog'</code>, <code>'metro'</code>, <code>'pastel'</code>, <code>'beach'</code>, <code>'moonlight'</code>, <code>'goo'</code>, or <code>'sunset'</code>. Note that this option supports fitted objects with three chains. If the object was fitted using a different number of chains then the colors are either automatically chosen, or can be specified by the user via the argument <code>custom_theme</code>. <br></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>logical; defaults to <code>FALSE</code>. If <code>TRUE</code>, the plots are returned in grids split over multiple pages. For more details see the documentation for <code>gridExtra::marrangeGrob()</code>. <br></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridrows</code></td>
+<td>
+<p>number of rows per page for the grid. Only relevant when using <code>grid = TRUE</code>. Defaults to 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridcols</code></td>
+<td>
+<p>number of columns per page for the grid. Only relevant when using <code>grid = TRUE</code>. Defaults to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>custom_theme</code></td>
+<td>
+<p>A named character vector with elements equal to the number of chains (<code>n_chains</code>). The name of each element should be the number corresponding to the respective chain. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to the corresponding function from the <b>coda</b> package.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+
+<dl>
+<dt><code>traceplot()</code></dt>
+<dd>
+<p>Plots the evolution of the estimated parameter vs. iterations in a fitted joint model.</p>
+</dd>
+<dt><code>ggtraceplot()</code></dt>
+<dd>
+<p>Plots the evolution of the estimated parameter vs. iterations in a fitted joint model using <span class="pkg">ggplot2</span>.</p>
+</dd>
+<dt><code>gelman_diag()</code></dt>
+<dd>
+<p>Calculates the potential scale reduction factor for the estimated parameters in a fitted joint model, together with the upper confidence limits.</p>
+</dd>
+<dt><code>densplot()</code></dt>
+<dd>
+<p>Plots the density estimate for the estimated parameters in a fitted joint model.</p>
+</dd>
+<dt><code>ggdensityplot()</code></dt>
+<dd>
+<p>Plots the evolution of the estimated parameter vs. iterations in a fitted joint model using <span class="pkg">ggplot2</span>.</p>
+</dd>
+<dt><code>cumuplot()</code></dt>
+<dd>
+<p>Plots the evolution of the sample quantiles vs. iterations in a fitted joint model.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# linear mixed model fits
+fit_lme1 &lt;- lme(log(serBilir) ~ year:sex + age,
+                random = ~ year | id, data = pbc2)
+
+fit_lme2 &lt;- lme(prothrombin ~ sex,
+                random = ~ year | id, data = pbc2)
+
+# cox model fit
+fit_cox &lt;- coxph(Surv(years, status2) ~ age, data = pbc2.id)
+
+# joint model fit
+fit_jm &lt;- jm(fit_cox, list(fit_lme1, fit_lme2), time_var = "year", n_chains = 1L)
+
+# trace plot for the fixed effects in the linear mixed submodels
+traceplot(fit_jm, parm = "betas")
+
+# density plot for the fixed effects in the linear mixed submodels
+densplot(fit_jm, parm = "betas")
+
+# cumulative quantile plot for the fixed effects in the linear mixed submodels
+cumuplot(fit_jm, parm = "betas")
+
+# trace plot for the fixed effects in the linear mixed submodels
+ggtraceplot(fit_jm, parm = "betas")
+ggtraceplot(fit_jm, parm = "betas", grid = TRUE)
+ggtraceplot(fit_jm, parm = "betas", custom_theme = c('1' = 'black'))
+
+# trace plot for the fixed effects in the linear mixed submodels
+ggdensityplot(fit_jm, parm = "betas")
+ggdensityplot(fit_jm, parm = "betas", grid = TRUE)
+ggdensityplot(fit_jm, parm = "betas", custom_theme = c('1' = 'black'))
+
+</code></pre>
+
+
+</div>

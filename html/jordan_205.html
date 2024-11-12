@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extract</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract and replace methods for jordan objects</h2>
+
+<h3>Description</h3>
+
+<p>Extraction and replace methods for jordan objects should
+work as expected.
+</p>
+<p>Replace methods can take a jordan or a numeric, but  the numeric must
+be zero.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Generally return a jordan object of the same class as the first argument</p>
+
+
+<h3>Methods</h3>
+
+
+<dl>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "albert", i = "index", j = "missing", drop = "logical")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "complex_herm_matrix", i = "index", j = "missing", drop = "logical")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "jordan", i = "index", j = "ANY", drop = "ANY")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "jordan", i = "index", j = "missing", drop = "ANY")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "quaternion_herm_matrix", i = "index", j = "missing", drop = "logical")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "real_symmetric_matrix", i = "index", j = "missing", drop = "logical")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "spin", i = "index", j = "missing", drop = "ANY")</code>: ... </p>
+</dd>
+<dt>[</dt>
+<dd>
+<p><code>signature(x = "spin", i = "missing", j = "index", drop = "ANY")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "albert", i = "index", j = "missing", value = "albert")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "complex_herm_matrix", i = "index", j = "ANY", value = "ANY")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "complex_herm_matrix", i = "index", j = "missing", value = "complex_herm_matrix")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "jordan_matrix", i = "index", j = "missing", value = "numeric")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "quaternion_herm_matrix", i = "index", j = "missing", value = "quaternion_herm_matrix")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "real_symmetric_matrix", i = "index", j = "missing", value = "real_symmetric_matrix")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "spin", i = "index", j = "index", value = "ANY")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "spin", i = "index", j = "missing", value = "numeric")</code>: ... </p>
+</dd>
+<dt>[&lt;-</dt>
+<dd>
+<p><code>signature(x = "spin", i = "index", j = "missing", value = "spin")</code>: ... </p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">showClass("index")  # taken from the Matrix package
+
+a &lt;- rspin(7)
+a[2:4] &lt;- 0
+a[5:7] &lt;- a[1]*10
+a
+
+</code></pre>
+
+
+</div>

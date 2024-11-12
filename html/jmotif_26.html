@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>series_to_wordbag</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converts a single time series into a bag of words.</h2>
+
+<h3>Description</h3>
+
+<p>Converts a single time series into a bag of words.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">series_to_wordbag(ts, w_size, paa_size, a_size, nr_strategy, n_threshold)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ts</code></td>
+<td>
+<p>the timeseries.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w_size</code></td>
+<td>
+<p>the sliding window size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paa_size</code></td>
+<td>
+<p>the PAA size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a_size</code></td>
+<td>
+<p>the alphabet size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr_strategy</code></td>
+<td>
+<p>the NR strategy.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_threshold</code></td>
+<td>
+<p>the normalization threshold.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Senin Pavel and Malinchik Sergey,
+SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model.
+Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
+</p>
+<p>Salton, G., Wong, A., Yang., C.,
+A vector space model for automatic indexing. Commun. ACM 18, 11, 613-620, 1975.
+</p>
+
+
+</div>

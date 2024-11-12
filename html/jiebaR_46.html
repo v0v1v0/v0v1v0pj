@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>&lt;=.qseg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quick mode symbol</h2>
+
+<h3>Description</h3>
+
+<p>Depreciated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'qseg'
+qseg &lt;= code
+
+## S3 method for class 'qseg'
+qseg[code]
+
+qseg
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>qseg</code></td>
+<td>
+<p>a qseg object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>a string</p>
+</td>
+</tr>
+</table>
+<h3>Format</h3>
+
+<p>qseg an environment</p>
+
+
+<h3>Details</h3>
+
+<p>Quick mode is depreciated, and is scheduled to be remove in v0.11.0. If you want to keep this feature, please submit a issue on GitHub page to let me know.
+</p>
+<p>Quick mode symbol to do segmentation, keyword extraction 
+and speech tagging. This symbol will initialize a <code>quick_worker</code> 
+when it is first called, and will do segmentation or other types of work 
+immediately.
+</p>
+<p>You can reset the default model setting by <code>$</code>, and 
+it will change the default setting the next time you use quick mode. 
+If you only want to change the parameter temporarily, you can reset the 
+settings of <code>quick_worker$</code>. <code>get_qsegmodel</code>, 
+<code>set_qsegmodel</code>, and <code>reset_qsegmodel</code>
+are also available for setting quick mode settings.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng &lt;<a href="http://qinwenfeng.com">http://qinwenfeng.com</a>&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>set_qsegmodel</code> <code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+qseg &lt;= "This is test"
+qseg &lt;= "This is the second test"
+
+## End(Not run)
+
+## Not run: 
+qseg &lt;= "This is test"
+qseg$detect = T
+qseg
+get_qsegmodel()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

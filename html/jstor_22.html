@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_re_import</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Re-import files</h2>
+
+<h3>Description</h3>
+
+<p><code>jst_re_import()</code> lets you re-import a file which was exported via
+<code>jst_import()</code> or <code>jst_import_zip()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_re_import(file, warn = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>A path to a .csv file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn</code></td>
+<td>
+<p>Should warnings be emitted, if the type of file cannot be
+determined?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When attempting to re-import, a heuristic is applied. If the file has column
+names which match the names from any of the <code style="white-space: pre;">⁠find_*⁠</code> functions, the file
+is read with the corresponding specifications. If no column names are
+recognized, files are recognized based on the number of columns. Since both
+references and footnotes have only two columns, the first line is inspected
+for either <code>"Referenc...|Bilbio...|Endnote..."</code> or <code>"Footnote..."</code>.
+In case there is still no match, the file is read with
+<code>readr::read_csv()</code> with <code>guess_max = 5000</code> and a warning is raised.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>tibble</code>, with the columns determined based on heuristics applied
+to the input file.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jst_combine_outputs()</code>
+</p>
+
+
+</div>

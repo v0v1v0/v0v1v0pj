@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>neighbor_mesh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find out neighborhood meshes collection</h2>
+
+<h3>Description</h3>
+
+<p>input should use meshcode under the 1km mesh size.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">neighbor_mesh(meshcode, contains = TRUE)
+
+find_neighbor_mesh(meshcode = NULL, contains = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meshcode</code></td>
+<td>
+<p><code>character</code>. mesh code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contains</code></td>
+<td>
+<p>logical. contains input meshcode (default <code>TRUE</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>meshcode
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">neighbor_mesh(53394501)
+neighbor_mesh(533945011)
+neighbor_mesh(533945011, contains = FALSE)
+</code></pre>
+
+
+</div>

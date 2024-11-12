@@ -1,0 +1,167 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>json_validate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Validate a json file</h2>
+
+<h3>Description</h3>
+
+<p>Validate a single json against a schema.  This is a convenience
+wrapper around <code>json_validator(schema)(json)</code>.  See
+<code>json_validator()</code> for further details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">json_validate(
+  json,
+  schema,
+  verbose = FALSE,
+  greedy = FALSE,
+  error = FALSE,
+  engine = "imjv",
+  reference = NULL,
+  query = NULL,
+  strict = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>json</code></td>
+<td>
+<p>Contents of a json object, or a filename containing
+one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>schema</code></td>
+<td>
+<p>Contents of the json schema, or a filename
+containing a schema.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Be verbose?  If <code>TRUE</code>, then an attribute
+"errors" will list validation failures as a data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>greedy</code></td>
+<td>
+<p>Continue after the first error?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error</code></td>
+<td>
+<p>Throw an error on parse failure?  If <code>TRUE</code>,
+then the function returns <code>NULL</code> on success (i.e., call
+only for the side-effect of an error on failure, like
+<code>stopifnot</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>engine</code></td>
+<td>
+<p>Specify the validation engine to use.  Options are
+"imjv" (the default; which uses "is-my-json-valid") and "ajv"
+(Another JSON Schema Validator).  The latter supports more
+recent json schema features.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reference</code></td>
+<td>
+<p>Reference within schema to use for validating against a
+sub-schema instead of the full schema passed in. For example
+if the schema has a 'definitions' list including a definition for a
+'Hello' object, one could pass "#/definitions/Hello" and the validator
+would check that the json is a valid "Hello" object. Only available if
+<code>engine = "ajv"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>query</code></td>
+<td>
+<p>A string indicating a component of the data to
+validate the schema against.  Eventually this may support full
+<a href="https://www.npmjs.com/package/jsonpath">jsonpath</a> syntax, but
+for now this must be the name of an element within <code>json</code>.  See
+the examples for more details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strict</code></td>
+<td>
+<p>Set whether the schema should be parsed strictly or not.
+If in strict mode schemas will error to "prevent any unexpected
+behaviours or silently ignored mistakes in user schema". For example
+it will error if encounters unknown formats or unknown keywords. See
+https://ajv.js.org/strict-mode.html for details. Only available in
+<code>engine = "ajv"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># A simple schema example:
+schema &lt;- '{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "Product",
+    "description": "A product from Acme\'s catalog",
+    "type": "object",
+    "properties": {
+        "id": {
+            "description": "The unique identifier for a product",
+            "type": "integer"
+        },
+        "name": {
+            "description": "Name of the product",
+            "type": "string"
+        },
+        "price": {
+            "type": "number",
+            "minimum": 0,
+            "exclusiveMinimum": true
+        },
+        "tags": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1,
+            "uniqueItems": true
+        }
+    },
+    "required": ["id", "name", "price"]
+}'
+
+# Test if some (invalid) json conforms to the schema
+jsonvalidate::json_validate("{}", schema, verbose = TRUE)
+
+# Test if some (valid) json conforms to the schema
+json &lt;- '{
+    "id": 1,
+    "name": "A green door",
+    "price": 12.50,
+    "tags": ["home", "green"]
+}'
+jsonvalidate::json_validate(json, schema)
+
+# Test a fraction of a data against a reference into the schema:
+jsonvalidate::json_validate(json, schema,
+                            query = "tags", reference = "#/properties/tags",
+                            engine = "ajv", verbose = TRUE)
+</code></pre>
+
+
+</div>

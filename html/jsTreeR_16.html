@@ -1,0 +1,178 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>treeNavigator-module</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tree navigator (Shiny module)</h2>
+
+<h3>Description</h3>
+
+<p>A Shiny module allowing to render a files and folders
+navigator in the server side file system.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">treeNavigatorUI(id, width = "100%", height = "auto")
+
+treeNavigatorServer(
+  id,
+  rootFolder,
+  search = TRUE,
+  wholerow = FALSE,
+  contextMenu = FALSE,
+  theme = "proton",
+  pattern = NULL,
+  all.files = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>an ID string; the one passed to <code>treeNavigatorUI</code> and
+the one passed to <code>treeNavigatorServer</code> must be identical,
+must not contain the <code>"-"</code> character, and must be a valid HTML
+id attribute</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width, height</code></td>
+<td>
+<p>arguments passed to <code>jstreeOutput</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rootFolder</code></td>
+<td>
+<p>path to the root folder in which you want to
+navigate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>search, wholerow, contextMenu</code></td>
+<td>
+<p>arguments passed to <code>jstree</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theme</code></td>
+<td>
+<p>the <strong>jsTree</strong> theme, <code>"default"</code> or <code>"proton"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pattern, all.files</code></td>
+<td>
+<p>arguments passed to <code>list.files</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>values passed to <code>req</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The <code>treeNavigatorUI</code> function returns a <code>shiny.tag.list</code>
+object to be included in a Shiny UI definition, and the function
+<code>treeNavigatorServer</code>, to be included in a Shiny server definition,
+returns a reactive value containing the selected file paths of the tree
+navigator.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(jsTreeR)
+
+css &lt;- HTML("
+  .flexcol {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin: 0;
+  }
+  .stretch {
+    flex-grow: 1;
+    height: 1px;
+  }
+  .bottomright {
+    position: fixed;
+    bottom: 0;
+    right: 15px;
+    min-width: calc(50% - 15px);
+  }
+")
+
+ui &lt;- fixedPage(
+  tags$head(
+    tags$style(css)
+  ),
+  class = "flexcol",
+
+  br(),
+
+  fixedRow(
+    column(
+      width = 6,
+      treeNavigatorUI("explorer")
+    ),
+    column(
+      width = 6,
+      tags$div(class = "stretch"),
+      tags$fieldset(
+        class = "bottomright",
+        tags$legend(
+          tags$h1("Selections:", style = "float: left;"),
+          downloadButton(
+            "dwnld",
+            class = "btn-primary btn-lg",
+            style = "float: right;",
+            icon  = icon("save")
+          )
+        ),
+        verbatimTextOutput("selections")
+      )
+    )
+  )
+)
+server &lt;- function(input, output, session){
+
+  Paths &lt;- treeNavigatorServer(
+    "explorer", rootFolder = getwd(),
+    search = list( # (search in the visited folders only)
+      show_only_matches  = TRUE,
+      case_sensitive     = TRUE,
+      search_leaves_only = TRUE
+    )
+  )
+
+  output[["selections"]] &lt;- renderPrint({
+    cat(Paths(), sep = "\n")
+  })
+
+  output[["dwnld"]] &lt;- downloadHandler(
+    filename = "myArchive.zip",
+    content = function(file){
+      zip(file, files = Paths())
+    }
+  )
+
+}
+
+if(interactive()) shinyApp(ui, server)
+</code></pre>
+
+
+</div>

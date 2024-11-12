@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add_index</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adds an indirect effect index to a fitted mediation model</h2>
+
+<h3>Description</h3>
+
+<p><code>add_index</code> is a generic function that adds a
+(moderated) indirect effect index to an object created with an <code style="white-space: pre;">⁠mdt_*⁠</code>
+family function. This index is computed using Monte Carlo methods. This
+function invokes particular methods depending of the class of the mediation
+model. For example, with a model fitted with <code>mdt_simple</code>,
+<code>add_index</code> will invoke
+<code>add_index.simple_mediation</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">add_index(mediation_model, times = 5000, level = 0.05, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mediation_model</code></td>
+<td>
+<p>A mediation model fitted with an <code style="white-space: pre;">⁠mdt_*⁠</code> family
+function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Number of simulations to use to compute the Monte Carlo index's
+confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>level</code></td>
+<td>
+<p>Alpha threshold to use for the confidence interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to specific methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of the same class as <code>mediation_model</code>, but with index
+added for later use.
+</p>
+
+
+</div>

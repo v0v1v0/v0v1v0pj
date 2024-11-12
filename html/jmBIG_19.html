@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>survfitJMCS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction using <code>FastJM</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>prediction of survival probability using <code>FastJM</code> for BIG data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">survfitJMCS(model, ids, u, method = "GH", obs.time)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>value of id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>u</code></td>
+<td>
+<p>see <code>survfitjmcs</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>options are 'Laplace','GH'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs.time</code></td>
+<td>
+<p>vector which represents time variable in the longitudinal data</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of predicted value for the given id along with other information relevant for survival probability confidence plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+##
+library(survival)
+library(dplyr)
+jmcs1&lt;-jmcsBig(dtlong=data.frame(long2),
+dtsurv = data.frame(surv2),
+longm=y~ x7+visit,
+survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,
+samplesize=200,id='id')
+mod2&lt;-jmcs1
+P2&lt;-survfitJMCS(model&lt;-mod2,ids&lt;-c(5),u&lt;-seq(surv2[surv2$id==5,]$time,
+surv2[surv2$id==5,]$time+10,0.2),obs.time='time')
+print(P2)
+##
+  
+</code></pre>
+
+
+</div>

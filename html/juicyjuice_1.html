@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>css_inline</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform CSS inlining with HTML</h2>
+
+<h3>Description</h3>
+
+<p>Given an HTML string, the <code>css_inline()</code> function will render that into HTML
+with CSS inlined into the <code>style</code> attribute of HTML tags.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">css_inline(html)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>html</code></td>
+<td>
+<p>HTML provided as a string.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A character vector of length one which contains the transformed HTML
+text.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Take an HTML string and inline the CSS into the tags
+css_inline(html = "&lt;style&gt;div{color:blue;}&lt;/style&gt;&lt;div/&gt;")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getTracks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search Jamendo database for several tracks</h2>
+
+<h3>Description</h3>
+
+<p>Search Jamendo database for several tracks
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getTracks(track_ids, client_id = Sys.getenv("JAMENDO_CLIENT_ID"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>track_ids</code></td>
+<td>
+<p>List of track IDs to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains information about several tracks.
+See <a href="https://developer.jamendo.com/v3.0/tracks">https://developer.jamendo.com/v3.0/tracks</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Examples
+ IDs &lt;- c(114069,113885)
+ tracks &lt;- getTracks(IDs)
+
+</code></pre>
+
+
+</div>

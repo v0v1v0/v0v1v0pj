@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>partial_response</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes and plots the trait-environment relationship of a given CWM trait and a given environmental variable</h2>
+
+<h3>Description</h3>
+
+<p>Computes and plots the trait-environment relationship of a given CWM trait and a focal environmental variable. In order to build the response curve, the function builds a dataframe where the focal environmental variable varies along a gradient and the other (non-focal) variables are fixed to their mean (but see FixX parameter for fixing non-focal variables to user-defined values).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">partial_response(
+  m,
+  indexGradient,
+  indexTrait,
+  XFocal = NULL,
+  grid.length = 200,
+  FixX = NULL,
+  FullPost = "mean"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>a model fitted with <code>jtdm_fit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indexGradient</code></td>
+<td>
+<p>The name (as specified in the column names of X) of the focal variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indexTrait</code></td>
+<td>
+<p>The name (as specified in the column names of Y) of the focal trait.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XFocal</code></td>
+<td>
+<p>Optional. A gradient of the focal variable provided by the user. If provided, the function will used this gradient instead of building a regular one. Default to NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid.length</code></td>
+<td>
+<p>The number of points along the gradient of the focal variable. Default to 200.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FixX</code></td>
+<td>
+<p>Optional. A parameter to specify the value to which non-focal variables are fixed. This can be useful for example if we have some categorical variables (e.g. forest vs meadows) and we want to obtain the partial response curve for a given value of the variable. It has to be a list of the length and names of the columns of X. For example, if the columns of X are "MAT","MAP","Habitat" and we want to fix "Habitat" to 1, then FixX=list(MAT=NULL,MAP=NULL,Habitat=1.). Default to NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FullPost</code></td>
+<td>
+<p>The type of predictions to be obtain. If FullPost = TRUE, the function returns samples from the predictive distribution. If FullPost="mean", the function computes the posterior distribution of the regression term B%*%X). Default to "mean", here FullPost cannot be FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>A plot of the trait-environment relationship.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predictions</code></td>
+<td>
+<p>A data frame containing the predicted trait-environmental relationships including the gradient of the focal environmental variable, mean trait predictions and quantiles (can be useful to code customized plot).</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Y)  
+data(X)  
+# Short MCMC to obtain a fast example: results are unreliable !
+m = jtdm_fit(Y=Y, X=X, formula=as.formula("~GDD+FDD+forest"), sample = 1000)  
+# SLA-GDD relationship
+plot = partial_response(m,indexGradient="GDD",indexTrait="SLA")
+plot$p
+# SLA-GDD relationship in forest (i.e. when forest=1)
+plot = partial_response(m,indexGradient="GDD",indexTrait="SLA",
+                        FixX=list(GDD=NULL,FDD=NULL,forest=1))
+plot$p
+</code></pre>
+
+
+</div>

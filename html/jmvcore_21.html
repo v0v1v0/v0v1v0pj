@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>composeTerm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compose and decompose interaction terms to and from their components</h2>
+
+<h3>Description</h3>
+
+<p>Compose and decompose interaction terms to and from their components
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">composeTerm(components)
+
+composeTerms(listOfComponents)
+
+decomposeTerm(term)
+
+decomposeTerms(terms)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>components</code></td>
+<td>
+<p>a character vectors of components</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>listOfComponents</code></td>
+<td>
+<p>a list of character vectors of components</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>term</code></td>
+<td>
+<p>a string with components separated with colons</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>terms</code></td>
+<td>
+<p>a character vector of components separated with colons</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">composeTerm(c('a', 'b', 'c'))
+# 'a:b:c'
+
+composeTerm(c('a', 'b', 'with space'))
+# 'a:b:`with space`'
+
+decomposeTerm('a:b:c')
+# c('a', 'b', 'c')
+
+decomposeTerm('a:b:`with space`')
+# c('a', 'b', 'with space')
+
+</code></pre>
+
+
+</div>

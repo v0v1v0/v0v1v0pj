@@ -1,0 +1,237 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getCopyNumberDataByResampling</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a copy number profile by resampling</h2>
+
+<h3>Description</h3>
+
+<p>Generate a copy number profile by resampling input data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getCopyNumberDataByResampling(length, nBkp = NA, bkp = NULL,
+  regData = NULL, regions = NULL, regAnnot = NULL, minLength = 0,
+  regionSize = 0, connex = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>length</code></td>
+<td>
+<p>length of the profile</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nBkp</code></td>
+<td>
+<p>number of breakpoints.  If <code>NULL</code>, then argument <code>bkp</code>
+is expected to be provided.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bkp</code></td>
+<td>
+<p>a numeric vector of breakpoint positions that may be used to
+bypass the breakpoint generation step.  Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regData</code></td>
+<td>
+<p>a data.frame containing copy number data for different types
+of copy number regions.  Columns:</p>
+ <dl>
+<dt>c</dt>
+<dd>
+<p>Total copy number</p>
+</dd>
+<dt>b</dt>
+<dd>
+<p>Allele B fraction (a.k.a. BAF)</p>
+</dd> <dt>region</dt>
+<dd>
+<p>a character value,
+annotation label for the region. See Details.</p>
+</dd> <dt>genotype</dt>
+<dd>
+<p>the
+(germline) genotype of SNPs. By definition, rows with missing genotypes are
+interpreted as non-polymorphic loci (a.k.a. copy number probes).</p>
+</dd> </dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regions</code></td>
+<td>
+<p>a character vector of region labels that may be used to
+bypass the region label generation step.  Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regAnnot</code></td>
+<td>
+<p>a data.frame containing annotation data for each copy number
+region.  Columns: </p>
+ <dl>
+<dt>region</dt>
+<dd>
+<p>label of the form (must match
+<code>regData[["region"]]</code>).</p>
+</dd> <dt>freq</dt>
+<dd>
+<p>frequency (in [0,1]) of this type
+of region in the genome.</p>
+</dd> </dl>
+<p> If <code>NULL</code> (the default), frequencies of
+regions (0,1), (0,2), (1,1) and (1,2) (the most common alterations) are set
+to represent 90% of the regions. <code>sum(regAnnot[["freq"]])</code> should be
+1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minLength</code></td>
+<td>
+<p>minimum length of region between breakpoints.  Defaults to
+0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regionSize</code></td>
+<td>
+<p>If <code>regionSize&gt;0</code>, breakpoints are included by pairs,
+where the distance within pair is set to <code>regionSize</code>.  <code>nBkp</code> is
+then required to be an even number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>connex</code></td>
+<td>
+<p>If <code>TRUE</code>, any two successive regions are constrained to
+be connex in the (minor CN, major CN) space.  See 'Details'.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function generates a random copy number profile of length 'length',
+with 'nBkp' breakpoints randomly chosen. Between two breakpoints, the
+profile is constant and taken among the different types of regions in
+<code>regData</code>.
+</p>
+<p>Elements of <code>regData[["region"]]</code> must be of the form <code>"(C1,C2)"</code>,
+where <code>C1</code> denotes the minor copy number and <code>C2</code> denotes the
+major copy number.  For example, </p>
+ <dl>
+<dt>(1,1)</dt>
+<dd>
+<p>Normal</p>
+</dd>
+<dt>(0,1)</dt>
+<dd>
+<p>Hemizygous deletion</p>
+</dd> <dt>(0,0)</dt>
+<dd>
+<p>Homozygous deletion</p>
+</dd>
+<dt>(1,2)</dt>
+<dd>
+<p>Single copy gain</p>
+</dd> <dt>(0,2)</dt>
+<dd>
+<p>Copy-neutral LOH</p>
+</dd>
+<dt>(2,2)</dt>
+<dd>
+<p>Balanced two-copy gain</p>
+</dd> <dt>(1,3)</dt>
+<dd>
+<p>Unbalanced two-copy gain</p>
+</dd>
+<dt>(0,3)</dt>
+<dd>
+<p>Single-copy gain with LOH</p>
+</dd> </dl>
+<p>If 'connex' is set to TRUE (the default), transitions between copy number
+regions are constrained in such a way that for any breakpoint, one of the
+minor and the major copy number does not change.  Equivalently, this means
+that all breakpoints can be seen in both total copy numbers and allelic
+ratios.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements </p>
+<dl>
+<dt>profile</dt>
+<dd>
+<p>the profile (a <code>length</code> by <code>2</code> data.frame
+containing the same fields as the input data <code>regData</code>.</p>
+</dd> <dt>bkp</dt>
+<dd>
+<p>a
+vector of bkp positions (the last row index before a breakpoint)</p>
+</dd>
+</dl>
+<table><tr style="vertical-align: top;">
+<td><code>regions</code></td>
+<td>
+<p>a character vector of region labels</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Pierre-Jean, M, Rigaill, G. J. and Neuvial, P. (2015). "Performance
+Evaluation of DNA Copy Number Segmentation Methods." *Briefings in
+Bioinformatics*, no. 4: 600-615.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+affyDat &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=1)
+sim &lt;- getCopyNumberDataByResampling(len=1e4, nBkp=5, minLength=100, regData=affyDat)
+plotSeg(sim$profile, sim$bkp)
+
+## another run with identical parameters
+bkp &lt;- sim$bkp
+regions &lt;- sim$regions
+sim2 &lt;- getCopyNumberDataByResampling(len=1e4, bkp=bkp, regData=affyDat, regions=regions)
+plotSeg(sim2$profile, bkp)
+
+## change tumor fraction but keep same "truth"
+affyDatC &lt;- acnr::loadCnRegionData(dataSet="GSE29172", tumorFraction=0.5)
+simC &lt;- getCopyNumberDataByResampling(len=1e4, bkp=bkp, regData=affyDatC, regions=regions)
+plotSeg(simC$profile, bkp)
+
+## restrict to only normal, single copy gain, and copy-neutral LOH
+## with the same bkp
+affyDatR &lt;- subset(affyDat, region %in% c("(1,1)", "(0,2)", "(1,2)"))
+simR &lt;- getCopyNumberDataByResampling(len=1e4, bkp=bkp, regData=affyDatR)
+plotSeg(simR$profile, bkp)
+
+## Same 'truth', on another dataSet
+regions &lt;- simR$regions
+illuDat &lt;- acnr::loadCnRegionData(dataSet="GSE11976", tumorFraction=1)
+sim &lt;- getCopyNumberDataByResampling(len=1e4, bkp=bkp, regData=illuDat, regions=regions)
+plotSeg(sim$profile, sim$bkp)
+
+</code></pre>
+
+
+</div>

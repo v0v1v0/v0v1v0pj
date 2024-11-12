@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The jubilee class</h2>
+
+<h3>Description</h3>
+
+<p>This S4 class stores raw and derived data,
+channel regression settings and results.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>call</code></dt>
+<dd>
+<p>the match.call slot.</p>
+</dd>
+<dt><code>lookback.channel</code></dt>
+<dd>
+<p>numeric, the look-back channel in years.</p>
+</dd>
+<dt><code>fwd.rtn.duration</code></dt>
+<dd>
+<p>numeric, the forward return duration in years.</p>
+</dd>
+<dt><code>reg.dtb</code></dt>
+<dd>
+<p>data.table, contains the regression data.</p>
+</dd>
+<dt><code>dtb</code></dt>
+<dd>
+<p>data.table, contains the consolidated market data.</p>
+</dd>
+<dt><code>rate.spread.mean</code></dt>
+<dd>
+<p>numeric, the mean of the yield spread,
+used to calculate <code>rate.spread.norm</code> column.</p>
+</dd>
+<dt><code>create.time</code></dt>
+<dd>
+<p><code>POSIXct</code>, records the creation time of this object.</p>
+</dd>
+</dl>
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>densityplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Density plots of JAGS output</h2>
+
+<h3>Description</h3>
+
+<p>Displays a series of density plots for posteriors of monitored parameters in a JAGS analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  densityplot(x, parameters=NULL, layout=NULL, ask=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A jagsUI object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters</code></td>
+<td>
+<p>A vector of names (as characters) of parameters to plot. Parameter names must match parameters included in the model. Calling non-scalar parameters without subsetting (e.g. <code>alpha</code>) will plot all values of <code>alpha</code>. If <code>parameters=NULL</code>, all parameters will be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout</code></td>
+<td>
+<p>A length 2 vector with the number of rows and columns to display in the plot. The default is 3 x 3, or smaller if there are fewer parameters to plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>If <code>TRUE</code>, ask user for confirmation before generating each new plot; the default is to ask when output is going to the screen, not when it is going to a file.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+</div>

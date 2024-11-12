@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jewel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate Gaussian graphical models from multiple datasets</h2>
+
+<h3>Description</h3>
+
+<p>This function estimates Gaussian graphical models (i.e. networks of conditional dependencies, direct connections between variables) given multiple datasets. 
+We assume that datasets contain measurements of the same variables collected under different conditions (different equipment, locations, even sub-types of disease).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jewel(
+  X,
+  lambda1,
+  lambda2 = NULL,
+  Theta = NULL,
+  W = NULL,
+  tol = 0.01,
+  maxIter = 10000,
+  stability = FALSE,
+  stability_nsubsets = 25,
+  stability_frac = 0.8,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>a list of <code>K</code> numeric data matrices of <code>n_k</code> samples and 
+<code>p</code> variables (<code>n_k</code> can be different for each matrix).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda1</code></td>
+<td>
+<p>a number, first regularization parameter (of the common penalty).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda2</code></td>
+<td>
+<p>an optional number, second regularization parameter 
+(of the class-specific penalty). If NULL, set to <code>lambda_2 = lambda_1 * 1.4</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Theta</code></td>
+<td>
+<p>an optional list of <code>K</code> regression coefficient matrices 
+of the size <code>p</code> by <code>p</code>. User-provided initialization can be used 
+for warm-start procedures. If NULL, initialized as all zeros.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>an optional list of <code>K</code> weights matrices of the size 
+<code>p</code> by <code>p</code>. User-provided initialization can be used when some 
+vertices are believed to be hubs. If NULL, initialized as all ones.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>an optional number, convergence threshold controlling the relative 
+error between iterations. The default value is 0.01.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxIter</code></td>
+<td>
+<p>an optional number, maximum allowed number of iterations. 
+The default value is 10 000.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stability</code></td>
+<td>
+<p>if stability = TRUE, stability selection procedure to reduce 
+the number of false positives will be applied. <code>n_k / 2</code> samples are 
+randomly chosen in each dataset <code>stability_nsubsets</code> times and then 
+__jewel__ method is applied to each subset. In the final estimate, we include 
+only the edges that appear in at least <code>stability_frac</code> proportion of the subsets. 
+By default this procedure is disabled since it increases the running time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stability_nsubsets</code></td>
+<td>
+<p>an optional number, how many times to subsample 
+datasets and apply __jewel__ for stability selection procedure. The default value is 25.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stability_frac</code></td>
+<td>
+<p>an optional number, in what proportion of the stability 
+results on subsampled data an edge has to be present to be included into the 
+final estimate. The default value is 0.8.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>if verbose = FALSE, tracing information printing is disabled. 
+The default value is TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The following list is returned
+</p>
+
+<ul>
+<li> <p><code>CommonG</code> - an adjacency matrix of the common estimated graph (intersection of <code>K</code> estimated graphs).
+</p>
+</li>
+<li> <p><code>G_list</code> - a list of <code>K</code> adjacency matrices for each estimated graph.
+</p>
+</li>
+<li> <p><code>Theta</code> - a list of <code>K</code> estimated covariance matrices (when stability selection is disabled).
+</p>
+</li>
+<li> <p><code>BIC</code> – a number, value of Bayesian information criterion for resulting graphs (when stability selection is disabled).
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">{
+K &lt;- 3
+p &lt;- 50
+n &lt;- 20
+data &lt;- generateData_rewire(K = K, p = p, n = n, ncores = 1, verbose = FALSE)
+G_list_true &lt;- data$Graphs
+X &lt;- data$Data
+true_degrees &lt;- rowSums(G_list_true[[1]])
+cut &lt;- sort(true_degrees, decreasing = TRUE)[ceiling(p * 0.03)]
+apriori_hubs &lt;- ifelse(true_degrees &gt;= cut, 10, 1)
+W &lt;- constructWeights(apriori_hubs, K = K)
+res &lt;- jewel(X, lambda1 = 0.25, W = W, verbose = FALSE)
+}
+</code></pre>
+
+
+</div>

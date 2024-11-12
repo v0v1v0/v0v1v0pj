@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_eqdb_csv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read the csv of the earthquake database</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#stable"><img src="../help/figures/lifecycle-stable.svg" alt="[Stable]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_eqdb_csv(path, show_metadata = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>local file path to earthquake record file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_metadata</code></td>
+<td>
+<p>logical. If <em>FALSE</em>, returns only the values
+observed at each location.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a <code>tbl</code> object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://www.data.jma.go.jp/svd/eqdb/data/shindo/index.html">https://www.data.jma.go.jp/svd/eqdb/data/shindo/index.html</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">read_eqdb_csv(system.file("dummy/eqdb.csv", package = "jmastats"))
+</code></pre>
+
+
+</div>

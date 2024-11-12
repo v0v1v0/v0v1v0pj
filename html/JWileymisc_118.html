@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>winsorizor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Winsorize at specified percentiles</h2>
+
+<h3>Description</h3>
+
+<p>Simple function winsorizes data at the specified percentile.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">winsorizor(d, percentile, values, na.rm = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>A vector, matrix, data frame, or data table to be winsorized</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>percentile</code></td>
+<td>
+<p>The percentile bounded by [0, 1] to winsorize data at.
+If a data frame or matrix is provided for the data, this should have the
+same length as the number of columns, or it will be repeated for all.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>If values are specified, use these instead of calculating by percentiles.
+Should be a data frame with columns named “low”, and “high”.
+If a data frame or matrix is provided for the data, there should be as many rows
+for values to winsorize at as there are columns in the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.rm</code></td>
+<td>
+<p>A logical whether to remove NAs.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>winsorized data. Attributes are included to list the exact values
+(for each variable, if a data frame or matrix) used to winsorize
+at the lower and upper ends.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">dev.new(width = 10, height = 5)
+par(mfrow = c(1, 2))
+hist(as.vector(eurodist), main = "Eurodist")
+hist(winsorizor(as.vector(eurodist), .05), main = "Eurodist with lower and upper\n5% winsorized")
+
+library(data.table)
+dat &lt;- data.table(x = 1:5)
+dat[, y := scale(1:5)]
+winsorizor(dat$y, .01)
+
+## make a copy of the data table
+winsorizor(dat, .01)
+
+winsorizor(mtcars, .01)
+
+winsorizor(matrix(1:9, 3), .01)
+
+rm(dat) # clean up
+</code></pre>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>has_bars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Utilities for formula random effects structure</h2>
+
+<h3>Description</h3>
+
+<p>Utilities for formula random effects structure
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">has_bars(x, type = c("both", "single", "double"))
+
+find_bars(x)
+
+no_bars(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A formula object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>One of <code>"both"</code>, <code>"single"</code>, or <code>"double"</code>. Defaults to <code>"both"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A modified formula object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">has_bars(y ~ x)
+has_bars(y ~ x + (x | g))
+has_bars(y ~ x + (x | g), type = "double")
+
+find_bars(y ~ x)
+find_bars(y ~ x + (x | g))
+
+no_bars(y ~ x)
+no_bars(y ~ x + (x | g))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DerivSplines</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Derivatives and Integrals of B-splines and Natural Cubic splines </h2>
+
+<h3>Description</h3>
+
+<p>Numerical derivatives and integrals of functions <code>bs()</code> and <code>ns()</code> at their first argument.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dns(x, df = NULL, knots = NULL, intercept = FALSE, 
+    Boundary.knots = range(x), eps = 1e-03)
+
+dbs(x, df = NULL, knots = NULL, intercept = FALSE, 
+    Boundary.knots = range(x), eps = 1e-03)
+
+ins(x, df = NULL, knots = NULL, intercept = FALSE, 
+    Boundary.knots = range(x), from = 0, weight.fun = NULL, 
+    integrand.fun = NULL, ...)
+
+ibs(x, df = NULL, knots = NULL, intercept = FALSE, 
+    Boundary.knots = range(x), from = 0, weight.fun = NULL, 
+    integrand.fun = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, df, knots, intercept, Boundary.knots</code></td>
+<td>
+<p>see the help pages of functions <code>ns()</code> and <code>bs()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>a numeric scalar denoting the step length for the central difference approximation, which
+calculates the derivative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>a numeric scalar denoting the lower limit of the integral.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weight.fun</code></td>
+<td>
+<p>a function to be applied as weights.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>integrand.fun</code></td>
+<td>
+<p>a function to be applied in the integrand.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>extra arguments passed to <code>weight.fun</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an object of class <code>dns</code>, <code>dbs</code>, <code>ins</code> or <code>ibs</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+</div>

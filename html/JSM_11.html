@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmodelTMObject</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitted jmodelTM Object</h2>
+
+<h3>Description</h3>
+
+<p>An object returned by the <code>jmodelTM</code> function, inheriting from class <code>jmodelTM</code> and representing a fitted joint model for survival and longitudinal data. Objects of this class have methods for the generic functions <code>AIC</code>, <code>BIC</code>, <code>logLik</code>, <code>print</code>, <code>summary</code>, and <code>vcov</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The following components must be included in a legitimate <code>jmodelTM</code> object.
+</p>
+<table><tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>a list with the estimated parameters. The list is consist of the following components:</p>
+</td>
+</tr></table>
+<dl>
+<dt>beta</dt>
+<dd>
+<p>the vector of estimated coefficients for the fixed effects in the linear mixed-effects model.</p>
+</dd>
+<dt>phi</dt>
+<dd>
+<p>the vector of estimated coefficients for the covariates other than the covariate associated with the longitudinal process in the survival model.</p>
+</dd>
+<dt>alpha</dt>
+<dd>
+<p>the estimated coefficient for the covariate associated with the longitudinal process in the survival model.</p>
+</dd>
+<dt>Ysigma</dt>
+<dd>
+<p>the estimated measurement error standard deviation for the linear mixed-effects model.</p>
+</dd>
+<dt>BSigma</dt>
+<dd>
+<p>the estimated variance-covariance matrix of the random effects.</p>
+</dd>
+<dt>lamb</dt>
+<dd>
+<p>a numeric matrix with two columns: the first column contains the unique observed survival times in ascending order; the second column contains the corresponding estimated baseline hazard values.</p>
+</dd>
+</dl>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Vcov</code></td>
+<td>
+<p>the variance-covariance matrix evaluated at the estimated parameter values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logLik</code></td>
+<td>
+<p>the log-likelihood (the joint likelihood) value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>est.bi</code></td>
+<td>
+<p>the estimated values for the random effects</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>a list containing an image of the <code>jmodelTM</code> call that produced the object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numIter</code></td>
+<td>
+<p>the number of iterations used in the EM algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence</code></td>
+<td>
+<p>the convergence indicator: if <code>"failure"</code>, usually more iterations are required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>the value of the <code>control</code> argument passed to <code>jmodelTM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time.SE</code></td>
+<td>
+<p>the CPU time used to compute the standard error estimates, i.e. the time use to compute the variance-covariance matrix for the parameter estimates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>the total number of repeated measurements for the longitudinal outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the number of sample units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>the censoring indicator: 0 denotes censored survival time; 1 denotes observed survival time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>the transformation parameter used for the survival model.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+Pantelis Z. Hadjipantelis <a href="mailto:pantelis@ucdavis.edu">pantelis@ucdavis.edu</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmodelTM</code>
+</p>
+
+
+</div>

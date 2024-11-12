@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>param_summary_format</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Format a data frame of summary statistics</h2>
+
+<h3>Description</h3>
+
+<p>This functions nicely formats a data frame of parameter summary
+statistics and is designed to be used with the param_summary()
+function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">param_summary_format(d, digits = getOption("digits"), pretty = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>A data frame of the parameter summary statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>Number of digits to round to for printing</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pretty</code></td>
+<td>
+<p>Logical value whether prettified values should be returned.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A formatted data.table of summary statistics or a formated
+vector (if <code>pretty = TRUE</code>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+xsum &lt;- do.call(rbind, apply(matrix(rnorm(100*10), ncol = 10),
+  2, param_summary))
+rownames(xsum) &lt;- letters[1:10]
+param_summary_format(xsum)
+param_summary_format(xsum, pretty = TRUE)
+
+rm(xsum)
+</code></pre>
+
+
+</div>

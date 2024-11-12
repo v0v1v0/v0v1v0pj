@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jointVIP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>create jointVIP object</h2>
+
+<h3>Description</h3>
+
+<p>This is creates the jointVIP object &amp; check inputs
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_jointVIP(treatment, outcome, covariates, pilot_df, analysis_df)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>treatment</code></td>
+<td>
+<p>string denoting the name of the treatment variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outcome</code></td>
+<td>
+<p>string denoting the name of the outcome variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariates</code></td>
+<td>
+<p>vector of strings or list denoting column names of interest</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pilot_df</code></td>
+<td>
+<p>data.frame of the pilot data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>analysis_df</code></td>
+<td>
+<p>data.frame of the analysis data</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a jointVIP object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data &lt;- data.frame(year = rnorm(50, 200, 5),
+                   pop = rnorm(50, 1000, 500),
+                   gdpPercap = runif(50, 100, 1000),
+                   trt = rbinom(50, 1, 0.5),
+                   out = rnorm(50, 1, 0.2))
+# random 20 percent of control as pilot data                  
+pilot_sample_num = sample(which(data$trt == 0),
+                          length(which(data$trt == 0)) *
+                          0.2)
+pilot_df = data[pilot_sample_num, ]
+analysis_df = data[-pilot_sample_num, ]
+treatment = "trt"
+outcome = "out"
+covariates = names(analysis_df)[!names(analysis_df)
+                                %in% c(treatment, outcome)]
+new_jointVIP = create_jointVIP(treatment = treatment,
+                               outcome = outcome,
+                               covariates = covariates,
+                               pilot_df = pilot_df,
+                               analysis_df = analysis_df)
+
+</code></pre>
+
+
+</div>

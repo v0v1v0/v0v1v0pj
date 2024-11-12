@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>rocUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>rocUI: shiny module UI for roc analysis</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for roc analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">rocUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Shiny module UI for roc analysis
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for roc analysis
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+library(ggplot2)
+library(pROC)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      rocUI("roc")
+    ),
+    mainPanel(
+      plotOutput("plot_roc"),
+      tableOutput("cut_roc"),
+      ggplotdownUI("roc"),
+      DTOutput("table_roc")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(data1))
+
+  out_roc &lt;- callModule(rocModule, "roc",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$plot_roc &lt;- renderPlot({
+    print(out_roc()$plot)
+  })
+
+  output$cut_roc &lt;- renderTable({
+    print(out_roc()$cut)
+  })
+
+  output$table_roc &lt;- renderDT({
+    datatable(out_roc()$tb,
+      rownames = F, editable = F, extensions = "Buttons",
+      caption = "ROC results",
+      options = c(jstable::opt.tbreg("roctable"), list(scrollX = TRUE))
+    )
+  })
+}
+</code></pre>
+
+
+</div>

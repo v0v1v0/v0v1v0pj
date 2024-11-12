@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.dynLong</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot a <code>dynLong</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Plots the conditional longitudinal expectations for a
+<em>new</em> subject calculated using the <code>dynLong</code> function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'dynLong'
+plot(x, main = NULL, xlab = NULL, ylab = NULL, grid = TRUE, estimator, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>dynLong</code> calculated by the
+<code>dynLong</code> function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>an overall title for the plot: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>a title for the x [time] axis: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>a character vector of the titles for the <em>K</em> longitudinal
+outcomes y-axes: see <code>title</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>adds a rectangular grid to an existing plot: see
+<code>grid</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>a character string that can take values <code>mean</code> or
+<code>median</code> to specify what prediction statistic is plotted from an
+objecting inheritting of class <code>dynSurv</code>. Default is
+<code>estimator='median'</code>. This argument is ignored for non-simulated
+<code>dynSurv</code> objects, i.e. those of <code>type='first-order'</code>, as in that
+case a mode-based prediction is plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments; currently limited to <code>lwd</code> and
+<code>cex</code>. See <code>par</code> for details.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A dynamic prediction plot.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos D. Dynamic predictions and prospective accuracy in joint models
+for longitudinal and time-to-event data. <em>Biometrics</em>. 2011;
+<strong>67</strong>: 819–829.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>dynLong</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+
+hvd2 &lt;- droplevels(hvd[hvd$num == 1, ])
+out &lt;- dynLong(fit2, hvd2)
+plot(out, main = "Patient 1")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

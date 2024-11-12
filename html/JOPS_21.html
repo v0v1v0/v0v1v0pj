@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>indiumoxide</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An X-ray diffractogram.</h2>
+
+<h3>Description</h3>
+
+<p>An X-ray diffractogram.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(indiumoxide)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A matrix with two columns:
+</p>
+
+<dl>
+<dt><code>angle</code></dt>
+<dd>
+<p>the angles (degrees) of diffraction</p>
+</dd>
+<dt><code>count</code></dt>
+<dd>
+<p>corresponding photon counts.</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>An X-ray diffractogram of Indium-Tin oxide.
+</p>
+<p>These data have been taken from the source of package <code>Diffractometry</code>,
+which is no longer available from CRAN in binary form.
+</p>
+
+
+<h3>Source</h3>
+
+<p>P.L. Davies, U. Gather, M. Meise, D. Mergel, T. Mildenberger (2008).
+Residual based localization and quantification of peaks in x-ray diffractograms,
+<em>Annals of Applied Statistics</em>, Vol. 2, No. 3, 861-886.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">angle = indiumoxide[,1]
+photon = indiumoxide[,2]
+plot(angle, type = 'l', photon, xlab = 'Angle', ylab = 'Photon count')
+</code></pre>
+
+
+</div>

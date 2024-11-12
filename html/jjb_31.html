@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>max_n</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maxima and Minima <em>n</em> elements</h2>
+
+<h3>Description</h3>
+
+<p>Obtain the Maximum or Minimum <em>n</em> elements from a vector.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">max_n(x, n = 1L)
+
+min_n(x, n = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Data vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of observations to select</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The underlying function sorts the data using <code>base::sort()</code> and then extracts
+out the appropriate n-back or n-forward values.
+</p>
+<p>As a result of the sorting procedure, this is an inefficient function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>vector</code> containing the maximum/minimum of <code class="reqn">n</code> elements.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+x = 1:10
+
+# Defaults to traditional max
+# This is more costly to compute than using the regular max function.
+max_n(x) 
+
+# Retrieve top two observations (highest first)
+max_n(x, 2)
+
+# Missing values have no effect on the sorting procedure
+x[9] = NA
+max_n(x, 3)
+
+# Defaults to traditional min.
+# This is more costly to compute than using the regular min function.
+min_n(x)
+min(x)
+
+# Retrieve bottom two observations (lowest first)
+min_n(x, 2)
+
+# Missing values have no effect on the sorting procedure
+x[2] = NA
+min_n(x, 3)
+</code></pre>
+
+
+</div>

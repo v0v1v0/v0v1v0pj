@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extract_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Score extraction</h2>
+
+<h3>Description</h3>
+
+<p>To extract score variables from <code>QR_matrix</code> or
+<code>mQR_matrix</code> objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">extract_score(
+  x,
+  format_output = c("data.frame", "vector"),
+  weighted_score = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format_output</code></td>
+<td>
+<p>string of characters indicating the output format:
+either a <code>data.frame</code> or a <code>vector</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weighted_score</code></td>
+<td>
+<p>logical indicating whether to extract the weighted
+score (if previously calculated) or the unweighted one.
+By default, the unweighted score is extracted.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For <code>QR_matrix</code> objects, the output is a vector or the
+object <code>NULL</code> if no score was previously calculated.
+For <code>mQR_matrix</code> objects, it is a list of scores (<code>NULL</code>
+elements or vectors).
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>extract_score()</code> returns a data.frame with two column: the
+series name and their score.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Path of matrix demetra_m
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extract the quality report from the demetra_m file
+QR &lt;- extract_QR(demetra_path)
+
+# Compute the score
+QR1 &lt;- compute_score(x = QR, n_contrib_score = 5)
+QR2 &lt;- compute_score(
+    x = QR,
+    score_pond = c(qs_residual_sa_on_sa = 5, qs_residual_sa_on_i = 30,
+                   f_residual_td_on_sa = 10, f_residual_td_on_i = 40,
+                   oos_mean = 30, residuals_skewness = 15, m7 = 25)
+)
+mQR &lt;- mQR_matrix(list(a = QR1, b = QR2))
+
+# Extract score
+extract_score(QR1)
+extract_score(mQR)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jcolors_contin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>continuous palettes of colors for figures</h2>
+
+<h3>Description</h3>
+
+<p>Creates different color palette functions
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jcolors_contin(
+  palette = c("default", "pal2", "pal3", "pal4", "pal10", "pal11", "pal12", "rainbow"),
+  reverse = FALSE,
+  interpolate = c("spline", "linear"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>Character string indicating a palette of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reverse</code></td>
+<td>
+<p>logical value indicating whether the color palette should be reversed. Defaults
+to <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interpolate</code></td>
+<td>
+<p>Character string for color interpolation method.
+"linear" or "spline" interpolation available</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments to be passed to <code>colorRampPalette</code>.
+See <code>colorRampPalette</code> for details</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a function that takes an integer argument (the required number of colors), which
+then returns a character vector of colors
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+colfunc &lt;- jcolors_contin()
+jcols   &lt;- colfunc(1000)
+n       &lt;- length(jcols)
+image(1:n, 1, as.matrix(1:n),
+      col  = jcols,
+      xlab = "", ylab = "",
+      xaxt = "n", yaxt = "n", bty = "n")
+
+</code></pre>
+
+
+</div>

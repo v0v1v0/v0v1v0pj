@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>estat_activate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determine which <code>estat</code> object key to edit.</h2>
+
+<h3>Description</h3>
+
+<p>Determine which <code>estat</code> object key to edit.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">estat_activate(x, pattern, new_name = NULL)
+
+estat_activate_tab(x, new_name = NULL)
+
+estat_activate_time(x, new_name = NULL)
+
+estat_activate_area(x, new_name = NULL)
+
+estat_activate_cat(x, n, new_name = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>estat</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pattern</code></td>
+<td>
+<p>Pattern to look for.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new_name</code></td>
+<td>
+<p>New column name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A category number.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The <code>estat</code> object which the selected key is active.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">estat_activate_tab(estat_census_2020)
+estat_activate_cat(estat_census_2020, 1)
+estat_activate_area(estat_census_2020)
+estat_activate_time(estat_census_2020)
+</code></pre>
+
+
+</div>

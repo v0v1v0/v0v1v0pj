@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotCI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence Interval Plot</h2>
+
+<h3>Description</h3>
+
+<p>Plots multiple confidence intervals on the same graph,
+and determines the proportion of confidence intervals containing
+the true population mean.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotCI(CI, mu = NULL, plot.midpoints = TRUE, 
+       col = c("black", "red", "darkgreen", "purple"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>CI</code></td>
+<td>
+<p>N by 2 matrix or 2 by N matrix consisting of N two-sided confidence intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>Numeric; the population mean, and is <code>NULL</code> if unknown.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plot.midpoints</code></td>
+<td>
+<p>Logical; plots the midpoints of the confidence intervals if <code>TRUE</code> (default);
+otherwise, does not plot the midpoints.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>A vector of size four, specifying the colors of the line representing population mean, 
+confidence intervals not containing the population mean, confidence intervals containing the population mean,
+and the sample means, respectively.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The title of the graph states the proportion of the confidence intervals
+containing the true population mean, when the population mean is not <code>NULL</code>. </p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>CI.t.test</code> </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Plot fifty 90% confidence intervals, each based on 13 observations from a 
+#    Normal( mean=70, sd=10 ) distribution.
+
+plotCI( replicate( 50, t.test( rnorm( 13, 70, 10 ), conf.level=0.9 )$conf.int ), 70 )
+</code></pre>
+
+
+</div>

@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quality report objects</h2>
+
+<h3>Description</h3>
+
+<p><code>mQR_matrix()</code> and <code>QR_matrix()</code> are creating one (or several)
+quality report. The function
+<code>is.QR_matrix()</code> and <code>is.mQR_matrix()</code> are functions to test
+whether an object is a quality report or a list of quality reports.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">QR_matrix(modalities = NULL, values = NULL, score_formula = NULL)
+
+mQR_matrix(x = list(), ...)
+
+is.QR_matrix(x)
+
+is.mQR_matrix(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>modalities</code></td>
+<td>
+<p>a <code>data.frame</code> containing the output variables'
+modalities (Good, Bad, etc.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>values</code></td>
+<td>
+<p>a <code>data.frame</code> containing the output variables' values
+(test p-values, test statistics, etc.) Therefore, the values data frame can
+contain more variables than the data frame <code>modalities</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>score_formula</code></td>
+<td>
+<p>the formula used to calculate the series score (if
+defined).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> object, a <code>mQR_matrix</code> object
+or a list of <code>QR_matrix</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>objects of the same type as <code>x</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A<code>QR_matrix</code> object is a list of three items:
+</p>
+
+<ul>
+<li> <p><code>modalities</code>, a <code>data.frame</code> containing a set of categorical
+variables (by default: Good, Uncertain, Bad, Severe).
+</p>
+</li>
+<li> <p><code>values</code>, a <code>data.frame</code> containing the values corresponding to
+the <code>modalities</code> indicators (i.e. p-values, statistics, etc.), as well
+as variables for which a modality cannot be defined (e.g. the series
+frequency, the ARIMA model, etc).
+</p>
+</li>
+<li> <p><code>score_formula</code> contains the formula used to calculate the series
+score (once the calculus is done).
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p><code>QR_matrix()</code> creates and returns a <code>QR_matrix</code> object.
+<code>mQR_matrix()</code> creates and returns a <code>mQR_matrix</code> object
+(ie. a list of <code>QR_matrix</code> objects). <code>is.QR_matrix()</code> and
+<code>is.mQR_matrix()</code> return Boolean values (<code>TRUE</code> or <code>FALSE</code>).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+
+
+</div>

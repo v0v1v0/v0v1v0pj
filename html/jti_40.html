@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mpd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Maximal Prime Decomposition</h2>
+
+<h3>Description</h3>
+
+<p>Find the maximal prime decomposition and its associated junction tree
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mpd(x, save_graph = TRUE)
+
+## S3 method for class 'matrix'
+mpd(x, save_graph = TRUE)
+
+## S3 method for class 'cpt_list'
+mpd(x, save_graph = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Either a neighbor matrix or a <code>cpt_list</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>save_graph</code></td>
+<td>
+<p>Logical indicating if the moralized graph should be kept.
+Useful when <code>x</code> is a <code>cpt_list</code> object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>- <code>prime_ints</code>: a list with the prime components,
+- <code>flawed</code>: indicating which prime components that are triangulated
+- <code>jt_collect</code>: the MPD junction tree prepared for collecting
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(igraph)
+el &lt;- matrix(c(
+"A", "T",
+"T", "E",
+"S", "L",
+"S", "B",
+"L", "E",
+"E", "X",
+"E", "D",
+"B", "D"),
+ nc = 2,
+ byrow = TRUE
+)
+
+g &lt;- igraph::graph_from_edgelist(el, directed = FALSE)
+A &lt;- igraph::as_adjacency_matrix(g, sparse = FALSE)
+mpd(A)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>permute_by_predictor</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Permute data while respecting grouping structure(s) of observations</h2>
+
+<h3>Description</h3>
+
+<p>Permute data while respecting grouping structure(s) of observations
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">permute_by_predictor(
+  jlmer_spec,
+  predictors,
+  predictor_type = c("guess", "between_participant", "within_participant"),
+  n = 1L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jlmer_spec</code></td>
+<td>
+<p>Data prepped for jlmer from <code>make_jlmer_spec()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predictors</code></td>
+<td>
+<p>A vector of terms from the model. If multiple, the must form the levels of one predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predictor_type</code></td>
+<td>
+<p>Whether the predictor is <code>"between_participant"</code> or <code>"within_participant"</code>. Defaults to <code>"guess"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of permuted samples of the data to generate. Defaults to <code>1L</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A long dataframe of permuted re-samples with <code>.id</code> column representing replication IDs.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+# Example data setup
+chickweights_df &lt;- ChickWeight
+chickweights_df &lt;- chickweights_df[chickweights_df$Time &lt;= 20, ]
+chickweights_df$DietInt &lt;- as.integer(chickweights_df$Diet)
+head(chickweights_df)
+
+# Example 1: Spec object using the continuous `DietInt` predictor
+chickweights_spec1 &lt;- make_jlmer_spec(
+  formula = weight ~ 1 + DietInt,
+  data = chickweights_df,
+  subject = "Chick", time = "Time"
+)
+chickweights_spec1
+
+# Shuffling `DietInt` values guesses `predictor_type = "between_participant"`
+reset_rng_state()
+spec1_perm1 &lt;- permute_by_predictor(chickweights_spec1, predictors = "DietInt")
+# This calls the same shuffling algorithm for CPA in Julia, so counter is incremented
+get_rng_state()
+
+# Shuffling under shared RNG state reproduces the same permutation of the data
+reset_rng_state()
+spec1_perm2 &lt;- permute_by_predictor(chickweights_spec1, predictors = "DietInt")
+identical(spec1_perm1, spec1_perm2)
+
+# Example 2: Spec object using the multilevel `Diet` predictor
+chickweights_spec2 &lt;- make_jlmer_spec(
+  formula = weight ~ 1 + Diet,
+  data = chickweights_df,
+  subject = "Chick", time = "Time"
+)
+chickweights_spec2
+
+# Levels of a category are automatically shuffled together
+reset_rng_state()
+spec2_perm1 &lt;- permute_by_predictor(chickweights_spec2, predictors = "Diet2")
+reset_rng_state()
+spec2_perm2 &lt;- permute_by_predictor(chickweights_spec2, predictors = c("Diet2", "Diet3", "Diet4"))
+identical(spec2_perm1, spec2_perm2)
+
+
+
+
+</code></pre>
+
+
+</div>

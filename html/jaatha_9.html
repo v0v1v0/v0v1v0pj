@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jaatha_stat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a summary statistic for Jaatha</h2>
+
+<h3>Description</h3>
+
+<p>This function creates summary statistics for Jaatha models. A summary
+statistic consists primarily of a function that calculates the statistic
+from the simulation results. Jaatha primarily supports Poisson distributed
+summary statistics, but can also transform summary statistics that follow
+a different distribution in approximately Poisson distributed statistics.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_jaatha_stat(name, calc_func, poisson = TRUE, breaks = c(0.1, 0.5, 0.9))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>The name of the summary statistic</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calc_func</code></td>
+<td>
+<p>The function that summarizes the simulation data. Must take
+two arguments. The first is the simulated data, and the second are
+options that can be calculated from the real data. Ignoring the second 
+argument in the function body should be fine in most situations. The 
+function must return a numeric vector if <code>poisson = TRUE</code>, and can
+also return a numeric matrix if <code>poisson = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>poisson</code></td>
+<td>
+<p>If <code>TRUE</code>, it is assumed that the summary statistic
+values are (at least approximately) independent and Poisson distributed.
+If it is set to <code>FALSE</code>, the statistic is transformed into an approximately
+Poisson distributed array using a binning approach. See "Transformation
+of non Poisson distributed statistics" for details. If any summary
+statistic is only approximately Poisson distributed, Jaatha is a
+composite-likelihood method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>The probabilities for the quantiles that are used for binning
+the data. See the section on non Poisson distributed summary statistics
+for details.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The summary statistic. Indented for being used with
+<code>create_jaatha_model</code>.
+</p>
+
+
+<h3>Transformation of non Poisson distributed statistics</h3>
+
+<p>To transform a statistic into approximately Poisson distributed values,
+we first calculate the empirical quantiles of the real data for the 
+probabilities given in <code>breaks</code>. These are used as break points for
+divining the range of the statistic into disjunct intervals. We then count
+who many of the values for the simulated data fall into each intervals, and
+use this counts as summary statistic. The counts are multinomial 
+distributed, and should be close to the required Poisson distribution in 
+most cases.
+</p>
+
+
+</div>

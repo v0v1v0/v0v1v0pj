@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>autowrap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Use automatic wrapper for julia type.</h2>
+
+<h3>Description</h3>
+
+<p><code>autowrap</code> tells 'JuliaCall' to use automatic wrapper for julia type.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">autowrap(type, fields = NULL, methods = c())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the julia type to wrap.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fields</code></td>
+<td>
+<p>names of fields to be included in the wrapper.
+If the value is NULL, then every julia fields will be included in the wrapper.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>methods</code></td>
+<td>
+<p>names of methods to be overloaded for the wrapper.</p>
+</td>
+</tr>
+</table>
+</div>

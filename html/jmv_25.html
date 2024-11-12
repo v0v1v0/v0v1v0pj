@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>propTestN</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Proportion Test (N Outcomes)</h2>
+
+<h3>Description</h3>
+
+<p>The X² Goodness of fit test (not to be confused with the X² test of 
+independence), tests the Null hypothesis that the proportions of 
+observations match some expected proportions. If the p-value is low, this 
+suggests that the Null hypothesis is false, and that the true proportions 
+are different to those tested.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">propTestN(data, var, counts = NULL, expected = FALSE, ratio = NULL,
+  formula)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>the variable of interest in <code>data</code> (not necessary when
+using a formula, see the examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>counts</code></td>
+<td>
+<p>the counts in <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expected</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), whether expected
+counts should be displayed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ratio</code></td>
+<td>
+<p>a vector of numbers: the expected proportions</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>(optional) the formula to use, see the examples</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$props</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the proportions </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$tests</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$props$asDF</code>
+</p>
+<p><code>as.data.frame(results$props)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('HairEyeColor')
+dat &lt;- as.data.frame(HairEyeColor)
+
+propTestN(formula = Freq ~ Eye, data = dat, ratio = c(1,1,1,1))
+
+#
+#  PROPORTION TEST (N OUTCOMES)
+#
+#  Proportions
+#  --------------------------------
+#    Level    Count    Proportion
+#  --------------------------------
+#    Brown      220         0.372
+#    Blue       215         0.363
+#    Hazel       93         0.157
+#    Green       64         0.108
+#  --------------------------------
+#
+#
+#  X² Goodness of Fit
+#  -----------------------
+#    X²     df    p
+#  -----------------------
+#    133     3    &lt; .001
+#  -----------------------
+#
+
+</code></pre>
+
+
+</div>

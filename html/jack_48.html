@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ZonalQR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of quaternionic zonal polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a quaternionic (or symplectic) zonal polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ZonalQR(x, lambda, algorithm = "DK")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric or complex vector or bigq vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>the algorithm used, either <code>"DK"</code> (Demmel-Koev)
+or <code>"naive"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric or complex scalar or a <code>bigq</code> rational number.
+</p>
+
+
+<h3>References</h3>
+
+<p>F. Li, Y. Xue. <em>Zonal polynomials and hypergeometric
+functions of quaternion matrix argument</em>.
+Comm. Statist. Theory Methods, 38 (8), 1184-1206, 2009
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ZonalQPolR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lambda &lt;- c(2,2)
+ZonalQR(c(3,1), lambda)
+ZonalQR(c(gmp::as.bigq(3),gmp::as.bigq(1)), lambda)
+##
+x &lt;- c(3,1)
+ZonalQR(x, c(1,1)) + ZonalQR(x, 2) # sum(x)^2
+ZonalQR(x, 3) + ZonalQR(x, c(2,1)) + ZonalQR(x, c(1,1,1)) # sum(x)^3
+</code></pre>
+
+
+</div>

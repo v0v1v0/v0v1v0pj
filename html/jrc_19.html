@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sendCommand</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Send a command to a web page</h2>
+
+<h3>Description</h3>
+
+<p><code>sendCommand</code> sends JavaScript code through the selected WebSocket connection and evaluates it on the specified
+web page. Use JavaScript function <code>jrc.sendCommand</code> to send R code from the web page
+and evaluate it in the current R session. All commands send to R from the server will be evaluated
+only after authorization in the currently running R session (see <code>authorize</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sendCommand(command, sessionId = NULL, wait = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>command</code></td>
+<td>
+<p>A line (or several lines separated by <code>\n</code>) of JavaScript code. This code
+will be directly evaluated on the web page. No R-side syntax check is performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>An ID of the session to which the command should be sent. Can also be a vector of multiple session IDs.
+If <code>NULL</code>, the command will be sent to all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wait</code></td>
+<td>
+<p>If <code>wait &gt; 0</code>, after sending the message, R will wait for a reply for a given number of seconds. 
+For this time (or until the reply is received), execution of other commands will be halted. Any incoming message 
+from the session will be considered as a reply.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Each opened page gets its own environment, where all the commands are evaluated. Any changes
+made with the usual assignment operator <code>&lt;-</code> will be limited to this page-specific environment. The changes
+are still saved, but can be accessed only with <code>getSessionVariable</code> function. To make changes outside
+of the page-specific environment use <code>&lt;&lt;-</code> instead.
+</p>
+<p>In JavaScript one should use <code>windows.varibleName = "SomeValue"</code>
+instead of <code>varibleName = "SomeValue"</code>, in order to make the variable accessible outside of the
+current <code>sendCommand</code> call.
+</p>
+<p>This function is a wrapper around <code>sendCommand</code> method of class <code>Session</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>authorize</code>, <code>sendData</code>, <code>sendHTML</code>, <code>callFunction</code>,
+<code>openPage</code>, <code>getSessionIds</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+## Not run: 
+# to run this example an installed web browser is required
+k &lt;- 0
+openPage()
+sendCommand(paste0("button = document.createElement('input');",
+              "button.type = 'button';",
+              "button.addEventListener('click', function() {jrc.sendCommand('k &lt;&lt;- k + 1')});", 
+              "button.value = '+1';",
+              "document.body.appendChild(button);", collapse = "\n"))
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

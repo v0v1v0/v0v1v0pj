@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jstree-shiny</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Shiny bindings for jstree</h2>
+
+<h3>Description</h3>
+
+<p>Output and render functions for using <code>jstree</code> within
+Shiny applications and interactive Rmd documents. See examples with
+<code>jstreeExample</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jstreeOutput(outputId, width = "100%", height = "auto")
+
+renderJstree(expr, env = parent.frame(), quoted = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>outputId</code></td>
+<td>
+<p>output variable to read from</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width, height</code></td>
+<td>
+<p>must be a valid CSS unit (like <code>'100%'</code>,
+<code>'400px'</code>, <code>'auto'</code>) or a number, which will be coerced to a
+string and have <code>'px'</code> appended</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>an expression that generates a <code>jstree</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>env</code></td>
+<td>
+<p>the environment in which to evaluate <code>expr</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quoted</code></td>
+<td>
+<p>logical, whether <code>expr</code> is a quoted expression
+(with <code>quote()</code>); this is useful if you want to save an expression
+in a variable</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>jstreeOutput</code> returns an output element that can be included
+in a Shiny UI definition, and <code>renderJstree</code> returns a
+<code>shiny.render.function</code> object that can be included in a Shiny server
+definition.
+</p>
+
+
+<h3>Shiny values</h3>
+
+<p>If the <code>outputId</code> is called <code>"ID"</code> for example, you have four
+or seven available Shiny <code>input</code> values in the server:
+<code>input[["ID"]]</code> contains the tree with the node fields <code>text</code>
+and <code>data</code> only, <code>input[["ID_full"]]</code> contains the full tree,
+<code>input[["ID_selected"]]</code> contains the selected nodes,
+<code>input[["ID_selected_paths"]]</code> is like <code>input[["ID_selected"]]</code>
+except that it provides the paths to the selected nodes instead of only
+the values of their text field. This makes four Shiny values always
+present. There are three additional Shiny values if you have set
+<code>checkboxes=TRUE</code> in the <code>jstree</code> command:
+<code>input[["ID_checked"]]</code> contains the checked nodes,
+<code>input[["ID_checked_paths"]]</code> provides the paths to the checked
+nodes. If you have set <code>checkboxes=TRUE</code> and
+<code>checkWithText=TRUE</code> (the default), then these two additional
+Shiny values are useless because 'checked' is the same as 'selected' in
+this situation. Try <code>jstreeExample("checkWithText")</code>. Finally, the
+seventh Shiny value that is provided when <code>checkboxes=TRUE</code> is
+<code>input[["ID_checked_tree"]]</code>. It is like <code>input[["ID_checked"]]</code>
+except that it returns the hierarchy, in other words it provides the
+checked nodes with their parent(s).
+</p>
+
+
+</div>

@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>doRBS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run RBS segmentation</h2>
+
+<h3>Description</h3>
+
+<p>High-level function for multivariate recursive binary (RBS) segmentation
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">doRBS(Y, K, stat = NULL, ..., verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A <code>n*p</code> signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The number of change points to find</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stat</code></td>
+<td>
+<p>A vector containing the names or indices of the columns of
+<code>Y</code> to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments to be passed to 'segmentByRBS'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around the lower-level segmentation function
+<code>segmentByRBS</code>. It can be run on p-dimensional,
+piecewise-constant data in order to defined a set of candidate change
+points. It is recommended to prune this list of candidates using dynamic
+programming (<code>pruneByDP</code>), combined with a selection of the best
+number of change points. The <code>jointSeg</code> function provides a
+convenient wrapper for performing segmentation, pruning and model selection.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of the same structure as the output of
+<code>segmentByRBS</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Gey, S., &amp; Lebarbier, E. (2008). Using CART to Detect Multiple
+Change Points in the Mean for Large Sample.
+http://hal.archives-ouvertes.fr/hal-00327146/
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>PSSeg</code>, <code>pruneByDP</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+p &lt;- 2
+trueK &lt;- 10
+len &lt;- 5e4
+sim &lt;- randomProfile(len, trueK, 1, p)
+Y &lt;- sim$profile
+K &lt;- 2*trueK
+res &lt;- doRBS(Y, K)
+getTpFp(res$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+cols &lt;- rep(2, K)
+cols[1:trueK] &lt;- 3
+par(mfrow=c(p,1))
+for (ii in 1:p) {
+    plot(Y[, ii], pch=19, cex=0.2)
+    abline(v=res$bkp[1:trueK], col= cols)
+    abline(v=sim$bkp, col=8, lty=2)
+}
+
+## NA:s in one dimension at a true breakpoint
+jj &lt;- sim$bkp[1]
+Y[jj-seq(-10, 10), p] &lt;- NA
+res2 &lt;- doRBS(Y, K)
+getTpFp(res2$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+## NA:s in both dimensions at a true breakpoint
+Y[jj-seq(-10, 10), ] &lt;- NA
+res3 &lt;- doRBS(Y, K)
+getTpFp(res3$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+</code></pre>
+
+
+</div>

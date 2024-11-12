@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>survIDINRI_helper</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>survIDINRI_helper: Helper function for IDI.INF.OUT in survIDINRI packages</h2>
+
+<h3>Description</h3>
+
+<p>Helper function for IDI.INF.OUT in survIDINRI packages
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">survIDINRI_helper(
+  var.event,
+  var.time,
+  list.vars.ind,
+  t,
+  data,
+  dec.auc = 3,
+  dec.p = 3,
+  id.cluster = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>var.event</code></td>
+<td>
+<p>event</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.time</code></td>
+<td>
+<p>time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>list.vars.ind</code></td>
+<td>
+<p>list of independent variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.auc</code></td>
+<td>
+<p>digits for AUC, Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.p</code></td>
+<td>
+<p>digits for p value, Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.cluster</code></td>
+<td>
+<p>cluster variable if marginal model, Default: NULL</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Helper function for IDI.INF.OUT in survIDINRI packages
+</p>
+
+
+<h3>Value</h3>
+
+<p>IDI, NRI
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>data.table</code>
+<code>model.matrix</code>
+<code>coxph</code>
+<code>Surv</code>
+<code>IDI.INF.OUT</code>
+<code>IDI.INF</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># library(survival)
+# survIDINRI_helper("status", "time", list.vars.ind = list("age", c("age", "sex")),
+#                  t = 365, data = lung)
+</code></pre>
+
+
+</div>

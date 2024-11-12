@@ -1,0 +1,153 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstraw_alstructure</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Non-Parametric Jackstraw for ALStructure</h2>
+
+<h3>Description</h3>
+
+<p>Test association between the observed variables and population structure estimated by ALStructure.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstraw_alstructure(
+  dat,
+  r,
+  FUN,
+  r1 = NULL,
+  s = NULL,
+  B = NULL,
+  covariate = NULL,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a genotype matrix with <code>m</code> rows as variables and <code>n</code> columns as observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>a number of significant LFs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>a function to ALStructure</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>a numeric vector of LFs of interest (implying you are not interested in all <code>r</code> LFs).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>s</code></td>
+<td>
+<p>a number of “synthetic” null variables. Out of <code>m</code> variables, <code>s</code> variables are independently permuted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a number of resampling iterations. There will be a total of <code>s*B</code> null statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covariate</code></td>
+<td>
+<p>a data matrix of covariates with corresponding <code>n</code> observations (do not include an intercept term).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical specifying to print the computational progress.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function uses ALStructure from Cabreros and Storey (2019). A deviation <code>dev</code> in logistic regression
+(the full model with <code>r</code> LFs vs. the intercept-only model) is used to assess association.
+This function also requires the Bioconductor <code>gcatest</code> package to be installed.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>jackstraw_alstructure</code> returns a list consisting of
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>p.value</code></td>
+<td>
+<p><code>m</code> p-values of association tests between variables and their LFs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>obs.stat</code></td>
+<td>
+<p><code>m</code> observed deviances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>null.stat</code></td>
+<td>
+<p><code>s*B</code> null deviances</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Neo Christopher Chung <a href="mailto:nchchung@gmail.com">nchchung@gmail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Chung and Storey (2015) Statistical significance of variables driving systematic variation in high-dimensional data. Bioinformatics, 31(4): 545-554 <a href="https://doi.org/10.1093/bioinformatics/btu674">doi:10.1093/bioinformatics/btu674</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jackstraw_pca jackstraw
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# load genotype data to analyze (not shown) into this variable
+X
+# choose the number of ancestries
+r &lt;- 3
+
+# load alstructure package (install from https://github.com/StoreyLab/alstructure)
+library(alstructure)
+# define the function this way, a function of the genotype matrix only
+FUN &lt;- function(x) t( alstructure(x, d_hat = r)$Q_hat )
+
+# calculate p-values (and other statistics) for each SNP
+out &lt;- jackstraw_alstructure( X, r, FUN )
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tpower</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a truncated power function.</h2>
+
+<h3>Description</h3>
+
+<p>Compute a truncated power function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tpower(x, knot, p)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector on which the basis is calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knot</code></td>
+<td>
+<p>a scalar giving the truncation point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a scalar power for the basis, e.g. <code>p = 3</code> for cubic TPF.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a vector with the truncated power function.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Basis  on grid
+x = seq(0, 4, length = 500)
+knots = 0:3
+Y = outer(x, knots, tpower, 1)
+matplot(x, Y, type ='l', lwd = 2, xlab = 'x', ylab = '',
+main ='Linear TPF basis')
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>theoryRowpenUpperBoundDiagA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Penalty Parameter for Covariance Estimation Based on Theory</h2>
+
+<h3>Description</h3>
+
+<p>This function returns a theoretically-guided choice of
+the glasso penalty parameter, treating the column
+correlation matrix as the identity.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">theoryRowpenUpperBoundDiagA(B, n1, n2, m)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>row covariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n1</code></td>
+<td>
+<p>sample size of group one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n2</code></td>
+<td>
+<p>sample size of group two.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>number of columns of the data matrix (where the
+data matrix is of size n by m, with n = n1 + n2).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a theoretically guided choice of the
+glasso penalty parameter.
+</p>
+
+
+<h3>References</h3>
+
+<p>Joint mean and covariance estimation with unreplicated matrix-variate data
+Michael Hornstein, Roger Fan, Kerby Shedden, Shuheng Zhou
+(2018).  Joint mean and covariance estimation with
+unreplicated matrix-variate data.  Journal of the American
+Statistical Association
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Define sample sizes
+n1 &lt;- 10
+n2 &lt;- 10
+n &lt;- n1 + n2
+m &lt;- 2e3
+# Row covariance matrix (autoregressive of order 1)
+B &lt;- outer(1:n, 1:n, function(x, y) 0.8^abs(x - y))
+# Calculate theoretically guided Gemini penalty.
+rowpen &lt;- theoryRowpenUpperBoundDiagA(B, n1, n2, m)
+print(rowpen)
+</code></pre>
+
+
+</div>

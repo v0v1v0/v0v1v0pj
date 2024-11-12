@@ -1,0 +1,246 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>prederrJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction Errors for Joint Models</h2>
+
+<h3>Description</h3>
+
+ 
+<p>Using the available longitudinal information up to a starting time point, this function computes an estimate 
+of the prediction error of survival at a horizon time point based on joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">prederrJM(object, newdata, Tstart, Thoriz, ...)
+
+## S3 method for class 'JMbayes'
+prederrJM(object, newdata, Tstart, Thoriz, 
+    lossFun = c("square", "absolute"), interval = FALSE, idVar = "id", 
+    simulate = FALSE, M = 100, ...)
+
+## S3 method for class 'mvJMbayes'
+prederrJM(object, newdata, Tstart, Thoriz, 
+    lossFun = c("square", "absolute"), interval = FALSE, idVar = "id", 
+    M = 100, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>JMbayes</code> or <code>mvJMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data frame that contains the longitudinal and covariate information for the subjects for which prediction 
+of survival probabilities is required. The names of the variables in this data frame must be the same as in the data frames that
+were used to fit the linear mixed effects model (using <code>lme()</code>) and the survival model (using <code>coxph()</code>)
+that were supplied as the two first argument of <code>jointModelBayes</code>. In addition, this data frame should contain a variable 
+that identifies the different subjects (see also argument <code>idVar</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>numeric scalar denoting the time point up to which longitudinal information is to be used to derive predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>numeric scalar denoting the time point for which a prediction of the survival status is of interest; <code>Thoriz</code> mast be later than <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lossFun</code></td>
+<td>
+<p>either the options <code>"absolute"</code> or <code>"square"</code> (default),  or a user-specified loss function. 
+As the names suggest, 
+when <code>lossFun = "absolute"</code> the loss function is <code class="reqn">L(x) = |x|</code>, whereas when <code>lossFun = "square"</code> the loss function is 
+<code class="reqn">L(x) = x^2</code>. If a user-specified function is supplied, this should have a single argument and be vectorized.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interval</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the weighted prediction error in the interval <code>[Tstart, Thoriz]</code> is calculated, while
+if <code>FALSE</code> the prediction error at time <code>Thoriz</code> is calculated using the longitudinal information up to time <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idVar</code></td>
+<td>
+<p>the name of the variable in <code>newdata</code> that identifies the different subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simulate</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a Monte Carlo approach is used to estimate survival probabilities. If <code>FALSE</code>,
+a first order estimator is used instead. See <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>a numeric scalar denoting the number of Monte Carlo samples; see <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Based on a fitted joint model (represented by <code>object</code>) and using the data supplied in argument <code>newdata</code>, this function
+computes the following estimate of the prediction: </p>
+<p style="text-align: center;"><code class="reqn">PE(u | t) = \{R(t)\}^{-1} \sum_{i: T_i \geq s} I(T_i \geq u) 
+  L\{1 - Pr(T_i &gt; u | T_i &gt; t, \tilde{y}_i(t), x_i)\}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">+ \delta_i I(T_i &lt; u) L\{0 - Pr(T_i &gt; u | T_i &gt; t, \tilde{y}_i(t), x_i)\}</code>
+</p>
+ 
+<p style="text-align: center;"><code class="reqn">+ (1 - \delta_i) I(T_i &lt; u) [S_i(u \mid T_i, \tilde{y}_i(t)) L\{1 - Pr(T_i &gt; u | T_i &gt; t, \tilde{y}_i(t), x_i)\}</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">+ \{1 - S_i(u \mid T_i, \tilde{y}_i(t))\} L\{0 - Pr(T_i &gt; u | T_i &gt; t, \tilde{y}_i(t), x_i)\}],</code>
+</p>
+
+<p>where <code class="reqn">R(t)</code> denotes the number of subjects at risk at time <code class="reqn">t = </code> <code>Tstart</code>, <code class="reqn">\tilde{y}_i(t) = \{y_i(s), 0 \leq s \leq t\}</code> denotes the available 
+longitudinal measurements up to time <code class="reqn">t</code>, <code class="reqn">T_i</code> denotes the observed event time for subject <code class="reqn">i</code>, <code class="reqn">\delta_i</code> is the event indicator, 
+<code class="reqn">s</code> is the starting time point <code>Tstart</code> up to which the longitudinal information is used, and <code class="reqn">u &gt; s</code> is the horizon time point <code>Thoriz</code>.
+Function <code class="reqn">L(.)</code> is the loss function that can be the absolute value (i.e., <code class="reqn">L(x) = |x|</code>), the squared value (i.e., <code class="reqn">L(x) = x^2</code>), 
+or a user-specified function. The probabilities <code class="reqn">Pr(T_i &gt; u | T_i &gt; t, \tilde{y}_i(t), x_i)</code> are calculated by <code>survfitJM</code>.
+</p>
+<p>When <code>interval</code> is set to <code>TRUE</code>, then function <code>prederrJM</code> computes the integrated prediction error in the interval 
+<code class="reqn">(u,t) =</code> <code>(Tstart, Thoriz)</code> defined as </p>
+<p style="text-align: center;"><code class="reqn">IPE(u | t) = \sum_{i: t \leq T_i \leq u} w_i(T_i) PE(T_i | t),</code>
+</p>
+<p> where 
+</p>
+<p style="text-align: center;"><code class="reqn">w_i(T_i) = \frac{\delta_i G(T_i) / G(t)}{\sum_{i: t \leq T_i \leq u} \delta_i G(T_i) / G(t)},</code>
+</p>
+<p> with <code class="reqn">G(.)</code> denoting
+the Kaplan-Meier estimator of the censoring time distribution.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>prederrJM</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>prederr</code></td>
+<td>
+<p>a numeric scalar denoting the estimated prediction error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr</code></td>
+<td>
+<p>a numeric scalar denoting the number of subjects at risk at time <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>a copy of the <code>Tstart</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>a copy of the <code>Thoriz</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interval</code></td>
+<td>
+<p>a copy of the <code>interval</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classObject</code></td>
+<td>
+<p>the class of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameObject</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lossFun</code></td>
+<td>
+<p>a copy of the <code>lossFun</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Henderson, R., Diggle, P. and Dobson, A. (2002). Identification and efficacy of 
+longitudinal markers for survival. <em>Biostatistics</em> <b>3</b>, 33–50.
+</p>
+<p>Rizopoulos, D. (2016). The R package JMbayes for fitting joint models for longitudinal and
+time-to-event data using MCMC. <em>Journal of Statistical Software</em> <b>72(7)</b>, 1–45.
+doi:10.18637/jss.v072.i07.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for 
+longitudinal and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfitJM</code>, <code>aucJM</code>, <code>dynCJM</code>, <code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# we construct the composite event indicator (transplantation or death)
+pbc2$status2 &lt;- as.numeric(pbc2$status != "alive")
+pbc2.id$status2 &lt;- as.numeric(pbc2.id$status != "alive")
+
+# we fit the joint model using splines for the subject-specific 
+# longitudinal trajectories and a spline-approximated baseline
+# risk function
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 2), data = pbc2,
+    random = ~ ns(year, 2) | id)
+survFit &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+jointFit &lt;- jointModelBayes(lmeFit, survFit, timeVar = "year")
+
+# prediction error at year 10 using longitudinal data up to year 5 
+prederrJM(jointFit, pbc2, Tstart = 5, Thoriz = 10)
+prederrJM(jointFit, pbc2, Tstart = 5, Thoriz = 6.5, interval = TRUE)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

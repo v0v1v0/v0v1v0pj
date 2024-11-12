@@ -1,0 +1,168 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.rocJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Method for rocJM Objects</h2>
+
+<h3>Description</h3>
+
+<p>Produces plots of ROC curves and the corresponding areas under the curve.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'rocJM'
+plot(x, which = NULL, type = c("ROC", "AUC"), 
+  ndt = "all", main = NULL, caption = NULL, xlab = NULL, 
+  ylab = NULL, ask = NULL, legend = FALSE, lx = NULL, ly = NULL, 
+  lty = NULL, col = NULL, cex.caption = 0.8, cex.axis = NULL, 
+  cex.lab = NULL, cex.main = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>rocJM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>a numeric vector specifying for which generic subjects to produce the plots. 
+This refers to the different cases identified by the <code>idVar</code> argument in <code>rocJM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>a character string specifying which plot to produce the ROC curves or the areas under
+the ROC curves.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ndt</code></td>
+<td>
+<p>the character string <code>"all"</code> or a numeric scalar specifying for which time windows 
+(<code>dt</code> argument of <code>rocJM</code>) to produce the plots.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>a character string specifying the title in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption</code></td>
+<td>
+<p>a character string specifying a caption in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>a character string specifying the x-axis label in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>a character string specifying the y-axis label in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, the user is asked before each plot, see <code>par()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a legend is included in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lx,ly</code></td>
+<td>
+<p>the <code>x</code> and <code>y</code> arguments of <code>legend()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty</code></td>
+<td>
+<p>what types of lines to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>which colors to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.caption</code></td>
+<td>
+<p>font size for the caption.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis, cex.lab, cex.main</code></td>
+<td>
+<p>graphical parameters; see <code>par</code> for more info.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>extra graphical parameters passed to <code>plot()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for 
+longitudinal and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>rocJM</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(sqrt(CD4) ~ obstime + obstime:(drug + AZT + prevOI + gender), 
+    random = ~ obstime | patient, data = aids)
+fitSURV &lt;- coxph(Surv(Time, death) ~ drug + AZT + prevOI + gender, 
+    data = aids.id, x = TRUE)
+fit.aids &lt;- jointModel(fitLME, fitSURV, timeVar = "obstime", 
+    method = "piecewise-PH-aGH")
+
+ND &lt;- aids[aids$patient == "7", ]
+roc &lt;- rocJM(fit.aids, dt = c(2, 4, 8), ND, idVar = "patient")
+plot(roc, lwd = 2, legend = TRUE)
+plot(roc, type = "AUC")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

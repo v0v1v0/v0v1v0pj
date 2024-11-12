@@ -1,0 +1,219 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_mod</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scale variables in fitted regression models</h2>
+
+<h3>Description</h3>
+
+<p><code>scale_mod</code> (previously known as <code>scale_lm</code>) takes fitted regression models
+and scales all
+predictors by dividing each by 1 or 2 standard deviations (as chosen by the
+user).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_mod(model, ...)
+
+## Default S3 method:
+scale_mod(
+  model,
+  binary.inputs = "0/1",
+  n.sd = 1,
+  center = TRUE,
+  scale.response = FALSE,
+  center.only = FALSE,
+  scale.only = FALSE,
+  data = NULL,
+  vars = NULL,
+  apply.weighted.contrasts = getOption("jtools-weighted.contrasts", FALSE),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A regression model of type <code>lm</code>, <code>glm</code>,
+<code>svyglm</code>, or lme4::merMod. Other model types
+may work as well but are not tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed on to <code>gscale()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary.inputs</code></td>
+<td>
+<p>Options for binary variables. Default is <code>"0/1"</code>;
+<code>"0/1"</code> keeps original scale; <code>"-0.5,0.5"</code> rescales 0 as -0.5
+and
+1 as 0.5; <code>center</code> subtracts the mean; and <code>full</code> treats them
+like other continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.sd</code></td>
+<td>
+<p>How many standard deviations should you divide by for
+standardization? Default is 1, though some prefer 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Default is <code>TRUE</code>. If <code>TRUE</code>, the predictors are
+also
+mean-centered. For binary predictors, the <code>binary.inputs</code> argument
+supersedes this one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.response</code></td>
+<td>
+<p>Should the response variable also be rescaled? Default
+is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center.only</code></td>
+<td>
+<p>Rather than actually scale predictors, just mean-center
+them.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.only</code></td>
+<td>
+<p>A logical value indicating whether you would like to scale
+the values, but not mean-center them.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>If you provide the data used to fit the model here, that data
+frame is used to re-fit the model instead of the <code>stats::model.frame()</code>
+of the model. This is particularly useful if you have variable
+transformations or polynomial terms specified in the formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>A character vector of variable names that you want to be
+scaled. If NULL, the default, it is all predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>apply.weighted.contrasts</code></td>
+<td>
+<p>Factor variables cannot be scaled, but you
+can set the contrasts such that the intercept in a regression model will
+reflect the true mean (assuming all other variables are centered). If set
+to TRUE, the argument will apply weighted effects coding to all factors.
+This is similar to the R default effects coding, but weights according to
+how many observations are at each level. An adapted version of
+<code>contr.wec()</code> from the <code>wec</code> package is used to do this. See
+that package's documentation and/or Grotenhuis et al. (2016) for more
+info.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function will scale all continuous variables in a regression
+model for ease of interpretation, especially for those models that have
+interaction terms. It can also mean-center all of them as well, if
+requested.
+</p>
+<p>The scaling happens on the input data, not the terms themselves. That
+means interaction terms are still properly calculated because they are
+the product of standardized predictors, not a standardized product of
+predictors.
+</p>
+<p>This function re-estimates the model, so for large models one should
+expect a runtime equal to the first run.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The functions returns a re-fitted model object, inheriting
+from whichever class was supplied.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jacob Long <a href="mailto:jacob.long@sc.edu">jacob.long@sc.edu</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Bauer, D. J., &amp; Curran, P. J. (2005). Probing interactions in fixed and
+multilevel regression: Inferential and graphical techniques.
+<em>Multivariate Behavioral Research</em>, <em>40</em>(3), 373-400.
+</p>
+<p>Cohen, J., Cohen, P., West, S. G., &amp; Aiken, L. S. (2003). <em>Applied
+multiple regression/correlation analyses for the behavioral sciences</em> (3rd
+ed.). Mahwah, NJ: Lawrence Erlbaum Associates, Inc.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>sim_slopes</code> performs a simple slopes analysis.
+</p>
+<p><code>interact_plot</code> creates attractive, user-configurable plots of
+interaction models.
+</p>
+<p>standardization, scaling, and centering tools
+<code>center()</code>,
+<code>center_mod()</code>,
+<code>gscale()</code>,
+<code>standardize()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+fit &lt;- lm(formula = Murder ~ Income * Illiteracy,
+          data = as.data.frame(state.x77))
+fit_scale &lt;- scale_mod(fit)
+fit_scale &lt;- scale_mod(fit, center = TRUE)
+
+# With weights
+fitw &lt;- lm(formula = Murder ~ Income * Illiteracy,
+           data = as.data.frame(state.x77),
+           weights = Population)
+fitw_scale &lt;- scale_mod(fitw)
+fitw_scale &lt;- scale_mod(fitw, center = TRUE, binary.input = "0/1")
+
+# With svyglm
+if (requireNamespace("survey")) {
+library(survey)
+data(api)
+dstrat&lt;-svydesign(id=~1,strata=~stype, weights=~pw, data=apistrat, fpc=~fpc)
+regmodel &lt;- svyglm(api00~ell*meals,design=dstrat)
+regmodel_scale &lt;- scale_mod(regmodel)
+regmodel_scale &lt;- scale_mod(regmodel, binary.input = "0/1")
+}
+
+</code></pre>
+
+
+</div>

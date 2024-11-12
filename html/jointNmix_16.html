@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot-methods-Nmix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Methods for Nmix objects</h2>
+
+<h3>Description</h3>
+
+<p>Plots residuals vs. fitted values or the conditional distributions of the abundances for each site</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'uniNmix'
+plot(x, posterior = FALSE, layout, sites, restype, ...)
+## S3 method for class 'jointNmix'
+plot(x, posterior = FALSE, layout, sites, restype, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>posterior</code></td>
+<td>
+<p>logical. If TRUE, plots the conditional distributions of the abundances. If FALSE, plots residuals vs. fitted values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout</code></td>
+<td>
+<p>two-number vector indicating the partition of the graphical window in rows and columns, respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sites</code></td>
+<td>
+<p>index of sites to plot the conditional distribution of the abundances. If left unspecified, all sites are plotted</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>restype</code></td>
+<td>
+<p>type of residuals to be plotted. Defaults to "ordinary"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>not used</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>References</h3>
+
+<p>Moral, R.A., Hinde, J., Demétrio, C.G.B., Reigada, C. and Godoy, W.A.C. (submitted) Models for jointly estimating abundance of two unmarked site-associated species subject to imperfect detection.</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Nmix</code>
+<code>jointNmix</code>
+</p>
+
+
+</div>

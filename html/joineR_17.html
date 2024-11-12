@@ -1,0 +1,256 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulate data from a joint model</h2>
+
+<h3>Description</h3>
+
+<p>This function simulates longitudinal and time-to-event data from
+a joint model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simjoint(
+  n = 500,
+  model = c("intslope", "int", "quad"),
+  sepassoc = FALSE,
+  ntms = 5,
+  b1 = c(1, 1, 1, 1),
+  b2 = c(1, 1),
+  gamma = c(1, 0.1),
+  sigu,
+  vare = 0.01,
+  theta0 = -3,
+  theta1 = 1,
+  censoring = TRUE,
+  censlam = exp(-3),
+  truncation = FALSE,
+  trunctime = max(ntms),
+  gridstep = 0.01
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the number of subjects to simulate data for.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>a character string specifying the type of latent association.
+This defaults to the intercept and slope version as seen in Wulfsohn and
+Tsiatis (1997). For association via the random intercept only, choose
+<code>model = "int"</code>, whereas for a quadratic association, use <code>model
+= "quad"</code>. Computing times are commensurate with the type of association
+structure chosen.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sepassoc</code></td>
+<td>
+<p>logical value: if <code>TRUE</code> then the joint model is fitted
+with separate association, see <code>Details</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ntms</code></td>
+<td>
+<p>the maximum number of (discrete) time points to simulate repeated
+longitudinal measurements at.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b1</code></td>
+<td>
+<p>a vector specifying the coefficients of the fixed effects in the
+longitudinal sub-model. The order in each row is intercept, a continuous
+covariate, covariate, a binary covariate, the measurement time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b2</code></td>
+<td>
+<p>a vector of <code>length = 2</code> specifying the coefficients for the
+time-to-event baseline covariates, in the order of a continuous covariate
+and a binary covariate.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>a vector of specifying the latent association parameter(s) for
+the longitudinal outcome. It must be of length 1 if <code>sepassoc =
+FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigu</code></td>
+<td>
+<p>a positive-definite matrix specifying the variance-covariance
+matrix. If <code>model = "int"</code>, the matrix has dimension <code>dim = c(1,
+1)</code>; if <code>model = "intslope"</code>, the matrix has dimension <code>dim =
+c(2, 2)</code>; else if <code>model = "quad"</code>, the matrix has dimension <code>dim
+= c(3, 3)</code>. If <code>D = NULL</code> (default), an identity matrix is assumed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vare</code></td>
+<td>
+<p>a numeric value specifying the residual standard error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta0, theta1</code></td>
+<td>
+<p>parameters controlling the failure rate. See Details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>censoring</code></td>
+<td>
+<p>logical: if <code>TRUE</code>, includes an independent censoring
+time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>censlam</code></td>
+<td>
+<p>a scale (<code class="reqn">&gt;0</code>) parameter for an exponential distribution
+used to simulate random censoring times for when <code>censoring = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>truncation</code></td>
+<td>
+<p>logical: if <code>TRUE</code>, adds a truncation time for a
+maximum event time in the case of <code>model = "int"</code> or <code>model =
+"intslope"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trunctime</code></td>
+<td>
+<p>a truncation time for use when <code>truncation = TRUE</code>. For
+<code>model = "quad"</code>, <code>trunctime</code> is required, and defaults to
+<code>max(ntms)</code> if not specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gridstep</code></td>
+<td>
+<p>the step-size for the grid used to simulate event times when
+<code>model = "quad"</code>. Default is <code>gridstep = 0.01</code>. See Details.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function <code>simjoint</code> simulates data from a joint model, 
+similar to that performed in Henderson et al. (2000). It works by first 
+simulating longitudinal data for all possible follow-up times using random 
+draws for the multivariate Gaussian random effects and residual error 
+terms. Data can be simulated assuming either random-intercepts only 
+(<code>model = "int"</code>) in each of the longitudinal sub-models; 
+random-intercepts and random-slopes (<code>model = "intslope"</code>); or 
+quadratic random effects structures (<code>model = "quad"</code>). The failure 
+times are simulated from proportional hazards time-to-event models, using 
+the following methodologies:
+</p>
+
+<dl>
+<dt><code>model = "int"</code></dt>
+<dd>
+<p>The baseline hazard function is specified to be
+an exponential distribution with
+</p>
+<p style="text-align: center;"><code class="reqn">\lambda_0(t) = \exp{\theta_0}.</code>
+</p>
+
+<p>Simulation is conditional on known time-independent effects, and the
+methodology of Bender et al. (2005) is used to simulate the failure time.</p>
+</dd>
+<dt><code>model = "intslope"</code></dt>
+<dd>
+<p>The baseline hazard function is specified
+to be a Gompertz distribution with
+</p>
+<p style="text-align: center;"><code class="reqn">\lambda_0(t) = \exp{\theta_0 + \theta_1 t}.</code>
+</p>
+
+<p>In the usual representation of the Gompertz distribution, <code class="reqn">\theta_1</code> is
+the shape parameter, and the scale parameter is equivalent to
+<code class="reqn">\exp(\theta_0)</code>. Simulation is conditional on on a predictable
+(linear) time-varying process, and the methodology of Austin (2012) is used
+to simulate the failure time.</p>
+</dd>
+<dt><code>model="quad"</code></dt>
+<dd>
+<p>The baseline hazard function is specified as per
+<code>model="intslope"</code>. The integration technique used for the above two
+cases is complex in quadratic (and higher order) models, therefore we use a
+different approach. We note that hazard function can be written as
+</p>
+<p style="text-align: center;"><code class="reqn">\lim_{dt \rightarrow 0} \lambda(t) dt = \lim_{dt \rightarrow 0}
+  P[t \le T \le t + dt | T \ge t].</code>
+</p>
+
+<p>In the simulation routine the parameter <code>gridstep</code> acts as <code class="reqn">dt</code> in
+that we choose a nominally small value, which multiplies the hazard and
+this scaled hazard is equivalent to the probability of having an event in
+the interval <code class="reqn">(t, t + dt)</code>, or equivalently <code class="reqn">(t, t +
+  </code><code>gridstep</code><code class="reqn">)</code>. A vector of possible times is set up for each
+individual, ranging from 0 to <code>trunctime</code> in increments of <code class="reqn">dt</code> (or
+<code>gridstep</code>). The failure probability at each time is compared to an
+independent <code class="reqn">U(0, 1)</code> draw, and if the probability does not exceed the
+random draw then the survival time is set as <code>trunctime</code>, otherwise it
+is the generated time from the vector of candidate times. The minimum of
+these candidate times (i.e. when we deem the event to have first happened)
+is taken as the survival time.</p>
+</dd>
+</dl>
+<h3>Value</h3>
+
+<p>A list of 2 <code>data.frame</code>s: one recording the requisite
+longitudinal outcomes data, and one recording the time-to-event data.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Pete Philipson
+</p>
+
+
+<h3>References</h3>
+
+<p>Austin PC. Generating survival times to simulate Cox proportional hazards
+models with time-varying covariates. <em>Stat Med.</em> 2012; <strong>31(29)</strong>:
+3946-3958.
+</p>
+<p>Bender R, Augustin T, Blettner M. Generating survival times to simulate Cox
+proportional hazards models. <em>Stat Med.</em> 2005; <strong>24</strong>: 1713-1723.
+</p>
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>:
+465-480.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simjoint(10, sepassoc = TRUE)
+</code></pre>
+
+
+</div>

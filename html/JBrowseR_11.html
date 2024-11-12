@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>text_index</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create configuration for a JBrowse 2 text index</h2>
+
+<h3>Description</h3>
+
+<p>Creates the necessary configuration string for an adapter to a text index for
+gene name search in the browser.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">text_index(ix_uri, ixx_uri, meta_uri, assembly)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ix_uri</code></td>
+<td>
+<p>the URI for the ix file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ixx_uri</code></td>
+<td>
+<p>the URI for the ixx file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meta_uri</code></td>
+<td>
+<p>the URI for the JSON metadata file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>assembly</code></td>
+<td>
+<p>the assembly associated with the text index</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Note: this function currently only supports aggregate indices.
+</p>
+<p>For more information on JBrowse 2 text indices, visit:
+<a href="https://jbrowse.org/jb2/docs/config_guide/#text-searching">https://jbrowse.org/jb2/docs/config_guide/#text-searching</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>a character vector with the JSON text index adapter.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">text_index(
+"https://jbrowse.org/genomes/hg19/trix/hg19.ix",
+"https://jbrowse.org/genomes/hg19/trix/hg19.ixx",
+"https://jbrowse.org/genomes/hg19/trix/meta.json",
+"hg19"
+)
+</code></pre>
+
+
+</div>

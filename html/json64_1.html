@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>j_decode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Decoding Function</h2>
+
+<h3>Description</h3>
+
+<p>Used to decode a base64 string. By default the function expects an encoded json.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">j_decode(str, json = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>str</code></td>
+<td>
+<p>The string to be decoded.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>json</code></td>
+<td>
+<p>Defaults to TRUE. If TRUE, the function expects str to be an encoded json and will return a data.frame or list, depending on JSON structure. If FALSE, the function will return an string.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Decode an encoded string:
+
+str &lt;- "SGVsbG8gV29ybGQh"
+j_decode(str, json = FALSE)
+
+# Decode an encoded json:
+
+encoded_json &lt;- "W3sibXNnIjogIkhlbGxvIFdvcmxkISIsICJqc29uIjogdHJ1ZX1d"
+j_decode(encoded_json)
+</code></pre>
+
+
+</div>

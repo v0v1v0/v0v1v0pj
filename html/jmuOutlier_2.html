@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CI.t.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Student's t-Confidence Interval with Finite Population Correction</h2>
+
+<h3>Description</h3>
+
+<p>Performs two-sided confidence interval on population mean, allowing for a finite population correction.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CI.t.test(x, conf.level = 0.95, fpc = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A nonempty numeric vector of data values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.level</code></td>
+<td>
+<p>Confidence level of the interval, and should be between 0 and 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fpc</code></td>
+<td>
+<p>The finite population correction, and should be between 0 and 1.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>fpc</code> is typically defined as <code class="reqn">1-n/N</code>, where <code>n</code> is the sample size,
+and <code>N</code> is the population size, for simple random sampling without replacement.
+When sampling with replacement, set <code>fpc=1</code> (default).</p>
+
+
+<h3>Value</h3>
+
+<p>A confidence interval for the population mean.</p>
+
+
+<h3>Note</h3>
+
+<p>The definition of <code>fpc</code> is based on the textbook by 
+Scheaffer, Mendenhall, Ott, Gerow (2012), chapter 4.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>References</h3>
+
+<p>Scheaffer, R. L., Mendenhall, W., Ott, R. L., Gerow, K. G. (2012) <em>Elementary Survey Sampling,</em> 7th edition.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>t.test</code> and <code>plotCI</code>. </p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Sample 43 observations from a population of 200 numbers, and compute the 95% confidence interval.
+pop = sqrt(1:200) ; x1 = sample( pop, 43 ) ; print(sort(x1))
+
+CI.t.test( x1, fpc = 1-length(x1)/length(pop) )
+
+# Sample 14 observations from a Normal(mean=50, sd=5) distribution,
+#    and compute the 90% confidence interval.
+x2 = rnorm( 14, 50, 5 ) ; print(sort(x2)) 
+
+CI.t.test( x2, 0.9 )
+</code></pre>
+
+
+</div>

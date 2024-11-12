@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modelCompare</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compare Two Models</h2>
+
+<h3>Description</h3>
+
+<p>Generic function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">modelCompare(model1, model2, ...)
+
+as.modelCompare(x)
+
+is.modelCompare(x)
+
+## S3 method for class 'lm'
+modelCompare(model1, model2, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model1</code></td>
+<td>
+<p>A fitted model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model2</code></td>
+<td>
+<p>A fitted model object to compare to <code>model1</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to specific methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object (e.g., list or a modelCompare object) to
+test or attempt coercing to a modelCompare object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Depends on the method dispatch.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m1 &lt;- lm(mpg ~ qsec * hp, data = mtcars)
+
+m2 &lt;- lm(mpg ~ am, data = mtcars)
+
+modelCompare(m1, m2)
+
+## cleanup
+rm(m1, m2)
+
+## Not run: 
+m3 &lt;- lm(mpg ~ 1, data = mtcars)
+m4 &lt;- lm(mpg ~ 0, data = mtcars)
+modelCompare(m3, m4)
+
+## cleanup
+rm(m3, m4)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,129 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jVaR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Value at Risk Function
+</h2>
+
+<h3>Description</h3>
+
+<p>Compute VaR by many methods.
+</p>
+<p>See the report: Value at Risk.&lt;researchgate.net&gt;
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jVaR(type, Return, Alpha, N_th_day)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Computing method. 
+</p>
+<p>. 'non_adjust_hist': Historical method without any adjustment.
+</p>
+<p>. 'grch11_hist': Historical method with adjustment by Garch(1,1) method.
+</p>
+<p>. 'ewhv_hist': Exponential Weighted method.
+</p>
+<p>. 'ewma_hist': Historical method with adjustment by EWMA method.
+</p>
+<p>. 'kernel_hist': Estimating density function using kernel fitting method.
+</p>
+<p>. 'grch11_kernel_hist': Kernel fitting method apply on return adjusted by Garch(1,1).
+</p>
+<p>. 'ewma_kernel_hist': Kernel fitting method apply on return adjusted by EWMA.
+</p>
+<p>. 'garch11': Garch(1,1) method.
+</p>
+<p>. 'normal': Normal return method.
+</p>
+<p>. 'mle_normal': Normal return method (Estimating by maximum likelihood method).
+</p>
+<p>. 'monte_carlo': Simulation method.   
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Return</code></td>
+<td>
+
+<p>A return series that computed from price series.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Alpha</code></td>
+<td>
+
+<p>Given probability of the event that loss exceeds VaR.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N_th_day</code></td>
+<td>
+
+<p>Time point of VaR computing (...,-1,0,1,...)
+</p>
+<p>. -1 : previous day
+</p>
+<p>.  0 : present
+</p>
+<p>.  1 : next day
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Value at Risk at the time point.
+</p>
+
+
+<h3>Note</h3>
+
+<p>viet-hung.vu@jvn.edu.vn
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Hung Vu
+</p>
+
+
+<h3>References</h3>
+
+<p>Value at Risk.(reserchgate.net)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>https://www.researchgate.net/profile/Vu_Hung4
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(11, 12, 10, 13, 12, 14, 13, 15, 13, 14, 12)
+s &lt;- jReturn(y)
+alpha &lt;- 0.2
+h &lt;- 0
+v &lt;- jVaR('non_adjust_hist',s,alpha,h)
+</code></pre>
+
+
+</div>

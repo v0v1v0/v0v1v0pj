@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_progress</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set/get options for Julia progress bar</h2>
+
+<h3>Description</h3>
+
+<p>Set/get options for Julia progress bar
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_progress(show, width)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>Whether to show the progress bar. You may also pass in a list of <code>"show"</code> and <code>"width"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>width</code></td>
+<td>
+<p>Width of the progress bar. If <code>"auto"</code>, adjusts the progress bar width to fit the console.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Previous values for <code>show</code> and <code>width</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+# Show current progress options
+julia_progress()
+
+# Set options and save previous options
+old_progress_opts &lt;- julia_progress(show = FALSE, width = 100)
+julia_progress()
+
+# Restoring progress settings by passing a list of old options
+old_progress_opts
+julia_progress(old_progress_opts)
+identical(julia_progress(), old_progress_opts)
+
+# Alternatively, reset to default settings using this syntax:
+julia_progress(show = TRUE, width = "auto")
+
+
+
+
+</code></pre>
+
+
+</div>

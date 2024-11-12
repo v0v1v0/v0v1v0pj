@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>durbinH</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>calculate Sortino Ratio of performance over downside risk</h2>
+
+<h3>Description</h3>
+
+<p>durbinH test the serial correlation of a dynamic regression, namely, a time
+series regression with AR(1) terms. It modifies Durbin-Watson statictic.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">durbinH(model,Ly.label="ar1")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>Estimation result object by, for example, dynlm or arima</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Ly.label</code></td>
+<td>
+<p>Label of AR(1) dependent variable</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+  data(macrodata)
+  y=ts(macrodata[,"OECD"],start=c(1961,1),freq=12) #OECD business cycle index
+
+ out1=dynlm::dynlm(y~L(y,1)+season(y)+trend(y))
+ durbinH(out1,Ly.label="L(y, 1)")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Julia-Setup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Julia setup</h2>
+
+<h3>Description</h3>
+
+<p>Julia must be installed separately in order for the <span class="pkg">JuliaConnectoR</span> package to work.
+You can download and install Julia from <a href="https://julialang.org/downloads/">https://julialang.org/downloads/</a>.
+</p>
+
+
+<h3>Details</h3>
+
+
+
+<h4>Setup via the Juliaup installation manager</h4>
+
+<p>If you have installed Julia via Juliaup,
+the Julia installation should be discovered by the <span class="pkg">JuliaConnectoR</span>.
+</p>
+
+
+
+<h4>Juliaup on Windows</h4>
+
+<p>If you have freshly installed Juliaup, start Julia once on the command line.
+This will do the actual installation of the current Julia version.
+Juliaup puts the Julia executable on the system <span class="env">PATH</span>.
+This way, the Julia installation can be detected by the <span class="pkg">JuliaConnectoR</span>.
+</p>
+
+
+
+<h4>Juliaup on Mac</h4>
+
+<p>After the installation of Juliaup, Julia might not be on the system <span class="env">PATH</span>
+but it should be discovered automatically
+if it is installed in the default location, i.e., the <code>.juliaup</code>
+folder in your home directory.
+</p>
+
+
+
+<h4>Setup via Julia binaries</h4>
+
+<p>If you have installed Julia via a binary package or any other method,
+the simplest way to make Julia discoverable is by adding the directory
+containing the Julia executable to the <span class="env">PATH</span> environment variable.
+</p>
+<p>Alternatively, you can set the <span class="env">JULIA_BINDIR</span> environment variable
+to specify the exact directory containing the Julia binary.
+(You can find the correct path to this directory by evaluating the expression
+<code>Sys.BINDIR</code> within Julia.)
+</p>
+<p>If the <span class="env">JULIA_BINDIR</span> variable is set, it takes precedence over
+looking up the system <span class="env">PATH</span>.
+This makes it easy to use a different Julia version
+than the one in your system <span class="env">PATH</span>.
+</p>
+
+
+
+</div>

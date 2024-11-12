@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>geeExp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>geeExp: transform the unit of coefficients (internal function)</h2>
+
+<h3>Description</h3>
+
+<p>Transform the unit of coefficients to "Coeff", "OR" or "RR"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">geeExp(gee.coef, family = "binomial", dec)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>gee.coef</code></td>
+<td>
+<p>geeUni object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>Family: "gaussian", "binomial", "poisson", "quasipoisson", etc..., Default: 'binomial'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>Decimal point</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>The transforemed coefficients(95
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(geepack)
+data(dietox)
+dietox$Cu &lt;- as.factor(dietox$Cu)
+gee.uni &lt;- geeUni("Weight", c("Time", "Cu"),
+  data = dietox, id.vec = dietox$Pig,
+  family = "gaussian", cor.type = "exchangeable"
+)
+gee.exp &lt;- geeExp(gee.uni, "binomial", 2)
+</code></pre>
+
+
+</div>

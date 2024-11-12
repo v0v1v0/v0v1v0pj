@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.survfitJMMLSM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot conditional probabilities for new subjects</h2>
+
+<h3>Description</h3>
+
+<p>Plot conditional probabilities for new subjects. 
+If <code>CompetingRisk = FALSE</code>, print the survival probabilities. 
+Otherwise, print the cumulative incidence probabilities for each failure type.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'survfitJMMLSM'
+plot(
+  x,
+  include.y = FALSE,
+  xlab = NULL,
+  ylab = NULL,
+  xlim = NULL,
+  ylim.long = NULL,
+  ylim.surv = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>x of class <code>survfitJMMLSM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.y</code></td>
+<td>
+<p>include longitudinal responses of this subject versus time. Default is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>X axis label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Y axis label.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+<p>X axis support.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim.long</code></td>
+<td>
+<p>Y axis support for the longitudinal outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim.surv</code></td>
+<td>
+<p>Y axis support for the event / survival probability.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>plots of conditional probabilities over different pre-specified time points for subjects. 
+If single failure type, then survival probabilities will be returned. 
+Otherwise, cumulative incidence probabilities for each failure type will be returned.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Shanpeng Li <a href="mailto:lishanpeng0913@ucla.edu">lishanpeng0913@ucla.edu</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfitJMMLSM</code>
+</p>
+
+
+</div>

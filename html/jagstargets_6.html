@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tar_jags_example_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write an example JAGS model file.</h2>
+
+<h3>Description</h3>
+
+<p>Overwrites the file at <code>path</code> with a built-in example
+JAGS model file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tar_jags_example_file(path = tempfile(pattern = "", fileext = ".jags"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Character of length 1, file path to write the model file.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>NULL</code> (invisibly).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">path &lt;- tempfile(pattern = "", fileext = ".jags")
+tar_jags_example_file(path = path)
+writeLines(readLines(path))
+</code></pre>
+
+
+</div>

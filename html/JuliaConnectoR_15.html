@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juliaFun</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrap a Julia function in an R function</h2>
+
+<h3>Description</h3>
+
+<p>Creates an R function that will call the Julia function with the given name
+when it is called. Like any R function, the returned function can
+also be passed as a function argument to Julia functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juliaFun(name, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>the name of the Julia function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for currying:
+The resulting function will be called using these arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+
+   # Wrap a Julia function and use it
+   juliaSqrt &lt;- juliaFun("sqrt")
+   juliaSqrt(2)
+   # In the following call, the sqrt function is called without
+   # a callback to R because the linked function object is used.
+   juliaCall("map", juliaSqrt, c(1,4,9))
+
+   # may also be used with arguments
+   plus1 &lt;- juliaFun("+", 1)
+   plus1(2)
+   # Results in an R callback (calling Julia again)
+   # because there is no linked function object in Julia.
+   juliaCall("map", plus1, c(1,2,3))
+
+}
+
+
+</code></pre>
+
+
+</div>

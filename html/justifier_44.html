@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>load_justifications</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Load Justifications from a file or multiple files</h2>
+
+<h3>Description</h3>
+
+<p>These function load justifications from the YAML fragments
+in one (<code>load_justifications</code>) or multiple files (<code>load_justifications_dir</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">load_justifications(
+  text = NULL,
+  file = NULL,
+  delimiterRegEx = "^---$",
+  justificationContainer = c("justifier", "justification", "decision", "assertion",
+    "source"),
+  ignoreOddDelimiters = FALSE,
+  encoding = "UTF-8",
+  storeDecisionGraphSvg = TRUE,
+  silent = TRUE
+)
+
+load_justifications_dir(
+  path,
+  recursive = TRUE,
+  extension = "jmd",
+  regex = NULL,
+  justificationContainer = c("justifier", "justification", "decision", "assertion",
+    "source"),
+  delimiterRegEx = "^---$",
+  ignoreOddDelimiters = FALSE,
+  encoding = "UTF-8",
+  silent = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text, file</code></td>
+<td>
+<p>As <code>text</code> or <code>file</code>, you can specify a <code>file</code> to read with
+encoding <code>encoding</code>, which will then be read using <code>base::readLines()</code>. If the
+argument is named <code>text</code>, whether it is the path to an existing file is checked
+first, and if it is, that file is read. If the argument is named <code>file</code>, and it
+does not point to an existing file, an error is produced (useful if calling
+from other functions). A <code>text</code> should be a character vector where every
+element is a line of the original source (like provided by <code>base::readLines()</code>);
+although if a character vector of one element <em>and</em> including at least one
+newline character (<code style="white-space: pre;">⁠\\n⁠</code>) is provided as <code>text</code>, it is split at the newline
+characters using <code>base::strsplit()</code>. Basically, this behavior means that the
+first argument can be either a character vector or the path to a file; and if
+you're specifying a file and you want to be certain that an error is thrown if
+it doesn't exist, make sure to name it <code>file</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delimiterRegEx</code></td>
+<td>
+<p>The regular expression used to locate YAML
+fragments</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>justificationContainer</code></td>
+<td>
+<p>The container of the justifications in the YAML
+fragments. Because only justifications are read that are stored in
+this container, the files can contain YAML fragments with other data, too,
+without interfering with the parsing of the justifications.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignoreOddDelimiters</code></td>
+<td>
+<p>Whether to throw an error (FALSE) or
+delete the last delimiter (TRUE) if an odd number of delimiters is
+encountered.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>encoding</code></td>
+<td>
+<p>The encoding to use when calling <code>readLines()</code>. Set to
+NULL to let <code>readLines()</code> guess.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>storeDecisionGraphSvg</code></td>
+<td>
+<p>Whether to also produce (and return) the SVG
+for the decision graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be silent (TRUE) or informative (FALSE).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>The path containing the files to read.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>recursive</code></td>
+<td>
+<p>Whether to also process subdirectories (<code>TRUE</code>)
+or not (<code>FALSE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extension</code></td>
+<td>
+<p>The extension of the files to read; files with other extensions will
+be ignored. Multiple extensions can be separated by a pipe (<code>|</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regex</code></td>
+<td>
+<p>Instead of specifing an extension, it's also possible to specify a regular
+expression; only files matching this regular expression are read. If specified, <code>regex</code>
+takes precedece over <code>extension</code>,</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>load_justifications_dir</code> simply identifies all files and then calls
+<code>load_justifications</code> for each of them. <code>load_justifications</code> loads the
+YAML fragments containing the justifications using
+<code>yum::load_yaml_fragments()</code> and then parses the justifications
+into a visual representation as a
+ggplot2::ggplot graph and Markdown documents with
+overviews.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object with the ggplot2::ggplot graph stored
+in <code>output$graph</code> and the overview in <code>output$overview</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">exampleMinutes &lt;- 'This is an example of minutes that include
+a source, an assertion, and a justification. For example, in
+the meeting, we can discuss the assertion that sleep deprivation
+affects decision making. We could quickly enter this assertion in
+a machine-readable way in this manner:
+
+---
+assertion:
+  -
+    id: assertion_SD_decision
+    label: Sleep deprivation affects the decision making proces.
+    source:
+      id: source_Harrison
+---
+
+Because it is important to refer to sources, we cite a source as well.
+We have maybe specified that source elsewhere, for example in the
+minutes of our last meeting. That specification may have looked
+like this:
+
+---
+source:
+  -
+    id: source_Harrison
+    label: "Harrison &amp; Horne (2000) The impact of sleep deprivation on decision making: A review."
+    xdoi: "doi:10.1037/1076-898x.6.3.236"
+    type: "Journal article"
+---
+
+We can now refer to these two specifications later on, for
+example to justify decisions we take.
+';
+
+justifier::load_justifications(text=exampleMinutes);
+
+### To load a directory with justifications
+
+examplePath &lt;-
+  file.path(system.file(package="justifier"),
+            'extdata');
+justifier::load_justifications_dir(path=examplePath);
+
+</code></pre>
+
+
+</div>

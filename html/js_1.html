@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coffee_compile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Coffee Script</h2>
+
+<h3>Description</h3>
+
+<p>Compiles coffee script into JavaScript.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coffee_compile(code, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>a string with JavaScript code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional options passed to the compiler</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Hello world
+coffee_compile("square = (x) -&gt; x * x")
+coffee_compile("square = (x) -&gt; x * x", bare = TRUE)
+
+# Simple script
+demo &lt;- readLines(system.file("example/demo.coffee", package = "js"))
+js &lt;- coffee_compile(demo)
+cat(js)
+cat(uglify_optimize(js))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extract_null_cluster_dists</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Construct a null distribution of cluster-mass statistics</h2>
+
+<h3>Description</h3>
+
+<p>Construct a null distribution of cluster-mass statistics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">extract_null_cluster_dists(null_statistics, threshold, binned = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>null_statistics</code></td>
+<td>
+<p>A simulation-by-time-by-predictor 3D array of null (permuted) timewise statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>The threshold value that the statistic must pass to contribute to cluster mass.
+Interpretation differs on the choice of statistic (more below):
+</p>
+
+<ul>
+<li>
+<p> If <code>statistic = "t"</code>, the threshold for t-value (beta/std.err) from the regression model.
+</p>
+</li>
+<li>
+<p> If <code>statistic = "chisq"</code>, the threshold for the p-value of chi-squared statistics from likelihood ratio tests.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binned</code></td>
+<td>
+<p>Whether the data has been aggregated/collapsed into time bins. Defaults to <code>FALSE</code>,
+which requires a cluster to span at least two time points. If <code>TRUE</code>, allows length-1 clusters to exist.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>null_cluster_dists</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>permute_timewise_statistics()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+library(dplyr, warn.conflicts = FALSE)
+
+# Specification object
+spec &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, filter(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec
+
+# Null cluster-mass distributions are derived from the permuted timewise statistics
+reset_rng_state()
+null_statistics &lt;- permute_timewise_statistics(spec, nsim = 100)
+null_cluster_dists &lt;- extract_null_cluster_dists(null_statistics, threshold = 2)
+null_cluster_dists
+
+# Collect as dataframe with `tidy()`
+# - Each simulation contributes one (largest) cluster-mass statistic to the null
+# - When no clusters are found, the `sum_statistic` value is zero
+null_cluster_dists_df &lt;- tidy(null_cluster_dists)
+null_cluster_dists_df
+
+# Changing the `threshold` value changes the shape of the null
+extract_null_cluster_dists(null_statistics, threshold = 1)
+extract_null_cluster_dists(null_statistics, threshold = 3)
+
+
+
+
+</code></pre>
+
+
+</div>

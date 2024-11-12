@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>binMissingValues</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>binMissingValues</h2>
+
+<h3>Description</h3>
+
+<p>Perform binning in order to remove missing values
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">binMissingValues(Y, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A numeric matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ? 
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Some segmentation methods (in particular, GFLars) do not natively handle the 
+situation when some observations have missing values in one or more 
+dimensions. In order to avoid dropping the corresponding observations 
+entirely, <code>binMissingValues</code> bins the signal values of the last complete
+observation before a (range of) observations with missing entries using the 
+<code>binMeans</code> function.
+</p>
+<p>In the specific case when the first row has NA values, the first non-missing 
+entry is replicated in order to make smoothing possible.  This choice is 
+arbitrary but some arbitrary choice is needed in that case.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Currently this function is only used by <code>doGFLars</code> in order
+to make it possible to run GFLars segmentation on SNP array data where most
+markers (on the order of 2/3 to 5/6) have missing values, because of 
+uninformative or missing allelic ratio signals.
+</p>
+<p>The <code>binMissingValues</code> function may be used for other segmentation 
+methods suffering from the same limitation.  However, we emphasize that 
+handling missing values natively in the segmentation method would be a 
+better solution.
+</p>
+<p>Currently this function is only used by <code>doGFLars</code> in order
+to make it possible to run GFLars segmentation on SNP array data where most
+markers (on the order of 2/3 to 5/6) have missing values, because of 
+uninformative or missing allelic ratio signals. The <code>binMissingValues</code>
+function may be used for other segmentation methods suffering from the same
+limitation.  However, we emphasize that handling missing values natively in
+the segmentation method would be a better solution.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Bleakley, K., &amp; Vert, J. P. (2011). The group fused lasso for 
+multiple change-point detection. arXiv preprint arXiv:1106.4199.
+</p>
+<p>Vert, J. P., &amp; Bleakley, K. (2010). Fast detection of multiple 
+change-points shared by many signals using group LARS. Advances in Neural 
+Information Processing Systems, 23, 2343-2351.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+sim &lt;- randomProfile(10, 1, 0.1, 3)
+Y &lt;- sim$profile
+Y[c(4, 8), 2] &lt;- NA
+Y[c(7, 8), 3] &lt;- NA
+
+res &lt;- binMissingValues(Y)
+
+Y &lt;- sim$profile
+Y[1:5, 2] &lt;- NA
+Yb &lt;- binMissingValues(Y)
+
+Y &lt;- sim$profile
+Y[3:5, 2] &lt;- NA
+Yb &lt;- binMissingValues(Y)
+
+</code></pre>
+
+
+</div>

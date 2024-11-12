@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jot_erase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Erase a Note</h2>
+
+<h3>Description</h3>
+
+<p>Erase a Note
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jot_erase(name, pad = jot_active())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>character, name of note to erase. required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pad</code></td>
+<td>
+<p>path to file of pad to write to. default is <code>jot_active()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>path to pad, invisibly
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tf &lt;- tempfile()
+jot_new_pad(tf)
+jot(3, 'example')
+jot_erase('example')
+</code></pre>
+
+
+</div>

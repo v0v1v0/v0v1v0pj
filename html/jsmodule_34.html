@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jsPropensityGadget</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jsPropensityGadget: Shiny Gadget for propensity score analysis.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny Gadget including original/matching/IPTW data, Label info, Table 1, Cox model, Basic/kaplan-meier plot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jsPropensityGadget(data, nfactor.limit = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit for categorical variables, Default: 20</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny Gadget including original/matching/IPTW data, Label info, Table 1, Cox model, Basic/kaplan-meier plot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny Gadget including original/matching/IPTW data, Label info, Table 1, Cox model, Basic/kaplan-meier plot.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>data.table</code>
+<code>matchit</code>,<code>match.data</code>
+<code>cox2.display</code>,<code>svycox.display</code>
+<code>survfit</code>,<code>coxph</code>,<code>Surv</code>
+<code>jskm</code>,<code>svyjskm</code>
+<code>ggsave</code>
+<code>svykm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive()) {
+  jsPropensityGadget(mtcars)
+}
+</code></pre>
+
+
+</div>

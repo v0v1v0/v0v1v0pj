@@ -1,0 +1,201 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reliability</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Reliability Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Reliability Analysis
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reliability(data, vars, alphaScale = TRUE, omegaScale = FALSE,
+  meanScale = FALSE, sdScale = FALSE, corPlot = FALSE,
+  alphaItems = FALSE, omegaItems = FALSE, meanItems = FALSE,
+  sdItems = FALSE, itemRestCor = FALSE, revItems = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>a vector of strings naming the variables of interest in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alphaScale</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide Cronbach's
+alpha</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omegaScale</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide McDonald's
+omega</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meanScale</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the mean</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdScale</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the standard
+deviation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corPlot</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a correlation
+plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alphaItems</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide what the
+Cronbach's alpha would be if the item was dropped</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>omegaItems</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide what the
+McDonald's omega would be if the item was dropped</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meanItems</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide item means</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sdItems</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide item standard
+deviations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itemRestCor</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide item-rest
+correlations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>revItems</code></td>
+<td>
+<p>a vector containing strings naming the varibales that are
+reverse scaled</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$scale</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$items</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$corPlot</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an image </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$meanScoreOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$sumScoreOV</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an output </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$scale$asDF</code>
+</p>
+<p><code>as.data.frame(results$scale)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('iris')
+
+reliability(iris, vars = c('Sepal.Length', 'Sepal.Width', 'Petal.Length', 'Petal.Width'),
+            omegaScale = TRUE)
+
+#
+#  RELIABILITY ANALYSIS
+#
+#  Scale Reliability Statistics
+#  -----------------------------------------
+#             Cronbach's alpha    McDonald's omega
+#  -----------------------------------------
+#    scale           0.708           0.848
+#  -----------------------------------------
+#
+
+</code></pre>
+
+
+</div>

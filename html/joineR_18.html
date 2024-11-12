@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>subset.jointdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subsetting object of class <code>jointdata</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Returns an object of class <code>jointdata</code> which is a subset of
+an original object of class <code>jointdata</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointdata'
+subset(x, subj.subset, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object of class <code>jointdata</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subj.subset</code></td>
+<td>
+<p>vector of subject identifiers, to include in the data 
+subset. This must be a unique vector of patient identifiers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class <code>jointdata</code>, with data only on a subset of
+subjects.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ines Sousa
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(heart.valve)
+heart.surv &lt;- UniqueVariables(heart.valve,
+                              var.col = c("fuyrs", "status"),
+                              id.col = "num")
+heart.long &lt;- heart.valve[, c(1, 4, 5, 7, 8, 9, 10, 11)]
+heart.jd &lt;- jointdata(longitudinal = heart.long, 
+                      survival = heart.surv,
+                      id.col = "num",
+                      time.col = "time")
+take &lt;- heart.jd$survival$num[heart.jd$survival$status == 0]
+heart.jd.cens &lt;- subset(heart.jd, take)
+</code></pre>
+
+
+</div>

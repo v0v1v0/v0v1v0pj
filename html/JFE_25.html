@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>OmegaSharpeRatio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Omega-Sharpe ratio of the return distribution</h2>
+
+<h3>Description</h3>
+
+<p>The Omega-Sharpe ratio is a conversion of the omega ratio to a ranking statistic
+in familiar form to the Sharpe ratio.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">OmegaSharpeRatio(R, MAR = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>an xts, vector, matrix, data frame, timeSeries or zoo object of
+asset returns</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>MAR</code></td>
+<td>
+<p>Minimum Acceptable Return, in the same periodicity as your
+returns</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>To calculate the Omega-Sharpe ration we subtract the target (or Minimum
+Acceptable Returns (MAR)) return from the portfolio return and we divide
+it by the opposite of the Downside Deviation.
+</p>
+<p style="text-align: center;"><code class="reqn">OmegaSharpeRatio(R,MAR) = \frac{r_p - r_t}{\sum^n_{t=1}\frac{max(r_t - r_i, 0)}{n}}</code>
+</p>
+
+<p>where <code class="reqn">n</code> is the number of observations of the entire series
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>References</h3>
+
+<p>Carl Bacon, <em>Practical portfolio performance measurement
+and attribution</em>, second edition 2008, p.95<br>
+See also package <code>PerformanceAnalytics</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+  data(assetReturns)
+	R=assetReturns[, -29]
+  OmegaSharpeRatio(R)
+
+</code></pre>
+
+
+</div>

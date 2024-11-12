@@ -1,0 +1,188 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jenga</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jenga: automatic projections of time features using KNN</h2>
+
+<h3>Description</h3>
+
+<p>Automatic projections of time features using KNN
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jenga(
+  df,
+  seq_len = NULL,
+  smoother = FALSE,
+  k = NULL,
+  method = NULL,
+  kernel = NULL,
+  ci = 0.8,
+  n_windows = 10,
+  mode = NULL,
+  n_sample = 30,
+  search = "random",
+  dates = NULL,
+  error_scale = "naive",
+  error_benchmark = "naive",
+  seed = 42
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>A data frame with time features on columns (numerical or categorical features, but not both).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seq_len</code></td>
+<td>
+<p>Positive integer. Time-step number of the projected sequence</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smoother</code></td>
+<td>
+<p>Logical. Perform optimal smoothing using standard loess (only for numerical features). Default: FALSE</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>Positive integer. Number of neighbors to consider when applying kernel average. Min number is 3. Default: NULL (automatic selection).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>Positive integer. Distance method for calculating neighbors. Possibile options are: "euclidean", "manhattan", "minkowski". Default: NULL (automatic selection).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kernel</code></td>
+<td>
+<p>String. Distribution used to calculate kernel densities. Possible options are: "norm", "cauchy", "unif", "t". Default: NULL (automatic selection).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>Confidence interval. Default: 0.8</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_windows</code></td>
+<td>
+<p>Positive integer. Number of validation tests to measure/sample error. Default: 10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mode</code></td>
+<td>
+<p>String. Sequencing method: deterministic ("segmented"), or non-deterministic ("sampled"). Default: NULL (automatic selection).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_sample</code></td>
+<td>
+<p>Positive integer. Number of samples for grid or random search. Default: 30.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>search</code></td>
+<td>
+<p>String. Two option available: "grid", "random". Default: "random".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dates</code></td>
+<td>
+<p>Date. Vector with dates for time features.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_scale</code></td>
+<td>
+<p>String. Scale for the scaled error metrics. Two options: "naive" (average of naive one-step absolute error for the historical series) or "deviation" (standard error of the historical series). Default: "naive".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>error_benchmark</code></td>
+<td>
+<p>String. Benchmark for the relative error metrics. Two options: "naive" (sequential extension of last value) or "average" (mean value of true sequence). Default: "naive".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Positive integer. Random seed. Default: 42.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This function returns a list including:
+</p>
+
+<ul>
+<li>
+<p> exploration: list of all models, complete with predictions, test metrics, prediction stats and plot
+</p>
+</li>
+<li>
+<p> history: a table with the sampled models, hyper-parameters, validation errors
+</p>
+</li>
+<li>
+<p> best_model: results for the best model, including:
+</p>
+
+<ul>
+<li>
+<p> predictions: min, max, q25, q50, q75, quantiles at selected ci, and different statics for numerical and categorical variables
+</p>
+</li>
+<li>
+<p> testing_errors: training and testing errors for one-step and sequence for each ts feature (different measures for numerical and categorical variables)
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p> time_log
+</p>
+</li>
+</ul>
+<h3>Author(s)</h3>
+
+<p>Giancarlo Vercellino <a href="mailto:giancarlo.vercellino@gmail.com">giancarlo.vercellino@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Useful links:
+</p>
+
+<ul><li> <p><a href="https://rpubs.com/giancarlo_vercellino/jenga">https://rpubs.com/giancarlo_vercellino/jenga</a>
+</p>
+</li></ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">jenga(covid_in_europe[, c(2, 3)], n_sample = 1)
+jenga(covid_in_europe[, c(4, 5)], n_sample = 1)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calib_el</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>An internal function for calibration of weights using empirical likelihood method</h2>
+
+<h3>Description</h3>
+
+<p><code>calib_el</code> performs calibration using empirical likelihood (EL) method. The function is taken from Wu (2005), if algorithm has problem with convergence codes from Zhang, Han and Wu (2022) using <code>constrOptim</code> is used.
+</p>
+<p>In (pseudo) EL the following (pseudo) EL function is maximized
+</p>
+\[\sum_{i \in r} d_i\log(p_i),\]
+<p>under the following constraint
+</p>
+\[\sum_{i \in r} p_i = 1,\]
+<p>with constraints on quantiles (with notation as in Harms and Duchesne (2006))
+</p>
+\[\sum_{i \in r} p_i(a_{i} - \alpha/N) = 0,\]
+<p>where \(a_{i}\) is created using <code>joint_calib_create_matrix</code> function, and possibly means
+</p>
+\[\sum_{i \in r} p_i(x_{i} - \mu_{x}) = 0,\]
+<p>where \(\mu_{x}\) is known population mean of X. For simplicity of notation we assume only one quantile and one mean is known. This can be generalized to multiple quantiles and means.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calib_el(X, d, totals, maxit = 50, tol = 1e-08, eps = .Machine$double.eps, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>matrix of variables for calibration of quantiles and totals (first column should be intercept),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>initial d-weights for calibration (e.g. design-weights),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>totals</code></td>
+<td>
+<p>vector of totals (where 1 element is the population size),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxit</code></td>
+<td>
+<p>a numeric value giving the maximum number of iterations,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the desired accuracy for the iterative procedure,</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+<p>the desired accuracy for computing the Moore-Penrose generalized inverse (see <code>MASS::ginv()</code>),</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments passed to stats::optim via stats::constrOptim.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a vector of empirical likelihood g-weights
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Maciej Beręsewicz based on Wu (2005) and Zhang, Han and Wu (2022)
+</p>
+<script id="MathJax-script" async src="../../mathjaxr/doc/mathjax/es5/tex-chtml-full.js"></script><h3>References</h3>
+
+<p>Wu, C. (2005). Algorithms and R codes for the pseudo empirical likelihood method in survey sampling. Survey Methodology, 31(2), 239 (code is taken from <a href="https://sas.uwaterloo.ca/~cbwu/Rcodes/LagrangeM2.txt">https://sas.uwaterloo.ca/~cbwu/Rcodes/LagrangeM2.txt</a>).
+</p>
+<p>Zhang, S., Han, P., and Wu, C. (2023) Calibration Techniques Encompassing Survey Sampling, Missing Data Analysis and Causal Inference. International Statistical Review, 91: 165–192. https://doi.org/10.1111/insr.12518 (code is taken from Supplementary Materials).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## generate data based on Haziza and Lesage (2016)
+set.seed(123)
+N &lt;- 1000
+x &lt;- runif(N, 0, 80)
+y &lt;- exp(-0.1 + 0.1*x) + rnorm(N, 0, 300)
+p &lt;- rbinom(N, 1, prob = exp(-0.2 - 0.014*x))
+totals_known &lt;- c(N=N, x=sum(x))
+df &lt;- data.frame(x, y, p)
+df_resp &lt;- df[df$p == 1, ]
+df_resp$d &lt;- N/nrow(df_resp)
+res &lt;- calib_el(X = model.matrix(~x, df_resp),
+                d = df_resp$d,
+                totals = totals_known)
+data.frame(known = totals_known, estimated=colSums(res*df_resp$d*model.matrix(~x, df_resp)))
+
+</code></pre>
+
+
+</div>

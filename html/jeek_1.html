@@ -1,0 +1,108 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jeek-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A Fast and Scalable Joint Estimator for Integrating Additional Knowledge in
+Learning Multiple Related Sparse Gaussian Graphical Models</h2>
+
+<h3>Description</h3>
+
+<p>This is an R implementation of a Fast and Scalable Joint Estimator for
+Integrating Additional Knowledge in Learning Multiple Related Sparse
+Gaussian Graphical Models (JEEK).The JEEK algorithm can be used to fast
+estimate multiple related precision matrices in a large-scale. For instance,
+it can identify multiple gene networks from multi-context gene expression
+datasets. By performing data-driven network inference from high-dimensional
+and heterogenous data sets, this tool can help users effectively translate
+aggregated data into knowledge that take the form of graphs among entities.
+Please run demo(jeek) to learn the basic functions provided by this package.
+For further details, please read the original paper: Beilun Wang, Arshdeep
+Sekhon, Yanjun Qi (2018).
+</p>
+
+
+<h3>Details</h3>
+
+
+<table>
+<tr>
+<td style="text-align: left;"> Package: </td>
+<td style="text-align: left;"> jeek</td>
+</tr>
+<tr>
+<td style="text-align: left;"> Type: </td>
+<td style="text-align: left;"> Package</td>
+</tr>
+<tr>
+<td style="text-align: left;"> Version: </td>
+<td style="text-align: left;">
+1.1.0</td>
+</tr>
+<tr>
+<td style="text-align: left;"> Date: </td>
+<td style="text-align: left;"> 2018-07-03</td>
+</tr>
+<tr>
+<td style="text-align: left;"> License: </td>
+<td style="text-align: left;"> GPL (&gt;= 2)</td>
+</tr>
+<tr>
+<td style="text-align: left;"> </td>
+</tr>
+</table>
+<p> We consider
+the problem of including additional knowledge in estimating sparse Gaussian
+graphical models (sGGMs) from aggregated samples, arising often in
+bioinformatics and neuroimaging applications. Previous joint sGGM estimators
+either fail to use existing knowledge or cannot scale-up to many tasks
+(large <code class="reqn">K</code>) under a high-dimensional (large <code class="reqn">p</code>) situation.  In this
+paper, we propose a novel Joint Elementary Estimator incorporating
+additional Knowledge (JEEK) to infer multiple related sparse Gaussian
+Graphical models from large-scale heterogeneous data. Using domain knowledge
+as weights, we design a novel hybrid norm as the minimization objective to
+enforce the superposition of two weighted sparsity constraints, one on the
+shared interactions and the other on the task-specific structural patterns.
+This enables JEEK to elegantly consider various forms of existing knowledge
+based on the domain at hand and avoid the need to design knowledge-specific
+optimization. JEEK is solved through a fast and entry-wise parallelizable
+solution that largely improves the computational efficiency of the
+state-of-the-art <code class="reqn">O(p^5K^4)</code> to <code class="reqn">O(p^2K^4)</code>. We conduct a rigorous
+statistical analysis showing that JEEK achieves the same convergence rate
+<code class="reqn">O(\log(Kp)/n_{tot})</code> as the state-of-the-art estimators that are much
+harder to compute. Empirically, on multiple synthetic datasets and one
+real-world data from neuroscience, JEEK outperforms the speed of the
+state-of-arts significantly while achieving the same level of prediction
+accuracy.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Beilun Wang, Zhaoyang Wang
+</p>
+<p>Maintainer: Beilun Wang - bw4mw at virginia dot edu
+</p>
+
+
+<h3>References</h3>
+
+<p>Beilun Wang, Arshdeep Sekhon, Yanjun Qi. A Fast and Scalable
+Joint Estimator for Integrating Additional Knowledge in Learning Multiple
+Related Sparse Gaussian Graphical Models. &lt;arXiv:1806.00548&gt;
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(exampleData)
+result = jeek(X = exampleData, 0.3, covType = "cov", parallel = TRUE)
+plot.jeek(results)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>stat.anova.jmdem</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+JMDEM Anova Statistics
+</h2>
+
+<h3>Description</h3>
+
+<p>This is a utility function, used in <code>jmdem</code> method for <code>anova(..., test != NULL)</code> and should not be used by the average user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">stat.anova.jmdem(table, test = c("Rao", "Wald")) 
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>table</code></td>
+<td>
+<p>numeric matrix as results from <code>anova.jmdem(..., test = NULL, print.results = FALSE)</code> saved as the attributes <code>table.x</code> or <code>table.z</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>a character string, partially matching one of "<code>Rao</code>" or "<code>Wald</code>".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A matrix which is the original <code>table</code>, augmented by a column of test statistics, depending on the <code>test</code> argument.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Hastie, T. J. and Pregibon, D. (1992). <em>Generalized linear models</em>. Chapter 6 of <em>Statistical Models in S</em> eds J. M. Chambers and T. J. Hastie, Wadsworth &amp; Brooks/Cole.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>anova.jmdem</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example in jmdem(...)
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x, dformula = ~ z, 
+                            mfamily = poisson(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4), 
+                            lambda.true = c(2.5, 3), n = 100)
+                            
+fit &lt;- jmdem(mformula = y ~ x, dformula = ~ z, data = MyData, 
+             mfamily = poisson, dfamily = Gamma(link = "log"), 
+             dev.type = "deviance", method = "CG")
+              
+stat.anova.jmdem(anova(fit, test = "Rao", print.results = FALSE)$table.x)
+</code></pre>
+
+
+</div>

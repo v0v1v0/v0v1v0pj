@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Sum.Indices.2.Topologies</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sums two tables with indices values.</h2>
+
+<h3>Description</h3>
+
+<p>You input two tables with indices 
+and it function returns a single table with the sum.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Sum.Indices.2.Topologies(indices1 = indices1, indices2 = indices2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>indices1</code></td>
+<td>
+<p>a table of indices values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indices2</code></td>
+<td>
+<p>a table of indices values.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a single table with the sum of the two indices.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ ## get the library
+ library(jrich)
+ 
+ ## load the data
+ data(Multitaxon1) 
+ 
+ ## calculate indices for two trees and their distributions
+ temp.Index.Value1 &lt;- Calculate.Index(tree = Multitaxon1[[1]][[1]],
+                                      distribution = Multitaxon1[[1]][[2]],0)
+
+ temp.Index.Value2 &lt;- Calculate.Index(tree = Multitaxon1[[2]][[1]],
+                                      distribution = Multitaxon1[[2]][[2]],0)
+ 
+ ## sum the indices values
+ Sum.Indices.2.Topologies(temp.Index.Value1, temp.Index.Value2)
+ 
+
+</code></pre>
+
+
+</div>

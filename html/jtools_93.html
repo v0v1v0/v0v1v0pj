@@ -1,0 +1,269 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summ.svyglm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Complex survey regression summaries with options</h2>
+
+<h3>Description</h3>
+
+<p><code>summ()</code> prints output for a regression model in a fashion similar to
+<code>summary()</code>, but formatted differently with more options.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'svyglm'
+summ(
+  model,
+  scale = FALSE,
+  confint = getOption("summ-confint", FALSE),
+  ci.width = getOption("summ-ci.width", 0.95),
+  digits = getOption("jtools-digits", default = 2),
+  pvals = getOption("summ-pvals", TRUE),
+  n.sd = 1,
+  center = FALSE,
+  transform.response = FALSE,
+  scale.only = FALSE,
+  exp = FALSE,
+  vifs = getOption("summ-vifs", FALSE),
+  model.info = getOption("summ-model.info", TRUE),
+  model.fit = getOption("summ-model.fit", TRUE),
+  model.coefs = getOption("summ-model.coefs", TRUE),
+  which.cols = NULL,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A <code>svyglm</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>If <code>TRUE</code>, reports standardized regression
+coefficients by scaling and mean-centering input data (the latter can be
+changed via the <code>scale.only</code> argument). Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confint</code></td>
+<td>
+<p>Show confidence intervals instead of standard errors? Default
+is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci.width</code></td>
+<td>
+<p>A number between 0 and 1 that signifies the width of the
+desired confidence interval. Default is <code>.95</code>, which corresponds
+to a 95% confidence interval. Ignored if <code>confint = FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer specifying the number of digits past the decimal to
+report in the output. Default is 2. You can change the default number of
+digits for all jtools functions with
+<code>options("jtools-digits" = digits)</code> where digits is the desired
+number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pvals</code></td>
+<td>
+<p>Show p values? If <code>FALSE</code>, these
+are not printed. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.sd</code></td>
+<td>
+<p>If <code>scale = TRUE</code>, how many standard deviations should
+predictors be divided by? Default is 1, though some suggest 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>If you want coefficients for mean-centered variables but don't
+want to standardize, set this to <code>TRUE</code>. Note that setting this to
+false does not affect whether <code>scale</code> mean-centers variables. Use
+<code>scale.only</code> for that.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform.response</code></td>
+<td>
+<p>Should scaling/centering apply to response
+variable? Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.only</code></td>
+<td>
+<p>If you want to scale but not center, set this to <code>TRUE</code>.
+Note that for legacy reasons, setting <code>scale = TRUE</code> and <code>center = FALSE</code>
+will not achieve the same effect. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exp</code></td>
+<td>
+<p>If <code>TRUE</code>, reports exponentiated coefficients with
+confidence intervals for exponential models like logit and Poisson models.
+This quantity is known as an odds ratio for binary outcomes and incidence
+rate ratio for count models.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vifs</code></td>
+<td>
+<p>If <code>TRUE</code>, adds a column to output with variance inflation
+factors (VIF). Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model.info</code></td>
+<td>
+<p>Toggles printing of basic information on sample size,
+name of DV, and number of predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model.fit</code></td>
+<td>
+<p>Toggles printing of model fit statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model.coefs</code></td>
+<td>
+<p>Toggles printing of model coefficents.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which.cols</code></td>
+<td>
+<p>Developmental feature. By providing columns by name,
+you can add/remove/reorder requested columns in the output. Not fully
+supported, for now.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Among other things, arguments are passed to <code>scale_mod()</code> or
+<code>center_mod()</code> when <code>center</code> or <code>scale</code> is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>By default, this function will print the following items to the
+console:
+</p>
+
+<ul>
+<li>
+<p> The sample size
+</p>
+</li>
+<li>
+<p> The name of the outcome variable
+</p>
+</li>
+<li>
+<p> The (Pseudo-)R-squared value and AIC.
+</p>
+</li>
+<li>
+<p> A table with regression coefficients, standard errors, t values, and
+p values.
+</p>
+</li>
+</ul>
+<p>The <code>scale</code> and <code>center</code> options are performed via refitting
+the model with <code>scale_mod()</code> and <code>center_mod()</code>,
+respectively. Each of those in turn uses <code>gscale()</code> for the
+mean-centering and scaling. These functions can handle <code>svyglm</code> objects
+correctly by calling <code>svymean()</code> and <code>svyvar()</code> to compute means
+and
+standard deviations. Weights are not altered. The fact that the model is
+refit means the runtime will be similar to the original time it took to fit
+the model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If saved, users can access most of the items that are returned in the
+output (and without rounding).
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>coeftable</code></td>
+<td>
+<p>The outputted table of variables and coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The model for which statistics are displayed. This would be
+most useful in cases in which <code>scale = TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<p>Much other information can be accessed as attributes.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jacob Long <a href="mailto:jacob.long@sc.edu">jacob.long@sc.edu</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>scale_mod()</code> can simply perform the standardization if
+preferred.
+</p>
+<p><code>gscale()</code> does the heavy lifting for mean-centering and scaling
+behind the scenes.
+</p>
+<p>Other summ: 
+<code>summ.glm()</code>,
+<code>summ.lm()</code>,
+<code>summ.merMod()</code>,
+<code>summ.rq()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (requireNamespace("survey")) {
+  library(survey)
+  data(api)
+  dstrat &lt;- svydesign(id = ~1, strata =~ stype, weights =~ pw,
+                      data = apistrat, fpc =~ fpc)
+  regmodel &lt;- svyglm(api00 ~ ell * meals, design = dstrat)
+
+  summ(regmodel)
+}
+</code></pre>
+
+
+</div>

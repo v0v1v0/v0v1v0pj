@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_clean_page</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clean a character vector of pages</h2>
+
+<h3>Description</h3>
+
+<p>This function tries to convert character vectors into integers. This function
+should not be called on page ranges.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_clean_page(page)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>page</code></td>
+<td>
+<p>A character vector for pages.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>An integer vector, cleaned and converted from the input vector.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_clean_page("2")
+
+# anything that is not a digit gets removed
+jst_clean_page("A2-")
+
+# a weird format from the American Journal of Sociology is convered correctly
+jst_clean_page("AJSv104p126")
+# this is done by searching for "p", and if it is found, extracting the
+# content after "p".
+</code></pre>
+
+
+</div>

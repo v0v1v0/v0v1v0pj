@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getVarCov.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract variance-covariance matrix of random effects from an <code>mjoint</code>
+object</h2>
+
+<h3>Description</h3>
+
+<p>Extract variance-covariance matrix of random effects from an
+<code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+getVarCov(obj, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model of
+time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A variance-covariance matrix.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Pinheiro JC, Bates DM. <em>Mixed-Effects Models in S and S-PLUS.</em> New York:
+Springer Verlag; 2000.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>getVarCov</code> for the generic method description.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit2 &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+
+getVarCov(fit2)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

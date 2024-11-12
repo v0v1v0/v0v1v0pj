@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-sort.QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tri des objets QR_matrix et mQR_matrix</h2>
+
+<h3>Description</h3>
+
+<p>Permet de trier les bilans qualité en fonction d'une ou plusieurs variables.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code> ou <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p>booléen indiquant si les bilans qualité doivent être triés
+par ordre croissant ou décroissant.
+Par défaut, le tri est effectué par ordre croissant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_variables</code></td>
+<td>
+<p>variables à utiliser pour le tri. Elles doivent être
+présentes dans les tables de modalités.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>autres paramètres de la fonction <code>order</code> (non
+utilisés pour l'instant).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>L'objet en entrée avec les tables de bilan qualité triées.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Chemin menant au fichier demetra_m.csv
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extraire le bilan qualité à partir du fichier demetra_m.csv
+QR &lt;- extract_QR(demetra_path)
+
+# Calculer le score
+QR &lt;- compute_score(QR, n_contrib_score = 2)
+print(QR$modalities$score)
+
+# Trier les scores
+
+# Pour trier par ordre croissant sur le score
+QR &lt;- sort(QR, sort_variables = "score")
+print(QR$modalities$score)
+
+</code></pre>
+
+
+</div>

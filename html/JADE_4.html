@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>AMUSE</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+AMUSE Method for Blind Source Separation
+</h2>
+
+<h3>Description</h3>
+
+
+<p>AMUSE method for the second order blind source separation problem. The function estimates
+the unmixing matrix in a second order stationary source separation model by jointly diagonalizing
+the covariance matrix and an autocovariance matrix at lag k.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">AMUSE(x, ...)
+
+## Default S3 method:
+AMUSE(x, k = 1, ...)
+## S3 method for class 'ts'
+AMUSE(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric matrix or a multivariate time series object of class <code>ts</code>. Missing values are not allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer lag for the autocovariance matrix, must be larger than 0. Default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to be passed to or from methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The lag <code>k</code> has a huge effect on the performance and it should be chosen so that the eigenvalues of autocovariance matrix are distinct. The function assumes always as many sources as there are time series.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with class 'bss' containing the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>estimated unmixing matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EV</code></td>
+<td>
+<p>eigenvectors of autocovariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>lag of the autocovariance matrix used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p>estimated sources as time series objected standardized to have mean 0 and unit variances.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Tong, L., Soon, V.C., Huang, Y.F. and Liu, R. (1990), AMUSE: a new blind identification algorithm, in Proceedings of IEEE International Symposium on
+<em>Circuits and Systems 1990</em>, 1784–1787.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2012), Statistical properties of a blind source separation estimator for stationary time series, 
+<em>Statistics &amp; Probability Letters</em>, 82, 1865–1873.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>            
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ts</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># creating some toy data
+A&lt;- matrix(rnorm(9),3,3)
+s1 &lt;- arima.sim(list(ar=c(0.3,0.6)),1000)
+s2 &lt;- arima.sim(list(ma=c(-0.3,0.3)),1000)
+s3 &lt;- arima.sim(list(ar=c(-0.8,0.1)),1000)
+
+S &lt;- cbind(s1,s2,s3)
+X &lt;- S %*% t(A)
+
+res1&lt;-AMUSE(X)
+res1
+coef(res1)
+plot(res1) # compare to plot.ts(S)
+MD(coef(res1),A)
+
+# input of a time series
+X2&lt;- ts(X, start=c(1961, 1), frequency=12)
+plot(X2)
+res2&lt;-AMUSE(X2, k=2)
+plot(res2)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,130 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>djd</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Function for Joint Diagonalization of k Square Matrices in a Deflation Based Manner  
+</h2>
+
+<h3>Description</h3>
+
+<p>This function jointly diagonalizes k real-valued square matrices by searching an orthogonal matrix in a deflation based manner.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">djd(X, G = "max", r = 2, eps = 1e-06, maxiter = 500)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+
+<p>an array containing the k p times p real valued matrices of dimension  c(p, p, k).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+
+<p>criterion function used for the the algorithm. Options are <code>max</code>, <code>pow</code> and <code>log</code>. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+
+<p>power value used if <code>G="pow"</code> or <code>G="max"</code>. 0 is not meaningful for this value. See details.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eps</code></td>
+<td>
+
+<p>convergence tolerance.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+
+<p>maximum number of iterations.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Denote the square matrices as <code class="reqn">A_i</code>, <code class="reqn">i=1,\ldots,k</code>. This algorithm searches then an orthogonal matrix W
+so that  <code class="reqn">D_i=W'A_iW</code> is diagonal for all <code class="reqn">i</code>. If the <code class="reqn">A_i</code> commute then there is an exact solution. If not, the function
+will perform an approximate joint diagonalization by maximizing <code class="reqn">\sum G(w_j' A_i w_j)</code> where <code class="reqn">w_j</code> are the orthogonal vectors in W. 
+</p>
+<p>The function G can be choosen to be of the form <code class="reqn">G(x) = |x|^r</code> or  <code class="reqn">G(x) = log(x)</code>. If <code>G="max"</code> is chosen, the function G is of the form <code class="reqn">G(x) = |x|^r</code>, and the diagonalization criterion will be maximized globally at each stage by choosing an appropriate initial value from a set
+of random vectors. If <code>G="pow"</code> or <code>G="log"</code> are chosen, the initial values are the eigenvectors of <code class="reqn">A_1</code> which plays hence a special role.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The matrix W
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Klaus Nordhausen, Jari Miettinen</p>
+
+
+<h3>References</h3>
+
+<p><cite>Nordhausen, K., Gutch, H. W., Oja, H. and Theis, F.J. (2012): Joint Diagonalization of Several Scatter Matrices for ICA, in <em>LVA/ICA 2012</em>, LNCS 7191, pp. 172–179.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K., Oja, H. and Taskinen, S. (2014),  Deflation-based Separation of Uncorrelated Stationary Time Series, 
+<em>Journal of Multivariate Analysis</em>, 123, 214–227.</cite>
+</p>
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Z &lt;- matrix(runif(9), ncol = 3)
+U &lt;- eigen(Z %*% t(Z))$vectors
+D1 &lt;- diag(runif(3))
+D2 &lt;- diag(runif(3))
+D3 &lt;- diag(runif(3))
+D4 &lt;- diag(runif(3))
+
+X.matrix &lt;- array(0, dim=c(3, 3, 4))
+X.matrix[,,1] &lt;- t(U) %*% D1 %*% U
+X.matrix[,,2] &lt;- t(U) %*% D2 %*% U
+X.matrix[,,3] &lt;- t(U) %*% D3 %*% U
+X.matrix[,,4] &lt;- t(U) %*% D4 %*% U
+
+W1 &lt;- djd(X.matrix)
+round(U %*% W1, 4) # should be a signed permutation 
+                     # matrix if W1 is correct.
+
+W2 &lt;- djd(X.matrix, r=1)
+round(U %*% W2, 4) # should be a signed permutation 
+                     # matrix if W2 is correct.
+
+W3 &lt;- djd(X.matrix, G="l")
+round(U %*% W3, 4) # should be a signed permutation 
+                     # matrix if W3 is correct.
+
+</code></pre>
+
+
+</div>

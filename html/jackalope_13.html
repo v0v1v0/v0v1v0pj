@@ -1,0 +1,152 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>indels</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Insertions and deletions (indels) specification</h2>
+
+<h3>Description</h3>
+
+<p>Construct necessary information for insertions and deletions (indels) that will
+be used in <code>create_haplotypes</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">indels(rate, max_length = 10, a = NULL, rel_rates = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>rate</code></td>
+<td>
+<p>Single number specifying the overall indel rate among all lengths.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_length</code></td>
+<td>
+<p>Maximum length of indels. Defaults to <code>10</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>Extra parameter necessary for generating rates from a Lavalette distribution.
+See Details for more info. Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rel_rates</code></td>
+<td>
+<p>A numeric vector of relative rates for each indel length
+from 1 to the maximum length.
+If provided, all arguments other than <code>rate</code> are ignored.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>All indels require the <code>rate</code> parameter, which specifies
+the overall indels rate among all lengths.
+The <code>rate</code> parameter is ultimately combined with a vector of relative rates among
+the different lengths of indels from 1 to the maximum possible length.
+There are three different ways to specify/generate relative-rate values.
+</p>
+
+<ol>
+<li>
+<p> Assume that rates are proportional to <code>exp(-L)</code> for indel length
+<code>L</code> from 1 to the maximum length (Albers et al. 2011).
+This method will be used if the following arguments are provided:
+</p>
+
+<ul>
+<li> <p><code>rate</code>
+</p>
+</li>
+<li> <p><code>max_length</code>
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p> Generate relative rates from a Lavalette distribution
+(Fletcher and Yang 2009), where the rate for length <code>L</code> is proportional to
+<code>{L * max_length / (max_length - L + 1)}^(-a)</code>.
+This method will be used if the following arguments are provided:
+</p>
+
+<ul>
+<li> <p><code>rate</code>
+</p>
+</li>
+<li> <p><code>max_length</code>
+</p>
+</li>
+<li> <p><code>a</code>
+</p>
+</li>
+</ul>
+</li>
+<li>
+<p> Directly specify values by providing a numeric vector of relative
+rates for each insertion/deletion length from 1 to the maximum length.
+This method will be used if the following arguments are provided:
+</p>
+
+<ul>
+<li> <p><code>rate</code>
+</p>
+</li>
+<li> <p><code>rel_rates</code>
+</p>
+</li>
+</ul>
+</li>
+</ol>
+<h3>Value</h3>
+
+<p>An <code>indel_info</code> object, which is an R6 class that wraps the info needed for
+the <code>create_haplotypes</code> function.
+It does not allow the user to directly manipulate the info inside, as that
+should be done using this function.
+You can use the <code>rates()</code> method to view the indel rates by size.
+</p>
+
+
+<h3>References</h3>
+
+<p>Albers, C. A., G. Lunter, D. G. MacArthur, G. McVean, W. H. Ouwehand, and R. Durbin.
+2011. Dindel: accurate indel calls from short-read data. Genome Research 21:961–973.
+</p>
+<p>Fletcher, W., and Z. Yang. 2009. INDELible: a flexible simulator of
+biological sequence evolution. Molecular Biology and Evolution 26:1879–1888.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># relative rates are proportional to `exp(-L)` for indel
+# length `L` from 1 to 5:
+indel_rates1 &lt;- indels(0.1, max_length = 5)
+
+# relative rates are proportional to Lavalette distribution
+# for length from 1 to 10:
+indel_rates2 &lt;- indels(0.2, max_length = 10, a = 1.1)
+
+# relative rates are all the same for lengths from 1 to 100:
+indel_rates3 &lt;- indels(0.2, rel_rates = rep(1, 100))
+
+
+
+</code></pre>
+
+
+</div>

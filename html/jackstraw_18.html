@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pip</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute posterior inclusion probabilities (PIPs)</h2>
+
+<h3>Description</h3>
+
+<p>From a set of p-values, computes posterior probabilities that a feature should be truly included.
+For example, membership inclusion in a given cluster can be improved by filtering low quality members.
+In using PCA and related methods, it helps select variables that are truly associated with given latent variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pip(pvalue, group = NULL, pi0 = NULL, verbose = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pvalue</code></td>
+<td>
+<p>a vector of p-values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>a vector of group indicators (optional).
+If provided, PIP analysis is stratified.
+Assumes groups are in 1:k where k is the number of unique groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pi0</code></td>
+<td>
+<p>a vector of pi0 values (optional).
+Its length has to be either 1 or equal the number of groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If TRUE, reports information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments for <code>lfdr</code> to control a local FDR estimation.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function requires the Bioconductor <code>qvalue</code> package to be installed.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>pip</code> returns a vector of posterior inclusion probabilities
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Neo Christopher Chung <a href="mailto:nchchung@gmail.com">nchchung@gmail.com</a>
+John R. Yamamoto-Wilson
+</p>
+
+
+<h3>References</h3>
+
+<p>Chung (2020) Statistical significance of cluster membership for unsupervised evaluation of cell identities. Bioinformatics, 36(10): 3107–3114 <a href="https://doi.org/10.1093/bioinformatics/btaa087">doi:10.1093/bioinformatics/btaa087</a>
+</p>
+<p>Chung (2014) "Jackstraw Weighted Shrinkage for Principal Component Analysis and Covariance Matrix" in Statistical Inference of Variables Driving Systematic Variation in High-Dimensional Biological Data. PhD thesis, Princeton University. <a href="https://www.proquest.com/openview/e90b562d689cf3a021c35a93c6f346db/1?pq-origsite=gscholar&amp;cbl=18750">https://www.proquest.com/openview/e90b562d689cf3a021c35a93c6f346db/1?pq-origsite=gscholar&amp;cbl=18750</a>
+</p>
+
+
+</div>

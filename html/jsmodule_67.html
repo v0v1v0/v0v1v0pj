@@ -1,0 +1,163 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tb1simpleUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>tb1simpleUI : tb1 module UI for propensity score analysis</h2>
+
+<h3>Description</h3>
+
+<p>Table 1 module UI for propensity score analysis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tb1simpleUI(id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>tb1 module UI for propensity score analysis
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table 1 UI for propensity score analysis
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(readxl)
+library(jstable)
+library(haven)
+library(survey)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      FilePsInput("datafile"),
+      tb1simpleUI("tb1")
+    ),
+    mainPanel(
+      DTOutput("table1_original"),
+      DTOutput("table1_ps"),
+      DTOutput("table1_iptw")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  mat.info &lt;- callModule(FilePs, "datafile")
+
+  data &lt;- reactive(mat.info()$data)
+  matdata &lt;- reactive(mat.info()$matdata)
+  data.label &lt;- reactive(mat.info()$data.label)
+
+
+  vlist &lt;- eventReactive(mat.info(), {
+    mklist &lt;- function(varlist, vars) {
+      lapply(
+        varlist,
+        function(x) {
+          inter &lt;- intersect(x, vars)
+          if (length(inter) == 1) {
+            inter &lt;- c(inter, "")
+          }
+          return(inter)
+        }
+      )
+    }
+    factor_vars &lt;- names(data())[data()[, lapply(.SD, class) %in% c("factor", "character")]]
+    factor_list &lt;- mklist(data_varStruct(), factor_vars)
+    conti_vars &lt;- setdiff(names(data()), c(factor_vars, "pscore", "iptw"))
+    conti_list &lt;- mklist(data_varStruct(), conti_vars)
+    nclass_factor &lt;- unlist(data()[, lapply(.SD, function(x) {
+      length(unique(x)[!is.na(unique(x))])
+    }),
+    .SDcols = factor_vars
+    ])
+    class01_factor &lt;- unlist(data()[, lapply(.SD, function(x) {
+      identical(levels(x), c("0", "1"))
+    }),
+    .SDcols = factor_vars
+    ])
+    validate(
+      need(!is.null(class01_factor), "No categorical variables coded as 0, 1 in data")
+    )
+    factor_01vars &lt;- factor_vars[class01_factor]
+    factor_01_list &lt;- mklist(data_varStruct(), factor_01vars)
+    group_vars &lt;- factor_vars[nclass_factor &gt;= 2 &amp; nclass_factor &lt;= 10 &amp;
+      nclass_factor &lt; nrow(data())]
+    group_list &lt;- mklist(data_varStruct(), group_vars)
+    except_vars &lt;- factor_vars[nclass_factor &gt; 10 | nclass_factor == 1 |
+      nclass_factor == nrow(data())]
+
+    ## non-normal: shapiro test
+    f &lt;- function(x) {
+      if (diff(range(x, na.rm = T)) == 0) {
+        return(F)
+      } else {
+        return(shapiro.test(x)$p.value &lt;= 0.05)
+      }
+    }
+
+    non_normal &lt;- ifelse(nrow(data()) &lt;= 3 | nrow(data()) &gt;= 5000,
+      rep(F, length(conti_vars)),
+      sapply(conti_vars, function(x) {
+        f(data()[[x]])
+      })
+    )
+    return(list(
+      factor_vars = factor_vars, factor_list = factor_list,
+      conti_vars = conti_vars, conti_list = conti_list, factor_01vars = factor_01vars,
+      factor_01_list = factor_01_list, group_list = group_list,
+      except_vars = except_vars, non_normal = non_normal
+    ))
+  })
+
+  out.tb1 &lt;- callModule(tb1simple2, "tb1",
+    data = data, matdata = matdata, data_label = data.label,
+    data_varStruct = NULL, vlist = vlist,
+    group_var = reactive(mat.info()$group_var)
+  )
+
+  output$table1_original &lt;- renderDT({
+    tb &lt;- out.tb1()$original$table
+    cap &lt;- out.tb1()$original$caption
+    out &lt;- datatable(tb, rownames = T, extension = "Buttons", caption = cap)
+    return(out)
+  })
+
+  output$table1_ps &lt;- renderDT({
+    tb &lt;- out.tb1()$ps$table
+    cap &lt;- out.tb1()$ps$caption
+    out &lt;- datatable(tb, rownames = T, extension = "Buttons", caption = cap)
+    return(out)
+  })
+
+  output$table1_iptw &lt;- renderDT({
+    tb &lt;- out.tb1()$iptw$table
+    cap &lt;- out.tb1()$iptw$caption
+    out &lt;- datatable(tb, rownames = T, extension = "Buttons", caption = cap)
+    return(out)
+  })
+}
+</code></pre>
+
+
+</div>

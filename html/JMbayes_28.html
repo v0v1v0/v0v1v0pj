@@ -1,0 +1,573 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointModelBayes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Joint Models for Longitudinal and Time-to-Event Data
+</h2>
+
+<h3>Description</h3>
+
+<p>Fits shared parameter joint models for longitudinal and survival outcomes under a Bayesian approach.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jointModelBayes(lmeObject, survObject, timeVar,  
+    param = c("td-value", "td-extra", "td-both", "shared-betasRE", "shared-RE"), 
+    extraForm = NULL, baseHaz = c("P-splines", "regression-splines"), 
+    transFun = NULL, densLong = NULL, lag = 0, df.RE = NULL, 
+    estimateWeightFun = FALSE, weightFun = NULL, init = NULL, 
+    priors = NULL, scales = NULL, control = list(), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lmeObject</code></td>
+<td>
+<p>an object of class 'lme' fitted by function <code>lme()</code> from package <b>nlme</b> or by function <code>glmmPQL()</code> 
+from package <b>MASS</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survObject</code></td>
+<td>
+<p>an object of class 'coxph' fitted by function <code>coxph()</code> from package <b>survival</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVar</code></td>
+<td>
+<p>a character string indicating the time variable in the mixed effects model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>param</code></td>
+<td>
+<p>a character string specifying the type of association structure between the longitudinal and 
+survival processes. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>extraForm</code></td>
+<td>
+<p>a list with components <code>fixed</code> a formula representing the fixed-effects part of the user-defined term, 
+<code>indFixed</code> a numeric vector indicating which fixed effects of <code>lmeObject</code> are involved in the user-defined term, 
+<code>random</code> a formula representing the random-effects part of the user-defined term, and <code>indRamdom</code> a 
+numeric vector indicating which random effects of <code>lmeObject</code> are involved in the user-defined term. 
+Required only when <code>param = "td-extra"</code> or <code>param = "td-both"</code>. See <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseHaz</code></td>
+<td>
+<p>a character string specifying the type of the baseline hazard function. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transFun</code></td>
+<td>
+<p>a function or a named list with elements <code>value</code> and <code>extra</code> which should be functions. 
+In either case the functions should always have two arguments, namely <code>x</code> and <code>data</code> 
+(even when the second one is not needed). The purpose is to transform the <code>value</code> and/or <code>extra</code>,
+for example including an interaction term, a nonlinear function, etc.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>densLong</code></td>
+<td>
+<p>a function with arguments <code>y</code>, <code>eta.y</code>, <code>scale</code>, <code>log</code>, and <code>data</code> that calculates the
+density of the longitudinal outcome. <code>y</code> denotes the longitudinal responses, <code>eta.y</code> the linear predictor that
+includes the fixed and random effects, <code>scale</code> a possible scale parameter (e.g., the measurement error standard deviation),
+<code>log</code> a logical argument that controls whether the density should be calculated in the log scale, and <code>data</code> a 
+data frame which may be used to extract variables used in the definition of the density function (e.g., a censoring indicator for
+left censored longitudinal data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>a numeric scalar denoting a lag effect in the time-dependent covariate represented by the mixed model; default is 0.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df.RE</code></td>
+<td>
+<p>a numeric scalar denoting the number of degrees of freedom for the Student's-<code class="reqn">t</code> random-effects distribution. If <code>NULL</code>
+the random effects are assumed to have a multivariate normal distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimateWeightFun</code></td>
+<td>
+<p>logical; experimental, not in use yet.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weightFun</code></td>
+<td>
+<p>a weight function; experimental, not in use yet.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p>a named list of user-specified initial values:
+</p>
+
+<dl>
+<dt>betas</dt>
+<dd>
+<p>the vector of fixed effects for the linear mixed effects model.</p>
+</dd>
+<dt>tau</dt>
+<dd>
+<p>the precision parameter from the linear mixed effects model (i.e., <code class="reqn">\tau = 1/\sigma^2</code> with <code class="reqn">\sigma</code> 
+denoting the error terms standard deviation).</p>
+</dd>
+<dt>invD</dt>
+<dd>
+<p>the inverse variance-covariance matrix of the random effects.</p>
+</dd>
+<dt>b</dt>
+<dd>
+<p>a matrix of random effects values.</p>
+</dd>
+<dt>gammas</dt>
+<dd>
+<p>the vector of baseline covariates for the survival model.</p>
+</dd>
+<dt>alphas</dt>
+<dd>
+<p>the association parameter(s).</p>
+</dd>
+<dt>Dalphas</dt>
+<dd>
+<p>the association parameter for the true slopes formulation.</p>
+</dd>
+<dt>Bs.gammas</dt>
+<dd>
+<p>the vector of spline coefficients for the spline-approximated baseline risk function.</p>
+</dd>
+</dl>
+<p>When this list of initial values does not contain some of these components or contains components 
+not of the appropriate length, then the default initial values are used instead.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a named list of user-specified prior parameters:
+</p>
+
+<dl>
+<dt>priorMean.betas</dt>
+<dd>
+<p>the prior mean vector of the normal prior for the fixed effects of the linear mixed effects model.</p>
+</dd>
+<dt>priorTau.betas</dt>
+<dd>
+<p>the prior precision matrix of the normal prior for the fixed effects of the 
+linear mixed effects model.</p>
+</dd>
+<dt>priorA.tau</dt>
+<dd>
+<p>the prior shape parameter of the Gamma prior for the precision parameter of the 
+linear mixed effects model.</p>
+</dd>
+<dt>priorB.tau</dt>
+<dd>
+<p>the prior rate parameter of the Gamma prior for the precision parameter of the 
+linear mixed effects model.</p>
+</dd>
+<dt>priorMean.gammas</dt>
+<dd>
+<p>the prior mean vector of the normal prior for the regression coefficients of the survival model.</p>
+</dd>
+<dt>priorTau.gammas</dt>
+<dd>
+<p>the prior precision matrix of the normal prior for the regression coefficients of 
+the survival model.</p>
+</dd>
+<dt>priorMean.alphas</dt>
+<dd>
+<p>the prior mean vector of the normal prior for the association parameter in the survival model.</p>
+</dd>
+<dt>priorTau.alphas</dt>
+<dd>
+<p>the prior precision matrix of the normal prior for the association parameter in
+the survival model.</p>
+</dd>
+<dt>priorMean.Dalphas</dt>
+<dd>
+<p>the prior mean vector of the normal prior for the slope association parameter 
+in the survival model.</p>
+</dd>
+<dt>priorTau.Dalphas</dt>
+<dd>
+<p>the prior precision matrix of the normal prior for the slope association parameter
+in the survival model.</p>
+</dd>
+<dt>priorMean.Bs.gammas</dt>
+<dd>
+<p>the prior mean vector of the normal prior for the spline coefficients of the 
+baseline risk function.</p>
+</dd>
+<dt>priorTau.Bs.gammas</dt>
+<dd>
+<p>the prior precision matrix of the normal prior for the spline coefficients of 
+the baseline risk function.</p>
+</dd>
+<dt>priorA.tauBs</dt>
+<dd>
+<p>the prior shape parameter of the Gamma prior for the precision parameter of the 
+penalty term when <code>baseHaz = "P-splines"</code>.</p>
+</dd>
+<dt>priorB.tauBs</dt>
+<dd>
+<p>the prior rate parameter of the Gamma prior for the precision parameter of the 
+penal term when <code>baseHaz = "P-splines"</code>.</p>
+</dd>
+<dt>priorR.D</dt>
+<dd>
+<p>the prior precision matrix of the Wishart prior for the precision matrix of the random effects.</p>
+</dd>
+<dt>priorK.D</dt>
+<dd>
+<p>the degrees of freedom of the Wishart prior for the precision matrix of the random effects.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scales</code></td>
+<td>
+<p>a named list with names as in <code>init</code> specifying scaling constants for the proposal distributions 
+in the Metropolis algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values with components:
+</p>
+        
+<dl>
+<dt>adapt</dt>
+<dd>
+<p>logical default <code>FALSE</code>; should adaptive Metropolis be used. Currently experimental.</p>
+</dd>
+<dt>n.iter</dt>
+<dd>
+<p>integer specifying the total number of iterations; default is 20000.</p>
+</dd>
+<dt>n.burnin</dt>
+<dd>
+<p>integer specifying how many of <code>n.iter</code> to discard as burn-in; default is 3000.</p>
+</dd>
+<dt>n.thin</dt>
+<dd>
+<p>integer specifying the thinning of the chains; default is to set <code>n.thin</code> such that 2000 samples are kept.</p>
+</dd>
+<dt>n.adapt</dt>
+<dd>
+<p>integer specifying the number of iterations to use for adaptation; default is 3000.</p>
+</dd>
+<dt>keepRE</dt>
+<dd>
+<p>logical; if <code>TRUE</code> the MCMC samples for the random effect are kept in the output object.</p>
+</dd>
+<dt>priorVar</dt>
+<dd>
+<p>integer used as the prior precision in the normal prior for the fixed effects, 
+the regression coefficients of the survival submodel, the association parameters, the extra association parameters, 
+and in the spline coefficients; default is 100.</p>
+</dd>
+<dt>knots</dt>
+<dd>
+<p>a numeric vector of knots positions for the spline approximation of the log baseline risk function; 
+default is <code>NULL</code>, which means that the knots are calculated based on the percentiles of the observed event times.</p>
+</dd>
+<dt>ObsTimes.knots</dt>
+<dd>
+<p>logical; if <code>TRUE</code> (default), the knots are set using the percentiles of the observed event times
+(i.e., including both true events and censored observations). If <code>FALSE</code>, the knots are set based on the percentiles of
+the true event times alone.</p>
+</dd>
+<dt>lng.in.kn</dt>
+<dd>
+<p>a numeric scalar indicating the number of knots to use (based on the percentiles); default is 15 for the penalized
+spline baseline hazard and 5 for the regression spline baseline hazard.</p>
+</dd>
+<dt>ordSpline</dt>
+<dd>
+<p>a numeric scalar setting the order of the spline function. This is the number of coefficients in 
+each piecewise polynomial segment, thus a cubic spline has order 4; default is 4.</p>
+</dd>
+<dt>diff</dt>
+<dd>
+<p>a numeric scalar setting the order of the differences in the calculation of the penalty term for the penalized 
+baseline hazard; default is 2.</p>
+</dd>
+<dt>seed</dt>
+<dd>
+<p>a numeric scalar setting the random seed; default is 1.</p>
+</dd>
+<dt>verbose</dt>
+<dd>
+<p>logical; if <code>TRUE</code> (default), a progress bar is shown in the console.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>options passed to the <code>control</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Function <code>jointModelBayes</code> fits joint models for longitudinal and survival data under a Bayesian approach. For the longitudinal 
+responses a linear mixed effects model represented by the <code>lmeObject</code> is assumed, unless the user specifies his own probability 
+density function using argument <code>densLong</code>. For the survival times, let <code class="reqn">w_i</code> denote the vector of baseline covariates in 
+<code>survObject</code>, with associated parameter vector <code class="reqn">\gamma</code>, <code class="reqn">m_i(t)</code> the subject-specific linear predictor at time point 
+<code class="reqn">t</code> as defined by the mixed model (i.e., <code class="reqn">m_i(t)</code> equals the fixed-effects part <code>+</code> random-effects part of the mixed 
+effects model for sample unit <code class="reqn">i</code>), <code class="reqn">m_i'(t)</code> denotes an extra user-defined term (based on the specification of argument 
+<code>extraForm</code>) to be included in the linear predictor of the survival submodel, and <code class="reqn">\alpha</code> and <code class="reqn">\alpha_e</code> vector of 
+association parameters for <code class="reqn">m_i(t)</code> and <code class="reqn">m_i'(t)</code>, respectively. Then, <code>jointModelBayes</code>
+assumes a relative risk model of the form </p>
+<p style="text-align: center;"><code class="reqn">h_i(t) = h_0(t) \exp\{\gamma^\top w_i + f(m_i(t), m_i'(t), b_i; \alpha, \alpha_e)\},</code>
+</p>
+ 
+<p>where the baseline risk function is approximated using splines, i.e., </p>
+<p style="text-align: center;"><code class="reqn">\log h_0(t) = \sum_k \tilde\gamma_k B(t; \lambda),</code>
+</p>
+ 
+<p>with <code class="reqn">B(.)</code> denoting a B-spline basis function, <code class="reqn">\lambda</code> a vector of knots, and <code class="reqn">\tilde \gamma_k</code> the corresponding 
+splines coefficients (<code class="reqn">\tilde \gamma</code> correspond to <code>Bs.gammas</code> above). Argument <code>baseHaz</code> specifies whether a 
+penalized- or regression-spline-approximation is employed. For the former the P-splines approach of Eilers and Marx (1996) is used, 
+namely the prior for <code class="reqn">\tilde \gamma</code> is taken to be proportional to </p>
+<p style="text-align: center;"><code class="reqn">p(\tilde \gamma) \propto 
+\exp \Bigl(- \frac{\tau_{bs}}{2} \tilde \gamma^\top \Delta^\top \Delta \tilde \gamma \Bigr),</code>
+</p>
+<p> where <code class="reqn">\Delta</code> denotes the 
+differences matrix (the order of the differences is set by the control argument <code>diff</code>).
+</p>
+<p>Function <code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d)</code> specifies the association structure between the two processes. In particular, for
+<code>param = "td-value"</code>, </p>
+<p style="text-align: center;"><code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d) = f_1(m_i(t)) \alpha,</code>
+</p>
+<p> for <code>param = "td-extra"</code>, 
+</p>
+<p style="text-align: center;"><code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d) = f_2(m_i'(t)) \alpha_e,</code>
+</p>
+<p> for <code>param = "td-both"</code>, 
+</p>
+<p style="text-align: center;"><code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d) = f_1(m_i(t)) \alpha + f_2(m_i'(t)) \alpha_e,</code>
+</p>
+<p> for <code>param = "shared-RE"</code>, 
+</p>
+<p style="text-align: center;"><code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d) = \alpha^\top b_i,</code>
+</p>
+<p> and for <code>param = "shared-betasRE"</code>,
+</p>
+<p style="text-align: center;"><code class="reqn">f(m_i(t), m_i'(t), b_i; \alpha, \alpha_d) = \alpha^\top (\beta^* + b_i),</code>
+</p>
+<p> where <code class="reqn">f_1(.)</code> and <code class="reqn">f_2(.)</code> denote possible
+transformation functions, <code class="reqn">b_i</code> denotes the vector of random effects for 
+the <code class="reqn">i</code>th subject and <code class="reqn">\beta^*</code> the fixed effects that correspond to the random effects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>See <code>JMbayesObject</code> for the components of the fit.
+</p>
+
+
+<h3>Note</h3>
+
+<p>1. The <code>lmeObject</code> argument should represent a mixed model object without any special structure in the random-effects
+covariance matrix (i.e., no use of <code>pdMats</code>).
+</p>
+<p>2. The <code>lmeObject</code> object should not contain any within-group correlation structure (i.e., <code>correlation</code> 
+argument of <code>lme()</code>) or within-group heteroscedasticity structure (i.e., <code>weights</code> argument of <code>lme()</code>).
+</p>
+<p>3. It is assumed that the linear mixed effects model <code>lmeObject</code> and the survival model <code>survObject</code> have been 
+fitted to the same subjects. Moreover, it is assumed that the ordering of the subjects is the same for both 
+<code>lmeObject</code> and <code>survObject</code>, i.e., that the first line in the data frame containing the event times 
+corresponds to the first set of lines identified by the grouping variable in the data frame containing the repeated 
+measurements, and so on. Furthermore, the scale of the time variable (e.g., days, months, years) should be the same in both
+the <code>lmeObject</code> and <code>survObject</code> objects.
+</p>
+<p>4. In the <code>print</code> and <code>summary</code> generic functions for class <code>jointModel</code>, the estimated coefficients (and
+standard errors for the <code>summary</code> generic) for the event process are augmented with the element "Assoct" that 
+corresponds to the association parameter <code class="reqn">\alpha</code> and the element "AssoctE" that corresponds to the parameter 
+<code class="reqn">\alpha_e</code> when <code>parameterization</code> is <code>"td-extra"</code> or <code>"td-both"</code> (see <b>Details</b>).
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Henderson, R., Diggle, P. and Dobson, A. (2000) Joint modelling of longitudinal measurements and event time data.
+<em>Biostatistics</em> <b>1</b>, 465–480.
+</p>
+<p>Hsieh, F., Tseng, Y.-K. and Wang, J.-L. (2006) Joint modeling of survival and longitudinal data: Likelihood 
+approach revisited. <em>Biometrics</em> <b>62</b>, 1037–1043.
+</p>
+<p>Rizopoulos, D. (2016). The R package JMbayes for fitting joint models for longitudinal and
+time-to-event data using MCMC. <em>Journal of Statistical Software</em> <b>72(7)</b>, 1–45.
+doi:10.18637/jss.v072.i07.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: With 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011) Dynamic predictions and prospective accuracy in joint models for longitudinal 
+and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+<p>Tsiatis, A. and Davidian, M. (2004) Joint modeling of longitudinal and time-to-event data: an overview. 
+<em>Statistica Sinica</em> <b>14</b>, 809–834.
+</p>
+<p>Wulfsohn, M. and Tsiatis, A. (1997) A joint model for survival and longitudinal data measured with error. 
+<em>Biometrics</em> <b>53</b>, 330–339.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coef.JMbayes</code>,
+<code>ranef.JMbayes</code>, 
+<code>logLik.JMbayes</code>, 
+<code>survfitJM</code>,
+<code>aucJM</code>,
+<code>dynCJM</code>,
+<code>prederrJM</code>, 
+<code>predict.JMbayes</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+# A joint model for the AIDS dataset:
+# First we fit the linear mixed model for the longitudinal measurements of
+# sqrt CD4 cell counts
+lmeFit.aids &lt;- lme(CD4 ~ obstime * drug, random = ~ obstime | patient, data = aids)
+# next we fit the Cox model for the time to death (including the 'x = TRUE' argument)
+survFit.aids &lt;- coxph(Surv(Time, death) ~ drug, data = aids.id, x = TRUE)
+
+# the corresponding joint model is fitted by (the default is to assume 
+# the current value parameterization)
+jointFit.aids &lt;- jointModelBayes(lmeFit.aids, survFit.aids, timeVar = "obstime")
+summary(jointFit.aids)
+
+# A joint model for the PBC dataset:
+# We first fit the linear mixed and Cox models. In the first we include 
+# splines to model flexibly the subject-specific longitudinal trajectories
+lmeFit.pbc &lt;- lme(log(serBilir) ~ ns(year, 2),
+    random = list(id = pdDiag(form = ~ ns(year, 2))), data = pbc2)
+survFit.pbc &lt;- coxph(Surv(years, status2) ~ 1, data = pbc2.id, x = TRUE)
+
+# the corresponding joint model is fitted by:
+jointFit.pbc &lt;- jointModelBayes(lmeFit.pbc, survFit.pbc, timeVar = "year", 
+    baseHaz = "regression-splines")
+summary(jointFit.pbc)
+
+# we update the joint model fitted for the PBC dataset by including
+# the time-dependent slopes term. To achieve this we need to define 
+# the 'extraForm' argument, in which we use function dns() to numerically
+# compute the derivative of the natural cubic spline. In addition, we increase
+# the number of MCMC iterations to 35000
+dform = list(fixed = ~ 0 + dns(year, 2), random = ~ 0 + dns(year, 2),
+    indFixed = 2:3, indRandom = 2:3)
+jointFit.pbc2 &lt;- update(jointFit.pbc, param = "td-both", extraForm = dform,
+    n.iter = 35000)
+summary(jointFit.pbc2)
+
+# we fit the same model with the shared random effects formulation
+jointFit.pbc3 &lt;- update(jointFit.pbc, param = "shared-betasRE")
+summary(jointFit.pbc3)
+
+# a joint model for left censored longitudinal data
+# we create artificial left censoring in serum bilirubin
+pbc2$CensInd &lt;- as.numeric(pbc2$serBilir &lt;= 0.8)
+pbc2$serBilir2 &lt;- pbc2$serBilir
+pbc2$serBilir2[pbc2$CensInd == 1] &lt;- 0.8
+
+censdLong &lt;- function (y, eta.y, scale, log = FALSE, data) {
+    log.f &lt;- dnorm(x = y, mean = eta.y, sd = scale, log = TRUE)
+    log.F &lt;- pnorm(q = y, mean = eta.y, sd = scale, log.p = TRUE)
+    ind &lt;- data$CensInd
+    if (log) {
+        (1 - ind) * log.f + ind * log.F
+    } else {
+        exp((1 - ind) * log.f + ind * log.F)
+    }
+}
+lmeFit.pbc2 &lt;- lme(log(serBilir2) ~ ns(year, 2), data = pbc2,
+                   random = ~ ns(year, 2) | id, method = "ML")
+jointFit.pbc4 &lt;- jointModelBayes(lmeFit.pbc2, survFit.pbc, timeVar = "year",
+                                  densLong = censdLong)
+
+summary(jointFit.pbc4)
+
+# a joint model for a binary outcome
+pbc2$serBilirD &lt;- 1 * (pbc2$serBilir &gt; 1.8)
+lmeFit.pbc3 &lt;- glmmPQL(serBilirD ~ year, random = ~ year | id, 
+	family = binomial, data = pbc2)
+
+dLongBin &lt;- function (y, eta.y, scale, log = FALSE, data) {
+    dbinom(x = y, size = 1, prob = plogis(eta.y), log = log)
+}
+
+jointFit.pbc5 &lt;- jointModelBayes(lmeFit.pbc3, survFit.pbc, timeVar = "year", 
+	densLong = dLongBin)
+
+summary(jointFit.pbc5)
+
+
+# create start-stop counting process variables
+pbc &lt;- pbc2[c("id", "serBilir", "drug", "year", "years",
+              "status2", "spiders")]
+pbc$start &lt;- pbc$year
+splitID &lt;- split(pbc[c("start", "years")], pbc$id)
+pbc$stop &lt;- unlist(lapply(splitID,
+                          function (d) c(d$start[-1], d$years[1]) ))
+pbc$event &lt;- with(pbc, ave(status2, id,
+                           FUN = function (x) c(rep(0, length(x)-1), x[1])))
+pbc &lt;- pbc[!is.na(pbc$spiders), ]
+
+# left-truncation
+pbc &lt;- pbc[pbc$start != 0, ] 
+
+lmeFit.pbc &lt;- lme(log(serBilir) ~ drug * ns(year, 2),
+                  random = ~ ns(year, 2) | id, data = pbc)
+
+tdCox.pbc &lt;- coxph(Surv(start, stop, event) ~ drug * spiders + cluster(id),
+                   data = pbc, x = TRUE, model = TRUE)
+
+jointFit.pbc6 &lt;- jointModelBayes(lmeFit.pbc, tdCox.pbc, timeVar = "year")
+
+summary(jointFit.pbc6)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

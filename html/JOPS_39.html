@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.ps2dglm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>ps2DGLM</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns both linear
+predictor and inverse link predictions at arbitrary (x, y) data locations
+(using <code>ps2DGLM</code> with <code>class ps2dglm</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'ps2dglm'
+predict(object, ..., XY, type = "mu")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>ps2DGLM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>XY</code></td>
+<td>
+<p>a matrix of arbitrary (<code>x</code>, <code>y</code>) locations for
+desired prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the mean value <code>type = "mu"</code> (default) or linear predictor
+<code>type = "eta"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated mean (inverse link function) (default)
+or the linear predictor prediction with <code>type =
+"eta"</code>, for arbitary (x, y) locations in <code>XY</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(fields)
+library(JOPS)
+# Extract data
+library(rpart)
+Kyphosis &lt;- kyphosis$Kyphosis
+Age &lt;- kyphosis$Age
+Start &lt;- kyphosis$Start
+y &lt;- 1 * (Kyphosis == "present") # make y 0/1
+fit &lt;- ps2DGLM(
+  Data = cbind(Start, Age, y),
+  Pars = rbind(c(1, 18, 10, 3, .1, 2), c(1, 206, 10, 3, .1, 2)),
+  family = "binomial", link = "logit")
+predict(fit, XY = cbind(Start, Age)[1:5,])
+</code></pre>
+
+
+</div>

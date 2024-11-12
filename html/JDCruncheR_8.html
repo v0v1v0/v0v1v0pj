@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export_xlsx.QR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Exporting QR_matrix objects in an Excel file</h2>
+
+<h3>Description</h3>
+
+<p>To export a quality report in an Excel file.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'QR_matrix'
+export_xlsx(x, file, auto_format = TRUE, overwrite = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>a <code>character</code> object with the path to the file to export
+que l'on veut créer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_format</code></td>
+<td>
+<p>logical indicating whether to format the output
+(<code>auto_format = TRUE</code> by default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>logical indicating whether to create an Excel file if it
+doesn't exist yet (<code>create = TRUE</code> by default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other unused arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns invisibly (via <code>invisible(x)</code>) a workbook object
+created by <code>XLConnect::loadWorkbook()</code> for further manipulation.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other QR_matrix functions: 
+<code>export_xlsx()</code>,
+<code>export_xlsx.mQR_matrix()</code>,
+<code>extract_QR()</code>,
+<code>rbind.QR_matrix()</code>,
+<code>sort()</code>,
+<code>weighted_score()</code>
+</p>
+
+
+</div>

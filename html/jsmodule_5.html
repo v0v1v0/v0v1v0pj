@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coxModule</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>coxModule: shiny modulde server for Cox's model.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny modulde server for Cox's model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coxModule(
+  input,
+  output,
+  session,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 10,
+  design.survey = NULL,
+  default.unires = T,
+  limit.unires = 20,
+  id.cluster = NULL,
+  ties.coxph = "efron"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>reactuve data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>reactive list of variable structure, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nlevels limit in factor variable, Default: 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design.survey</code></td>
+<td>
+<p>reactive survey data. default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default.unires</code></td>
+<td>
+<p>Set default independent variables using univariate analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>limit.unires</code></td>
+<td>
+<p>Change to default.unires = F if number of independent variables &gt; limit.unires, Default: 20</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.cluster</code></td>
+<td>
+<p>reactive cluster variable if marginal cox model, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ties.coxph</code></td>
+<td>
+<p>'coxph' ties option, one of 'efron', 'breslow', 'exact', default: 'erfon'</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny modulde server for Cox's model.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny modulde server for Cox's model.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      coxUI("cox")
+    ),
+    mainPanel(
+      DTOutput("coxtable")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_cox &lt;- callModule(coxModule, "cox",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$coxtable &lt;- renderDT({
+    datatable(out_cox()$table, rownames = T, caption = out_cox()$caption)
+  })
+}
+</code></pre>
+
+
+</div>

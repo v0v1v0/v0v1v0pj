@@ -1,0 +1,204 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compile</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compile information</h2>
+
+<h3>Description</h3>
+
+<p>Compiled objects are used as building blocks for junction tree inference
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compile(
+  x,
+  evidence = NULL,
+  root_node = "",
+  joint_vars = NULL,
+  tri = "min_fill",
+  pmf_evidence = NULL,
+  alpha = NULL,
+  initialize_cpts = TRUE
+)
+
+## S3 method for class 'cpt_list'
+compile(
+  x,
+  evidence = NULL,
+  root_node = "",
+  joint_vars = NULL,
+  tri = "min_fill",
+  pmf_evidence = NULL,
+  alpha = NULL,
+  initialize_cpts = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object returned from <code>cpt_list</code> (baeysian network) or
+<code>pot_list</code> (decomposable markov random field)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>evidence</code></td>
+<td>
+<p>A named vector. The names are the variabes and the elements
+are the evidence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>root_node</code></td>
+<td>
+<p>A node for which we require it to live in the root
+clique (the first clique).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>joint_vars</code></td>
+<td>
+<p>A vector of variables for which we require them
+to be in the same clique. Edges between all these variables are added
+to the moralized graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tri</code></td>
+<td>
+<p>The optimization strategy used for triangulation if x originates
+from a Baeysian network. One of
+</p>
+
+<ul>
+<li>
+<p> 'min_fill'
+</p>
+</li>
+<li>
+<p> 'min_rfill'
+</p>
+</li>
+<li>
+<p> 'min_sp'
+</p>
+</li>
+<li>
+<p> 'min_ssp'
+</p>
+</li>
+<li>
+<p> 'min_lsp'
+</p>
+</li>
+<li>
+<p> 'min_lssp'
+</p>
+</li>
+<li>
+<p> 'min_elsp'
+</p>
+</li>
+<li>
+<p> 'min_elssp'
+</p>
+</li>
+<li>
+<p> 'min_nei'
+</p>
+</li>
+<li>
+<p> 'minimal'
+</p>
+</li>
+<li>
+<p> 'alpha'
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pmf_evidence</code></td>
+<td>
+<p>A named vector of frequencies of the expected
+missingness of a variable. Variables with frequencies of 1 can be
+neglected; these are inferrred. A value of 0.25 means, that the
+given variable is expected to be missing (it is not a evidence node)
+in one fourth of the future cases. Relevant for <code>tri</code> methods
+'min_elsp' and 'min_elssp'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>Character vector. A permutation of the nodes
+in the graph. It specifies a user-supplied eliminination ordering for
+triangulation of the moral graph.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize_cpts</code></td>
+<td>
+<p><code>TRUE</code> if the CPTs should be initialized,
+i.e. multiplied together to form the clique potentials. If FALSE,
+the <code>compile</code>d object will save the triangulation and other
+information that needs only bee computed once. Herafter, it is
+possible to enter evidence into the CPTs, using <code>set_evidence</code>,
+saving a lot of computations.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Junction Tree Algorithm performs both a forward and inward
+message pass (collect and distribute). However, when the forward
+phase is finished, the root clique potential is guaranteed to be the
+joint pmf over the variables involved in the root clique. Thus, if
+it is known in advance that a specific variable is of interest, the
+algortihm can be terminated after the forward phase. Use the <code>root_node</code>
+to specify such a variable and specify <code>propagate = "collect"</code> in
+the juntion tree algortihm function <code>jt</code>.
+</p>
+<p>Moreover, if interest is in some joint pmf for variables that end up
+being in different cliques these variables must be specified in advance
+using the <code>joint_vars</code> argument. The compilation step then
+adds edges between all of these variables to ensure that at least one
+clique contains all of them.
+</p>
+<p>Evidence can be entered either at compile stage
+or after compilation. Hence, one can also combine
+evidence from before compilation with evidence
+after compilation. Before refers to entering
+evidence in the 'compile' function and after
+refers to entering evidence in the 'jt' function.
+</p>
+<p>Finally, one can either use a Bayesian network or a decomposable
+Markov random field (use the <code>ess</code> package to fit these). Bayesian
+networks must be constructed with <code>cpt_list</code> and decomposable MRFs
+can be constructed with both <code>pot_list</code> and <code>cpt_list</code>. However,
+<code>pot_list</code> is just an alias for <code>cpt_list</code> which handles both
+cases internally.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">cptl &lt;- cpt_list(asia2)
+cp1  &lt;- compile(cptl, evidence = c(bronc = "yes"), joint_vars = c("bronc", "tub"))
+print(cp1)
+names(cp1)
+dim_names(cp1)
+plot(get_graph(cp1))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LRskew</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Littlewood-Richardson rule for skew Schur polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Expression of a skew Schur polynomial as a linear
+combination of Schur polynomials.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LRskew(lambda, mu, output = "dataframe")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>the type of the output, <code>"dataframe"</code> or <code>"list"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This computes the expression of the skew Schur polynomial
+associated to the skew partition defined by <code>lambda</code> and <code>mu</code>
+as a linear combination of Schur polynomials. Every coefficient of this
+linear combination is a positive integer, a so-called
+Littlewood-Richardson coefficient.
+If <code>output="dataframe"</code>,
+the output is a dataframe with two columns: the column <code>coeff</code> gives
+the coefficients of this linear combination, and the column <code>nu</code>
+gives the partitions defining the Schur polynomials of this linear
+combination as character strings, e.g. the partition <code>c(4, 3, 1)</code> is
+given by <code>"[4, 3, 1]"</code>. If <code>output="list"</code>, the output is a list
+of lists with two elements. Each of these lists with two elements
+corresponds to a term of the linear combination: the first element, named
+<code>coeff</code>, is the coefficient, namely the Littlewood-Richardson
+coefficient <code class="reqn">c^{\lambda}_{\mu,\nu}</code>, where <code class="reqn">\nu</code> is the integer
+partition given in the second element of the list, named
+<code>nu</code>, which defines the Schur polynomial of the linear
+combination.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jack)
+LRskew(lambda = c(4, 2, 1), mu = c(3, 1))
+</code></pre>
+
+
+</div>

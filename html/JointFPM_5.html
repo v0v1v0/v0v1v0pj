@@ -1,0 +1,196 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.JointFPM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Post-estimation function for JointFPMs</h2>
+
+<h3>Description</h3>
+
+<p>Predicts different estimates from a joint flexible parametric model.
+Currently only the estimation of the mean number of events at different
+time points is supported.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JointFPM'
+predict(
+  object,
+  type = "mean_no",
+  newdata,
+  t,
+  exposed = NULL,
+  ci_fit = TRUE,
+  method = "romberg",
+  ngq = 30,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A joint flexible parametric model of class <code>JointFPM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character vector defining the estimate of interest. Currently available
+options are:
+</p>
+
+<dl>
+<dt>
+<code>mean_no</code>: </dt>
+<dd>
+<p>Estimates the mean number of events at time(s) <code>t</code>.</p>
+</dd>
+<dt>
+<code>diff</code>: </dt>
+<dd>
+<p>Estimates the difference in mean number of events
+between exposed and unexposed at time(s) <code>t</code>.</p>
+</dd>
+<dt>
+<code>marg_mean_no</code>: </dt>
+<dd>
+<p>Estimates the marginal mean number of events.</p>
+</dd>
+<dt>
+<code>marg_diff</code>: </dt>
+<dd>
+<p>Estimates the marginal difference in the mean
+number of events.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>A <code>data.frame</code> with one row including the variable values used for t
+he prediction. One value for each variable used in either the recurrent or
+competing event model is required when predicting <code>mean_no</code> or <code>diff</code>.
+For <code>marg_mean_no</code> or <code>marg_diff</code>, this includes the variable
+that you would like your marginal estimate to be conditioned on.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>A vector defining the time points used for the prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exposed</code></td>
+<td>
+<p>A function that takes <code>newdata</code> as an argument and creates a new dataset
+for the exposed group. This argument is required if <code>type = 'diff'</code>.
+Please see details for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci_fit</code></td>
+<td>
+<p>Logical indicator for whether confidence intervals should be estimated
+for the fitted estimates using the delta method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>The method used for the underlying numerical integration procedure.
+Defaults to <code>"romberg"</code>, which uses the <code>rmutil::int()</code> function,
+but it is possible to use Gaussian quadrature by setting
+<code>method = "gq"</code> instead.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ngq</code></td>
+<td>
+<p>Number of quadrature nodes used when <code>method = "gq"</code>. Defaults to 30,
+which lead to accurate results (compared to <code>method = "romberg"</code>) in our
+experience.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Added for compatibility with other predict functions.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function required for the <code>exposed</code> argument must take the <code>newdata</code>
+dataset as argument and transform it to a new dataset that defines the
+exposed group. Assume we assume that we have a model with one variable
+<code>trt</code> which is a 0/1 coded treatment indicator. If we would like to obtain
+the difference in mean number of events comparing the untreated to treated
+group we could use the following function assuming that
+<code>newdata = data.frame(trt = 0)</code>:
+</p>
+<div class="sourceCode"><pre>function(x){transform(x, trt = 1)}
+</pre></div>
+
+
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with the following columns:
+</p>
+
+<dl>
+<dt>
+<code>t</code>: </dt>
+<dd>
+<p>The time for the prediction,</p>
+</dd>
+<dt>
+<code>fit</code>: </dt>
+<dd>
+<p>The point estimate of the prediction,</p>
+</dd>
+<dt>
+<code>lci</code>: </dt>
+<dd>
+<p>The lower confidence interval limit,</p>
+</dd>
+<dt>
+<code>uci</code>: </dt>
+<dd>
+<p>The upper confidence interval limit.</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">bldr_model &lt;- JointFPM(Surv(time  = start,
+                            time2 = stop,
+                            event = event,
+                            type  = 'counting') ~ 1,
+                       re_model = ~ pyridoxine + thiotepa,
+                       ce_model = ~ pyridoxine + thiotepa,
+                       re_indicator = "re",
+                       ce_indicator = "ce",
+                       df_ce = 3,
+                       df_re = 3,
+                       cluster  = "id",
+                       data     = bladder1_stacked)
+
+predict(bldr_model,
+        newdata = data.frame(pyridoxine = 1,
+                             thiotepa   = 0),
+        t       =  c(10, 20),
+        ci_fit  = FALSE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>AdjustedSharpeRatio</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adjusted Sharpe ratio of the return distribution</h2>
+
+<h3>Description</h3>
+
+<p>Adjusted Sharpe ratio was introduced by Pezier and White (2006) to adjusts
+for skewness and kurtosis by incorporating a penalty factor for negative skewness
+and excess kurtosis.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">AdjustedSharpeRatio(R, Rf = 0, FUN = "StdDev")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>an xts, vector, matrix, data frame, timeSeries or zoo object of
+asset returns</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rf</code></td>
+<td>
+<p>the risk free rate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>one of "StdDev" or "VaR" or "ES" to use as the denominator for unadjusted Sharpe ratio, default="StdDev"</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p style="text-align: center;"><code class="reqn">Adjusted Sharpe Ratio = SR * [1 + (\frac{S}{6}) * SR - (\frac{K - 3}{24}) * SR^2]</code>
+</p>
+
+<p>where <code class="reqn">SR</code> is the sharpe ratio with data annualized, <code class="reqn">S</code> is the skewness and <code class="reqn">K</code> is the kurtosis
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>References</h3>
+
+<p>Carl Bacon, <em>Practical portfolio performance measurement
+and attribution</em>, second edition 2008 p.99.<br></p>
+<p>Pezier, Jaques and White, Anthony. 2006. The Relative Merits of Investable
+Hedge Fund Indices and of Funds of Hedge Funds in Optimal Passive Portfolios.
+Check <a href="https://econpapers.repec.org/paper/rdgicmadp/icma-dp2006-10.htm">https://econpapers.repec.org/paper/rdgicmadp/icma-dp2006-10.htm</a> <br>
+See also package <code>PerformanceAnalytics</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">    data(assetReturns)
+
+AdjustedSharpeRatio(assetReturns)
+
+</code></pre>
+
+
+</div>

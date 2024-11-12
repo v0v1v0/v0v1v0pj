@@ -1,0 +1,114 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>traceworstRhat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Trace plots corresponding to the worst values of Rhat</h2>
+
+<h3>Description</h3>
+
+<p>Trace plots with kernel densities will be created for parameters with the largest (worst) associated values of <code>Rhat</code>.
+This function is primarily intended for parameters with a vector (or array) of values.
+</p>
+<p><code>Rhat</code> (Gelman-Rubin Convergence Diagnostic, or Potential Scale Reduction Factor)
+is calculated within 'JAGS', and is
+commonly used as a measure of convergence for a given parameter node.  Values close
+to 1 are seen as evidence of adequate convergence.  <code>n.eff</code> is also calculated within 'JAGS', and may be interpreted as a crude measure of
+effective sample size for a given parameter node.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">traceworstRhat(x, p = NULL, n.eff = FALSE, margin = NULL, parmfrow = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object returned from <code>jagsUI</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Optional vector of parameters to subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.eff</code></td>
+<td>
+<p>Whether to plot parameters with the smallest associated values of <code>n.eff</code> instead.  Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>In the case of a 2+ dimensional array associated with a given parameter, this will have the effect
+of plotting the worst <code>Rhat</code> corresponding to each margin specified.  For example, specifying <code>margin=2</code> (column)
+will plot the parameter with the worst <code>Rhat</code> value from each column.  In contrast, specifying <code>margin=NULL</code> (the default)
+will cause the function to plot the single array element with the largest Rhat value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parmfrow</code></td>
+<td>
+<p>Optional call to <code>par(mfrow)</code> for the number of rows &amp; columns of plot window.  Returns the graphics device to previous state afterward.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments or arguments to <code>tracedens_jags()</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>References</h3>
+
+<p>Gelman, A., &amp; Rubin, D. B. (1992). Inference from Iterative Simulation
+Using Multiple Sequences. <em>Statistical Science, 7</em>(4), 457–472. http://www.jstor.org/stable/2246093
+</p>
+
+
+<h3>See Also</h3>
+
+<p>plotRhats, check_Rhat, qq_postpred, ts_postpred, plot_postpred
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## plotting everything
+traceworstRhat(SS_out, parmfrow=c(3,2))
+SS_out$Rhat  # the associated values
+
+traceworstRhat(SS_out, parmfrow=c(3,2), n.eff=TRUE)
+SS_out$n.eff  # the associated values
+
+## in the case of a 2-D array, setting margin=2 gives the max Rhat
+## associated with each column, rather than the global max
+traceworstRhat(x=SS_out, p="cycle_s", margin=2, parmfrow=c(2,2))
+SS_out$Rhat
+traceworstRhat(x=SS_out, p="cycle_s", margin=2, parmfrow=c(2,2), n.eff=TRUE)
+SS_out$n.eff
+</code></pre>
+
+
+</div>

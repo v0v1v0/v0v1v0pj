@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jt_nbinary_ops</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Number of Binary Operations</h2>
+
+<h3>Description</h3>
+
+<p>Number of binary operations needed to propagate in a junction tree
+given evidence, using the Lauritzen-Spiegelhalter scheme
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jt_nbinary_ops(x, evidence = list(), root = NULL, nc = 1)
+
+## S3 method for class 'triangulation'
+jt_nbinary_ops(x, evidence = list(), root = NULL, nc = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A junction tree object or an object returned from
+the triangulation function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>evidence</code></td>
+<td>
+<p>List of character vectors with evidence nodes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>root</code></td>
+<td>
+<p>Integer specifying the root node in the junction tree</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nc</code></td>
+<td>
+<p>Integer. The number of cores to be used in parallel</p>
+</td>
+</tr>
+</table>
+</div>

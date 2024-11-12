@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LRmult</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Littlewood-Richardson rule for multiplication</h2>
+
+<h3>Description</h3>
+
+<p>Expression of the product of two Schur polynomials as a linear
+combination of Schur polynomials.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LRmult(mu, nu, output = "dataframe")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mu, nu</code></td>
+<td>
+<p>integer partitions, given as vectors of decreasing integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>the type of the output, <code>"dataframe"</code> or <code>"list"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>This computes the expression of the product of the two Schur
+polynomials associated to <code>mu</code> and <code>nu</code> as a linear combination
+of Schur polynomials. If <code>output="dataframe"</code>, the output is a
+dataframe with two columns: the column <code>coeff</code> gives the coefficients
+of this linear combination, these are positive integers, and the column
+<code>lambda</code> gives the partitions defining the Schur polynomials of this
+linear combination as character strings, e.g. the partition
+<code>c(4, 3, 1)</code> is encoded by the character string <code>"[4, 3, 1]"</code>.
+If <code>output="list"</code>, the output is a list
+of lists with two elements. Each of these lists with two elements
+corresponds to a term of the linear combination: the first element,
+named <code>coeff</code>, is the coefficient, namely the Littlewood-Richardson
+coefficient <code class="reqn">c^{\lambda}_{\mu,\nu}</code>, where <code class="reqn">\lambda</code> is the
+integer partition given in the second element of the list, named
+<code>lambda</code>, which defines the Schur polynomial of the
+linear combination.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jack)
+mu &lt;- c(2, 1)
+nu &lt;- c(3, 2, 1)
+LR &lt;- LRmult(mu, nu, output = "list")
+LRterms &lt;- lapply(LR, function(lr) {
+  lr[["coeff"]] * SchurPol(3, lr[["lambda"]])
+})
+smu_times_snu &lt;- Reduce(`+`, LRterms)
+smu_times_snu == SchurPol(3, mu) * SchurPol(3, nu) # should be TRUE
+</code></pre>
+
+
+</div>

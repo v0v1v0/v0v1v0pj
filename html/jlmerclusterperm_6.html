@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compute_timewise_statistics</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit Julia regression models to each time point of a time series data</h2>
+
+<h3>Description</h3>
+
+<p>Fit Julia regression models to each time point of a time series data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compute_timewise_statistics(
+  jlmer_spec,
+  family = c("gaussian", "binomial"),
+  statistic = c("t", "chisq"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jlmer_spec</code></td>
+<td>
+<p>Data prepped for jlmer from <code>make_jlmer_spec()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>A GLM family. Currently supports "gaussian" and "binomial".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statistic</code></td>
+<td>
+<p>Test statistic for calculating cluster mass.
+Can be one of <code>"t"</code> (default) from the regression model output or
+<code>"chisq"</code> from a likelihood ratio test (takes about twice as long to calculate).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments passed to Julia for model fitting.
+Defaults to <code>fast = TRUE</code> (when <code>family = "binomial"</code>) and <code>progress = FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A predictor-by-time matrix of cluster statistics, of class <code>timewise_statistics</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jlmer()</code>, <code>make_jlmer_spec()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+library(dplyr, warn.conflicts = FALSE)
+
+# Specification object
+spec &lt;- make_jlmer_spec(
+  weight ~ 1 + Diet, filter(ChickWeight, Time &lt;= 20),
+  subject = "Chick", time = "Time"
+)
+spec
+
+# Predictor x Time matrix of t-statistics from regression output
+empirical_statistics &lt;- compute_timewise_statistics(spec)
+round(empirical_statistics, 2)
+
+# Collect as dataframe with `tidy()`
+empirical_statistics_df &lt;- tidy(empirical_statistics)
+empirical_statistics_df
+
+# Timewise statistics are from regression models fitted to each time point
+# - Note the identical statistics at `Time == 0`
+empirical_statistics_df %&gt;%
+  filter(time == 0)
+to_jlmer(weight ~ 1 + Diet, filter(ChickWeight, Time == 0)) %&gt;%
+  tidy() %&gt;%
+  select(term, statistic)
+
+
+
+
+</code></pre>
+
+
+</div>

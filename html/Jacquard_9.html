@@ -1,0 +1,121 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>JointGenotypeCounts</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate joint pairwise Genotype Counts
+</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>JointGenotypeCounts</code> counts for each pair of individuals in the database their
+nine joint genotype counts
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">JointGenotypeCounts(X.gen, one.is.minor = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X.gen</code></td>
+<td>
+<p>A matrix with genotype data coded in (0,1,2) format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>one.is.minor</code></td>
+<td>
+<p>If <code>TRUE</code> the genotype data represent the count
+of the minor allele for each marker, if <code>FALSE</code> the major allele.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list object with nine fields containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>f0000</code></td>
+<td>
+<p>Matrix of (0/0,0/0) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f1111</code></td>
+<td>
+<p>Matrix of (1/1,1/1) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f1101</code></td>
+<td>
+<p>Matrix of (1/1,0/1) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f0111</code></td>
+<td>
+<p>Matrix of (0/1,1/1) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f0101</code></td>
+<td>
+<p>Matrix of (0/1,0/1) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f1100</code></td>
+<td>
+<p>Matrix of (1/1,0/0) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f0011</code></td>
+<td>
+<p>Matrix of (0/0,1/1) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f0100</code></td>
+<td>
+<p>Matrix of (0/1,0/0) counts for all pairs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f0001</code></td>
+<td>
+<p>Matrix of (0/0,0/1) counts for all pairs</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>References</h3>
+
+<p>Graffelman, J., Weir, B.S. and Goudet, J. (2024) Estimation of Jacquard's genetic identity coefficients
+with bi-allelic variants by constrained least-squares. Preprint at bioRxiv. <a href="https://doi.org/10.1101/2024.03.25.586682">doi:10.1101/2024.03.25.586682</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(SimulatedPedigree)
+JC &lt;- JointGenotypeCounts(SimulatedPedigree[1:3,1:100])
+print(JC)
+</code></pre>
+
+
+</div>

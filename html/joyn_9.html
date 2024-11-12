@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_reportvar</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check reporting variable</h2>
+
+<h3>Description</h3>
+
+<p>check reportvar input <br> If resulting data frame has a reporting variable (storing joyn's report), check and return a valid name.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_reportvar(reportvar, verbose = getOption("joyn.verbose"))
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>if input reportvar is character, return valid name for the report var. If NULL or FALSE, return NULL.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# When null - reporting variable not returned in merged dt
+joyn:::check_reportvar(reportvar = NULL)
+# When FALSE - reporting variable not returned in merged dt
+joyn:::check_reportvar(reportvar = FALSE)
+# When character
+joyn:::check_reportvar(reportvar = ".joyn")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

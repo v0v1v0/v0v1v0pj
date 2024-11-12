@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jstage_metadata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scrape J-STAGE Article Metadata</h2>
+
+<h3>Description</h3>
+
+<p>Scrapes all available metadata from a J-STAGE article web page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jstage_metadata(url, collapse = NULL, pdf_path = NULL, bibtex_path = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>The URL or DOI of the J-STAGE article web page.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>collapse</code></td>
+<td>
+<p>A character string to separate multiple authors' names and keywords.
+If you are unsure which string to use, please specify "\n".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pdf_path</code></td>
+<td>
+<p>The path where the PDF file of the article will be downloaded. If
+<code>pdf_path</code> is not NULL, the PDF file will be downloaded to the specified
+location. Specify "." to save the file in the working directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bibtex_path</code></td>
+<td>
+<p>The path to save the BibTeX entry. If <code>bibtex_path</code> is not NULL, a BibTeX
+file will be saved. Specify "." to save the file in the working directory.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing the article metadata.
+</p>
+
+
+</div>

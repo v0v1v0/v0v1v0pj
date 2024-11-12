@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tSkewSchurPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew t-Schur polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Returns the skew t-Schur polynomial associated to
+the given skew partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tSkewSchurPol(n, lambda, mu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables, a positive integer</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>symbolicQspray</code> multivariate polynomial, the skew
+t-Schur polynomial associated to the skew partition defined by
+<code>lambda</code> and <code>mu</code>.
+It has a single parameter usually denoted by <code class="reqn">t</code> and its
+coefficients are polynomials in this parameter. Substituting
+<code class="reqn">t</code> with <code class="reqn">0</code> yields the skew Schur polynomials.
+</p>
+
+
+</div>

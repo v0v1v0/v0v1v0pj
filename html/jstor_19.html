@@ -1,0 +1,208 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_import</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrapper for file import</h2>
+
+<h3>Description</h3>
+
+<p>This function applies an import function to a list of <code>xml</code>-files
+or a .zip-archive in case of <code>jst_import_zip</code> and saves
+the output in batches of <code>.csv</code>-files to disk.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_import(
+  in_paths,
+  out_file,
+  out_path = NULL,
+  .f,
+  col_names = TRUE,
+  n_batches = NULL,
+  files_per_batch = NULL,
+  show_progress = TRUE
+)
+
+jst_import_zip(
+  zip_archive,
+  import_spec,
+  out_file,
+  out_path = NULL,
+  col_names = TRUE,
+  n_batches = NULL,
+  files_per_batch = NULL,
+  show_progress = TRUE,
+  rows = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>in_paths</code></td>
+<td>
+<p>A character vector to the <code>xml</code>-files which should be
+imported</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_file</code></td>
+<td>
+<p>Name of files to export to. Each batch gets appended by an
+increasing number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_path</code></td>
+<td>
+<p>Path to export files to (combined with filename).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.f</code></td>
+<td>
+<p>Function to use for import. Can be one of <code>jst_get_article</code>,
+<code>jst_get_authors</code>, <code>jst_get_references</code>, <code>jst_get_footnotes</code>, <code>jst_get_book</code>
+or <code>jst_get_chapter</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_names</code></td>
+<td>
+<p>Should column names be written to file? Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_batches</code></td>
+<td>
+<p>Number of batches, defaults to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>files_per_batch</code></td>
+<td>
+<p>Number of files for each batch. Can be used instead of
+n_batches, but not in conjunction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_progress</code></td>
+<td>
+<p>Displays a progress bar for each batch, if the session
+is interactive.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>zip_archive</code></td>
+<td>
+<p>A path to a .zip-archive from DfR</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>import_spec</code></td>
+<td>
+<p>A specification from jst_define_import
+for which parts of a .zip-archive should be imported via which functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rows</code></td>
+<td>
+<p>Mainly used for testing, to decrease the number of files which
+are imported (i.e. 1:100).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Along the way, we wrap three functions, which make the process of converting
+many files easier:
+</p>
+
+<ul>
+<li> <p><code>purrr::safely()</code>
+</p>
+</li>
+<li> <p><code>furrr::future_map()</code>
+</p>
+</li>
+<li> <p><code>readr::write_csv()</code>
+</p>
+</li>
+</ul>
+<p>When using one of the <code style="white-space: pre;">⁠find_*⁠</code> functions, there should usually be no errors.
+To avoid the whole computation to fail in the unlikely event that an error
+occurs, we use <code>safely()</code> which let's us
+continue the process, and catch the error along the way.
+</p>
+<p>If you have many files to import, you might benefit from executing the
+function in parallel. We use futures for this to give you maximum
+flexibility. By default the code is executed sequentially. If you want to
+run it in parallel, simply call <code>future::plan()</code> with
+<code>future::multisession()</code> as an argument before
+running <code>jst_import</code> or <code>jst_import_zip</code>.
+</p>
+<p>After importing all files, they are written to disk with
+<code>readr::write_csv()</code>.
+</p>
+<p>Since you might run out of memory when importing a large quantity of files,
+you can split up the files to import  into batches. Each batch is being
+treated separately, therefore for each batch multiple processes from
+<code>future::multisession()</code> are spawned, if you added this plan.
+For this reason, it is not recommended to have very small batches,
+as there is an overhead for starting and ending the processes. On the other
+hand, the batches should not be too large, to not exceed memory limitations.
+A value of 10000 to 20000 for <code>files_per_batch</code> should work fine on most
+machines. If the session is interactive and <code>show_progress</code> is <code>TRUE</code>, a
+progress bar is displayed for each batch.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Writes <code>.csv</code>-files to disk.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jst_combine_outputs()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# read from file list --------
+# find all files
+meta_files &lt;- list.files(pattern = "xml", full.names = TRUE)
+
+# import them via `jst_get_article`
+jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
+           files_per_batch = 25000)
+           
+# do the same, but in parallel
+library(future)
+plan(multiprocess)
+jst_import(meta_files, out_file = "imported_metadata", .f = jst_get_article,
+           files_per_batch = 25000)
+
+# read from zip archive ------ 
+# define imports
+imports &lt;- jst_define_import(article = c(jst_get_article, jst_get_authors))
+
+# convert the files to .csv
+jst_import_zip("my_archive.zip", out_file = "my_out_file", 
+                 import_spec = imports)
+
+## End(Not run) 
+</code></pre>
+
+
+</div>

@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>liver</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Liver cirrhosis drug trial data</h2>
+
+<h3>Description</h3>
+
+<p>This dataset gives the longitudinal observations of prothrombin 
+index, a measure of liver function, for patients from a controlled trial 
+into prednisone treatment of liver cirrhosis. Time-to-event information in 
+the form of the event time and associated censoring indicator are also 
+recorded along with a solitary baseline covariate - the allocated treatment
+arm in this instance. The data are taken from Andersen et al. (1993, p. 19)
+and were analyzed in Henderson et al. (2002). This is a subset of the full 
+data where a number of variables were recorded both at entry and during the
+course of the trial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(liver)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A <code>data.frame</code> in the unbalanced format with longitudinal observations 
+from 488 subjects. The columns are:
+</p>
+
+<dl>
+<dt><code>id</code></dt>
+<dd>
+<p>integer: number for patient identification.</p>
+</dd>
+<dt><code>prothrombin</code></dt>
+<dd>
+<p>integer: prothrombin index measurement (%).</p>
+</dd>
+<dt><code>time</code></dt>
+<dd>
+<p>numeric: time of prothrombin index measurement (years).</p>
+</dd>
+<dt><code>treatment</code></dt>
+<dd>
+<p>integer: patient treatment indicator. Coded as 
+<code>0 = </code>placebo; <code>1 = </code>prednisone.</p>
+</dd>
+<dt><code>survival</code></dt>
+<dd>
+<p>numeric: patient survival time (years).</p>
+</dd>
+<dt><code>cens</code></dt>
+<dd>
+<p>integer: censoring indicator. Coded as <code>1 = </code>died; 
+<code>0 = </code>censored.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Skrondal A, Rabe-Hesketh S. <em>Generalized Latent Variable
+Modeling: Multilevel, Longitudinal and Structural Equation Models.</em> Chapman
+&amp; Hall/CRC. 2004. URL: <a href="http://www.gllamm.org/books/readme.html#14.6">http://www.gllamm.org/books/readme.html#14.6</a>.
+</p>
+
+
+<h3>References</h3>
+
+<p>Andersen PK, Borgan O, Gill RD, Kieding N. <em>Statistical Models Based on 
+Counting Processes</em>. New York: Springer. 2003.
+</p>
+<p>Henderson R, Diggle PJ, Dobson A. Identification and efficacy of longitudinal
+markers for survival. <em>Biostatistics</em> 2002; <strong>3</strong>: 33-50.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>heart.valve</code>, <code>epileptic</code>, 
+<code>mental</code>, <code>aids</code>.
+</p>
+
+
+</div>

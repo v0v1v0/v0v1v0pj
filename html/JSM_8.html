@@ -1,0 +1,252 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmodelMult</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Semiparametric Joint Models for Survival and Longitudinal Data with Nonparametric Multiplicative Random Effects</h2>
+
+<h3>Description</h3>
+
+<p>This function applies a maximum likelihood approach to fit the semiparametric joint models of survival and normal
+longitudinal data. The survival model is assumed to come from a class of transformation models, including the Cox
+proportional hazards model and the proportional odds model as special cases. The longitudinal process is modeled by  
+nonparametric multiplicative random effects (NMRE) model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmodelMult(fitLME, fitCOX, data, model = 1, rho = 0, timeVarY = NULL, 
+           timeVarT = NULL, control = list(), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fitLME</code></td>
+<td>
+<p>an object inheriting from class <code>lme</code> representing a fitted nonparametric multiplicative random effects model. See <b>Details</b> and <b>Note</b> and <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fitCOX</code></td>
+<td>
+<p>an object inheriting from class <code>coxph</code> representing a fitted Cox proportional hazards regression model. Specifying <code>x = TRUE</code> is required in the call to <code>coxph()</code> to include the design matrix in the object fit. See <b>Note</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data.frame containing all the variables included in the joint modeling. See <b>Note</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>an indicator specifying the dependency between the survival and longitudinal outcomes. Default is 1. See 
+<b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rho</code></td>
+<td>
+<p>a nonnegative real number specifying the transformation model you would like to fit. Default is 0, i.e. the Cox proportional hazards model. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVarY</code></td>
+<td>
+<p>a character string indicating the time variable in the NMRE model. See <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVarT</code></td>
+<td>
+<p>a character string indicating the time variable in the <code>coxph</code> object. Normally it is <code>NULL</code>. See <b>Note</b> and <b>Examples</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values for the estimation algorithm with components:
+</p>
+
+<dl>
+<dt>tol.P</dt>
+<dd>
+<p>tolerance value for convergence in the parameters with default value 1e-03. See <b>Details</b>.</p>
+</dd>
+<dt>tol.L</dt>
+<dd>
+<p>tolerance value for convergence in the log-likelihood with default value 1e-06. See <b>Details</b>.</p>
+</dd>
+<dt>max.iter</dt>
+<dd>
+<p>the maximum number of EM iterations with default value 250.</p>
+</dd>
+<dt>SE.method</dt>
+<dd>
+<p>a character string specifying the standard error estimation method. Default is <code>"PRES"</code>. See <b>Details</b> and <b>Note</b>.</p>
+</dd>
+<dt>delta</dt>
+<dd>
+<p>a positive value used for numerical differentiation in the <code>SE.method</code>. Default is 1e-05 if <code>"PRES"</code> is used and 1e-03 otherwise. See <b>Details</b>.</p>
+</dd>
+<dt>nknot</dt>
+<dd>
+<p>the number of Gauss-Hermite quadrature knots used to approximate the integrals over the random effects. Under the nonparametric multiplicative random effects model, there are only one-dimensional integrations and the default for <code>nknot</code> is 11.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional options to be passed to the <code>control</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The <code>jmodelMult</code> function fits joint models for survival and longitudinal data. Nonparametric multiplicative random effects models (NMRE) are assumed for the longitudinal processes. With the Cox proportional hazards model and the proportional odds model as special cases, a general class of transformation models are assumed for the survival processes. The baseline hazard functions are left unspecified, i.e. no parametric forms are assumed, thus leading to semiparametric models. For detailed model formulation, please refer to Xu, Hadjipantelis and Wang (2017). 
+</p>
+<p>The longitudinal model (NMRE) is written as </p>
+<p style="text-align: center;"><code class="reqn">Y_i(t)=\mu_i(t) + \varepsilon_i(t) = b_i\times\mathbf{B}^\top(t)\boldsymbol\gamma + \varepsilon_i(t),</code>
+</p>
+<p> where <code class="reqn">\mathbf{B}(t)=(B_1(t), \cdots, B_L(t))</code> is a vector of B-spline basis functions and <code class="reqn">b_i</code> is a random effect <code class="reqn">\sim\mathcal{N}(1, \sigma_b^2)</code>. Note that we also allow the inclusion of baseline covariates as columns of <code class="reqn">\mathbf{B}(t)</code>. If <code>model = 1</code>, then the linear predictor for the survival model is expressed as </p>
+<p style="text-align: center;"><code class="reqn">\eta(t) = \mathbf{W}_i^\top(t)\boldsymbol\phi + \alpha\mu_i(t),</code>
+</p>
+<p> indicating that the entire longitudinal process (free of error) enters the survival model as a covariate. If other values are assigned to the <code>model</code> argument, the linear predictor for the surival model is then expressed as </p>
+<p style="text-align: center;"><code class="reqn">\eta(t) = \mathbf{W}_i^\top(t)\boldsymbol\phi + \alpha b_i,</code>
+</p>
+<p> suggesting that the survival and longitudinal models only share the same random effect.
+</p>
+<p>The survival model is written as </p>
+<p style="text-align: center;"><code class="reqn">\Lambda(t|\eta(t)) = G\left[\int_0^t\exp\{\eta(s)\}d\Lambda_0(s)\right],</code>
+</p>
+<p> where <code class="reqn">G(x) = \log(1 + \rho x) / \rho</code> with <code class="reqn">\rho \geq 0</code> is the class of logarithmic transfomrations. If <code>rho = 0</code>, then <code class="reqn">G(x) = x</code>, yielding the Cox proportional hazards model. If <code>rho = 1</code>, then <code class="reqn">G(x) = \log(1 + x)</code>, yielding the proportional odds model. Users could assign any nonnegative real value to <code>rho</code>.
+</p>
+<p>An expectation-maximization (EM) algorithm is implemented to obtain parameter estimates. The convergence criterion is either of (i) <code class="reqn">\max \{ | \boldsymbol\theta^{(t)} - \boldsymbol\theta^{(t - 1)} | / ( | \boldsymbol\theta^{(t - 1)} | + .Machine\$double.eps \times 2 ) \} &lt; tol.P</code>, or (ii) <code class="reqn">| L(\boldsymbol\theta^{(t)}) - L(\boldsymbol\theta^{(t - 1)})| / ( | L(\theta^{(t - 1)}) | + .Machine\$double.eps \times 2 ) &lt; tol.L</code>, is satisfied. Here <code class="reqn">\boldsymbol\theta^{(t)}</code> and <code class="reqn">\boldsymbol\theta^{(t-1)}</code> are the vector of parameter estimates at the <code class="reqn">t</code>-th and <code class="reqn">(t-1)</code>-th EM iterations, respectively; <code class="reqn">L(\boldsymbol\theta)</code> is the value of the log-likelihood function evaluated at <code class="reqn">\boldsymbol\theta</code>. Users could specify the tolerance values <code>tol.P</code> and <code>tol.L</code> through the <code>control</code> argument.
+</p>
+<p>For standard error estimation for the parameter estimates, three methods are provided, namely <code>"PRES"</code>, <code>"PFDS"</code> and <code>"PLFD"</code> (detailed information are referred to Xu, Baines and Wang (2014)). In the <code>control</code> argument, if <code>SE.method = "PRES"</code>, numerically differentiating the profile Fisher score vector with Richardson extrapolation is applied; if <code>SE.method = "PFDS"</code>, numerically differentiating the profile Fisher score vector with forward difference is applied; if <code>SE.method = "PLFD"</code>, numerially (second) differentiating the profile likelihood with forward difference is applied. Generally, numerically differentiating a function <code class="reqn">f(x)</code> (an arbitrary function) with forward difference is expressed as </p>
+<p style="text-align: center;"><code class="reqn">f^\prime(x) = \frac{f(x + \delta) - f(x)}{\delta},</code>
+</p>
+<p> and that with Richardson extrapolation is expressed as </p>
+<p style="text-align: center;"><code class="reqn">f^\prime(x) = \frac{f(x - 2\delta) - 8f(x - \delta) + 8f(x + \delta) - f(x + 2\delta)}{12\delta}.</code>
+</p>
+<p> Users could specify the value of <code class="reqn">\delta</code> through the <code>delta</code> item in the <code>control</code> argument.
+</p>
+
+
+<h3>Value</h3>
+
+<p>See <code>jmodelMultObject</code> for the components of the fit.
+</p>
+
+
+<h3>Note</h3>
+
+<p>1. To fit a nonparametric multiplicative random effects model, the fixed effect in the <code>fitLME</code> object should be a matrix of B-spline basis functions (an object from the <code>bs</code> function) with the possibility of including baseline covariates and the random effect should only include a random intercept. In the <code>bs</code> function, it is a good practice to specify the boundary knots through the <code>Boundary.knots</code> argument, where the upper boundary knot is typically the longest follow-up time among all subjects. See <b>Examples</b>.
+</p>
+<p>2. Currently, <code>jmodelMult()</code> could only handle the <code>fitLME</code> object with a simple random-effects structure (only the <code>pdDiag()</code> class). Moreover, the within-group correlation and heteroscedasticity structures in the <code>fitLME</code> object (i.e. the <code>correlation</code> and <code>weights</code> argument of <code>lme()</code>) are ignored.
+</p>
+<p>3. The <code>data</code> argument in <code>jmodelMult()</code>, <code>lme()</code> and <code>coxph()</code> should be the same data frame.
+</p>
+<p>4. For the <code>fitCOX</code> object, only the <code class="reqn">W_i(t)</code> in the linear predictor <code class="reqn">\eta(t)</code> for the survial model (see <b>Details</b>) should be involved in the <code>formula</code> argument of <code>coxph{}</code>. Since <code>coxph()</code> uses the same data frame as <code>lme()</code> does, a time-dependent Cox model must be fitted by <code>coxph()</code> although <code class="reqn">W_i(t)</code> may only contain time-independent covariates. See <b>Examples</b>.
+</p>
+<p>5. If <code class="reqn">W_i(t)</code> in the linear predictor <code class="reqn">\eta(t)</code> for the survial model (see <b>Details</b>) does involve time-dependent covariate, then <code>timeVarT</code> must specify the name of the time variable involved (see <b>Examples</b>).
+</p>
+<p>6. The standard error estimates are obtained by numerical approximations which is naturally subject to numerical errors. Therefore, in extreme cases, there may be <code>NA</code> values for part of the standard error estimates.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+Pantelis Z. Hadjipantelis <a href="mailto:pantelis@ucdavis.edu">pantelis@ucdavis.edu</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Dabrowska, D. M. and Doksun K. A. (1988) Partial Likelihood in Transformation Models with Censored Data. <em>Scandinavian Journal of Statistics</em> <b>15</b>, 1–23.
+</p>
+<p>Ding, J. and Wang, J. L. (2008) Modeling longitudinal data with nonparametric multiplicative random effects jointly with survival data. <em>Biometrics</em> <b>64</b>, 546–556.
+</p>
+<p>Tsiatis, A. A. and Davidian, M. (2004) Joint modeling of longitudinal and time-to-event data: an overview. 
+<em>Statistica Sinica</em> <b>14</b>, 809–834.
+</p>
+<p>Xu, C., Baines, P. D. and Wang, J. L. (2014) Standard error estimation using the EM algorithm for the joint modeling of survival and longitudinal data. <em>Biostatistics</em> <b>15</b>, 731–744
+</p>
+<p>Xu, C., Hadjipantelis, P. Z. and Wang, J. L. (2020) Semiparametric joint modeling of survival and longitudinal data: the R package JSM. <em>Journal of Statistical Software</em> &lt;doi:10.18637/jss.v093.i02&gt;.
+</p>
+<p>Zeng, D. and Lin, D. (2007) Maximum likelihood estimation in semiparametric regression models with censored data. <em>Journal of the Royal Statistical Society: Series B</em> <b>69</b>, 507–564.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmodelMultObject</code>,
+<code>lme</code>,
+<code>coxph</code>,
+<code>Surv</code>,
+<code>bs</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># linear mixed-effects model fit where the fixed effect is modeled by 
+# quadratic B-splie basis with no internal knots
+fitLME &lt;- lme(log(serBilir) ~ bs(obstime, degree = 2, Boundary.knots = c(0, 15)), 
+              random = ~ 1 | ID, data = pbc)
+# Cox proportional hazards model fit with a single time-independent covariate
+fitCOX &lt;- coxph(Surv(start, stop, event) ~ drug, data = pbc, x = TRUE)
+
+# joint model fit which assumes the Cox proportional hazards model for the survival process 
+# and NMRE for the longitudinal process. Use 'max.iter = 25', 'nknot = 3' and 
+# the 'PFDS' method to calculate standard error estimates as a quick toy example 
+fitJTMult.ph &lt;- jmodelMult(fitLME, fitCOX, pbc, timeVarY = "obstime", 
+                           control = list(SE.method = 'PFDS', max.iter = 25, nknot = 3))
+summary(fitJTMult.ph)
+
+## Not run: 
+# joint model fit with the default control
+fitJTMult.ph2 &lt;- jmodelMult(fitLME, fitCOX, pbc, timeVarY = "obstime")
+summary(fitJTMult.ph2)
+# joint model fit where the survival and longitudinal processes only share 
+# the same random effect
+fitJTMult.ph3 &lt;- jmodelMult(fitLME, fitCOX, pbc, model = 2, timeVarY = "obstime")
+summary(fitJTMult.ph3)
+
+# joint model fit which assumes the proportional odds model for the survival process 
+# and NMRE model for the longitudinal process
+fitJTMult.po &lt;- jmodelMult(fitLME, fitCOX, pbc, rho = 1, timeVarY = "obstime")
+summary(fitJTMult.po)
+# joint model fit where the survival and longitudinal processes only share 
+# the same random effect
+fitJTMult.po2 &lt;- jmodelMult(fitLME, fitCOX, pbc, model = 2, rho = 1, timeVarY = "obstime")
+summary(fitJTMult.po2)
+
+# allow baseline covariates in the NMRE model for the longitudinal process
+fitLME2 &lt;- lme(log(serBilir) ~ drug + bs(obstime, degree = 2, Boundary.knots = c(0, 15)), 
+               random = ~1 | ID, data = pbc)
+fitJTMult.ph4 &lt;- jmodelMult(fitLME2, fitCOX, pbc, timeVarY = "obstime")
+summary(fitJTMult.ph4)
+
+# Cox proportional hazards model fit with a time-dependent covariate
+fitCOX2 &lt;- coxph(Surv(start, stop, event) ~ drug + as.numeric(drug) : obstime, 
+                 data = pbc, x = TRUE)
+# joint model fit in which \code{timeVarT} must be specified
+fitJTMult.ph5 &lt;- jmodelMult(fitLME, fitCOX2, pbc, timeVarY = "obstime", timeVarT = 'obstime', 
+                            control = list(max.iter = 300))
+summary(fitJTMult.ph5)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

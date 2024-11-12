@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>NormalizeCountMatrices</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalize the count matrices and set whether to use the Poisson KL divergence
+or the Frobenius norm</h2>
+
+<h3>Description</h3>
+
+<p>Normalize the count data within each modality. The default
+normalization, which should be used when using the KL divergence, is median
+library size normalization (Zheng et al. 2017; Elyanow et al. 2020). To perform median library size normalization,
+each count within a cell is divided by its library size (i.e. the counts within a column are divided by the
+column sum). Then, all values are multiplied by the median library size
+(i.e. the median column sum). To use the Frobenius norm, set <code>frob=TRUE</code> to log<code class="reqn">(x+1)</code>
+normalize your count data and use a desired <code>scaleFactor</code>.
+You may also use a different form of normalization and store these results
+in the <code>normalized.count.matrices</code> slot.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">NormalizeCountMatrices(SickleJr, diffFunc = "klp", scaleFactor = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diffFunc</code></td>
+<td>
+<p>A string set to "klp" when using the Poisson KL divergence
+or to "fr" when using the Frobenius norm: default is KL divergence; this also determines
+the type of normalization</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaleFactor</code></td>
+<td>
+<p>A single numeric value (if using the same scale factor for each modality)
+or a list of numeric values to use (if using different scale factors in different modalities)
+as scale factors for the log<code class="reqn">(x+1)</code> normalization when <code>diffFunc="fr"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with a list of sparse, normalized data matrices added to its <code>normalized.count.matrices</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>Elyanow R, Dumitrascu B, Engelhardt BE, Raphael BJ (2020).
+“NetNMF-SC: Leveraging gene-gene interactions for imputation and dimensionality reduction in single-cell expression analysis.”
+<em>Genome Research</em>, <b>30</b>(2), 195–204.
+ISSN 15495469, <a href="https://doi.org/10.1101/gr.251603.119">doi:10.1101/gr.251603.119</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/31992614/">https://pubmed.ncbi.nlm.nih.gov/31992614/</a>.
+</p>
+<p>Zheng GX, Terry JM, Belgrader P, Ryvkin P, Bent ZW, Wilson R, Ziraldo SB, Wheeler TD, McDermott GP, Zhu J, Gregory MT, Shuga J, Montesclaros L, Underwood JG, Masquelier DA, Nishimura SY, Schnall-Levin M, Wyatt PW, Hindson CM, Bharadwaj R, Wong A, Ness KD, Beppu LW, Deeg HJ, McFarland C, Loeb KR, Valente WJ, Ericson NG, Stevens EA, Radich JP, Mikkelsen TS, Hindson BJ, Bielas JH (2017).
+“Massively parallel digital transcriptional profiling of single cells.”
+<em>Nature Communications</em>, <b>8</b>.
+ISSN 20411723, <a href="https://doi.org/10.1038/NCOMMS14049">doi:10.1038/NCOMMS14049</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/28091601/">https://pubmed.ncbi.nlm.nih.gov/28091601/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">SimSickleJrSmall&lt;-NormalizeCountMatrices(SimSickleJrSmall)
+SimSickleJrSmall&lt;-NormalizeCountMatrices(SimSickleJrSmall, diffFunc="fr",scaleFactor=1e6)
+</code></pre>
+
+
+</div>

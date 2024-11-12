@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>EnvVars-JuliaConnectoR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Environment variables used by the <span class="pkg">JuliaConnectoR</span>
+</h2>
+
+<h3>Description</h3>
+
+<p>There are some environment variables which can be used to deviate from the
+default behavior of the package.
+To have an effect, these environment variables must be set before a Julia
+connection is established, i.e., before the first call to Julia or before a
+call to  <code>startJuliaServer</code>.
+All the variables are optional.
+</p>
+
+
+<h3>Details</h3>
+
+<p>The environment variables that are used in the package are listed below:
+</p>
+
+<dl>
+<dt>
+<span class="env">JULIA_BINDIR</span>:</dt>
+<dd>
+<p>If this variable is set to the path of the Julia <code>bin</code> directory
+before connecting to Julia, the corresponding Julia installation will be used.
+By using this variable, it is possible to use a different Julia version
+than the one in the system <span class="env">PATH</span>.
+(You can find the correct path to the <code>bin</code> directory
+of Julia by evaluating the expression <code>Sys.BINDIR</code> within Julia.)</p>
+</dd>
+<dt>
+<span class="env">JULIACONNECTOR_JULIAENV</span>:</dt>
+<dd>
+<p>Specify environment variables only for
+Julia.
+(This does not work on Windows and the variable is ignored there.)
+This allows, e.g., to set
+the LD_LIBRARY_PATH variable to a different value for Julia than for R.
+The value can be any R code that defines variables, e.g.,
+<code>"LD_LIBRARY_PATH=''"</code> is a valid value.
+On Linux, Julia is started with an empty <code>LD_LIBRARY_PATH</code>
+by default as the <code>LD_LIBRARY_PATH</code> required by R may be incompatible
+with Julia. If the <code>LD_LIBRARY_PATH</code> needs to be set to a different
+value, this can be done via the <code>JULIACONNECTOR_JULIAENV</code> variable.</p>
+</dd>
+<dt>
+<span class="env">JULIACONNECTOR_JULIAOPTS</span>:</dt>
+<dd>
+<p>Set start-up options for Julia.
+As an example, consider specifying the project environment and enabling
+code coverage when starting Julia. This can be achieved by setting
+the environment variable to
+<code>"--project=/path/to/project --code-coverage"</code>.</p>
+</dd>
+<dt>
+<span class="env">JULIACONNECTOR_SERVER</span>:</dt>
+<dd>
+<p>Specifies the server address of a
+(running) Julia server that the R process can connect to.
+A possible example value is "localhost:11980", specifying host and port.
+The function <code>startJuliaServer</code> sets this variable and
+communicates the location of the server to child processes with it.
+Due to security concerns, the Julia server accepts only connections from
+the same machine and connecting to remote machines is currently not
+possible.</p>
+</dd>
+</dl>
+</div>

@@ -1,0 +1,172 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jlctree</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fits Joint Latent Class Tree (JLCT) model.</h2>
+
+<h3>Description</h3>
+
+<p>Fits Joint Latent Class Tree model. 
+This is the main function that is normally called by the user.
+See <code>jlctree-package</code> for more details.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jlctree(survival, classmb, fixed, random, subject, data, parms = list(),
+  control = list())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>survival</code></td>
+<td>
+<p>a two-sided formula object; required. The left side of the formula corresponds
+to a <code>Surv()</code> object of type “counting” for left-truncated right-censored (LTRC) data,
+or of type “right” for right-censored data.
+The right side of the formula specifies the names of covariates to include in the survival model,
+excluding the longitudinal outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classmb</code></td>
+<td>
+<p>one-sided formula describing the covariates in the class-membership tree construction; required.
+Covariates used for tree construction are separated by <code>+</code> on the right of <code>~</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fixed</code></td>
+<td>
+<p>two-sided linear formula object for the fixed-effects in the linear mixed-effects model for 
+longitudinal outcomes; required.
+The longitudinal outcome is on the left of <code>~</code> and the covariates are separated by <code>+</code> 
+on the right of <code>~</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+<p>one-sided formula for the node-specific random effects in the linear mixed-effects model for 
+longitudinal outcomes; optional. 
+If missing, there are no node-specific random effects in the fitted linear mixed-effects model.
+Covariates with a random effect are separated by <code>+</code> on the right of <code>~</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subject</code></td>
+<td>
+<p>name of the covariate representing the subject identifier; optional. 
+If missing, there are no subject-specific random intercepts in the fitted linear mixed-effects model for
+longitudinal outcomes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the dataset; required.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>parameter list of Joint Latent Class Tree model parameters. 
+See also <code>jlctree.control</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p><code>rpart</code> control parameters. See also <code>rpart.control</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>tree</code></td>
+<td>
+<p>an <code>rpart</code> object, containing the constructed Joint Latent Class tree.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>the <code>rpart.control</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>the <code>jlctree.control</code> parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lmmmodel</code></td>
+<td>
+<p>an <code>lme4</code> object, containing the linear mixed-effects effects model
+with fixed effects, node-specific random effects (if valid), 
+and subject-specific random intercepts (if valid). 
+Returned when <code>fity</code> is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coxphmodel_diffh_diffs</code></td>
+<td>
+<p>a <code>coxph</code> object, containing a Cox PH model
+with different hazards and different slopes across terminal nodes.
+Returned when <code>fits</code> is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coxphmodel_diffh</code></td>
+<td>
+<p>a <code>coxph</code> object, containing a Cox PH model 
+with different hazards but same slopes across terminal nodes.
+Returned when <code>fits</code> is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coxphmodel_diffs</code></td>
+<td>
+<p>a <code>coxph</code> object, containing a Cox PH model 
+with same hazards but different slopes across terminal nodes.
+Returned when <code>fits</code> is TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>jlctree-package, jlctree.control, rpart.control</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> # Time-to-event in LTRC format:
+ data(data_timevar)
+ tree &lt;- jlctree(survival=Surv(time_L, time_Y, delta)~X3+X4+X5,
+                 classmb=~X1+X2, fixed=y~X1+X2+X3+X4+X5, random=~1,
+                 subject='ID',data=subset(data_timevar, ID&lt;=30),
+                 parms=list(maxng=4, fity=FALSE, fits=FALSE))
+
+ # Time-to-event in right-censored format:
+ data(data_timeinv)
+ tree &lt;- jlctree(survival=Surv(time_Y, delta)~X3+X4+X5,
+                 classmb=~X1+X2, fixed=y~X1+X2+X3+X4+X5, random=~1,
+                 subject='ID', data=subset(data_timeinv, ID&lt;=30),
+                 parms=list(maxng=4, fity=FALSE, fits=FALSE))
+
+</code></pre>
+
+
+</div>

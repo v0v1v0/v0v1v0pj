@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>grid_probs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to compute predicted quantiles</h2>
+
+<h3>Description</h3>
+
+<p>Find predicted quantiles given classification results at different quantiles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">grid_probs(X, q, delta, median_loc)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Matrix of class predictions, where each column gives the predictions
+for a given quantile in q.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>The quantiles for which the columns of X are predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delta</code></td>
+<td>
+<p>The number of quantiles used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median_loc</code></td>
+<td>
+<p>Location of median quantile (0-based indexing).</p>
+</td>
+</tr>
+</table>
+</div>

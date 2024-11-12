@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CalculateUMAPSickleJr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate the UMAP for an object of class SickleJr</h2>
+
+<h3>Description</h3>
+
+<p>Perform UMAP on the <code class="reqn">\mathbf{H}</code> matrix alone (default) or within a modality by
+using UMAP on the <code class="reqn">W^vH</code> corresponding to modality <code class="reqn">v</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CalculateUMAPSickleJr(
+  SickleJr,
+  umap.settings = umap::umap.defaults,
+  modality = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>umap.settings</code></td>
+<td>
+<p>Optional settings for the <code>umap</code>; defaults to <code>umap.defaults</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modality</code></td>
+<td>
+<p>A number corresponding to the desired modality; if set, will perform UMAP on
+<code class="reqn">\mathbf{W}^{\mathtt{modality}}</code>
+on <code class="reqn">\mathbf{H}</code> alone; not recommended for datasets of more than 1000 cells</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with UMAP output based on the <code class="reqn">\mathbf{H}</code> matrix alone or within a modality added to its <code>umap</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>McInnes L, Healy J, Saul N, Großberger L (2018).
+“UMAP: Uniform Manifold Approximation and Projection.”
+<em>Journal of Open Source Software</em>, <b>3</b>(29), 861.
+ISSN 2475-9066, <a href="https://doi.org/10.21105/JOSS.00861">doi:10.21105/JOSS.00861</a>, <a href="https://joss.theoj.org/papers/10.21105/joss.00861">https://joss.theoj.org/papers/10.21105/joss.00861</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Since this example has only 10 observations,
+#we need to modify the number of neighbors from the default of 15
+umap.settings=umap::umap.defaults
+umap.settings$n_neighbors=2
+SimSickleJrSmall&lt;-CalculateUMAPSickleJr(SimSickleJrSmall,
+umap.settings=umap.settings)
+SimSickleJrSmall&lt;-CalculateUMAPSickleJr(SimSickleJrSmall,
+umap.settings=umap.settings,modality=1)
+SimSickleJrSmall&lt;-CalculateUMAPSickleJr(SimSickleJrSmall,
+umap.settings=umap.settings,modality=2)
+</code></pre>
+
+
+</div>

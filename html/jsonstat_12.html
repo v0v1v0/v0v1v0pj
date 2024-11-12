@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>toJSON.jsonstat.dataset</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert JSON-stat dataset into JSON</h2>
+
+<h3>Description</h3>
+
+<p>Convert JSON-stat dataset into JSON
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jsonstat.dataset'
+toJSON(x, auto_unbox = F)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>JSON-stat dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_unbox</code></td>
+<td>
+<p>this flag marks atomic vectors in given list as a
+singleton, so it will not turn into an 'array' when encoded into JSON.
+FALSE by default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>JSON output
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jsonstat)
+library(dplyr)
+
+.plan &lt;- compress_plan("place.of.birth", "geo", "Place of Birth") %&gt;%
+  dimension("age.group", "classification", "Age Group") %&gt;%
+  dimension("gender", "classification", "Gender") %&gt;%
+  dimension("year", "time", "Year") %&gt;%
+  dimension("province.of.residence", "geo", "Province of Residence") %&gt;%
+  dimension("concept", "metric", "Concept") %&gt;%
+  dimension("value", "value", "value")
+
+.dataset &lt;- as.dataset(galicia, .plan,
+              label = paste("Population by province of residence,",
+                            "place of birth, age, gender and year",
+                            "in Galicia"),
+              href = "https://github.com/zedoul/jsonstat")
+
+.jsonstat &lt;- toJSON(.dataset)
+</code></pre>
+
+
+</div>

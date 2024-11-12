@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>boot_jaatha</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parametric Bootstrapping of Jaatha Estimates</h2>
+
+<h3>Description</h3>
+
+<p>This function is a helper function for using the <code>boot</code>
+function to bootstrap Jaatha estimates. Each bootstap replication requires
+a complete jaatha estimation on data simulated with the original parameter
+estimates. Therefore, bootstrapping is normally computationally demanding and
+should be executed on a computing cluster.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">boot_jaatha(results, R, cores_per_run = 1, verbose = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>results</code></td>
+<td>
+<p>The results of an <code>jaatha</code> analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>R</code></td>
+<td>
+<p>The number of bootstrapping replicates that are performed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cores_per_run</code></td>
+<td>
+<p>The number of cores that are used for each replicate.
+This corresponds to the <code>cores</code> option of <code>jaatha</code>.
+Different replicates can be executed in parallel using the 
+<code>parallel</code>, <code>ncpus</code> and <code>cl</code> options of 
+<code>boot</code>.  The total number of CPU cores
+used is <code>ncpus</code> * <code>cores_per_run</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If TRUE (default), each bootstrap estimation is written
+as a message.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments that are passed on <code>boot</code>.
+It is highly recommended to use its <code>parallel</code> and <code>ncpus</code> 
+options to parallelize the bootstrap replicates.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The result of <code>boot</code>. This object can be used to
+estimate standard errors or confidence intervals of the estimates using
+the functions available in package <span class="pkg">boot</span>.
+Note that the returned object contains a vector of parameter values <code>t0</code>
+that is the result of an additional jaatha run for the original data, whereas
+the parametric bootstrap simulations used parameter values that are in the vector
+<code>mle</code> in the returned <code>boot</code> object.
+By default, the function <code>boot.ci</code> of the <code>boot</code> package
+uses the parameter values <code>t0</code> as a reference point.
+To use the values in <code>mle</code> instead, overwrite <code>t0</code> with <code>mle</code> before
+applying the function <code>boot.ci</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>boot</code>, <code>jaatha</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# The original Jaatha anaylsis:
+model &lt;- create_jaatha_model(function(x) rpois(10, x),
+                    par_ranges = matrix(c(0.1, 0.1, 10, 10), 2, 2),
+                    sum_stats = list(create_jaatha_stat("sum", sum)))
+data &lt;- create_jaatha_data(rpois(10, 9), model)
+jaatha_result &lt;- jaatha(model, data, cores = 2)
+
+# Bootstrapping the results:
+library(boot)
+
+jaatha_boot_results &lt;- boot_jaatha(jaatha_result, 50, 
+                                   cores_per_run = 2)
+
+boot.ci(jaatha_boot_results, type = "norm")
+jaatha_boot_results$t0 &lt;- jaatha_boot_results$mle
+boot.ci(jaatha_boot_results, type = "norm")
+
+
+</code></pre>
+
+
+</div>

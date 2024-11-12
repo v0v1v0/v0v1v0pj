@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dimension.jsonstat.compress.plan</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>dimension</h2>
+
+<h3>Description</h3>
+
+<p>This function adds another dimension into compress plan
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jsonstat.compress.plan'
+dimension(.plan, dim_name,
+  role_name = c("time", "geo", "metric", "classification", "value"),
+  label = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>.plan</code></td>
+<td>
+<p><code>jsonstat.compress.plan</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim_name</code></td>
+<td>
+<p>name of dimension</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>role_name</code></td>
+<td>
+<p>role of dimension</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label of dimension</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>jsonstat.compress.plan</code> object
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jsonstat)
+
+.plan &lt;- compress_plan("place.of.birth", "geo", "Place of Birth")
+.plan &lt;- dimension(.plan, "age.group", "classification", "Age Group")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>maxEntropy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conditional Poisson Sampling (maximum entropy sampling)</h2>
+
+<h3>Description</h3>
+
+<p>Draw a sample by means of Conditional Poisson Sampling
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">maxEntropy(pik, N, q)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pik</code></td>
+<td>
+<p>vector of first-order inclusion probabilities</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>population size (excluding self-selecting units)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>matrix of selection probabilities, computed by means of function
+<code>UPMEsfromq()</code> of package <code>sampling</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>this functions is a modified version of function <code>UPmaxentropy</code>,
+in the <span class="pkg">sampling</span> package.
+</p>
+
+
+</div>

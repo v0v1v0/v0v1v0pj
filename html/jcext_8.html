@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>extended_jc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>extended_jc</h2>
+
+<h3>Description</h3>
+
+<p>Gets daily classification of weather types
+at every grid-point over the map or selected area of interest according
+to the Jenkison and Collison scheme.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">extended_jc(mslp, loni, lati, times, gale = FALSE, num_cores = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>mslp</code></td>
+<td>
+<p>3-Dimensional array ([loni,lati,time]) with mean sea level pressure in Pa.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loni</code></td>
+<td>
+<p>Array with longitude values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lati</code></td>
+<td>
+<p>Array with latitude values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Array with the dates used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gale</code></td>
+<td>
+<p>Logial. If TRUE, the function returns also Gale days.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_cores</code></td>
+<td>
+<p>Number of cores (2 by default).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with two objects:
+</p>
+
+<ul>
+<li>
+<p> A list of eleven matrix of daily frequencies of weather types ("wtypes").
+Each matrix is a 3D array [loni,lati,times] and it refers to each weather type (N,NE,E,SE,S,SW,W,A,C and U).
+</p>
+</li>
+<li>
+<p> A list of six matrix of daily frequency of airflow indices ("indices").
+Each matrix is a 3D array [loni,lati,times] and it refers to each airflow index (W,S,TF,ZW,ZS,Z and D).
+</p>
+</li>
+<li>
+<p> A list with the central points for which the classification is applied.
+</p>
+</li>
+</ul>
+<h3>References</h3>
+
+<p>Otero, N., Sillmann, J. &amp; Butler, T.
+<em>Assessment of an extended version of the Jenkinson–Collison classification on CMIP5 models over Europe</em>
+Climate Dynamics. https://doi.org/10.1007/s00382-017-3705-y
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>classification_jc</code>
+<code>calculate_cwt</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Load data
+data(press)
+# Get coordinates
+longitudes &lt;- press$loni
+latitudes  &lt;- press$lati
+times      &lt;- press$dates
+
+# Example when the classification is restricted to an area
+# Select longitudes and latitudes within the European domain: -10W,40E, 40N,70N
+ilon  &lt;- which(longitudes&gt;(-10)&amp;longitudes&lt;40)
+loni  &lt;- longitudes[ilon]
+ilat  &lt;- which(latitudes&gt;40&amp;latitudes&lt;70)
+lati  &lt;- latitudes[ilat]
+cwtEU &lt;- extended_jc(press$msl[ilon,ilat,], loni, lati, times, gale=FALSE, num_cores=2)
+ ## Not run: 
+# Not run
+# This is a long running example
+# Get the classification for the whole map, all longitudes and latitudes
+cwtGlobal &lt;- extended_jc(press$msl, longitudes, latitudes, times, gale=FALSE, num_cores=2)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

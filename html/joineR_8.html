@@ -1,0 +1,216 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointplot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint plot of longitudinal and survival data</h2>
+
+<h3>Description</h3>
+
+<p>This function views the longitudinal profile of each unit with
+the last longitudinal measurement prior to event-time (censored or not)
+taken as the end-point, referred to as time zero. In doing so, the shape of
+the profile prior to event-time can be inspected. This can be done over a
+user-specified number of time units.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jointplot(
+  object,
+  Y.col,
+  Cens.col,
+  lag,
+  split = TRUE,
+  col1,
+  col2,
+  xlab,
+  ylab,
+  gp1lab,
+  gp2lab,
+  smooth = 2/3,
+  mean.profile = FALSE,
+  mcol1,
+  mcol2
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>jointdata</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y.col</code></td>
+<td>
+<p>an element of class <code>character</code> identifying the 
+longitudinal response part of the <code>jointdata</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Cens.col</code></td>
+<td>
+<p>an element of class <code>character</code> identifying the survival
+status or censoring indicator part of the <code>jointdata</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>argument which specifies how many units in time we look back 
+through. Defaults to the maximum observation time across all units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>split</code></td>
+<td>
+<p>logical argument which allows the profiles of units which 
+<em>fail</em> and those which are <em>censored</em> to be viewed in separate 
+panels of the same graph. This is the default option. Using <code>split =
+FALSE</code> will plot all profiles overlaid on a single plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col1</code></td>
+<td>
+<p>argument to choose the colour for the profiles of the 
+<em>censored</em> units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col2</code></td>
+<td>
+<p>argument to choose the colour for the profiles of the 
+<em>failed</em> units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>an element of class <code>character</code> indicating the title for the
+x-axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>an element of class <code>character</code> indicating the title for the
+x-axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gp1lab</code></td>
+<td>
+<p>an element of class <code>character</code> for the group 
+corresponding to a censoring indicator of zero. Typically, the censored 
+group.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gp2lab</code></td>
+<td>
+<p>an element of class <code>character</code> for the group 
+corresponding to a censoring indicator of one. Typically, the group 
+experiencing the event of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smooth</code></td>
+<td>
+<p>the smoother span. This gives the proportion of points in the 
+plot which influence the smooth at each value. Defaults to a value of 2/3. 
+Larger values give more smoothness. See <code>lowess</code> for 
+further details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean.profile</code></td>
+<td>
+<p>draw mean profiles if TRUE. Only applies to the 
+<code>split = TRUE</code> case.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcol1</code></td>
+<td>
+<p>argument to choose the colour for the mean profile of the units 
+with a censoring indicator of zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcol2</code></td>
+<td>
+<p>argument to choose the colour for the mean profile of the units 
+with a censoring indicator of one.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function tailors the <code>xyplot</code> function to 
+produce a representation of joint data with longitudinal and survival 
+components.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A lattice plot.
+</p>
+
+
+<h3>Note</h3>
+
+<p>If more than one cause of failure is present (i.e. competing risks
+data), then all failures are pooled together into a single failure type.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Pete Philipson
+</p>
+
+
+<h3>References</h3>
+
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data 
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>xyplot</code>, <code>joint</code>, 
+<code>jointdata</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(heart.valve)
+heart.surv &lt;- UniqueVariables(heart.valve, 
+                              var.col = c("fuyrs", "status"),
+                              id.col = "num")
+heart.long &lt;- heart.valve[, c("num", "time", "log.lvmi")]
+heart.cov &lt;- UniqueVariables(heart.valve, 
+                             c("age", "sex"), 
+                             id.col = "num")
+heart.valve.jd &lt;- jointdata(longitudinal = heart.long, 
+                            baseline = heart.cov, 
+                            survival = heart.surv,
+                            id.col = "num",
+                            time.col = "time")
+jointplot(heart.valve.jd, Y.col = "log.lvmi", 
+          Cens.col = "status", lag = 5)
+</code></pre>
+
+
+</div>

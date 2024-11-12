@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getPlaylist</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search Jamendo database for a playlist</h2>
+
+<h3>Description</h3>
+
+<p>Search Jamendo database for a playlist. You can search for either a playlist ID or a playlist name.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getPlaylist(
+  playlist_id = NULL,
+  playlist_name = NULL,
+  client_id = Sys.getenv("JAMENDO_CLIENT_ID")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>playlist_id</code></td>
+<td>
+<p>Playlist ID to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>playlist_name</code></td>
+<td>
+<p>Playlist name to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains information about a playlist.
+See <a href="https://developer.jamendo.com/v3.0/playlists">https://developer.jamendo.com/v3.0/playlists</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Example
+ playlistID &lt;- getPlaylist(playlist_id="100268")
+ playlistName &lt;- getPlaylist(playlist_name="Chillin")
+
+</code></pre>
+
+
+</div>

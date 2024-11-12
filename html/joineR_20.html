@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.jointdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Summarise a <code>jointdata</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Generic function used to produce summaries of objects of class 
+<code>jointdata</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointdata'
+summary(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object of class <code>joint</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments for the summary.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with five elements. Each summarises an element of the
+<code>jointdata</code> object:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>subjects</code></td>
+<td>
+<p>Gives the number of subjects in the data set.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longitudinal</code></td>
+<td>
+<p>If longitudinal data is available, it gives the
+names and class, of the longitudinal variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survival</code></td>
+<td>
+<p>If survival data is available, it gives the number
+of subjects with failure and censored survival times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>baseline</code></td>
+<td>
+<p>If baseline covariates is available, it gives the
+names and class, of the baseline covariates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>If longitudinal data is available, it gives the unique
+longitudinal time measurements, if it is a balanced study. In case of
+unbalanced study, it will only state it is an unbalanced study.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Ines Sousa
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointdata</code>, <code>UniqueVariables</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(heart.valve)
+heart.surv &lt;- UniqueVariables(heart.valve,
+                              var.col = c("fuyrs", "status"), 
+                              id.col = "num")
+heart.valve.jd &lt;- jointdata(survival = heart.surv, 
+                            id.col = "num",
+                            time.col = "time")
+summary(heart.valve.jd)
+</code></pre>
+
+
+</div>

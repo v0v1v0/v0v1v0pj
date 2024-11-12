@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>screen.fgl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Quickly identify connected features in the solution to FGL
+</h2>
+
+<h3>Description</h3>
+
+<p>Applies the FGL screening rule to identify (before running FGL) which features are connected (have degree &gt; 0 in any class) or unconnected in the solution.  
+screen.fgl returns exactly the right list of connected nodes when K=2.  When K is larger than 2, screen.fgl applies a weaker condition that screens out many, but not all unconnected nodes.  
+This algorithm is set up to be memory-efficient, but not fast: it can be applied to very large dimension datasets, but it will take time to run.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">screen.fgl(Y, lambda1, lambda2, weights = "equal")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+
+<p>A list of nXp data matrices.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda1</code></td>
+<td>
+
+<p>The tuning parameter for the graphical lasso penalty.  Must be greater than or equal to 0.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda2</code></td>
+<td>
+
+<p>The tuning parameter for the fused lasso penalty.  Must be greater than or equal to 0.  
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+
+<p>The weights to assign to each class.  The higher a class's weights, the weaker the effect of the penalties on its estimated inverse covariance matrix.  If "equal", the classes are weighted equally, regardless of sample size.  If "sample.size", the classes are weighted by sample size.  Custom weightings are achievable by entering a vector of K weights.  
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>connected, a logical vector identifying the connected nodes.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Patrick Danaher
+</p>
+
+
+<h3>References</h3>
+
+<p>Patrick Danaher, Pei Wang and Daniela Witten (2011).  The joint graphical lasso for inverse covariance estimation across multiple classes.  http://arxiv.org/abs/1111.0324
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## load an example dataset with K=two classes, p=200 features, and n=100 samples per class:
+data(example.data)
+str(example.data)
+## which nodes will be connected?
+screen.fgl(example.data,lambda1=.2,lambda2=.1,weights="equal")
+
+</code></pre>
+
+
+</div>

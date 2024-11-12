@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tar_jags_df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Select a strategic piece of <code>R2jags</code> output.</h2>
+
+<h3>Description</h3>
+
+<p>Not a user-side function. Do not call directly.
+Exported for infrastructure reasons only.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tar_jags_df(
+  fit,
+  data,
+  output = c("draws", "summary", "dic"),
+  variables = NULL,
+  summaries = NULL,
+  summary_args = NULL,
+  transform = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p><code>R2jags</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A list, the original JAGS dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>Character of length 1 denoting the type of output <code>tibble</code>
+to return: <code>"draws"</code> for MCMC samples (which could take up a lot of space)
+<code>"summary"</code> for lightweight posterior summary statistics,
+and <code>"dic"</code> for the overall deviance information criterion
+and effective number of parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variables</code></td>
+<td>
+<p>Character vector of model parameter names.
+The output posterior summaries are restricted to these variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>summaries</code></td>
+<td>
+<p>List of summary functions passed to <code>...</code> in
+<code>posterior::summarize_draws()</code> through <code style="white-space: pre;">⁠$summary()⁠</code>
+on the <code>CmdStanFit</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>summary_args</code></td>
+<td>
+<p>List of summary function arguments passed to
+<code>.args</code> in <code>posterior::summarize_draws()</code> through <code style="white-space: pre;">⁠$summary()⁠</code>
+on the <code>CmdStanFit</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>Symbol or <code>NULL</code>, name of a function that accepts
+arguments <code>data</code> and <code>draws</code> and returns a data frame. Here,
+<code>data</code> is the JAGS data list supplied to the model, and <code>draws</code>
+is a data frame with one column per model parameter and one row
+per posterior sample. Any arguments other than <code>data</code> and <code>draws</code>
+must have valid default values because <code>jagstargets</code> will not
+populate them. See the simulation-based calibration discussion
+thread at <a href="https://github.com/ropensci/jagstargets/discussions/31">https://github.com/ropensci/jagstargets/discussions/31</a>
+for an example.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame of <code>R2jags</code> output. Depends on the <code>output</code> argument.
+</p>
+
+
+</div>

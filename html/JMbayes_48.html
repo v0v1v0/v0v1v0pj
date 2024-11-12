@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ranef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Random Effects Estimates for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Extracts the random effects estimates from a fitted joint model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JMbayes'
+ranef(object, postVar = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>JMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postVar</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the variance of the posterior distribution is also returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a numeric matrix with rows denoting the individuals and columns the random effects (e.g., intercepts, slopes, etc.). 
+If <code>postVar = TRUE</code>, the numeric matrix has an extra attribute “postVar".
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coef.JMbayes</code>, <code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit
+fitLME &lt;- lme(log(serBilir) ~ drug * year, random = ~ 1 | id, data = pbc2)
+# survival regression fit
+fitSURV &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+
+# joint model fit, under the (default) Weibull model
+fitJOINT &lt;- jointModelBayes(fitLME, fitSURV, timeVar = "year")
+ranef(fitJOINT)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

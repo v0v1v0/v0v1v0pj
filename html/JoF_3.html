@@ -1,0 +1,142 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PASS2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Modelling Judgments of Frequency with PASS 2</h2>
+
+<h3>Description</h3>
+
+<p>Modelling Judgments of Frequency with PASS 2
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">PASS2(x, y, ..., sqc, att, n_output_units = "half", rdm_weights = F, noise = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>input handled by PASS 2. Only binary input is allowed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a second binary input handled by PASS 1. At least
+two inputs are needed for the simulation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other binary inputs for modeling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sqc</code></td>
+<td>
+<p>sequence of the different objects. Each input gets
+an ascending number. <code>x</code> gets the value <code>1</code>,
+<code>y</code> gets the value <code>2</code>, <code>...</code> gets the value
+<code>3</code> and so on.
+The argument <code>sqc = c(1, 2, 3, 2)</code> means: first
+input <code>x</code> is processed, second input <code>y</code> is
+processed followed by processing input number three and
+fourth, th input <code>y</code> is used again.
+So <code>sqc</code> contains the frequency information too.
+In <code>c(1, 2, 3, 2)</code>, <code>x</code> and  the third input
+are presented once. The input <code>y</code> is presented twice.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>att</code></td>
+<td>
+<p>attention is a vector with numeric values
+between 0 and 1. <code>att</code> has the same length like
+<code>sqc</code>, so each input processing have its own value
+and PASS 1 can modulate attention by time or input.
+If  <code>att</code> is exact one numeric value
+(e.g. <code> att = .1</code>), all inputs get the
+same parameter of attention.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_output_units</code></td>
+<td>
+<p>number of output units as numeric value.
+This must be between 1 and the maximum number of input units.
+<code>n_output_units = 'half'</code> determines the half of the input
+units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rdm_weights</code></td>
+<td>
+<p>a logical value indicating whether random
+weights in the neural network are used or not. If
+<code>rdm_weights = FALSE</code> all network connections are zero
+at the beginning.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>noise</code></td>
+<td>
+<p>a proportion between 0 and 1 which determines
+the number of random activated input units (higher numbers
+indicate higher noise).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>PASS 2 uses a competitive learning algorithm, which
+usually clusters the input as side effect. If weights are
+equal, the winning unit is chosen randomly, because of this,
+each simulation is slightly different.
+</p>
+<p style="text-align: center;"><code class="reqn">if an outputuni O_{i} losses:  \Delta w_{ij} = 0</code>
+</p>
+
+<p style="text-align: center;"><code class="reqn">if an outputuni O_{i} wins:  \Delta w_{ij} = g_{w}
+\frac{a_{i}}{\sum_{i}^{n}{a_{i}}} - g_{w}w_{ij}</code>
+</p>
+
+
+
+<h3>Value</h3>
+
+<p><code>PASS2</code> returns the relative judgment of frequency
+for each input.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sedlmeier, P. (2002). Associative learning and
+frequency judgements: The PASS model. In P. Sedlmeier,
+T. Betsch (Eds.), <em>Etc.: Frequency processing and cognition</em>
+(pp. 137-152). New York: Oxford University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">o1 &lt;- c(1, 0, 0, 0)
+o2 &lt;- c(0, 1, 0, 0)
+o3 &lt;- c(0, 0, 1, 0)
+o4 &lt;- c(0, 0, 0, 1)
+PASS2(o1, o2, o3, o4,
+      sqc = rep(1:4, 4:1), att = .1, n_output_units = 2,
+      rdm_weights = FALSE, noise = 0)
+</code></pre>
+
+
+</div>

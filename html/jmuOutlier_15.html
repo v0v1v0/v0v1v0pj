@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotEcdf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting Two Empirical Cumulative Distribution Functions</h2>
+
+<h3>Description</h3>
+
+<p>Graphs one or two empirical cumulative distribution functions on the same plot.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotEcdf(x, y = NULL, col = c("black", "red"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of numerical observations whose empirical cdf is to be graphed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Optional vector of observations whose empirical cdf is to be graphed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Scalar or vector of length two, specifying the colors of the two empirical distribution functions.
+The two colors correspond to <code>x</code> and <code>y</code>, respectively, and preferably should differ.
+Type <code>colors()</code> for selections.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.ecdf</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">par( mfrow=c(2,2) )
+plotEcdf( c(2,4,9,6), c(1,7,11,3,8) )
+plotEcdf( c(2,4,9,6), c(1,7,11,3), col=c("navyblue", "orange") ) 
+plotEcdf( c(11,5,3), c(3,7,9), col=c("tomato","darkgreen") ) 
+plotEcdf( c(15,19,11,4,6), col="purple" ) 
+par( mfrow=c(1,1) )
+</code></pre>
+
+
+</div>

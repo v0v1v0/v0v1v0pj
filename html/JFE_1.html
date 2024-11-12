@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ActivePremium</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Active Premium or Active Return</h2>
+
+<h3>Description</h3>
+
+<p>The return on an investment's annualized return minus the benchmark's
+annualized return.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ActivePremium(Ra, Rb, scale = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Ra</code></td>
+<td>
+<p>return vector of the portfolio</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rb</code></td>
+<td>
+<p>return vector of the benchmark asset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>number of periods in a year
+(daily scale = 252, monthly scale = 12, quarterly scale = 4)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Active Premium = Investment's annualized return - Benchmark's annualized
+return.
+With a view to speeding computation. I re-write the code of some ratios of the package PerformanceAnalytics,  and use the same name for comparing the performance enhancing. Interested readers may compare speed improvement with the use of system.time().
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>References</h3>
+
+<p>Sharpe, W.F. The Sharpe Ratio,<em>Journal of Portfolio Management</em>, Fall 1994, 49-58.<br>
+See aslo package <code>PerformanceAnalytics</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Return.annualized</code>, <br><code>InformationRatio</code>, <br><code>TrackingError</code>, <br></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+  data(assetReturns)
+	assetReturns=assetReturns["2015::2018"] #short sample for fast example
+#	Ra=assetReturns[, -29]
+#	Rb=assetReturns[,29] #DJI
+#  ActivePremium(Ra, Rb)
+
+</code></pre>
+
+
+</div>

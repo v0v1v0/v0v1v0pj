@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tidyeval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tidy eval helpers</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>rlang::sym()</code> creates a symbol from a string and
+<code>rlang::syms()</code> creates a list of symbols from a
+character vector.
+</p>
+</li>
+<li> <p><code>rlang::expr()</code> and <code>rlang::quo()</code> quote
+one expression. <code>quo()</code> wraps the quoted expression in a quosure.
+</p>
+<p>The plural variants <code>rlang::exprs()</code> and
+<code>rlang::quos()</code> return a list of quoted expressions or
+quosures.
+</p>
+</li>
+<li> <p><code>rlang::enexpr()</code> and <code>rlang::enquo()</code>
+capture the expression supplied as argument by the user of the
+current function (<code>enquo()</code> wraps this expression in a quosure).
+</p>
+<p><code>rlang::enexprs()</code> and <code>rlang::enquos()</code>
+capture multiple expressions supplied as arguments, including
+<code>...</code>.
+</p>
+</li>
+</ul>
+<p><code>exprs()</code> is not exported to avoid conflicts with <code>Biobase::exprs()</code>,
+therefore one should always use <code>rlang::exprs()</code>.
+</p>
+<p>To learn more about tidy eval and how to use these tools, visit
+<a href="https://rlang.r-lib.org/">https://rlang.r-lib.org/</a> and the <a href="https://adv-r.hadley.nz/metaprogramming.html">Metaprogramming section</a> of <a href="https://adv-r.hadley.nz">Advanced R</a>.
+</p>
+
+
+</div>

@@ -1,0 +1,99 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fourier</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determining and Graphing Fourier Approximation</h2>
+
+<h3>Description</h3>
+
+<p>The Fourier approximation is determined for any function on domain <code class="reqn">(0, 2\pi)</code> and then graphed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fourier(f, order = 3, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>The function to be approximated by Fourier analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>order</code></td>
+<td>
+<p>Integer; the order of the Fourier transformation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments to be passed to the <code>plot</code> function
+(see <code>par</code>). </p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The numerical output consists of <code class="reqn">a_0/2, a_1, ..., a_n, b_1, ..., b_2.</code>
+The equation is (constant) <code class="reqn">+ a_1 cos(x) + ... + a_n cos(n x) + b_1 sin(x) + ... + b_n sin(n x).</code>
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>constant</code></td>
+<td>
+<p>The constant term.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cosine.coefficients</code></td>
+<td>
+<p>The coefficients for the cosine terms.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sine.coefficients</code></td>
+<td>
+<p>The coefficients for the sine terms.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The formulas computed within <code>fourier</code> are based on the textbook by Larson (2013).</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>References</h3>
+
+<p>Larson, R. (2013) <em>Elementary Linear Algebra</em>, 7th edition.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">par( mfrow=c(2,2) )
+fourier( function(x){ exp(-x)*(x-pi) }, 4 )
+fourier( function(x){ exp(-x) }, 7 )
+fourier( function(x){ (x-pi) }, 5 )
+fourier( function(x){ (x-pi)^2 } )
+par( mfrow=c(1,1) )
+</code></pre>
+
+
+</div>

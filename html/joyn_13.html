@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>clear_joynenv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Clearing joyn environment</h2>
+
+<h3>Description</h3>
+
+<p>Clearing joyn environment
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">clear_joynenv()
+</code></pre>
+
+
+<h3>See Also</h3>
+
+<p>Messages functions
+<code>joyn_msg()</code>,
+<code>joyn_msgs_exist()</code>,
+<code>joyn_report()</code>,
+<code>msg_type_dt()</code>,
+<code>store_msg()</code>,
+<code>style()</code>,
+<code>type_choices()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Storing a message
+joyn:::store_msg("info", "simple message")
+
+# Clearing the environment
+joyn:::clear_joynenv()
+
+# Checking it does not exist in the environment
+print(joyn:::joyn_msgs_exist())
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>JackR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of Jack polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a Jack polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">JackR(x, lambda, alpha, algorithm = "DK")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric or complex vector or <code>bigq</code> vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>ordinary number or <code>bigq</code> rational number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>the algorithm used, either <code>"DK"</code> (Demmel-Koev)
+or <code>"naive"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric or complex scalar or a <code>bigq</code> rational number.
+</p>
+
+
+<h3>References</h3>
+
+
+<ul>
+<li>
+<p> I.G. Macdonald.
+<em>Symmetric Functions and Hall Polynomials</em>.
+Oxford Mathematical Monographs.
+The Clarendon Press Oxford University Press,
+New York, second edition, 1995.
+</p>
+</li>
+<li>
+<p> J. Demmel &amp; P. Koev.
+<em>Accurate and efficient evaluation of Schur and Jack functions</em>.
+Mathematics of computations, vol. 75, n. 253, 223-229, 2005.
+</p>
+</li>
+<li> <p><em>Jack polynomials</em>.
+<a href="https://www.symmetricfunctions.com/jack.htm">https://www.symmetricfunctions.com/jack.htm</a>
+</p>
+</li>
+</ul>
+<h3>See Also</h3>
+
+<p><code>JackPolR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lambda &lt;- c(2,1,1)
+JackR(c(1/2, 2/3, 1), lambda, alpha = 3)
+# exact value:
+JackR(c(gmp::as.bigq(1,2), gmp::as.bigq(2,3), gmp::as.bigq(1)), lambda,
+     alpha = gmp::as.bigq(3))
+</code></pre>
+
+
+</div>

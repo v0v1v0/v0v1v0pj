@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jrSiCKLSNMF</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run jrSiCKLSNMF outside of a SickleJr object</h2>
+
+<h3>Description</h3>
+
+<p>Perform joint non-negative matrix factorization (NMF) across multiple modalities of single-cell data.
+To measure the discrepancy between two distributions, one can use the Poisson Kullback-Leibler divergence (<code class="reqn">\mathtt{diffFunc}=</code><code class="reqn">\mathtt{"klp"}</code>)  or the Frobenius norm (<code class="reqn">\mathtt{diffFunc}=</code><code class="reqn">\mathtt{"fr"}</code>).
+It is also possible to set graph regularization constraints on <code class="reqn">\mathbf{W}^v</code> and either a sparsity constraint on <code class="reqn">\mathbf{H}</code> or an
+L2 norm constraint on the rows of <code class="reqn">\mathbf{H}</code>.
+This function passes by reference and updates the variables <code class="reqn">\mathtt{WL}</code> and <code class="reqn">\mathtt{H}</code> and does not require data to be in an
+object of type SickleJr. <code class="reqn">\mathtt{RunjrSiCKLSNMF}</code> calls this function. If your data are in an object of class SickleJr,
+please use the <code class="reqn">\mathtt{RunjrSiCKLSNMF}</code> function instead.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jrSiCKLSNMF(
+  datamatL,
+  WL,
+  H,
+  AdjL,
+  DL,
+  lambdaWL,
+  lambdaH,
+  initsamp,
+  suppress_warnings,
+  diffFunc = "klp",
+  Hconstraint = "None",
+  differr = 1e-06,
+  rounds = 1000L,
+  display_progress = TRUE,
+  minibatch = TRUE,
+  batchsize = 100L,
+  random_W_updates = TRUE,
+  minrounds = 100L
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>datamatL</code></td>
+<td>
+<p>An R list where each entry contains a normalized, sparse <code class="reqn">\mathbf{X}^v</code> matrix corresponding to single-cell modality <code class="reqn">v</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>WL</code></td>
+<td>
+<p>An R list containing initialized values of the <code class="reqn">\mathbf{W}^v</code> within each modality <code class="reqn">v</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>A matrix containing initialized values for the shared <code class="reqn">\mathbf{H}</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>AdjL</code></td>
+<td>
+<p>An R list containing all of the adjacency matrices for the
+feature-feature similarity graphs in sparse format; note that <code class="reqn">\mathtt{D-Adj}</code> is the
+graph Laplacian</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DL</code></td>
+<td>
+<p>An R list containing all of the degree matrices of the
+feature-feature similarity graphs; note that <code class="reqn">\mathtt{D-Adj}</code> is the graph Laplacian</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdaWL</code></td>
+<td>
+<p>A list of the <code class="reqn">\lambda_{\mathbf{W}^v}</code> corresponding to modality <code class="reqn">v</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdaH</code></td>
+<td>
+<p>A double containing the desired value for <code class="reqn">\lambda_{\mathbf{H}}</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initsamp</code></td>
+<td>
+<p>A vector of randomly selected rows of <code class="reqn">\mathtt{H}</code> on which to run the objective function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suppress_warnings</code></td>
+<td>
+<p>A Boolean that indicates whether warnings should be suppressed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diffFunc</code></td>
+<td>
+<p>A string indicating what type of divergence to use; set to the Poisson Kullback-Leibler divergence
+(<code class="reqn">\mathtt{``klp"}</code>) by default, but the Frobenius norm (<code class="reqn">\mathtt{``fr"}</code>) is also available</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hconstraint</code></td>
+<td>
+<p>A string that indicates whether you want to set an L2 norm constraint on the rows of <code class="reqn">\mathbf{H}</code>. Enter 'None' for
+no constraints or 'L2Norm' to set the L2 norm of each row of <code class="reqn">\mathbf{H}</code> to 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>differr</code></td>
+<td>
+<p>A double containing the tolerance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rounds</code></td>
+<td>
+<p>A double containing the number of rounds</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>display_progress</code></td>
+<td>
+<p>A Boolean indicating whether to display the progress bar</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minibatch</code></td>
+<td>
+<p>A Boolean indicating whether to use the mini-batch version of the algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>batchsize</code></td>
+<td>
+<p>Number of batches for mini-batch updates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random_W_updates</code></td>
+<td>
+<p>A Boolean indicating whether to update <code class="reqn">\mathbf{W}^v</code> once per epoch (TRUE) or after every update of
+the subset of <code class="reqn">\mathbf{H}</code> (FALSE) for the mini-batch algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minrounds</code></td>
+<td>
+<p>A minimum number of rounds for the algorithm to run: most useful for the mini-batch algorithm</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An R list containing values for the objective function.
+</p>
+
+
+<h3>References</h3>
+
+<p>Cai D, He X, Wu X, Han J (2008).
+“Non-negative matrix factorization on manifold.”
+<em>Proceedings - IEEE International Conference on Data Mining, ICDM</em>, 63–72.
+ISSN 15504786, <a href="https://doi.org/10.1109/ICDM.2008.57">doi:10.1109/ICDM.2008.57</a>.
+</p>
+<p>Greene D, Cunningham P (2009).
+“A matrix factorization approach for integrating multiple data views.”
+<em>Lecture Notes in Computer Science (including subseries Lecture Notes in Artificial Intelligence and Lecture Notes in Bioinformatics)</em>, <b>5781 LNAI</b>(PART 1), 423–438.
+ISSN 03029743, <a href="https://doi.org/10.1007/978-3-642-04180-8_45/COVER">doi:10.1007/978-3-642-04180-8_45/COVER</a>, <a href="https://link.springer.com/chapter/10.1007/978-3-642-04180-8_45">https://link.springer.com/chapter/10.1007/978-3-642-04180-8_45</a>.
+</p>
+<p>Eddelbuettel D, François R (2011).
+“Rcpp: Seamless R and C++ Integration.”
+<em>Journal of Statistical Software</em>, <b>40</b>(8), 1–18.
+<a href="https://doi.org/10.18637/jss.v040.i08">doi:10.18637/jss.v040.i08</a>.
+</p>
+<p>Eddelbuettel D, Sanderson C (2014).
+“RcppArmadillo: Accelerating R with high-performance C++ linear algebra.”
+<em>Computational	Statistics and Data Analysis</em>, <b>71</b>, 1054–1063.
+<a href="http://dx.doi.org/10.1016/j.csda.2013.02.005">http://dx.doi.org/10.1016/j.csda.2013.02.005</a>.
+</p>
+<p>Elyanow R, Dumitrascu B, Engelhardt BE, Raphael BJ (2020).
+“NetNMF-SC: Leveraging gene-gene interactions for imputation and dimensionality reduction in single-cell expression analysis.”
+<em>Genome Research</em>, <b>30</b>(2), 195–204.
+ISSN 15495469, <a href="https://doi.org/10.1101/gr.251603.119">doi:10.1101/gr.251603.119</a>, <a href="https://pubmed.ncbi.nlm.nih.gov/31992614/">https://pubmed.ncbi.nlm.nih.gov/31992614/</a>.
+</p>
+<p>Le Roux J, Weniger F, Hershey JR (2015).
+“Sparse NMF: half-baked or well done?”
+Mitsubishi Electric Research Laboratories (MERL), Cambridge.
+</p>
+<p>Lee DD, Seung HS (2000).
+“Algorithms for Non-negative Matrix Factorization.”
+In Leen T, Dietterich T, Tresp V (eds.), <em>Advances in Neural Information Processing Systems</em>, volume 13.
+<a href="https://proceedings.neurips.cc/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf">https://proceedings.neurips.cc/paper/2000/file/f9d1152547c0bde01830b7e8bd60024c-Paper.pdf</a>.
+</p>
+<p>Liu J, Wang C, Gao J, Han J (2013).
+“Multi-view clustering via joint nonnegative matrix factorization.”
+<em>Proceedings of the 2013 SIAM International Conference on Data Mining</em>, 252–260.
+<a href="https://doi.org/10.1137/1.9781611972832.28">doi:10.1137/1.9781611972832.28</a>.
+</p>
+
+
+</div>

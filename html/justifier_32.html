@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>import_from_json</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Import a structured justifier object from JSON</h2>
+
+<h3>Description</h3>
+
+<p>Import a structured justifier object from JSON
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">import_from_json(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Either a path to an existing file, or a character vector with the
+JSON to import.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>The justifier object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Programmatically create a justification with two assertions
+### but without sources; flatten it; and show the json
+justifier::justify(
+  "Icecream will make me feel less fit",
+  assertion = c(
+    justifier::assert('Icecream is rich in energy'),
+    justifier::assert('Consuming high-energy foods makes me feel less fit')
+  ),
+  weight = -.5
+) |&gt;
+  justifier::flatten() -&gt; originalObject;
+
+originalObject |&gt;
+  justifier::export_to_json() -&gt;
+  exportedJSON;
+
+### And import it again
+importedFromJSON &lt;-
+  justifier::import_from_json(
+    exportedJSON
+  );
+</code></pre>
+
+
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SimData</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A simulated dataset for use with jrSiCKLSNMF</h2>
+
+<h3>Description</h3>
+
+<p>A simulated dataset with <code class="reqn">\mathcal{U}(1,1.25)</code> multiplicative noise for the
+scRNA-seq variability parameter in SPARSim for the simulated scRNA-seq data and
+with <code class="reqn">\mathcal{N}(-0.25,0.25)</code> additive noise to the expression levels of the scATAC-seq data
+for data simulated via SimATAC. The simulated matrices are located in SimData$Xmatrices
+and the identities for the cell types are contained in SimData$cell_type. This corresponds
+to the Xmatrix data found in both
+</p>
+<p>XandLmatrices25/XandindividLKNNLmatrices1Sparsity5.RData and
+</p>
+<p>XandBulkLmatrix25/XandBulkLKNNmatrices1Sparsity5.RData on our Github
+</p>
+<p><a href="https://github.com/ellisdoro/jrSiCKLSNMF_Simulations">ellisdoro/jrSiCKLSNMF_Simulations</a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(SimData)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A list made up of a two items. The first is list of 2 simulated sparse matrices
+and the second is a vector containing cell identities.
+</p>
+
+<dl>
+<dt>Xmatrices</dt>
+<dd>
+<p>A list of 2 sparse matrices, each containing a different
+simulated omics modality measured on the same set of single cells: the first entry in the list
+corresponds to simulated scRNA-seq data and has 1000 genes and 300 cells; the second entry in
+the list corresponds to simulated scATAC-seq data and has 5910 peaks and 300
+cells.</p>
+</dd>
+<dt>cell_type</dt>
+<dd>
+<p>A vector containing the cell-type identities of the simulated data</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://github.com/ellisdoro/jrSiCKLSNMF_Simulations">jrSicKLSNMF Simulations</a>
+</p>
+
+
+</div>

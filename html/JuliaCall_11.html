@@ -1,0 +1,41 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>install_julia</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Install Julia.</h2>
+
+<h3>Description</h3>
+
+<p>Install Julia.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">install_julia(version = "latest", prefix = julia_default_install_dir())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>version</code></td>
+<td>
+<p>The version of Julia to install (e.g. <code>"1.6.3"</code>).
+Defaults to <code>"latest"</code>, which will install the most
+recent stable release.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+<p>the directory where Julia will be installed.
+If not set, a default location will be determined by <code>rappdirs</code>
+if it is installed, otherwise an error will be raised.</p>
+</td>
+</tr>
+</table>
+</div>

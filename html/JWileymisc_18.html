@@ -1,0 +1,126 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>styletests</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Several internal functions to style inference tests</h2>
+
+<h3>Description</h3>
+
+<p>Several internal functions to style inference tests
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">.styleaov(dv, g, digits = 2L, pdigits = 3L)
+
+.style2sttest(dv, g, digits = 2, pdigits = 3)
+
+.stylepairedttest(dv, g, ID, digits = 2, pdigits = 3)
+
+.stylepairedwilcox(dv, g, ID, digits = 2, pdigits = 3)
+
+.stylepairedmcnemar(dv, g, ID, digits = 2, pdigits = 3)
+
+.stylekruskal(dv, g, digits = 2, pdigits = 3)
+
+.stylechisq(dv, g, digits = 2, pdigits = 3, simChisq = FALSE, sims = 10000)
+
+.stylemsd(n, x, digits = 2, includeLabel = FALSE)
+
+.stylemdniqr(n, x, digits = 2, includeLabel = FALSE)
+
+.stylefreq(n, x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dv</code></td>
+<td>
+<p>An outcome variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>A grouping/predictor variable</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>An integer indicating the number of significant digits to use.
+Defaults to <code>2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pdigits</code></td>
+<td>
+<p>An integer indicating the number of digits for p values.
+Defaults to <code>3</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simChisq</code></td>
+<td>
+<p>A logical value, whether or not to simulate chi-square values.
+Only applies to some functions. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sims</code></td>
+<td>
+<p>An integer indicating the number of simulations to conduct.
+Only applies to some functions. Defaults to <code>10000</code>, but this is
+arbitrary and should be chosen.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character string of the formatted results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+JWileymisc:::.styleaov(mtcars$mpg, mtcars$cyl)
+
+JWileymisc:::.style2sttest(mtcars$mpg, mtcars$am)
+
+JWileymisc:::.stylepairedttest(sleep$extra, sleep$group, sleep$ID)
+
+JWileymisc:::.stylepairedwilcox(sleep$extra, sleep$group, sleep$ID)
+
+## example data
+set.seed(1234)
+exdata &lt;- data.frame(
+  ID = rep(1:10, 2),
+  Time = rep(c("base", "post"), each = 10),
+  Rating = sample(c("good", "bad"), size = 20, replace = TRUE))
+JWileymisc:::.stylepairedmcnemar(exdata$Rating, exdata$Time, exdata$ID)
+rm(exdata) ## cleanup
+
+JWileymisc:::.stylekruskal(mtcars$mpg, mtcars$am)
+JWileymisc:::.stylekruskal(mtcars$mpg, mtcars$cyl)
+
+JWileymisc:::.stylechisq(mtcars$cyl, mtcars$am)
+
+JWileymisc:::.stylemsd("Miles per Gallon", mtcars$mpg)
+JWileymisc:::.stylemsd("Miles per Gallon", mtcars$mpg, includeLabel = TRUE)
+
+JWileymisc:::.stylemdniqr("Miles per Gallon", mtcars$mpg)
+JWileymisc:::.stylemdniqr("Miles per Gallon", mtcars$mpg, includeLabel = TRUE)
+
+JWileymisc:::.stylefreq("Transmission", mtcars$am)
+JWileymisc:::.stylefreq("Transmission", mtcars$am)
+</code></pre>
+
+
+</div>

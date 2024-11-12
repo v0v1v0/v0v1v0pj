@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>FilePs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>FilePs: Shiny module Server for file upload for propensity score matching.</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module Server for file upload for propensity score matching.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">FilePs(input, output, session, nfactor.limit = 20)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>nfactor limit to include, Default: 20</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module Server for file upload for propensity score matching.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module Server for file upload for propensity score matching.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(readxl)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      FilePsInput("datafile")
+    ),
+    mainPanel(
+      tabsetPanel(
+        type = "pills",
+        tabPanel("Data", DTOutput("data")),
+        tabPanel("Matching data", DTOutput("matdata")),
+        tabPanel("Label", DTOutput("data_label", width = "100%"))
+      )
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  mat.info &lt;- callModule(FilePs, "datafile")
+
+  output$data &lt;- renderDT({
+    mat.info()$data
+  })
+
+  output$matdata &lt;- renderDT({
+    mat.info()$matdata
+  })
+
+  output$label &lt;- renderDT({
+    mat.info()$label
+  })
+}
+</code></pre>
+
+
+</div>

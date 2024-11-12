@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scan2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scans Data from Author's Website</h2>
+
+<h3>Description</h3>
+
+<p>Performs scan of dataset without typing the URL.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R"> scan2(file.name, course.num=course.number, na.strings=".", comment.char="#", ...) </code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>file.name</code></td>
+<td>
+<p>The file name in character format without the URL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>course.num</code></td>
+<td>
+<p>The course number in character or numeric format, where <code>course.number</code> is a global variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.strings</code></td>
+<td>
+<p>Character vector. Elements of this vector are to be interpreted as missing <code>NA</code> values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comment.char</code></td>
+<td>
+<p>Single character or empty string, denoting beginning of comment.  
+Use "" to turn off the interpretation of comments altogether.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments to be passed to the <code>scan</code> function.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The datasets are available on the author's website, http://educ.jmu.edu/~garrenst.
+The global variable <code>course.number</code> may be entered as the value of the second argument, <code>course.num</code>, in function <code>scan2</code>.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>read.table2</code> and <code>scan</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># The following two commands, when uncommented, are equivalent.
+
+# scan2( "exercise2.7.txt", 324 )
+
+# scan( "http://educ.jmu.edu/~garrenst/math324.dir/datasets/exercise2.7.txt", comment.char="#" )</code></pre>
+
+
+</div>

@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ulal.sub.dom.dat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+
+Domain-level data.
+</h2>
+
+<h3>Description</h3>
+
+
+<p>Domain-level means of the explanatory variables obtained from digital
+aerial photogrammetry (i.e., means of all elements not just the means
+of the samples). The domains are 15 forest stands in the
+municipality of Stokke, Norway.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("ulal.sub.dom.dat")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 15 observations on the following 5 variables.
+</p>
+
+<dl>
+<dt><code>stand.ID</code></dt>
+<dd>
+<p>a factor with unique stand IDs.</p>
+</dd> </dl>
+<dl>
+<dt><code>elev.mean</code></dt>
+<dd>
+<p>a numeric vector. Mean height
+obtained from digital aerial photogrammetry.</p>
+</dd>
+<dt><code>elev.mean.sq</code></dt>
+<dd>
+<p>a numeric vector. Mean height squared
+obtained from digital aerial photogrammetry.</p>
+</dd>
+<dt><code>k.i.one</code></dt>
+<dd>
+<p>a numeric vector of ones.</p>
+</dd>
+<dt><code>sum.i.k.ij.sq.em.0.48.r</code></dt>
+<dd>
+<p>a numeric vector. Domain-level
+sums of the k_ij values of all elements that were not sampled. Needed
+if fpc cannot be neglected in EBLUP estimation.</p>
+</dd>
+<dt><code>n.pixels</code></dt>
+<dd>
+<p>Number of elements with the domain i.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Breidenbach et al. (2018) Unit-level and area-level small area
+estimation under heteroscedasticity using digital aerial photogrammetry
+data. Remote Sensing of Environment.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(ulal.sub.dom.dat)
+</code></pre>
+
+
+</div>

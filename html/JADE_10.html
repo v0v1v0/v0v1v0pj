@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CPPdata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Cocktail Party Problem Data
+</h2>
+
+<h3>Description</h3>
+
+<p>This data set is a toy example for the so called cocktail party problem. In this case three sounds are mixed together with one noise source using four microphones.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("CPPdata")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 50000 observations on the following 4 variables.
+</p>
+
+<dl>
+<dt><code>Mic1</code></dt>
+<dd>
+<p>the mixture recorded by the first microphone.</p>
+</dd>
+<dt><code>Mic2</code></dt>
+<dd>
+<p>the mixture recorded by the second microphone.</p>
+</dd>
+<dt><code>Mic3</code></dt>
+<dd>
+<p>the mixture recorded by the third microphone.</p>
+</dd>
+<dt><code>Mic4</code></dt>
+<dd>
+<p>the mixture recorded by the fourth microphone.</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>The three original source files were kindly provided by Ella Bingham and are also available online at the following locations:
+<a href="https://research.ics.aalto.fi/ica/cocktail/source5.wav">https://research.ics.aalto.fi/ica/cocktail/source5.wav</a>, <a href="https://research.ics.aalto.fi/ica/cocktail/source7.wav">https://research.ics.aalto.fi/ica/cocktail/source7.wav</a> and <a href="https://research.ics.aalto.fi/ica/cocktail/source9.wav">https://research.ics.aalto.fi/ica/cocktail/source9.wav</a>.
+</p>
+<p>Note that the original sound files are included in the package's subfolder datafiles. In the example section we illustrate how the CPPdata was created. 
+An example analysis of the data is given in Miettinen et al. (2017).
+</p>
+
+
+<h3>Source</h3>
+
+<p>Ella Bingham
+</p>
+
+
+<h3>References</h3>
+
+<p><cite>Miettinen, J., Nordhausen, K. and Taskinen, S. (2017), Blind Source Separation Based on Joint Diagonalization in R: The Packages JADE and BSSasymp, <em>Journal of Statistical Software</em>, <b>76</b>, 1–31, &lt;doi:10.18637/jss.v076.i02&gt;.</cite>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# the data was created as follows:
+library("tuneR")
+S1 &lt;- readWave(system.file("datafiles/source5.wav", package = "JADE"))
+S2 &lt;- readWave(system.file("datafiles/source7.wav", package = "JADE"))
+S3 &lt;- readWave(system.file("datafiles/source9.wav", package = "JADE"))
+
+set.seed(321)
+NOISE &lt;- noise("white", duration = 50000)
+S &lt;- cbind(S1@left, S2@left, S3@left, NOISE@left)
+S &lt;- scale(S, center = FALSE, scale = apply(S, 2, sd))
+St &lt;- ts(S, start = 0, frequency = 8000)
+p &lt;- 4
+A &lt;- matrix(runif(p^2, 0, 1), p, p)
+A
+
+X &lt;- tcrossprod(St, A)
+Xt &lt;- as.ts(X)
+
+colnames(X) &lt;- c("Mic1", "Mic2", "Mic3", "Mic4")
+CPPdata &lt;- as.data.frame(X)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

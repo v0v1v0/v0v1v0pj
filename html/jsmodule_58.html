@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ROC_table</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>ROC_table: extract AUC, NRI and IDI information from list of roc object in pROC packages.</h2>
+
+<h3>Description</h3>
+
+<p>extract AUC, NRI and IDI information from list of roc in pROC packages
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ROC_table(ListModel, dec.auc = 3, dec.p = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ListModel</code></td>
+<td>
+<p>list of roc object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.auc</code></td>
+<td>
+<p>digits for AUC, Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.p</code></td>
+<td>
+<p>digits for p value, Default: 3</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>extract AUC, NRI and IDI information from list of roc object in pROC packages.
+</p>
+
+
+<h3>Value</h3>
+
+<p>table of AUC, NRI and IDI information
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>ci.auc</code>,<code>roc.test</code>
+<code>data.table</code>, <code>rbindlist</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(pROC)
+m1 &lt;- glm(vs ~ am + gear, data = mtcars, family = binomial)
+m2 &lt;- glm(vs ~ am + gear + wt, data = mtcars, family = binomial)
+m3 &lt;- glm(vs ~ am + gear + wt + mpg, data = mtcars, family = binomial)
+roc1 &lt;- roc(m1$y, predict(m1, type = "response"))
+roc2 &lt;- roc(m2$y, predict(m2, type = "response"))
+roc3 &lt;- roc(m3$y, predict(m3, type = "response"))
+list.roc &lt;- list(roc1, roc2, roc3)
+ROC_table(list.roc)
+</code></pre>
+
+
+</div>

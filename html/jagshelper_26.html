@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotdens</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot kernel densities of single parameter nodes</h2>
+
+<h3>Description</h3>
+
+<p>Produces a kernel density plot of a single or multiple parameter nodes (overlayed).
+</p>
+<p>Input can be of multiple possible formats: either a single or list of output objects
+from <code>jagsUI</code> with an associated vector of parameter names, or a vector or <code>data.frame</code>
+of posterior samples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotdens(
+  df,
+  p = NULL,
+  exact = FALSE,
+  add = FALSE,
+  col = NULL,
+  shade = TRUE,
+  lwd = 2,
+  minCI = 0.99,
+  legend = TRUE,
+  legendpos = "topleft",
+  legendnames = NULL,
+  main = NULL,
+  xlab = "",
+  ylab = "Density",
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>Input object for plotting.  See examples below.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Vector of parameter names, if <code>df</code> is given as a single or list of output objects
+from <code>jagsUI</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether the <code style="white-space: pre;">⁠p=⁠</code> argument should match the parameter name exactly.  See
+jags_df for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p>Whether to add to an existing plot (<code>TRUE</code>) or produce a new plot.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Vector of colors for plotting.  If the default (<code>NULL</code>) is accepted,
+colors will be automatically selected.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shade</code></td>
+<td>
+<p>Whether to shade the regions below the kernel density curve(s).
+Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>Line width for kernel density curves.  Defaults to <code>2</code>.  Note: setting
+this to <code>0</code> (or <code>FALSE</code>) will suppress lines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minCI</code></td>
+<td>
+<p>Minimum CI width to include for all density curves.  Defaults to 99%.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+<p>Whether to plot a legend.  Defaults to <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legendpos</code></td>
+<td>
+<p>Position for automatic legend.  Defaults to <code>"topleft"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legendnames</code></td>
+<td>
+<p>Names for legend</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Plot title.  Defaults to "".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>X-axis label.  Defaults to "".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Y-axis label.  Defaults to "Density".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional plotting arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>comparedens, comparecat, comparepriors
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## jagsUI object with a single parameter
+plotdens(asdf_jags_out, p="b1")
+
+## jagsUI object with multiple nodes of a parameter
+plotdens(asdf_jags_out, p="a")
+
+## jagsUI object with multiple parameter nodes
+plotdens(asdf_jags_out, p=c("a[1]","a[2]","a[3]"))
+
+## data.frame with multiple columns
+plotdens(jags_df(asdf_jags_out, p="a"))
+
+## list of jagsUI objects with a single parameter name
+plotdens(list(asdf_jags_out,asdf_jags_out,asdf_jags_out), p="b1")
+
+## list of jagsUI objects with a vector of parameter names
+plotdens(list(asdf_jags_out,asdf_jags_out,asdf_jags_out), p=c("a[1]","a[2]","a[3]"))
+</code></pre>
+
+
+</div>

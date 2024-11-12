@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is.naz</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Is a variable missing, non finite or zero length character?</h2>
+
+<h3>Description</h3>
+
+<p>Given a vector, return <code>TRUE</code> or <code>FALSE</code>
+if each element is either missing (NA/NaN), non finite (e.g. infinite)
+or a zero length character string (only for character vectors).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is.naz(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A vector to identify missing / non finite or zero length strings from</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>a logical vector
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">is.naz(c(1, NA, NaN))
+is.naz(c(1, NA, NaN, Inf))
+is.naz(c("test", "", NA_character_))
+</code></pre>
+
+
+</div>

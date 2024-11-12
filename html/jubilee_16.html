@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.mcsapply</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Wrapper to calculate <code>sapply</code> using multi-core</h2>
+
+<h3>Description</h3>
+
+<p>This utility calculates <code>sapply</code> using multi-core capability. 
+It is a simple wrapper on <code>simplify2array</code> and <code>parallel::mclapply</code>. 
+It is particularly convenient on Linux and Mac when parallelism saves significant amount of computing time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.mcsapply(x, FUN, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>the function to be applied to each element of x</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>optional arguments to <code>FUN</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>numeric
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">   a &lt;- seq(1,100)
+   jubilee.mcsapply(a, function(x) x^2) # use multi-core!
+</code></pre>
+
+
+</div>

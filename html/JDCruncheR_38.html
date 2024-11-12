@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sort</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>QR_matrix and mQR_matrix sorting</h2>
+
+<h3>Description</h3>
+
+<p>To sort the quality reports on one or several variables
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'QR_matrix'
+sort(x, decreasing = FALSE, sort_variables = "score", ...)
+
+## S3 method for class 'mQR_matrix'
+sort(x, decreasing = FALSE, sort_variables = "score", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decreasing</code></td>
+<td>
+<p>logical indicating whether the quality reports must be
+sorted in ascending or decreasing order.
+By default, the sorting is done in ascending order.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort_variables</code></td>
+<td>
+<p>They must be present in the modalities table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters of the function <code>order</code> (unused
+for now)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the input with sorted quality reports
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other QR_matrix functions: 
+<code>export_xlsx()</code>,
+<code>export_xlsx.QR_matrix()</code>,
+<code>export_xlsx.mQR_matrix()</code>,
+<code>extract_QR()</code>,
+<code>rbind.QR_matrix()</code>,
+<code>weighted_score()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Path of matrix demetra_m
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extract the quality report from the demetra_m file
+QR &lt;- extract_QR(demetra_path)
+
+# Compute the score
+QR &lt;- compute_score(QR, n_contrib_score = 2)
+print(QR$modalities$score)
+
+# Sort the scores
+
+# To sort by ascending scores
+QR &lt;- sort(QR, sort_variables = "score")
+print(QR$modalities$score)
+
+</code></pre>
+
+
+</div>

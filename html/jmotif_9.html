@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_discords_brute_force</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Finds a discord using brute force algorithm.</h2>
+
+<h3>Description</h3>
+
+<p>Finds a discord using brute force algorithm.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_discords_brute_force(ts, w_size, discords_num)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ts</code></td>
+<td>
+<p>the input timeseries.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>w_size</code></td>
+<td>
+<p>the sliding window size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>discords_num</code></td>
+<td>
+<p>the number of discords to report.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Keogh, E., Lin, J., Fu, A.,
+HOT SAX: Efficiently finding the most unusual time series subsequence.
+Proceeding ICDM '05 Proceedings of the Fifth IEEE International Conference on Data Mining
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">discords = find_discords_brute_force(ecg0606[1:600], 100, 1)
+plot(ecg0606[1:600], type = "l", col = "cornflowerblue", main = "ECG 0606")
+lines(x=c(discords[1,2]:(discords[1,2]+100)),
+   y=ecg0606[discords[1,2]:(discords[1,2]+100)], col="red")
+</code></pre>
+
+
+</div>

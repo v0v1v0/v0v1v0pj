@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wrap_str</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+<code>cat</code>, <code>message</code>, <code>warning</code>, and <code>stop</code> wrapped to fit the console's
+width.</h2>
+
+<h3>Description</h3>
+
+<p>These are convenience functions that format printed output to
+fit the width of the user's console.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">wrap_str(..., sep = "")
+
+cat_wrap(..., brk = "")
+
+warn_wrap(..., brk = "\n", class = NULL, call. = FALSE)
+
+stop_wrap(
+  ...,
+  brk = "\n",
+  trace = rlang::trace_back(bottom = rlang::caller_env()),
+  class = NULL,
+  call = rlang::caller_env(),
+  call. = FALSE
+)
+
+msg_wrap(..., class = NULL, brk = "\n")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Objects to print. For <code>stop_wrap()</code>, <code>warn_wrap()</code>, and
+<code>msg_wrap()</code>, any named objects are instead diverted to the <code>...</code> argument
+of <code>rlang::abort()</code>, <code>rlang::warn()</code>, and <code>rlang::inform()</code>,
+respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>Separator between <code>...</code>, Default: ”</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>brk</code></td>
+<td>
+<p>What should the last character of the message/warning/error be?
+Default is <code>"\n"</code>, meaning the console output ends with a new line.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>Subclass of the condition.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call.</code></td>
+<td>
+<p>Here for legacy reasons. It is ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>A <code>trace</code> object created by <code>trace_back()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>The actual calling environment to report in the error message.
+By default, <code>rlang::caller_env()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The point of these functions is to allow you to print
+output/messages/warnings/errors to the console without having to figure out
+where to place newline characters. These functions get the width of the
+console from the <code>"width"</code> option, which in most editors adjusts dynamically
+as you resize.
+</p>
+<p>So instead of writing a warning like this:
+</p>
+<div class="sourceCode"><pre>warning("I have to give you this very important message that may be too\n",
+        "wide for your screen")
+</pre></div>
+<p>You can do it like this:
+</p>
+<div class="sourceCode"><pre>warn_wrap("I have to give you this very important message that may be
+          too wide for your screen")
+</pre></div>
+<p>And the function will automatically insert line breaks to fit the console.
+As a note, it will also ignore any newlines you insert. This means you can
+make your own fit your editor's screen and indent in the middle of a string
+without that formatting being carried over into the output.
+</p>
+
+
+</div>

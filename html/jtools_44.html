@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_robust_se</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate robust standard errors and produce coefficient tables</h2>
+
+<h3>Description</h3>
+
+<p>This function wraps around several <span class="pkg">sandwich</span>
+and <span class="pkg">lmtest</span> functions to calculate robust standard errors and returns
+them in a useful format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_robust_se(
+  model,
+  type = "HC3",
+  cluster = NULL,
+  data = model.frame(model),
+  vcov = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A regression model, preferably of class <code>lm</code> or <code>glm</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>One of <code>"HC3"</code>, <code>"const"</code>, <code>"HC"</code>, <code>"HC0"</code>, <code>"HC1"</code>,
+<code>"HC2"</code>, <code>"HC4"</code>, <code>"HC4m"</code>, <code>"HC5"</code>. See <code>sandwich::vcovHC()</code> for some
+more details on these choices. Note that some of these do not work for
+clustered standard errors (see <code>sandwich::vcovCL()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cluster</code></td>
+<td>
+<p>If you want clustered standard errors, either a string naming
+the column in <code>data</code> that represents the clusters or a vector of clusters
+that is the same length as the number of rows in <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data used to fit the model. Default is to just get the
+<code>model.frame</code> from <code>model</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov</code></td>
+<td>
+<p>You may provide the variance-covariance matrix yourself and this
+function will just calculate standard errors, etc. based on that. Default
+is NULL.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with the following:
+</p>
+
+<ul>
+<li> <p><code>coefs</code>: a coefficient table with the estimates, standard errors,
+t-statistics, and p-values from <code>lmtest</code>.
+</p>
+</li>
+<li> <p><code>ses</code>: The standard errors from <code>coefs</code>.
+</p>
+</li>
+<li> <p><code>ts</code>: The t-statistics from <code>coefs</code>.
+</p>
+</li>
+<li> <p><code>ps</code>: The p-values from <code>coefs</code>.
+</p>
+</li>
+<li> <p><code>type</code>: The argument to <code>robust</code>.
+</p>
+</li>
+<li> <p><code>use_cluster</code>: <code>TRUE</code> or <code>FALSE</code> indicator of whether clusters were used.
+</p>
+</li>
+<li> <p><code>cluster</code>: The clusters or name of cluster variable used, if any.
+</p>
+</li>
+<li> <p><code>vcov</code>: The robust variance-covariance matrix.
+</p>
+</li>
+</ul>
+</div>

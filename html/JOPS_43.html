@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predict.pssignal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Predict function for <code>psSignal</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Prediction function which returns both linear
+predictor and inverse link predictions, for an arbitrary matrix of signals
+(using <code>psSignal</code> with <code>class pssignal</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'pssignal'
+predict(object, ..., X_pred, type = "mu")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object using <code>psSignal</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X_pred</code></td>
+<td>
+<p>a matrix of arbitrary signals with <code>ncol(X) == length(x_index)</code> locations for
+desired prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>the mean value <code>type = "mu"</code> (default) or linear predictor
+<code>type = "eta"</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>the estimated mean (inverse link function) (default)
+or the linear predictor prediction with <code>type =
+"eta"</code>, for a matrix of signals in <code>X_pred</code>.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B.D. and Eilers, P.H.C. (1999). Generalized linear regression for sampled signals and
+curves: A P-spline approach. <em>Technometrics</em>, 41(1): 1-13.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Get the data
+library(fds)
+data(nirc)
+iindex=nirc$x
+X=nirc$y
+sel= 50:650 #1200 &lt;= x &amp; x&lt;= 2400
+X=X[sel,]
+iindex=iindex[sel]
+dX=diff(X)
+diindex=iindex[-1]
+y=as.vector(labc[1,1:40])
+oout=23
+dX=t(dX[,-oout])
+y=y[-oout]
+fit1 = psSignal(y, dX, diindex, nseg = 25,lambda = 0.0001)
+predict(fit1, X_pred = dX[1:5, ])
+predict(fit1, X_pred = dX[1:5, ], type = 'eta')
+</code></pre>
+
+
+</div>

@@ -1,0 +1,156 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fitasy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit asymmetry parameters in the expectile bundle model</h2>
+
+<h3>Description</h3>
+
+<p>There are two functions for fitting the expectile bundle model, the present one for estimating asymmetry parameters (<code>fitasy</code>),
+the other for estimating the amplitude function, <code>fitampl</code>. See the details below.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fitasy(y, B, b, p, c0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a response vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a proper B-spline basis matrix, see <code>bbase()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>b</code></td>
+<td>
+<p>a vector of B-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a vector of asymmetries with values between  0 and 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>c0</code></td>
+<td>
+<p>a vector.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The expectile bundle model determines a set of expectile curves for a point cloud with data vectors <code>x</code> and <code>y</code>,
+as <code class="reqn">\psi_j{x_i} = a_j g(x_i)</code>. Here <code class="reqn">a_j</code> is the asymmetry parameter corresponding to a given asymmetry <code class="reqn">p_j</code>.
+A vector of asymmetries with all <code class="reqn">0 &lt;p_j &lt; 1</code> is specified by the user.
+</p>
+<p>The asymmetric least squares objective function is
+</p>
+<p style="text-align: center;"><code class="reqn">\sum_j \sum_i w_{ij}(y_i - \sum_j a_j g_j(x_i))^2.</code>
+</p>
+
+<p>The function <code class="reqn">g(\cdot)</code> is called the amplitude. The weights depend on the residuals:
+</p>
+<p style="text-align: center;"><code class="reqn">w_{ij} = p_j</code>
+</p>
+<p> if <code class="reqn">y_i &gt; a_jg(x_i)</code> and <code class="reqn">w_{ij} = 1- p_j</code> otherwise.
+</p>
+<p>The amplitude function is a sum of B-splines with coefficients <code>alpha</code>. There is no direct solution, so <code>alpha</code>
+and the asymmetry parameters <code>a</code> must be updated alternatingly. See the example.
+</p>
+
+
+<h3>Value</h3>
+
+<p>a vector of estimated asymmetry parameters .
+</p>
+
+
+<h3>Note</h3>
+
+<p>This is a simplification of the model described in the reference. There is no explict term for the trend.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Schnabel, S.K. and Eilers, P.H.C. (2013) A location-scale model for non-crossing expectile curves. <em>Stat</em> 2: 171–183.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get the data
+data(bone_data)
+x = bone_data$age
+y = bone_data$spnbmd
+m &lt;- length(x)
+
+# Set asymmetry levels
+p = c(0.005, 0.01, 0.02, 0.05, 0.2, 0.5, 0.8, 0.9, 0.95, 0.98, 0.99, 0.995)
+np &lt;- length(p)
+
+# Set P-spline parameters
+x0 &lt;- 5
+x1 &lt;- 30
+ndx &lt;- 20
+bdeg &lt;- 3
+pord &lt;- 2
+
+# Compute bases
+B &lt;- bbase(x, x0, x1, ndx, bdeg)
+xg &lt;- seq(from = min(x), to = max(x), length = 100)
+Bg &lt;- clone_base(B, xg)
+n &lt;- ncol(B)
+
+lambda = 1
+alpha &lt;- rep(1,n)
+a = p
+for (it in 1:20){
+  alpha &lt;- fitampl(y, B, alpha, p, a, pord, lambda)
+  alpha &lt;- alpha / sqrt(mean(alpha ^ 2))
+  anew &lt;- fitasy(y, B, alpha, p, a)
+  da = max(abs(a - anew))
+  a = anew
+  cat(it, da, '\n')
+     if (da &lt; 1e-6) break
+}
+
+# Compute bundle on grid
+ampl &lt;- Bg %*% alpha
+Z &lt;- ampl %*% a
+
+# Plot data and bundle
+plot(x, y, pch = 15, cex = 0.7, col = 'grey', xlab = 'Age', ylab = 'Density')
+cols = colorspace::rainbow_hcl(np, start = 10, end = 350)
+matlines(xg, Z, lty = 1, lwd = 2, col = cols)
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pdf_article</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>PDF Article for Journal of Data Science</h2>
+
+<h3>Description</h3>
+
+<p>Provides output format to render PDF article for submission to Journal of
+Data Science.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pdf_article(..., cls = c("jdsart", "jds"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional named arguments passed to <code>bookdown::pdf_book()</code>
+and <code>rmarkdown::pdf_document()</code> other than <code>base_format</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cls</code></td>
+<td>
+<p>The LaTeX class name. The available choices are <code>jdsart</code> for
+the latest class developed by vtex, or <code>jds</code> for the deprecated
+class.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The output format that can only be used with
+<code>bookdown::render_book()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (interactive() &amp;&amp; requireNamespace("rmarkdown", quietly = TRUE)) {
+    ## draft from a sample R markdown file
+    jds.rmd::draft("jds-sample.Rmd")
+    ## produce pdf with the tex source kept for submission
+    rmarkdown::render("jds-sample.Rmd")
+}
+</code></pre>
+
+
+</div>

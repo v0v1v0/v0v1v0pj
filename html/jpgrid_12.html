@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>grid_line</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Draw line segments between grid square codes</h2>
+
+<h3>Description</h3>
+
+<p>If <code>grid</code> and <code>grid_to</code> are both vectors, the line between
+<code>grid</code> and <code>grid_to</code> is drawn (using Bresenham's line algorithm).
+If <code>grid</code> is a list, The path lines for each element in the grid will be
+drawn.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">grid_line(grid, grid_to = NULL, close = FALSE, skip_na = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>grid</code></td>
+<td>
+<p>A <code>grid</code> vector or a list of <code>grid</code> vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_to</code></td>
+<td>
+<p>A <code>grid</code> vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>close</code></td>
+<td>
+<p>Should the path of each element be closed when <code>grid</code> is a list?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>skip_na</code></td>
+<td>
+<p>Should skip the <code>NA</code> grid and connects the paths? <code>FALSE</code> by
+default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of <code>grid</code> vectors.
+</p>
+
+
+</div>

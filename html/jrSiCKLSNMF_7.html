@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>DetermineClusters</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform clustering diagnostics</h2>
+
+<h3>Description</h3>
+
+<p>A wrapper for the <code>clValid</code> and <code>fviz_nbclust</code> functions to perform clustering diagnostics
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">DetermineClusters(
+  SickleJr,
+  numclusts = 2:20,
+  clusteringmethod = "kmeans",
+  diagnosticmethods = c("wss", "silhouette", "gap_stat"),
+  clValidvalidation = "internal",
+  createDiagnosticplots = TRUE,
+  runclValidDiagnostics = TRUE,
+  printPlots = TRUE,
+  printclValid = TRUE,
+  subset = FALSE,
+  subsetsize = 1000,
+  seed = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>SickleJr</code></td>
+<td>
+<p>An object of class SickleJr</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>numclusts</code></td>
+<td>
+<p>A vector of integers indicating the number of clusters to test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clusteringmethod</code></td>
+<td>
+<p>String holding the clustering method: defaults to k-means; since the other methods
+are not implemented in jrSiCKLSNMF, it is recommended to use k-means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>diagnosticmethods</code></td>
+<td>
+<p>Vector of strings indicating which methods to plot. Defaults to all three of the available: wss, silhouette, and gap_stat</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clValidvalidation</code></td>
+<td>
+<p>String containing validation method to use for <code>clValid</code>. Defaults to internal.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>createDiagnosticplots</code></td>
+<td>
+<p>Boolean indicating whether to create diagnostic plots for cluster size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>runclValidDiagnostics</code></td>
+<td>
+<p>Boolean indicating whether to calculate the diagnostics from <code>clValid</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>printPlots</code></td>
+<td>
+<p>Boolean indicating whether to print the diagnostic plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>printclValid</code></td>
+<td>
+<p>Boolean indicating whether to print the diagnostic results from <code>clValid</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>Boolean indicating whether to calculate the diagnostics on a subset of the data rather
+than on the whole dataset.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subsetsize</code></td>
+<td>
+<p>Numeric value indicating size of the subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>Numeric value holding the random seed</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with cluster diagnostics added to its <code>clusterdiagnostics</code> slot
+</p>
+
+
+<h3>References</h3>
+
+<p>Brock G, Pihur V, Datta S, Datta S (2008).
+“clValid: An R Package for Cluster Validation.”
+<em>Journal of Statistical Software</em>, <b>25</b>(4), 1–22.
+<a href="https://www.jstatsoft.org/v25/i04/">https://www.jstatsoft.org/v25/i04/</a>.
+</p>
+<p>Kassambara A, Mundt F (2020).
+<em>factoextra: Extract and Visualize the Results of Multivariate Data Analyses</em>.
+R package version 1.0.7, <a href="https://CRAN.R-project.org/package=factoextra">https://CRAN.R-project.org/package=factoextra</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#Since these data are too small, the clValid diagnostics do not run
+#properly. See the vignette for an example with the clValid diagnostics
+SimSickleJrSmall&lt;-DetermineClusters(SimSickleJrSmall,numclusts=2:5,runclValidDiagnostics=FALSE)
+</code></pre>
+
+
+</div>

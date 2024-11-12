@@ -1,0 +1,123 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>PCA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Perform Principal Component Analysis (PCA)</h2>
+
+<h3>Description</h3>
+
+<p>Perform principal components analysis on a data
+matrix and return the results as an object of class <code>coords</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  PCA(x, n.comp, scale = FALSE, compute.scores = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data matrix, rows are observations, columns are variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.comp</code></td>
+<td>
+<p>How many principal components to compute.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>Whether to standardize the columns before doing PCA.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compute.scores</code></td>
+<td>
+<p>Whether to compute the scores (i.e. x in the new
+basis).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function performs Principal Component Analysis (PCA) on the
+data.  Variables are always centred before
+the PCA is performed and, if <code>scale</code> is set, the variables
+will also be rescaled to unit variance.
+</p>
+<p>If <code>compute.scores</code> is set to <code>FALSE</code>, only the information
+required for the <code>toPC()</code> and <code>fromPC()</code> to work is stored
+in the returned <code>coords</code> object; otherwise the scores will
+be stored in the <code>$y</code> field of the <code>coords</code> object.
+</p>
+<p>The <code>PCA()</code> function is an alternative to
+the <code>prcomp()</code> command from the standard library.
+The main advantage of <code>PCA()</code> is that the <code>coords</code>
+class provides functions to convert between the original basis and the
+principal component basis.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>coords</code>, with the following
+additional components added:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>loadings</code></td>
+<td>
+<p>the loadings, each column is one of the new basis vectors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>if <code>compute.scores==TRUE</code>, this is <code>x</code> expressed in
+the new basis</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>the variance of the data along each of the new basis vectors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>total.var</code></td>
+<td>
+<p>the total variance of the data</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jochen Voss &lt;voss@seehuhn.de&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coords</code>;
+alternative implementations: <code>prcomp</code>, <code>princomp</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  pc &lt;- PCA(iris[, 1:4], scale = TRUE, n.comp = 2)
+  pc
+  plot(pc$y, col=iris$Species)
+</code></pre>
+
+
+</div>

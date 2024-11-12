@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jpen</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>JPEN Estimate of covariance matrix
+</h2>
+
+<h3>Description</h3>
+
+<p>Estimate of covariance Matrix using Joint Penalty Method
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jpen(S,  gam, lam=NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>S</code></td>
+<td>
+<p> Sample covariance matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gam</code></td>
+<td>
+<p>Tuning parameter gamma. gam is non-negative.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lam</code></td>
+<td>
+<p>Tuning parameter lambda. lam is non-negative.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function returns an estimate of covariance matrix using Joint Penalty method.</p>
+
+
+<h3>Value</h3>
+
+<p>Estimate of Covariance Matrix.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ashwini Maurya, Email: mauryaas@msu.edu
+</p>
+
+
+<h3>References</h3>
+
+<p>A Well Conditioned and Sparse Estimate of Covariance and Inverse Covariance Matrix Using Joint Penalty. Submitted.
+http://arxiv.org/pdf/1412.7907v2.pdf
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jpen.tune, jpen.inv</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p=10;n=100;
+Sig=diag(p);
+y=rmvnorm(n,mean=rep(0,p),sigma=Sig);
+gam=1.0;S=var(y);
+lam=2/p;
+Sighat=jpen(S,gam,lam);
+</code></pre>
+
+
+</div>

@@ -1,0 +1,109 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>acd_estimation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit Joint Mean-Covariance Models based on ACD</h2>
+
+<h3>Description</h3>
+
+<p>Fit joint mean-covariance models based on ACD.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">acd_estimation(m, Y, X, Z, W, start, mean, trace = FALSE, profile = TRUE,
+  errormsg = FALSE, covonly = FALSE, optim_method = "default")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>an integer vector of numbers of measurements for subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a vector of responses for all subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>model matrix for the mean structure model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>model matrix for the diagonal matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>model matrix for the lower triangular matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>starting values for the parameters in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mean</code></td>
+<td>
+<p>when covonly is true, it is used as the given mean.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>the values of the objective function and the parameters are
+printed for all the trace'th iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile</code></td>
+<td>
+<p>whether parameters should be estimated sequentially using the
+idea of profile likelihood or not.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>errormsg</code></td>
+<td>
+<p>whether or not the error message should be print.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covonly</code></td>
+<td>
+<p>estimate the covariance structure only, and use given mean.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optim_method</code></td>
+<td>
+<p>optimization method, choose "default" or "BFGS"(vmmin in
+R).</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>mcd_estimation</code> for joint mean covariance model fitting
+based on MCD, <code>hpc_estimation</code> for joint mean covariance
+model fitting based on HPC.
+</p>
+
+
+</div>

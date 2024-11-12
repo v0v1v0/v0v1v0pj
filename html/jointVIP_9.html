@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_boot_measures</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate bootstrapped variation
+additional tool to help calculate the uncertainty of each variable's bias</h2>
+
+<h3>Description</h3>
+
+<p>Calculate bootstrapped variation
+additional tool to help calculate the uncertainty of each variable's bias
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_boot_measures(object, smd = "cross-sample", use_abs = TRUE, B = 100)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>jointVIP object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>smd</code></td>
+<td>
+<p>calculate standardized mean difference either using <code>cross-sample</code> or <code>pooled</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use_abs</code></td>
+<td>
+<p>TRUE (default) for absolute measures</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>100 (default) for the number of times the bootstrap step wished to run</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>bootstrapped measures needed for bootstrap-jointVIP
+</p>
+
+
+</div>

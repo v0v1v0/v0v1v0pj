@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>newton.raphson.root</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A Newton Raphson root finder: finds x such that f(x) = 0</h2>
+
+<h3>Description</h3>
+
+<p>The function <code>newton.raphson.root</code> is a general root finder which
+can find the zero of any function whose derivative is available.
+In this package, it is called by <code>irr.solve</code> and by
+<code>GenBSImplied</code>. It can be used in other situations as
+well - see the examples below.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">newton.raphson.root(
+  f,
+  guess = 0,
+  lower = -Inf,
+  upper = Inf,
+  max.iter = 100,
+  toler = 1e-06,
+  convergence = 1e-08
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>The function whose zero is to be found. An R function
+object that takes one numeric argument and returns a list of
+two components (value and gradient). In an IRR application,
+these two components will be the NPV and the DV01/10000. In an
+implied volatility application, the components will be the
+option price and the vega. See also the examples below</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>guess</code></td>
+<td>
+<p>The starting value (guess) from which the solver
+starts searching for the IRR</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>The lower end of the interval within which to search
+for the root</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>The upper end of the interval within which to search
+for the root</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.iter</code></td>
+<td>
+<p>The maximum number of iterations of the
+Newton-Raphson procedure</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>toler</code></td>
+<td>
+<p>The criterion to determine whether a zero has been
+found. If the value of the function exceeds <code>toler</code> in
+absolute value, then <code>NA</code> is returned with a warning</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence</code></td>
+<td>
+<p>The relative tolerance threshold used to
+determine whether the Newton-Raphson procedure has
+converged. The procedure terminates when the last step is less
+than <code>convergence</code> times the current estimate of the
+root. Convergence can take place to a non zero local
+minimum. This is checked using the <code>toler</code> criterion
+below</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns <code>NA</code> under either of two conditions: (a)
+the procedure did not converge after <code>max.iter</code> iterations,
+or (b) the procedure converged but the function value is not zero
+within the limits of <code>toler</code> at this point. The second
+condition usually implies that the procedure has converged to a
+non zero local minimum from which there is no downhill gradient.
+</p>
+<p>If the iterations converge to a genuine root (within the limits of
+<code>toler</code>), then it returns the root that was found.
+</p>
+
+
+<h3>References</h3>
+
+<p>The Newton Raphson solver was converted from C++ code
+in the <a href="https://www.boost.org/">Boost library</a>
+</p>
+
+
+</div>

@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>index_under</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Return indices to be used in original data for undersampling</h2>
+
+<h3>Description</h3>
+
+<p>(note: sampling is done without replacement)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">index_under(ix_pos, ix_neg, q, delta)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>ix_pos</code></td>
+<td>
+<p>Indices for positive examples in data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ix_neg</code></td>
+<td>
+<p>Indices for negative examples in data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>q</code></td>
+<td>
+<p>Quantiles for which to construct tilted datasets.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delta</code></td>
+<td>
+<p>Number of quantiles.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a list, each of element of which gives indices to be used on
+a particular cut (note: will be of length delta - 1)
+</p>
+
+
+</div>

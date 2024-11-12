@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>austen_books</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tidy data frame of Jane Austen's 6 completed, published novels</h2>
+
+<h3>Description</h3>
+
+<p>Returns a tidy data frame of Jane Austen's 6 completed, published novels with
+two columns: <code>text</code>, which contains the text of the novels divided into
+elements of up to about 70 characters each, and <code>book</code>, which contains the titles of
+the novels as a factor in order of publication.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">austen_books()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>Users should be aware that there are some differences in usage
+between the novels as made available by Project Gutenberg. For example,
+"anything" vs. "any thing", "Mr" vs. "Mr.", and using underscores vs. all
+caps to indicate italics/emphasis.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with two columns: <code>text</code> and <code>book</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+library(dplyr)
+
+austen_books() %&gt;% 
+    group_by(book) %&gt;%
+    summarise(total_lines = n())
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>flaggedSchurPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Flagged Schur polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Computes a flagged Schur polynomial (which is not symmetric
+in general). See
+<a href="https://math.mit.edu/~apost/papers/degreeschub.pdf">Chains in the Bruhat order</a>
+for the definition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">flaggedSchurPol(lambda, a, b)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>integer partition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a, b</code></td>
+<td>
+<p>lower bounds and upper bounds, weakly increasing vectors of
+integers; <code>lambda</code>, <code>a</code> and <code>b</code> must have the same length</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>qspray</code> polynomial.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lambda &lt;- c(3, 2, 2)
+n &lt;- 3
+a &lt;- c(1, 1, 1); b &lt;- c(n, n, n)
+flaggedPoly &lt;- flaggedSchurPol(lambda, a, b)
+poly &lt;- SchurPol(n, lambda)
+flaggedPoly == poly # should be TRUE
+</code></pre>
+
+
+</div>

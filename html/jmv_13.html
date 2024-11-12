@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>corrPart</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Partial Correlation</h2>
+
+<h3>Description</h3>
+
+<p>Partial correlation matrices are a way to examine linear relationships
+between two or more continuous variables while controlling for other
+variables
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">corrPart(data, vars, controls, pearson = TRUE, spearman = FALSE,
+  kendall = FALSE, type = "part", sig = TRUE, flag = FALSE,
+  n = FALSE, hypothesis = "corr")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>a vector of strings naming the variables to correlate in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>controls</code></td>
+<td>
+<p>a vector of strings naming the control variables in
+<code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pearson</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide Pearson's R</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spearman</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Spearman's
+rho</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kendall</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Kendall's
+tau-b</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>one of <code>'part'</code> (default) or <code>'semi'</code> specifying the
+type of partial correlation to calculate; partial or semipartial
+correlation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sig</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, provide significance
+levels</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>flag</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), flag significant
+correlations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide the number of cases</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hypothesis</code></td>
+<td>
+<p>one of <code>'corr'</code> (default), <code>'pos'</code>,
+<code>'neg'</code> specifying the alernative hypothesis; correlated, correlated
+positively, correlated negatively respectively.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For each pair of variables, a Pearson's r value indicates the strength
+and direction of the relationship between those two variables. A
+positive value indicates a positive relationship (higher values of one
+variable predict higher values of the other variable). A negative
+Pearson's r indicates a negative relationship (higher values of one
+variable predict lower values of the other variable, and vice-versa).
+A value of zero indicates no relationship (whether a variable is high
+or low, does not tell us anything about the value of the other
+variable).
+</p>
+<p>More formally, it is possible to test the null hypothesis that the
+correlation is zero and calculate a p-value. If the p-value is low, it
+suggests the correlation co-efficient is not zero, and there is a linear
+(or more complex) relationship between the two variables.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$matrix</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a (semi)partial correlation matrix table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$matrix$asDF</code>
+</p>
+<p><code>as.data.frame(results$matrix)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data('mtcars')
+
+corrPart(mtcars, vars = vars(mpg, cyl, disp), controls = vars(hp))
+
+#
+#  PARTIAL CORRELATION
+#
+#  Partial Correlation
+#  ----------------------------------------------------
+#                           mpg       cyl       disp
+#  ----------------------------------------------------
+#    mpg     Pearson's r         —
+#            p-value             —
+#
+#    cyl     Pearson's r    -0.590         —
+#            p-value        &lt; .001         —
+#
+#    disp    Pearson's r    -0.606     0.719        —
+#            p-value        &lt; .001    &lt; .001        —
+#  ----------------------------------------------------
+#    Note. controlling for 'hp'
+#
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getReviewsTracks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>This method lets you filter and browse track reviews</h2>
+
+<h3>Description</h3>
+
+<p>This method lets you filter and browse track reviews
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getReviewsTracks(
+  track_ids,
+  limit = 10,
+  client_id = Sys.getenv("JAMENDO_CLIENT_ID")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>track_ids</code></td>
+<td>
+<p>List of album IDs to seach for</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>limit</code></td>
+<td>
+<p>Integer to set the number of displayed search results. Maximum value is 200.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>client_id</code></td>
+<td>
+<p>Defaults to System Environment variable "JAMENDO_CLIENT_ID"</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data frame which contains track reviews of the searched albums.
+See <a href="https://developer.jamendo.com/v3.0/reviews/tracks">https://developer.jamendo.com/v3.0/reviews/tracks</a> for more information.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+##Example
+ IDs &lt;- c(114069,113885)
+ reviews &lt;- getReviewsTracks(IDs,limit=3)
+
+</code></pre>
+
+
+</div>

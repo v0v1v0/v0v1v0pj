@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cisurvfitJMCS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bootstrapped CI using <code>FastJM</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Bootstrapped CI for predicted survival probability
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cisurvfitJMCS(object)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a <code>survfitJMCS</code> object</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>Bootstrap CI for the survival probability and other relevant information for predicted survival plot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+##
+library(survival)
+library(dplyr)
+jmcs1&lt;-jmcsBig(dtlong=data.frame(long2),
+dtsurv = data.frame(surv2),
+longm=y~ x7+visit,
+survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,
+samplesize=200,id='id')
+mod2&lt;-jmcs1
+P2&lt;-survfitJMCS(model&lt;-mod2,ids&lt;-c(5),u&lt;-seq(surv2[surv2$id==5,]$time,
+surv2[surv2$id==5,]$time+10,0.2),obs.time='time')
+bootci&lt;-cisurvfitJMCS(P2)
+print(bootci)
+##
+  
+</code></pre>
+
+
+</div>

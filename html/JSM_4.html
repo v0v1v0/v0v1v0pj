@@ -1,0 +1,119 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dataPreprocess</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Preprocess Data to Be Fed into Joint Models</h2>
+
+<h3>Description</h3>
+
+<p><code>dataPreprocess</code> is a function to preprocess data to be used in fitting joint models. Suppose the situation is that 
+the longitudinal measurements are recorded in a data frame with one row per measurment and the survival information 
+are recorded in another data frame with one row per subject. This function merges the two data frames by subject identification 
+and generate three new columns: <code>start</code>, <code>stop</code>, <code>event</code>. See <b>Value</b>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dataPreprocess(long, surv, id.col, long.time.col, surv.time.col, surv.event.col, 
+               surv.event.indicator = list(censored = 0, event = 1), suffix = ".join")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>long</code></td>
+<td>
+<p>a data frame for the longitudinal data, one row per measurment, with subject identification, time of measurement, and longitudinal measurements, etc.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv</code></td>
+<td>
+<p>a data frame for the survival data, one row per subject, with subject identification (column name should match that in <code>long</code>), possibly censored time-to-event, and event indicator (normally 0=censored, 1=event), etc.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.col</code></td>
+<td>
+<p>a <code>character</code> string specifying the subject identification column in both <code>long</code> and <code>surv</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>long.time.col</code></td>
+<td>
+<p>a <code>character</code> string specifying the time of measurement column in <code>long</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv.time.col</code></td>
+<td>
+<p>a <code>character</code> string specifying the possibly censored time-to-event column in <code>surv</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv.event.col</code></td>
+<td>
+<p>a <code>character</code> string specifying the event status column in <code>surv</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>surv.event.indicator</code></td>
+<td>
+<p>a <code>list</code> specifying the values in column <code>surv.event.col</code> corresponding to censored and event status.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffix</code></td>
+<td>
+<p>a optional <code>character</code> string specifying the suffix to be added to the <code>start</code>, <code>stop</code>, <code>event</code> columns in case  <code>long</code> or <code>surv</code> already have columns with these names.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame merging <code>long</code> and <code>surv</code> by subject identification, with one row per longitudinal measurment, 
+and generate three new columns: <code>start</code>, <code>stop</code>, <code>event</code> (column names are added with suffix specified by <code>suffix</code>:
+</p>
+
+<dl>
+<dt><code>start</code></dt>
+<dd>
+<p>starting time of the interval which contains the time of the longitudinal measurements.</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd>
+<p>ending time of the interval which contains the time of the longitudinal measurements.</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, e.g. death, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>1. If <code>long</code> and <code>surv</code> have columns sharing the same column names, the columns from <code>long</code> and <code>surv</code> would be named with suffixes ".long" and ".surv", respectively, in the output data frame.
+2. The time of measurement of the longitudinal measurements and possibly censored time-to-event should be recorded consistently for each subject, i.e. time 0 means the same time point for the longitudinal and survival measurements. 
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+liver.join &lt;- dataPreprocess(liver.long, liver.surv, 'ID', 'obstime', 'Time', 'death')
+
+## End(Not run)
+</code></pre>
+
+
+</div>

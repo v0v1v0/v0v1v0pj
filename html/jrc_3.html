@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>allowVariables</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Allow variable assignment without authorization</h2>
+
+<h3>Description</h3>
+
+<p>This function adds variable names to the list of variables, that
+can be modified from a web page without manual confirmation on the R side.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">allowVariables(vars = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>Vector of variable names to be added to the list. If <code>NULL</code>,
+returns names of all currently allowed variables.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around <code>allowVariables</code> method of class <code>App</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Names of all currently allowed variables if <code>vars = NULL</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>allowFunctions</code>, <code>authorize</code>, <code>openPage</code> (check argument
+<code>allowedVariables</code>), <code>sendData</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+allowVariables(c("myVariable", "anotherOne"))
+vars &lt;- allowVariables()
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>haps_gtrees</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Organize information to create haplotypes using gene trees</h2>
+
+<h3>Description</h3>
+
+<p>This function organizes higher-level information for creating haplotypes from
+gene trees output from coalescent simulations.
+Note that all gene trees must be rooted and binary.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">haps_gtrees(obj = NULL, fn = NULL)
+
+write_gtrees(gtrees, out_prefix)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>Object containing gene trees.
+This can be one of the following:
+(1) A single <code>list</code> with a <code>trees</code> field inside. This field must
+contain a set of gene trees for each chromosome.
+(2) A list of lists, each sub-list containing a <code>trees</code> field of
+length 1. The top-level list must be of the same length as the
+number of chromosomes.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fn</code></td>
+<td>
+<p>A single string specifying the name of the file containing
+the <code>ms</code>-style coalescent output with gene trees.
+Defaults to <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gtrees</code></td>
+<td>
+<p>A <code>haps_gtrees_info</code> object output from <code>haps_gtrees</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_prefix</code></td>
+<td>
+<p>Prefix for the output file of gene trees.
+The extension will be <code>.trees</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Using the <code>obj</code> argument is designed after the <code>trees</code> fields in the output from
+the <code>scrm</code> and <code>coala</code> packages.
+(These packages are not required to be installed when installing <code>jackalope</code>.)
+To get gene trees, make sure to add <code>+ sumstat_trees()</code>
+to the <code>coalmodel</code> for <code>coala</code>, or
+make sure that <code>"-T"</code> is present in <code>args</code> for <code>scrm</code>.
+If using either of these packages, I encourage you to cite them. For citation
+information, see output from <code>citation("scrm")</code> or <code>citation("coala")</code>.
+</p>
+<p>If using an output file from a command-line program like <code>ms</code>/<code>msms</code>,
+add the <code>-T</code> option.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>haps_gtrees_info</code> object containing information used in <code>create_haplotypes</code>
+to create variant haplotypes.
+This class is just a wrapper around a list of NEWICK tree strings, one for
+each gene tree, which you can view (but not change) using the object's
+<code>trees()</code> method.
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul><li> <p><code>write_gtrees()</code>: Write gene trees to ms-style output file.
+</p>
+</li></ul>
+</div>

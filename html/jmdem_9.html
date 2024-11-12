@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>model.matrix.jmdem</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Construct Design Matrices
+</h2>
+
+<h3>Description</h3>
+
+<p><code>model.matrix</code> creates a design (or model) matrix, e.g., by expanding factors to a set of dummy variables (depending on the contrasts) and expanding interactions similarly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmdem'
+model.matrix(object, submodel = c("both", "mean", "dispersion"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>the function family accesses the family objects which are stored within objects created by <code>jmdem.</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>submodel</code></td>
+<td>
+<p>character. The family of the specified submodel. For <code>both</code>, the families of the mean and dispersion submodels will be return in a list of 2 elements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>model.matrix</code> creates a design matrix from the description given in <code>terms(object)</code>, using the data in <code>data</code> which must supply variables with the same names as would be created by a call to <code>model.frame(object)</code> or, more precisely, by evaluating <code>attr(terms(object), "variables")</code>. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>The design matrix for a regression-like model with the specified formula and data.
+</p>
+<p>There is an attribute "<code>assign</code>", an integer vector with an entry for each column in the matrix giving the term in the formula which gave rise to the column. Value <code>0</code> corresponds to the intercept (if any), and positive values to terms in the order given by the <code>term.labels</code> attribute of the <code>terms</code> structure corresponding to object.
+</p>
+<p>If there are any factors in terms in the model, there is an attribute "<code>contrasts</code>", a named list with an entry for each factor. This specifies the contrasts that would be used in terms in which the factor is coded by contrasts (in some terms dummy coding may be used), either as a character vector naming a function or as a numeric matrix.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Chambers, J. M. (1992). <em>Data for models</em>. Chapter 3 of <em>Statistical Models in S</em> eds J. M. Chambers and T. J. Hastie, Wadsworth &amp; Brooks/Cole.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>model.frame</code>, <code>model.extract</code>, <code>terms</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example in jmdem(...)
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x, dformula = ~ z, 
+                            mfamily = poisson(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4), 
+                            lambda.true = c(2.5, 3), n = 100)
+                            
+fit &lt;- jmdem(mformula = y ~ x, dformula = ~ z, data = MyData, 
+             mfamily = poisson, dfamily = Gamma(link = "log"), 
+             dev.type = "deviance", method = "CG")
+              
+## Extract the design matrix of the mean submodel
+model.matrix(fit, submodel = "mean")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juicedown_example</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>List example files</h2>
+
+<h3>Description</h3>
+
+<p>List example files for the package. Show the path when the exact name is given.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juicedown_example(name = NULL, file = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>character. A single string for example name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>file</code></td>
+<td>
+<p>character. A single string for the main file.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The package sample files are organized under samples directory like so:
+</p>
+<p>samples/
+|– from-html/
+|   <code>-- sample.html </code>– include/
+|– pic/
+'– sample.Rmd
+</p>
+
+<ul>
+<li> <p><code>juicedown_example()</code> is equivalent to <code style="white-space: pre;">⁠ls samples⁠</code>,
+</p>
+</li>
+<li> <p><code>juicedown_example("from-html")</code> is to <code style="white-space: pre;">⁠ls samples/from-html⁠</code>, and
+</p>
+</li>
+<li> <p><code>juicedown_example("from-html", "sample.html")</code> shows the full path.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>character. A list of example files or a path string to each example file.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">juicedown_example()
+juicedown_example("from-html")
+juicedown_example("from-html", "sample.html")
+
+</code></pre>
+
+
+</div>

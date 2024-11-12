@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>KostkaJackNumbersWithGivenLambda</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Kostka-Jack numbers with a given partition <code class="reqn">\lambda</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Kostka numbers with Jack parameter, or Kostka-Jack numbers
+<code class="reqn">K_{\lambda,\mu}(\alpha)</code> for a given Jack parameter <code class="reqn">\alpha</code>
+and a given integer partition <code class="reqn">\lambda</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">KostkaJackNumbersWithGivenLambda(lambda, alpha, output = "vector")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>integer partition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the Jack parameter, a <code>bigq</code> number or anything coercible
+to a <code>bigq</code> number</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>the format of the output, either <code>"vector"</code> or
+<code>"list"</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Kostka-Jack number <code class="reqn">K_{\lambda,\mu}(\alpha)</code> is the
+coefficient of the monomial symmetric polynomial <code class="reqn">m_\mu</code> in the
+expression of the <code class="reqn">P</code>-Jack polynomial <code class="reqn">P_\lambda(\alpha)</code> as a
+linear combination of monomial symmetric polynomials. For <code class="reqn">\alpha=1</code>
+it is the ordinary Kostka number.
+</p>
+
+
+<h3>Value</h3>
+
+<p>If <code>output="vector"</code>, this function returns a named vector.
+This vector is made of the non-zero (i.e. positive) Kostka-Jack numbers
+<code class="reqn">K_{\lambda,\mu}(\alpha)</code> given as character strings and its names
+encode the partitions <code class="reqn">\mu</code>.
+If <code>ouput="list"</code>, this function returns a list of lists.
+Each of these lists has two
+elements. The first one is named <code>mu</code> and is an integer
+partition, and the second one is named <code>value</code> and is a <code>bigq</code>
+rational number, the Kostka-Jack number <code class="reqn">K_{\lambda,\mu}(\alpha)</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>KostkaJackNumbers</code>,
+<code>symbolicKostkaJackNumbersWithGivenLambda</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">KostkaJackNumbersWithGivenLambda(c(3, 2), alpha = "2")
+</code></pre>
+
+
+</div>

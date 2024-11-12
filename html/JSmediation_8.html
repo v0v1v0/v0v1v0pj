@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>apastylr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Creates an APA formatted report from a significance test</h2>
+
+<h3>Description</h3>
+
+<p>Create an APA formatted report from the test of a specific term
+in a linear model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">apastylr(model, term)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A linear model created using <code>lm()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>term</code></td>
+<td>
+<p>A character string representing a term in the linear model.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An APA formatted character string.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(ho_et_al)
+test &lt;- lm(hypodescent ~ linkedfate, ho_et_al)
+apastylr(test, "linkedfate")
+
+</code></pre>
+
+
+</div>

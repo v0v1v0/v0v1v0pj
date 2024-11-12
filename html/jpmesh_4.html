@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coarse_gather</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Gather more coarse mesh</h2>
+
+<h3>Description</h3>
+
+<p>Return coarse gather mesh codes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coarse_gather(meshcode, distinct = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meshcode</code></td>
+<td>
+<p><code>character</code>. mesh code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distinct</code></td>
+<td>
+<p>return unique meshcodes</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>meshcode
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m &lt;- c("493214294", "493214392", "493215203", "493215301")
+coarse_gather(m)
+coarse_gather(coarse_gather(m))
+coarse_gather(coarse_gather(m), distinct = TRUE)
+</code></pre>
+
+
+</div>

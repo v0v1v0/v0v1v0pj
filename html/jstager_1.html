@@ -1,0 +1,171 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_jstage_articles</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get J-Stage Articles List</h2>
+
+<h3>Description</h3>
+
+<p>Retrieves a list of articles published on J-STAGE, including detailed
+information such as publication date and bibliographic metadata.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_jstage_articles(
+  pubyearfrom = NA,
+  pubyearto = NA,
+  material = "",
+  article = "",
+  author = "",
+  affil = "",
+  keyword = "",
+  abst = "",
+  text = "",
+  issn = "",
+  cdjournal = "",
+  sortflg = NA,
+  vol = NA,
+  no = NA,
+  start = NA,
+  count = NA,
+  sep = "\n",
+  lang = "ja"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pubyearfrom</code></td>
+<td>
+<p>An integer specifying the starting publication year (in YYYY format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pubyearto</code></td>
+<td>
+<p>An integer specifying the ending publication year (in YYYY format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>material</code></td>
+<td>
+<p>A character string specifying the material name (partial match search,
+case insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>article</code></td>
+<td>
+<p>A character string specifying the article title (partial match search,
+case insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>author</code></td>
+<td>
+<p>A character string specifying the author name (partial match search, case
+insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>affil</code></td>
+<td>
+<p>A character string specifying the affiliation (partial match search, case
+insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keyword</code></td>
+<td>
+<p>A character string specifying the keyword (partial match search, case
+insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>abst</code></td>
+<td>
+<p>A character string specifying the abstract (partial match search, case
+insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>A character string specifying the full text (partial match search, case
+insensitive).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>issn</code></td>
+<td>
+<p>A character string specifying the ISSN (exact match search in XXXX-XXXX
+format).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cdjournal</code></td>
+<td>
+<p>A character string specifying the journal code.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sortflg</code></td>
+<td>
+<p>An integer specifying the sort flag: 1 for score order, 2 for volume,
+issue, and page order (default is 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vol</code></td>
+<td>
+<p>An integer specifying the volume (exact match).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>no</code></td>
+<td>
+<p>An integer specifying the issue number (exact match).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>An integer specifying the starting index for the search results.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>count</code></td>
+<td>
+<p>An integer specifying the number of search results to retrieve (up to
+1,000).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>A character string to separate multiple authors' names. Default is "\n".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A character string specifying the language for column names: "ja" for
+Japanese (default is "ja").</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list containing metadata and entry data frames with the search
+results.
+</p>
+
+
+</div>

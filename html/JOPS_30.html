@@ -1,0 +1,160 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pclm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit a composite link model</h2>
+
+<h3>Description</h3>
+
+<p>Fit a smooth latent distribution using the penalized composite link model (PCLM).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pclm(y, C, B, lambda = 1, pord = 2, itmax = 50, show = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a vector of counts, length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>a composition matrix, <code>m</code> by <code>q</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a B-spline basis matrix, <code>q</code> by <code>n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the penalty parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the  the order of the difference penalty (default = 2).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>itmax</code></td>
+<td>
+<p>the maximum number of iterations (default = 50).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>Set to TRUE or FALSE to display iteration history (default = FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The composite link model assumes that <code class="reqn">E(y) = \mu = C\exp(B \alpha)</code>, where <code class="reqn">\exp(B\alpha)</code> is
+a latent discrete distribution, usually on a finer grid than that for <code class="reqn">y</code>.
+</p>
+<p>Note that <code>sum(gamma) == sum(mu)</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following items:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the estimated B-spline coefficients, length <code>n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gamma</code></td>
+<td>
+<p>the estimated latent distribution, length <code>q</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>estimated values of <code>y</code>, length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p>the deviance of the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ed</code></td>
+<td>
+<p>the effective model dimension.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p>Akaike's Information Criterion.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Jutta Gampe
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P. H. C. (2007). III-posed problems with counts, the composite link
+model and penalized likelihood. <em>Statistical Modelling</em>, 7(3), 239–254.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Left and right boundaries, and counts, of wide intervals of the data
+cb &lt;- c( 0, 20, 30, 40, 50, 60)
+ce &lt;- c(20, 30, 40, 50, 60, 70)
+y &lt;- c(79, 54, 19, 1, 1, 0)
+
+# Construct the composition matrix
+m &lt;- length(y)
+n &lt;- max(ce)
+C &lt;- matrix(0, m, n)
+for (i in 1:m) C[i, cb[i]:ce[i]] &lt;- 1
+
+mids = (cb + ce) / 2 - 0.5
+widths = ce - cb + 1
+dens = y / widths / sum(y)
+x = (1:n) - 0.5
+B = bbase(x)
+fit = pclm(y, C, B, lambda = 2, pord = 2, show = TRUE)
+gamma = fit$gamma / sum(fit$gamma)
+# Plot density estimate and data
+plot(x, gamma, type = 'l', lwd = 2, xlab = "Lead Concentration", ylab = "Density")
+rect(cb, 0, ce, dens, density = rep(10, 6), angle = rep(45, 6))
+</code></pre>
+
+
+</div>

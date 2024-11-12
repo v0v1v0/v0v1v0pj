@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jaatha_model.function</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Specify a jaatha model using a simulation function</h2>
+
+<h3>Description</h3>
+
+<p>This is the usual way to specify a jaatha model. An detailed exampled on 
+doing so is given in the 'jaatha-intro' vignette.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class ''function''
+create_jaatha_model(
+  x,
+  par_ranges,
+  sum_stats,
+  ...,
+  scaling_factor = 1,
+  test = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A simulation function. This function takes model parameters as 
+input, and returns the simulated data. The function must take exactly one 
+argument, which is a numeric vector of model parameters for which the 
+simulation should be conducted. The function should return the simulation
+results in an arbitrary format, that is then passed on to the summary
+statistics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>par_ranges</code></td>
+<td>
+<p>A matrix stating the possible values for the model 
+parameters. The matrix must have one row for each parameter, and two
+columns which state the minimal and maximal possible value for the 
+parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sum_stats</code></td>
+<td>
+<p>A list of summary statistics created with 
+<code>create_jaatha_stat</code>. The simulation results will be passed
+to the statistics, which should convert them into a numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Currently unused.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaling_factor</code></td>
+<td>
+<p>If your model is a down-scaled version of your data,
+you can indicated this using this value. The estimated expectation values
+are multiplied with this factor before the likelihood is calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>A logical indicating whether a simulation is performed to test
+the model.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">create_jaatha_model(function(x) rpois(10, x),
+                    par_ranges = matrix(c(0.1, 0.1, 10, 10), 2, 2),
+                    sum_stats = list(create_jaatha_stat("sum", sum)))
+</code></pre>
+
+
+</div>

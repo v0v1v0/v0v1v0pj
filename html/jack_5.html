@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>HallLittlewoodPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hall-Littlewood polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Hall-Littlewood polynomial of a given partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">HallLittlewoodPol(n, lambda, which = "P")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>integer partition</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which Hall-Littlewood polynomial, <code>"P"</code> or <code>"Q"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The Hall-Littlewood polynomial in <code>n</code> variables of the
+integer partition <code>lambda</code>. This is a <code>symbolicQspray</code>
+polynomial with a unique parameter usually denoted by <code class="reqn">t</code> and
+its coefficients are polynomial in this parameter. When substituting
+<code class="reqn">t</code> with <code class="reqn">0</code> in the Hall-Littlewood <code class="reqn">P</code>-polynomials, one
+obtains the Schur polynomials.
+</p>
+
+
+</div>

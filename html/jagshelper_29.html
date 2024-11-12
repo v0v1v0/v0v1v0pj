@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pull_post</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Subset from posterior data.frame</h2>
+
+<h3>Description</h3>
+
+<p>Extracts a subset vector or <code>data.frame</code> from a <code>data.frame</code> consisting of more columns,
+such that column names match a name given in the <code style="white-space: pre;">⁠p=⁠</code> argument.  This may be useful
+in creating smaller objects consisting of MCMC samples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pull_post(x, p = NULL, exact = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Posterior <code>data.frame</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>String to begin posterior names.  If <code>NULL</code> is used, all parameters will be returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether name must be an exact match (<code>TRUE</code>) or with initial sub-string matching only supplied characters (<code>FALSE</code>).
+Defaults to <code>FALSE.</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with a column associated with each (subsetted) parameter and a row
+associated with each MCMC iteration.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jags_df
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">out_df &lt;- jags_df(asdf_jags_out)
+
+b &lt;- pull_post(out_df, p="b")
+str(b)
+a &lt;- pull_post(out_df, p=c("a","sig_a"))
+str(a)
+sigs &lt;- pull_post(out_df, p="sig")
+str(sigs)
+justsig &lt;- pull_post(out_df, p="sig", exact=TRUE)
+str(justsig)
+</code></pre>
+
+
+</div>

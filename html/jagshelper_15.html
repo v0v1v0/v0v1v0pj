@@ -1,0 +1,192 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>envelope</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Envelope plot</h2>
+
+<h3>Description</h3>
+
+<p>Envelope plot of the posterior densities of a vector of parameter nodes,
+in which the sequential order of nodes is important, such as a time series.
+</p>
+<p>This produces a plot of overlayed shaded strips, each corresponding to a given
+interval width (defaults to 50 percent and 95 percent), with an overlayed
+median line.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">envelope(
+  df,
+  p = NULL,
+  x = NA,
+  row = NULL,
+  column = NULL,
+  median = TRUE,
+  ci = c(0.5, 0.95),
+  col = 4,
+  add = FALSE,
+  dark = 0.3,
+  outline = FALSE,
+  xlab = "",
+  ylab = "",
+  main = NULL,
+  ylim = NULL,
+  transform = c("none", "exp", "expit"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>Output object returned from <code>jagsUI::jags()</code>; or alternately,
+two-dimensional <code>data.frame</code> or matrix in which parameter node element is
+given by column and MCMC iteration is given by row.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Parameter name, if input to <code>df</code> is a <code>jagsUI</code> output object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Vector of X-coordinates for plotting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row</code></td>
+<td>
+<p>Row to subset, in the case of a 2-d matrix of parameter nodes in-model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>column</code></td>
+<td>
+<p>Column to subset, in the case of a 2-d matrix of parameter nodes in-model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>median</code></td>
+<td>
+<p>Whether to include median line</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>Vector of intervals to overlay.  Defaults to 50 percent and 95 percent.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>Color for plotting</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add</code></td>
+<td>
+<p>Whether to add to existing plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dark</code></td>
+<td>
+<p>Opacity (0-1) for envelopes.  Note that multiple overlapping intervals will darken the envelope.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>outline</code></td>
+<td>
+<p>Whether to just envelope outlines</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>X-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Y-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Plot title.  If the default (<code>NULL</code>) is accepted and argument p is used, p will be used for the title.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p>Y-axis limits for plotting.  If the default (<code>NULL</code>) is accepted, these will be determined automatically.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>transform</code></td>
+<td>
+<p>Should the y-axis be (back)transformed?  Options are <code>"exp"</code>,
+indicating exponential, or <code>"expit"</code>, indicating inverse-logit. Defaults to
+<code>"none"</code>, indicating no transformation.  Note: if <code>transform="exp"</code>is used, consider
+adding additional plotting argument <code>log="y"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments or arguments to <code>lines()</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>overlayenvelope, caterpillar
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## usage with input data.frame
+trend &lt;- jags_df(SS_out, p="trend")
+envelope(trend, x=SS_data$x)
+
+## usage with jagsUI object
+envelope(SS_out, p="trend")
+
+## usage with 2-d jagsUI object
+envelope(SS_out, p="cycle_s", column=1, main="cycle")
+envelope(SS_out, p="cycle_s", column=2, col=2, add=TRUE)  ## overlay
+
+## scale transformation
+envelope(SS_out, p="trend", transform="exp", ylab="exp transform")
+envelope(SS_out, p="trend", transform="exp", ylab="exp transform", log="y")
+</code></pre>
+
+
+</div>

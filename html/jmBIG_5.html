@@ -1,0 +1,115 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joinRMLBig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint model for BIG data using joineRML</h2>
+
+<h3>Description</h3>
+
+<p>function for joint model in BIG DATA using <code>joineRML</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joinRMLBig(dtlong, dtsurv, longm, survm, samplesize = 50, rd, timeVar, id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtlong</code></td>
+<td>
+<p>longitudinal dataset, which contains id,visit time,longitudinal measurements along with various covariates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtsurv</code></td>
+<td>
+<p>survival dataset corresponding to the longitudinal dataset, with survival status and survival time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longm</code></td>
+<td>
+<p>model for longitudinal response</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survm</code></td>
+<td>
+<p>survival model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplesize</code></td>
+<td>
+<p>random effect part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rd</code></td>
+<td>
+<p>random effect part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVar</code></td>
+<td>
+<p>time variable in longitudinal model, included in the longitudinal data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>name of id column in longitudinal dataset</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a list containing various output which are useful for prediction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Atanu Bhattacharjee, Bhrigu Kumar Rajbongshi and Gajendra Kumar Vishwakarma
+</p>
+
+
+<h3>References</h3>
+
+<p>Hickey, Graeme L., et al. "joineRML: a joint model and software package for time-to-event and multivariate longitudinal outcomes." BMC medical research methodology 18 (2018): 1-14.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jmbayesBig,jmstanBig,jmcsBig
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+##
+library(survival)
+library(dplyr)
+fit4&lt;-joinRMLBig(dtlong=long2,dtsurv = surv2,longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,
+rd=~ visit|id,timeVar='visit',samplesize=200,id='id')
+P2&lt;-predJRML(model&lt;-fit4,ids&lt;-c(10),dtlong=long2,dtsurv=surv2)
+pp1&lt;-plot(P2$plong[[1]])
+pp1&lt;-plot(P2$psurv[[1]])
+##
+   
+
+
+</code></pre>
+
+
+</div>

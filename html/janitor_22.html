@@ -1,0 +1,120 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_to_date</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert many date and datetime formats as may be received from Microsoft
+Excel</h2>
+
+<h3>Description</h3>
+
+<p>Convert many date and datetime formats as may be received from Microsoft
+Excel
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_to_date(
+  x,
+  ...,
+  character_fun = lubridate::ymd,
+  string_conversion_failure = c("error", "warning")
+)
+
+convert_to_datetime(
+  x,
+  ...,
+  tz = "UTC",
+  character_fun = lubridate::ymd_hms,
+  string_conversion_failure = c("error", "warning")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The object to convert</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Passed to further methods.  Eventually may be passed to
+'excel_numeric_to_date()', 'base::as.POSIXct()', or 'base::as.Date()'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>character_fun</code></td>
+<td>
+<p>A function to convert non-numeric-looking, non-NA values
+in 'x' to POSIXct objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>string_conversion_failure</code></td>
+<td>
+<p>If a character value fails to parse into the
+desired class and instead returns 'NA', should the function return the
+result with a warning or throw an error?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tz</code></td>
+<td>
+<p>The timezone for POSIXct output, unless an object is POSIXt
+already.  Ignored for Date output.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Character conversion checks if it matches something that looks like
+a Microsoft Excel numeric date, converts those to numeric, and then runs
+convert_to_datetime_helper() on those numbers.  Then, character to Date or
+POSIXct conversion occurs via 'character_fun(x, ...)' or
+'character_fun(x, tz=tz, ...)', respectively.
+</p>
+
+
+<h3>Value</h3>
+
+<p>POSIXct objects for 'convert_to_datetime()' or Date objects for
+'convert_to_date()'.
+</p>
+
+
+<h3>Functions</h3>
+
+
+<ul><li> <p><code>convert_to_datetime()</code>: Convert to a date-time (POSIXct)
+</p>
+</li></ul>
+<h3>See Also</h3>
+
+<p>Other Date-time cleaning: 
+<code>excel_numeric_to_date()</code>,
+<code>sas_numeric_to_date()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">convert_to_date("2009-07-06")
+convert_to_date(40000)
+convert_to_date("40000.1")
+# Mixed date source data can be provided.
+convert_to_date(c("2020-02-29", "40000.1"))
+convert_to_datetime(
+  c("2009-07-06", "40000.1", "40000", NA),
+  character_fun=lubridate::ymd_h, truncated=1, tz="UTC"
+)
+</code></pre>
+
+
+</div>

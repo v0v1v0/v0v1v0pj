@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tagging</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Speech Tagging</h2>
+
+<h3>Description</h3>
+
+<p>The function uses Speech Tagging worker to cut word and 
+tags each word after segmentation using labels compatible with 
+ictclas.  <code>dict</code> 
+<code>hmm</code> and <code>user</code> should be provided when initializing 
+jiebaR worker.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tagging(code, jiebar)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>a Chinese sentence or the path of a text file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jiebar</code></td>
+<td>
+<p>jiebaR Worker</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There is a symbol <code>&lt;=</code> for this function.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng
+</p>
+
+
+<h3>References</h3>
+
+<p>The ictclas speech tag : <a href="http://t.cn/RAEj7e1">http://t.cn/RAEj7e1</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>&lt;=.tagger</code> <code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+words = "hello world"
+
+### Speech Tagging 
+tagger = worker("tag")
+tagger &lt;= words
+
+## End(Not run)
+</code></pre>
+
+
+</div>

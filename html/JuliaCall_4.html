@@ -1,0 +1,37 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>eng_juliacall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Julia language engine in R Markdown</h2>
+
+<h3>Description</h3>
+
+<p>Julia language engine in R Markdown
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">eng_juliacall(options)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>options</code></td>
+<td>
+<p>a list of chunk options</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+knitr::knit_engines$set(julia = JuliaCall::eng_juliacall)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anovaRMNP</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Repeated Measures ANOVA (Non-parametric)</h2>
+
+<h3>Description</h3>
+
+<p>The Friedman test is used to explore the relationship between a continuous 
+dependent variable and a categorical explanatory variable, where the 
+explanatory variable is 'within subjects' (where multiple measurements are 
+from the same subject). It is analagous to Repeated Measures ANOVA, but 
+with the advantage of being non-parametric, and not requiring the 
+assumptions of normality or homogeneity of variances. However, it has the 
+limitation that it can only test a single explanatory variable at a time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anovaRMNP(data, measures, pairs = FALSE, desc = FALSE, plots = FALSE,
+  plotType = "means")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>measures</code></td>
+<td>
+<p>a vector of strings naming the repeated measures variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pairs</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform pairwise
+comparisons</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plots</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a descriptive
+plot</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plotType</code></td>
+<td>
+<p><code>'means'</code> (default) or <code>'medians'</code>, the error
+bars to use in the plot</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$table</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the Friedman test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$comp</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table of the pairwise comparisons </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$desc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the descriptives </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$plot</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a descriptives plot </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$table$asDF</code>
+</p>
+<p><code>as.data.frame(results$table)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('bugs', package = 'jmv')
+
+anovaRMNP(bugs, measures = vars(LDLF, LDHF, HDLF, HDHF))
+
+#
+#  REPEATED MEASURES ANOVA (NON-PARAMETRIC)
+#
+#  Friedman
+#  ------------------------
+#    X²      df    p
+#  ------------------------
+#    55.8     3    &lt; .001
+#  ------------------------
+#
+
+</code></pre>
+
+
+</div>

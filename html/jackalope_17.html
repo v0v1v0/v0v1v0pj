@@ -1,0 +1,789 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ref_genome</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>R6 Class Representing a Reference Genome</h2>
+
+<h3>Description</h3>
+
+<p>Interactive wrapper for a pointer to a C++ object that stores reference genome
+information.
+</p>
+
+
+<h3>Details</h3>
+
+<p>This class should NEVER be created using <code>ref_genome$new</code>.
+Only use <code>read_fasta</code> or <code>create_genome</code>.
+Because this class wraps a pointer to a C++ object, there are no fields to
+manipulate directly.
+All manipulations are done through this class's methods.
+</p>
+
+
+<h3>Methods</h3>
+
+
+
+<h4>Public methods</h4>
+
+
+<ul>
+<li> <p><a href="#method-ref_genome-new"><code>ref_genome$new()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-print"><code>ref_genome$print()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-ptr"><code>ref_genome$ptr()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-n_chroms"><code>ref_genome$n_chroms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-sizes"><code>ref_genome$sizes()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-chrom_names"><code>ref_genome$chrom_names()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-chrom"><code>ref_genome$chrom()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-gc_prop"><code>ref_genome$gc_prop()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-nt_prop"><code>ref_genome$nt_prop()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-set_names"><code>ref_genome$set_names()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-clean_names"><code>ref_genome$clean_names()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-add_chroms"><code>ref_genome$add_chroms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-rm_chroms"><code>ref_genome$rm_chroms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-merge_chroms"><code>ref_genome$merge_chroms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-filter_chroms"><code>ref_genome$filter_chroms()</code></a>
+</p>
+</li>
+<li> <p><a href="#method-ref_genome-replace_Ns"><code>ref_genome$replace_Ns()</code></a>
+</p>
+</li>
+</ul>
+<hr>
+<a id="method-ref_genome-new"></a>
+
+
+
+<h4>Method <code>new()</code>
+</h4>
+
+<p>Do NOT use this; only use <code>read_fasta</code> or <code>create_genome</code> to make a
+new <code>ref_genome</code>.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$new(genome_ptr)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>genome_ptr</code></dt>
+<dd>
+<p>An <code>externalptr</code> object pointing to a C++ object that stores
+the information about the reference genome.</p>
+</dd>
+</dl>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-print"></a>
+
+
+
+<h4>Method <code>print()</code>
+</h4>
+
+<p>Print a <code>ref_genome</code> object.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$print()</pre></div>
+
+
+<hr>
+<a id="method-ref_genome-ptr"></a>
+
+
+
+<h4>Method <code>ptr()</code>
+</h4>
+
+<p>View pointer to underlying C++ object (this is not useful to end users).
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$ptr()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>An <code>externalptr</code> object.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-n_chroms"></a>
+
+
+
+<h4>Method <code>n_chroms()</code>
+</h4>
+
+<p>View number of chromosomes.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$n_chroms()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>Integer number of chromosomes.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-sizes"></a>
+
+
+
+<h4>Method <code>sizes()</code>
+</h4>
+
+<p>View chromosome sizes.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$sizes()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>Integer vector of chromosome sizes.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-chrom_names"></a>
+
+
+
+<h4>Method <code>chrom_names()</code>
+</h4>
+
+<p>View chromosome names.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$chrom_names()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>Character vector of chromosome names.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-chrom"></a>
+
+
+
+<h4>Method <code>chrom()</code>
+</h4>
+
+<p>View one reference chromosome.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$chrom(chrom_ind)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>chrom_ind</code></dt>
+<dd>
+<p>Index for the focal chromosome.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>A single string representing the chosen chromosome's DNA sequence.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-gc_prop"></a>
+
+
+
+<h4>Method <code>gc_prop()</code>
+</h4>
+
+<p>View GC proportion for part of one reference chromosome.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$gc_prop(chrom_ind, start, end)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>chrom_ind</code></dt>
+<dd>
+<p>Index for the focal chromosome.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>Point on the chromosome at which to start the calculation
+(inclusive).</p>
+</dd>
+<dt><code>end</code></dt>
+<dd>
+<p>Point on the chromosome at which to end the calculation
+(inclusive).</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>A double in the range <code style="white-space: pre;">⁠[0,1]⁠</code> representing the proportion of DNA
+sequence that is either <code>G</code> or <code>C</code>.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-nt_prop"></a>
+
+
+
+<h4>Method <code>nt_prop()</code>
+</h4>
+
+<p>View nucleotide content for part of one reference chromosome
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$nt_prop(nt, chrom_ind, start, end)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>nt</code></dt>
+<dd>
+<p>Which nucleotide to calculate the proportion that the DNA
+sequence is made of. Must be one of <code>T</code>, <code>C</code>, <code>A</code>, <code>G</code>, or <code>N</code>.</p>
+</dd>
+<dt><code>chrom_ind</code></dt>
+<dd>
+<p>Index for the focal chromosome.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>Point on the chromosome at which to start the calculation
+(inclusive).</p>
+</dd>
+<dt><code>end</code></dt>
+<dd>
+<p>Point on the chromosome at which to end the calculation
+(inclusive).</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>A double in the range <code style="white-space: pre;">⁠[0,1]⁠</code> representing the proportion of DNA
+sequence that is <code>nt</code>.
+</p>
+
+
+<hr>
+<a id="method-ref_genome-set_names"></a>
+
+
+
+<h4>Method <code>set_names()</code>
+</h4>
+
+<p>Change chromosome names.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$set_names(new_names)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>new_names</code></dt>
+<dd>
+<p>Vector of new names to use. This must be the same length as
+the number of current names.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 10)
+ref$set_names(c("a", "b", "c", "d"))
+
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-clean_names"></a>
+
+
+
+<h4>Method <code>clean_names()</code>
+</h4>
+
+<p>Clean chromosome names, converting <code style="white-space: pre;">⁠" :;=%,\\|/\"\'"⁠</code> to <code>"_"</code>.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$clean_names()</pre></div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 10)
+ref$set_names(c("a:", "b|", "c;", "d'"))
+ref$clean_names()
+
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-add_chroms"></a>
+
+
+
+<h4>Method <code>add_chroms()</code>
+</h4>
+
+<p>Add one or more chromosomes.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$add_chroms(new_chroms, new_names = NULL)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>new_chroms</code></dt>
+<dd>
+<p>Character vector of DNA strings representing new chromosomes.</p>
+</dd>
+<dt><code>new_names</code></dt>
+<dd>
+<p>Optional character vector of names for the new chromosomes.
+It should be the same length as <code>new_chroms</code>.
+If <code>NULL</code>, new names will be automatically generated. Defaults to <code>NULL</code>.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 10)
+ref$add_chroms("TCAGTCAG")
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-rm_chroms"></a>
+
+
+
+<h4>Method <code>rm_chroms()</code>
+</h4>
+
+<p>Remove one or more chromosomes by name
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$rm_chroms(chrom_names)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>chrom_names</code></dt>
+<dd>
+<p>Vector of the name(s) of the chromosome(s) to remove.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 10)
+ref$set_names(c("a", "b", "c", "d"))
+ref$rm_chroms("b")
+
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-merge_chroms"></a>
+
+
+
+<h4>Method <code>merge_chroms()</code>
+</h4>
+
+<p>Merge chromosomes into one.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$merge_chroms(chrom_names)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>chrom_names</code></dt>
+<dd>
+<p>Vector of the names of the chromosomes to merge into one.
+Duplicates are not allowed, and chromosomes are merged in the order
+they're provided.
+If this is <code>NULL</code>, then all chromosomes are merged after first
+shuffling their order.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 10)
+ref$merge_chroms(ref$chrom_names()[1:2])
+ref$merge_chroms(NULL)
+
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-filter_chroms"></a>
+
+
+
+<h4>Method <code>filter_chroms()</code>
+</h4>
+
+<p>Filter chromosomes by size or for a proportion of total bases.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$filter_chroms(threshold, method)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>threshold</code></dt>
+<dd>
+<p>Number used as a threshold. If <code>method == "size"</code>,
+then this is the minimum length of a chromosome that will remain after
+filtering.
+If <code>method == "prop"</code>, chromosomes are first size-sorted, then
+the largest <code>N</code> chromosomes are retained that allow at least
+<code style="white-space: pre;">⁠threshold * sum(&lt;all chromosome sizes&gt;)⁠</code> base pairs remaining after
+filtering.</p>
+</dd>
+<dt><code>method</code></dt>
+<dd>
+<p>String indicating which filter method to use: chromosome size
+(<code>method = "size"</code>) or proportion of total bases (<code>method = "prop"</code>).</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+<h5>Examples</h5>
+
+<div class="r example copy">
+<pre>ref &lt;- create_genome(4, 100, 50)
+ref$filter_chroms(90, "size")
+ref$filter_chroms(0.4, "prop")
+
+</pre>
+</div>
+
+
+<hr>
+<a id="method-ref_genome-replace_Ns"></a>
+
+
+
+<h4>Method <code>replace_Ns()</code>
+</h4>
+
+<p>Replace <code>N</code>s in the reference genome.
+</p>
+
+
+<h5>Usage</h5>
+
+<div class="r"><pre>ref_genome$replace_Ns(pi_tcag, n_threads = 1, show_progress = FALSE)</pre></div>
+
+
+
+<h5>Arguments</h5>
+
+<div class="arguments">
+
+<dl>
+<dt><code>pi_tcag</code></dt>
+<dd>
+<p>Numeric vector (length 4) indicating the sampling weights
+for <code>T</code>, <code>C</code>, <code>A</code>, and <code>G</code>, respectively, for generating new nucleotides
+with which to replace the <code>N</code>s.</p>
+</dd>
+<dt><code>n_threads</code></dt>
+<dd>
+<p>Optional integer specifying the threads to use.
+Ignored if the package wasn't compiled with OpenMP. Defaults to <code>1</code>.</p>
+</dd>
+<dt><code>show_progress</code></dt>
+<dd>
+<p>Optional logical indicating whether to show a
+progress bar. Defaults to <code>FALSE</code>.</p>
+</dd>
+</dl>
+</div>
+
+
+
+<h5>Returns</h5>
+
+<p>This <code>R6</code> object, invisibly.
+</p>
+
+
+
+
+<h3>See Also</h3>
+
+<p><code>read_fasta</code> <code>create_genome</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## ------------------------------------------------
+## Method `ref_genome$set_names`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 10)
+ref$set_names(c("a", "b", "c", "d"))
+
+
+## ------------------------------------------------
+## Method `ref_genome$clean_names`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 10)
+ref$set_names(c("a:", "b|", "c;", "d'"))
+ref$clean_names()
+
+
+## ------------------------------------------------
+## Method `ref_genome$add_chroms`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 10)
+ref$add_chroms("TCAGTCAG")
+
+## ------------------------------------------------
+## Method `ref_genome$rm_chroms`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 10)
+ref$set_names(c("a", "b", "c", "d"))
+ref$rm_chroms("b")
+
+
+## ------------------------------------------------
+## Method `ref_genome$merge_chroms`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 10)
+ref$merge_chroms(ref$chrom_names()[1:2])
+ref$merge_chroms(NULL)
+
+
+## ------------------------------------------------
+## Method `ref_genome$filter_chroms`
+## ------------------------------------------------
+
+ref &lt;- create_genome(4, 100, 50)
+ref$filter_chroms(90, "size")
+ref$filter_chroms(0.4, "prop")
+
+</code></pre>
+
+
+</div>

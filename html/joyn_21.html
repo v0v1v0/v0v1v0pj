@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>is_match_type_error</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confirm if match type error</h2>
+
+<h3>Description</h3>
+
+<p>Confirm if match type error
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is_match_type_error(x, name, by, verbose, match_type_error)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>name</code></td>
+<td>
+<p>name of data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>A vector of shared column names in <code>x</code> and <code>y</code> to merge on.
+This defaults to the shared key columns between the two tables.
+If <code>y</code> has no key columns, this defaults to the key of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>match_type_error</code></td>
+<td>
+<p>logical: from existing code</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>logical
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# example with dt not uniquely identified by "id"
+x1 = data.table(id = c(1L, 1L, 2L, 3L, NA_integer_),
+                t  = c(1L, 2L, 1L, 2L, NA_integer_),
+                x  = 11:15)
+joyn:::is_match_type_error(x1, name = "x1", by = "id")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

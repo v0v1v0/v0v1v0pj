@@ -1,0 +1,151 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>search_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Search values in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Search values in .omv-files for the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">search_omv(
+  dtaInp = NULL,
+  srcTrm = c(),
+  whlTrm = FALSE,
+  ignCse = FALSE,
+  incNum = TRUE,
+  incOrd = TRUE,
+  incNom = TRUE,
+  incID = TRUE,
+  incCmp = TRUE,
+  incRcd = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtaInp</code></td>
+<td>
+<p>Either a data frame or the name of a jamovi data file to be read (including the path, if required; "FILENAME.omv"; default: NULL)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>srcTrm</code></td>
+<td>
+<p>(Character or numeric) Vector (with length = 1) with a search term to be found in the data frame (default: c())</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>whlTrm</code></td>
+<td>
+<p>Whether the exact search term shall be found (TRUE) or whether a partial match is sufficient (FALSE; default: FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignCse</code></td>
+<td>
+<p>Whether to ignore the case of the search term (default: FALSE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incNum</code></td>
+<td>
+<p>Whether to include continuous variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incOrd</code></td>
+<td>
+<p>Whether to include ordinal variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incNom</code></td>
+<td>
+<p>Whether to include nominal variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incID</code></td>
+<td>
+<p>Whether to include ID variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incCmp</code></td>
+<td>
+<p>Whether to include Computed variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>incRcd</code></td>
+<td>
+<p>Whether to include Recoded variables in the search (default: TRUE)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on to methods; see Details below</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+
+<ul><li>
+<p> The ellipsis-parameter (<code>...</code>) can be used to submit arguments / parameters to the function that is used for reading and writing the data. Clicking on the
+respective function under “See also”, you can get a more detailed overview over which parameters each of those functions take. The functions are:
+<code>read_omv</code> and <code>write_omv</code> (for jamovi-files).
+</p>
+</li></ul>
+<h3>Value</h3>
+
+<p>a named list with the places where the search term was found: names in the list are the variables / columns, the entries the respective row names
+within that variable / column (row names are used for being tolerant to filtered-out cases in jamovi, if a filter is used, row numbers would be
+incorrect)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>replace_omv</code> uses <code>read_omv()</code> and <code>write_omv()</code> for reading and writing jamovi-files.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# the exact value 24 appears 13 times in age
+bfi_sample &lt;- jmvReadWrite::bfi_sample
+jmvReadWrite::search_omv(bfi_sample, 24, whlTrm = TRUE)
+# taking the fifth entry from the search results
+bfi_sample["61", "age"]
+# with the following search, both Males and Females are found
+# (the M of Males, wouldn't be matched if ignCse were FALSE and males is
+#  only a partial match within Females, thus whlTrm must be set to FALSE)
+jmvReadWrite::search_omv(bfi_sample, "males", whlTrm = FALSE, ignCse = TRUE)
+# the first entry is a female, the first entry is a male
+bfi_sample["1", "gender"] # Females
+bfi_sample["6", "gender"] # Males
+# using the search results assigned to a variable
+srcRes &lt;- jmvReadWrite::search_omv(bfi_sample, "males", whlTrm = FALSE, ignCse = TRUE)
+bfi_sample[srcRes[[1]][1], names(srcRes[1])] # Females
+bfi_sample[srcRes[[1]][6], names(srcRes[1])] # Males
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

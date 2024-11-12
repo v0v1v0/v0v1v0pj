@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mse</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mean Squared Error (MSE)</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the mean square of the model by taking the mean of the
+sum of squares between the truth, <code class="reqn">y</code>, and the predicted, <code class="reqn">\hat{y}</code>
+at each observation <code class="reqn">i</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mse(y, yhat)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A <code>vector</code> of the true <code class="reqn">y</code> values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yhat</code></td>
+<td>
+<p>A <code>vector</code> of predicted <code class="reqn">\hat{y}</code> values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The equation for MSE is:
+</p>
+<p style="text-align: center;"><code class="reqn">\frac{1}{n}\sum\limits_{i = 1}^n {{{\left( {{y_i} - {{\hat y}_i}} \right)}^2}}</code>
+</p>
+
+
+
+<h3>Value</h3>
+
+<p>The MSE in <code>numeric</code> form.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Set seed for reproducibility
+set.seed(100)
+
+# Generate data
+n = 1e2
+
+y = rnorm(n)
+yhat = rnorm(n, 0.5)
+
+# Compute
+o = mse(y, yhat)
+</code></pre>
+
+
+</div>

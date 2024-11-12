@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to.balanced</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Transform data to the longitudinal balanced format</h2>
+
+<h3>Description</h3>
+
+<p>Transforms a longitudinal data set in the unbalanced format to
+the balanced format.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to.balanced(data, id.col, time.col, Y.col, other.col = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame with longitudinal data in the unbalanced format. 
+That is, in the format of 'one row per observation'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id.col</code></td>
+<td>
+<p>a column number, or column name, in the data frame <code>data</code>,
+where the patient identifier is located.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time.col</code></td>
+<td>
+<p>a column number, or column name, in the data frame 
+<code>data</code>, where the time measurements are.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y.col</code></td>
+<td>
+<p>a vector of column numbers, or column names, of longitudinal 
+variables, and/or time dependent covariates in the data frame <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>other.col</code></td>
+<td>
+<p>a vector of column numbers, or column names, of baseline 
+covariates, and/or other subject level data, as for example, survival data.
+Default does not include <code>other.col</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame with longitudinal data in the balanced format. The
+balanced format is considered in this context as the format where each row
+has data on each subject. Notice that in this format we will have multiple
+columns for the same longitudinal variable, each corresponding to the
+variable observed at each time point.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Ines Sousa
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>to.unbalanced</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">simul &lt;- data.frame(num = 1:10,
+                    Y1.1 = rnorm(10), Y1.2 = rnorm(10),
+                    Y2.1 = rnorm(10), Y2.2 = rnorm(10),
+                    age = rnorm(10))
+simul &lt;- to.unbalanced(simul, id.col = 1, times = c(1, 2), 
+                       Y.col = 2:5, other.col = 6)
+simul &lt;- to.balanced(simul, id.col = "num", time.col = "time",
+                     Y.col = c("Y1.1", "Y2.1"), other.col = "age")
+</code></pre>
+
+
+</div>

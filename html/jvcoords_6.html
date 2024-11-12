@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>standardize</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Standardize data</h2>
+
+<h3>Description</h3>
+
+<p>Standardize each column of a data matrix and return the
+results as an object of class <code>coords</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  standardize(x, compute.scores = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A data matrix, rows are observations, columns are variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compute.scores</code></td>
+<td>
+<p>Whether to compute the scores (i.e. <code>x</code>
+in the new basis).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function standardizes the columns of <code>x</code> by subtracting the
+mean of each column and then dividing by the standard deviation.  The
+transformed data is stored in the <code>$y</code> field of the returned
+<code>coords</code> object.
+</p>
+<p>If <code>compute.scores</code> is set to <code>FALSE</code>, only the information
+required for the <code>toCoords()</code> and <code>fromCoords()</code> to work is
+stored in the returned <code>coords</code> object; otherwise the scores
+(transformed data) will be stored in the <code>$y</code> field of the
+<code>coords</code> object.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>coords</code>, with the following additional
+components added:
+</p>
+<table><tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>if <code>compute.scores==TRUE</code>, this is <code>x</code> expressed in
+the new basis</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Jochen Voss &lt;voss@seehuhn.de&gt;
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>coords</code>;
+alternative implementation <code>scale</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  w &lt;- standardize(iris[, 1:4])
+  colMeans(w$y)
+  apply(w$y, 2, sd)
+</code></pre>
+
+
+</div>

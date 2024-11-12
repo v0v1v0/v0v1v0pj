@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_assign</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Assign a value to a name in julia.</h2>
+
+<h3>Description</h3>
+
+<p><code>julia_assign</code> assigns a value to a name in julia with automatic type conversion.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_assign(x, value)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a variable name, given as a character string.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>value</code></td>
+<td>
+<p>a value to be assigned to x, note that R value will be converted to
+corresponding julia value automatically.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (identical(Sys.getenv("AUTO_JULIA_INSTALL"), "true")) { ## julia_setup is quite time consuming
+  ## doing initialization and automatic installation of Julia if necessary
+  julia_setup(installJulia = TRUE)
+  julia_assign("x", 2)
+  julia_assign("rsqrt", sqrt)
+}
+
+</code></pre>
+
+
+</div>

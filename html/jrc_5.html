@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>authorize</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Authorize further message processing</h2>
+
+<h3>Description</h3>
+
+<p><code>jrc</code> library allows one to get full control over the currently running R session from 
+a web page. Therefore for security reasons one should manually authorize function calls,
+variable assignments or expression evaluations. All the received messages that are not
+processed automatically are given an ID and stored. This function allows a message with the 
+given ID to be evaluated. It can also show a short description of the message and give user
+a choice between running it or discarding.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">authorize(sessionId = NULL, messageId = NULL, show = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session that received the message. If there is only one active session, this 
+argument becomes optional.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>messageId</code></td>
+<td>
+<p>ID of the message to be processed. If the session has only one stored message, this argument becomes
+optional.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show</code></td>
+<td>
+<p>If <code>TRUE</code> information about the message will be shown first. After that user gets
+a choice to go on with evaluation, to ignore the message (meaning it will be removed from memory) or to
+do nothing.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Expressions has to be always authorized before evaluation. One can specify a list of
+variables that can be changed automatically and functions that can be called without
+authorization.
+</p>
+<p>This function is a wrapper around <code>authorize</code> method of class <code>Session</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>allowFunctions</code>, <code>allowVariables</code>, <code>setLimits</code>, <code>getSessionIds</code>,
+<code>getMessageIds</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+
+callFunction("jrc.sendCommand", list("k &lt;&lt;- 10"), wait = 1)
+allowVariables("x")
+callFunction("jrc.sendData", list("x", 15), wait = 1)
+callFunction("jrc.sendData", list("y", 20), wait = 1)
+msgId &lt;- getMessageIds()
+authorize(messageId = msgId[1])
+#run that to first see some information about the message
+#authorize(messageId = msgId[2], show = TRUE)
+
+closePage()
+## End(Not run)
+</code></pre>
+
+
+</div>

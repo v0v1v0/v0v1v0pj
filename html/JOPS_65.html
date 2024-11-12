@@ -1,0 +1,254 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sim_psr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Single-Index signal regression using P-splines</h2>
+
+<h3>Description</h3>
+
+<p><code>sim_psr</code> is a single-index
+signal regression model that estimates both the signal coefficients
+vector and the unknown link function using P-splines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sim_psr(
+  y,
+  X,
+  x_index = c(1:ncol(X)),
+  nsegs = rep(10, 2),
+  bdegs = rep(3, 3),
+  lambdas = rep(1, 2),
+  pords = rep(2, 2),
+  max_iter = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a response vector of length <code>m</code>, usually continuous.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The signal regressors with dimension <code>m</code> by <code>p</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_index</code></td>
+<td>
+<p>an index of length <code>p</code> for columns of signal matrix;
+default is simple sequence, <code>c(1: ncol(X))</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegs</code></td>
+<td>
+<p>a vector of length 2 containing
+the number of evenly spaced segments between min and max, for each
+the coefficient vector and the (unknown) link function,
+resp. (default <code>c(10, 10)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdegs</code></td>
+<td>
+<p>a vector of length 2 containing
+the degree of B-splines, for the coefficient vector and
+the (unknown) link function, resp. (default cubic or <code>c(3, 3)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdas</code></td>
+<td>
+<p>a vector of length 2 containing
+the positive tuning parameters, for each
+the coefficient vector and the (unknown) link function, resp. (default <code>c(1, 1)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pords</code></td>
+<td>
+<p>a vector of length 2 containing
+the difference penalty order, for each
+the coefficient vector and the (unknown) link function, resp. (default<code>c(2, 2)</code> ).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max_iter</code></td>
+<td>
+<p>a scalar for the maximum number of iterations (default 100).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the response vector of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>the P-spline coefficient vector of length <code>(nsegs[1]+bdeg[1])</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iter</code></td>
+<td>
+<p>the number of iterations used for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yint</code></td>
+<td>
+<p>the estimated y-intercept for the single-index model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>the B-spline matrix built along the signal index, using <code>nsegs[1]</code>, used for the coefficient vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Q</code></td>
+<td>
+<p>the effective regressors from the <code>psVCSignal</code> portion of the single-index
+fit with dimension <code>m</code> by <code>length(alpha)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegs</code></td>
+<td>
+<p>a vector of length 2 containing
+the number of evenly spaced segments between min and max, for each
+the coefficient vector and the link function, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdegs</code></td>
+<td>
+<p>a vector of length 2 containing
+the degree of B-splines, for each
+the coefficient vector and the link function, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdas</code></td>
+<td>
+<p>a vector of length 2 containing
+the positive tuning parameters, for each
+the coefficient vector and the link function, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pords</code></td>
+<td>
+<p>a vector of length 2 containing
+the difference penalty order, for each
+the coefficient vector and the link function, resp.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>the estimated linear predictor for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>the leave-one-out cross-validation statistic or the standard error of prediction for the single-index fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>delta_alpha</code></td>
+<td>
+<p>change measure in signal-coefficent parameters at
+convervence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_index</code></td>
+<td>
+<p>the index of length <code>p</code> for columns of signal matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f_fit</code></td>
+<td>
+<p>the <code>psNormal</code> object, fitting link function f(<code>eta</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f_eta</code></td>
+<td>
+<p>the predicted values of the link function estimated with <code>f_fit</code> or estimated f(<code>eta</code>), at <code>x = eta</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers, Brian Marx, and Bin Li
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C., B. Li, B.D. Marx (2009).
+Multivariate calibration with single-index signal regression,
+<em>Chemometrics and Intellegent Laboratory Systems</em>, 96(2), 196-202.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Get the data
+library(fds)
+data(nirc)
+iindex &lt;- nirc$x
+X &lt;- nirc$y
+sel &lt;- 50:650 # 1200 &lt;= x &amp; x&lt;= 2400
+X &lt;- X[sel, ]
+iindex &lt;- iindex[sel]
+dX &lt;- diff(X)
+diindex &lt;- iindex[-1]
+y &lt;- as.vector(labc[1, 1:40])
+oout &lt;- 23
+dX &lt;- t(dX[, -oout])
+y &lt;- y[-oout]
+
+pords &lt;- c(2, 2)
+nsegs &lt;- c(27, 7)
+bdegs = c(3, 3)
+lambdas &lt;- c(1e-6, .1)
+max_iter &lt;- 100
+
+# Single-index model
+fit &lt;- sim_psr(y, dX, diindex, nsegs, bdegs, lambdas, pords,
+             max_iter)
+
+plot(fit, xlab = "Wavelength (nm)", ylab = " ")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>isLeap</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determining whether a given year is leap year</h2>
+
+<h3>Description</h3>
+
+<p>Determining whether a given year is leap year
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">isLeap(year, cal = "Gregorian")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p>An integer vector specifying given years</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cal</code></td>
+<td>
+<p>A character string specifying the calender type. Only 'Gregorian' and 'Jalali' are implemented</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A logical vector of of the same length as <code>year</code> which indicates wheter given years are leap years or not
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Abdollah Jalilian
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">isLeap(1362, 'Jalali')
+isLeap(c(2000, 2100))
+
+</code></pre>
+
+
+</div>

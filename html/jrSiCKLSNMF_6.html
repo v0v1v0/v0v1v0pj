@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CreateSickleJr</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create an object of class SickleJr</h2>
+
+<h3>Description</h3>
+
+<p>Using a list of sparse count matrices, create an object of class SickleJr
+and specify the names of these count matrices.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CreateSickleJr(count.matrices, names = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>count.matrices</code></td>
+<td>
+<p>A list of quality-controlled count matrices with pre-filtered features where each modality corresponds to each matrix in the
+list</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>names</code></td>
+<td>
+<p>Optional parameter with names for the count matrices in vector format</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class SickleJr with sparse count matrices added to the <code>count.matrices</code> slot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">ExampleSickleJr&lt;-CreateSickleJr(SimData$Xmatrices)
+</code></pre>
+
+
+</div>

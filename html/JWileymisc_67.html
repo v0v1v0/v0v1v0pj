@@ -1,0 +1,162 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lm2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Modified lm() to use a specified design matrix</h2>
+
+<h3>Description</h3>
+
+<p>This function is a minor modification of the lm() function
+to allow the use of a pre-specified design matrix. It is not intended for
+public use but only to support <code>modelTest.lm</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lm2(
+  formula,
+  data,
+  subset,
+  weights,
+  na.action,
+  model = TRUE,
+  x = FALSE,
+  y = FALSE,
+  qr = TRUE,
+  singular.ok = TRUE,
+  contrasts = NULL,
+  offset,
+  designMatrix,
+  yObserved,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>An object of class "formula" although it is only minimally used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>subset</code></td>
+<td>
+<p>subset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>any weights</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na.action</code></td>
+<td>
+<p>Defaults to <code>na.omit</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>defaults to <code>TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>defaults to <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>defaults to <code>FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qr</code></td>
+<td>
+<p>defaults to <code>TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>singular.ok</code></td>
+<td>
+<p>defaults to <code>TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+<p>defaults to <code>NULL</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>missing by default</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>designMatrix</code></td>
+<td>
+<p>a model matrix / design matrix (all numeric, pre coded if applicable for discrete variables)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yObserved</code></td>
+<td>
+<p>the observed y values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an lm class object
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>lm</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars$cyl &lt;- factor(mtcars$cyl)
+m &lt;- lm(mpg ~ hp * cyl, data = mtcars)
+
+x &lt;- model.matrix(m)
+y &lt;- mtcars$mpg
+m2 &lt;- JWileymisc:::lm2(mpg ~ 1 + cyl + hp:cyl, data = mtcars,
+  designMatrix = x[, -2, drop = FALSE],
+  yObserved = y)
+
+anova(m, m2)
+
+rm(m, m2, x, y)
+</code></pre>
+
+
+</div>

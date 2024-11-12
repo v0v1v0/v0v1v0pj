@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_neff</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quick summary of n.eff values by parameter name</h2>
+
+<h3>Description</h3>
+
+<p>Returns the mean number of <code>n.eff</code> values (by each parameter) that are greater than a specified threshold criterion.
+</p>
+<p><code>n.eff</code> is calculated within 'JAGS', and may be interpreted as a crude measure of
+effective sample size for a given parameter node.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_neff(x, thresh = 500)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object from <code>jagsUI::jags()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>thresh</code></td>
+<td>
+<p>Threshold value (defaults to 500)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Numeric (named) giving the proportion of <code>n.eff</code> values above the given threshold.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>check_Rhat, traceworstRhat, plotRhats, qq_postpred, ts_postpred
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">check_neff(SS_out)
+</code></pre>
+
+
+</div>

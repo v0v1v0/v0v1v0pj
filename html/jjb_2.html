@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>acc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Accuracy of the Model</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the accuracy of the model by taking the mean of the number of times
+the truth, <code class="reqn">y</code>, equals the predicted, <code class="reqn">\hat{y}</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">acc(y, yhat)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A <code>vector</code> of the true <code class="reqn">y</code> values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yhat</code></td>
+<td>
+<p>A <code>vector</code> of predicted <code class="reqn">\hat{y}</code> values.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The accuracy of the classification in <code>numeric</code> form.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Set seed for reproducibility
+set.seed(100)
+
+# Generate data
+n = 1e2
+
+y = round(runif(n))
+yhat = round(runif(n))
+
+# Compute
+o = acc(y, yhat)
+</code></pre>
+
+
+</div>

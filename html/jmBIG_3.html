@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmcsBig</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Joint model for BIG data using FastJM</h2>
+
+<h3>Description</h3>
+
+<p>function for joint model in BIG DATA using <code>FastJM</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmcsBig(dtlong, dtsurv, longm, survm, samplesize = 50, rd, id)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtlong</code></td>
+<td>
+<p>longitudinal dataset, which contains id,visit time,longitudinal measurements along with various covariates</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dtsurv</code></td>
+<td>
+<p>survival dataset corresponding to the longitudinal dataset, with survival status and survival time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>longm</code></td>
+<td>
+<p>model for longitudinal response</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survm</code></td>
+<td>
+<p>survival model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>samplesize</code></td>
+<td>
+<p>sample size to divide the Big data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rd</code></td>
+<td>
+<p>random effect part</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>name of id column in longitudinal dataset</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns a list containing various output which are useful for prediction.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Atanu Bhattacharjee, Bhrigu Kumar Rajbongshi and Gajendra Kumar Vishwakarma
+</p>
+
+
+<h3>References</h3>
+
+<p>Li, Shanpeng, et al. "Efficient Algorithms and Implementation of a Semiparametric Joint Model for Longitudinal and Competing Risk Data: With Applications to Massive Biobank Data." Computational and Mathematical Methods in Medicine 2022 (2022).
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jmbayesBig,jmstanBig,joinRMLBig
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+##
+library(survival)
+library(dplyr)
+fit2&lt;-jmcsBig(dtlong=data.frame(long2),dtsurv = data.frame(surv2),
+longm=y~ x7+visit,survm=Surv(time,status)~x1+visit,rd= ~ visit|id,samplesize=200,id='id')
+print(fit2)
+##
+  
+
+
+</code></pre>
+
+
+</div>

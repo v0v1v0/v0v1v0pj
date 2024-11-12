@@ -1,0 +1,132 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jlm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit a (mixed-effects) regression model in Julia</h2>
+
+<h3>Description</h3>
+
+<p>Fit a (mixed-effects) regression model in Julia
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jlm(formula, data, family = "gaussian", contrasts = jl_contrasts(data), ...)
+
+jlmer(
+  formula,
+  data,
+  family = NULL,
+  contrasts = jl_contrasts(data),
+  ...,
+  fit = TRUE,
+  optsum = list(),
+  progress = interactive()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula written in Julia syntax. Can be a string or a
+language object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>A distribution family</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>contrasts</code></td>
+<td>
+<p>A Julia dictionary of contrasts
+Inferred from <code>data</code> by default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments to the <code>fit()</code> function called in Julia</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>Whether to fit the model. If <code>FALSE</code>, returns the unfit model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optsum</code></td>
+<td>
+<p>A list of values to set for the optimizer. See <code style="white-space: pre;">⁠$optsum⁠</code> of unfit
+model for possible options.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress</code></td>
+<td>
+<p>Whether to print model fitting progress. Defaults to <code>interactive()</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A julia model object of class <code>jlme</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+jlme_setup(restart = TRUE)
+
+# Fixed effects models
+lm(mpg ~ hp, mtcars)
+jlm(mpg ~ hp, mtcars)
+
+# Auto-handling of contrasts
+x &lt;- mtcars
+x$cyl_helm &lt;- factor(x$cyl)
+contrasts(x$cyl_helm) &lt;- contr.helmert(3)
+colnames(contrasts(x$cyl_helm)) &lt;- c("4vs6", "4&amp;6vs8")
+lm(mpg ~ cyl_helm, x)
+jlm(mpg ~ cyl_helm, x)
+
+# Mixed effects models
+library(lme4)
+
+glmer(r2 ~ Anger + Gender + (1 | id), VerbAgg, family = "binomial")
+jlmer(r2 ~ Anger + Gender + (1 | id), VerbAgg, family = "binomial")
+
+# Set optimizer options via `optsum`
+jlmer(
+  r2 ~ Anger + Gender + (1 | id), VerbAgg, family = "binomial",
+  optsum = list(
+    optimizer = jl(":LN_NELDERMEAD"),
+    maxfeval = 10L
+  )
+)
+
+stop_julia()
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wires</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Quality control study of wire connections
+</h2>
+
+<h3>Description</h3>
+
+<p>Data from a study in quality control assessing the breaking strengths of 20 wire connections between a semiconductor wafer and a terminal post (King 1971).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("wires")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 20 observations on the following 2 variables.
+</p>
+
+<dl>
+<dt><code>Strength</code></dt>
+<dd>
+<p>A numeric vector giving the strength at which the connection failed.</p>
+</dd>
+<dt><code>Failure</code></dt>
+<dd>
+<p>A factor with levels <code>b</code> and <code>w</code> specifying whether the bond or wire failed.</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>The data were taken from Table 4.1 of Nelson (1982).
+</p>
+
+
+<h3>Source</h3>
+
+<p>James R. King (1971) Probability Charts for Decision Making. Industrial Press, New York, NY.
+</p>
+
+
+<h3>References</h3>
+
+<p>Wayne B. Nelson (1982) Applied Life Data Analysis. Wiley, Hoboken, NJ.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+data(wires)
+
+# Simultaneous 90% confidence regions for the mean and variance
+plot(csetMV(wires$Strength, method="mood"), main="Mood")
+plot(csetMV(wires$Strength, method="lrt"), main="LRT")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

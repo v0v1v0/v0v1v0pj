@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_formula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Retrieve formulas from model objects</h2>
+
+<h3>Description</h3>
+
+<p>This function is primarily an internal helper function in <code>jtools</code> and
+related packages to standardize the different types of formula objects used
+by different types of models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_formula(model, ...)
+
+## Default S3 method:
+get_formula(model, ...)
+
+## S3 method for class 'brmsfit'
+get_formula(model, resp = NULL, dpar = NULL, ...)
+
+## S3 method for class 'panelmodel'
+get_formula(model, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The fitted model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Ignored.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>resp</code></td>
+<td>
+<p>For <code>brmsfit</code> objects, the response variable for which
+the formula is desired. <code>brmsfit</code> objects may have multiple formulas, so
+this selects a particular one. If <code>NULL</code>, the first formula is chosen
+(unless <code>dpar</code> is specified).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dpar</code></td>
+<td>
+<p>For <code>brmsfit</code> objects, the distributional variable for which
+the formula is desired. If <code>NULL</code>, no distributional parameter is used.
+If there are multiple responses with distributional parameters, then
+<code>resp</code> should be specified or else the first formula will be used by
+default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>formula</code> object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+data(mtcars)
+fit &lt;- lm(mpg ~ cyl, data = mtcars)
+get_formula(fit)
+
+</code></pre>
+
+
+</div>

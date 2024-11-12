@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>chaindens_df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>By-chain kernel density of each column of a <code>data.frame</code>.</h2>
+
+<h3>Description</h3>
+
+<p>By-chain kernel density plot of each column of a posterior <code>data.frame</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">chaindens_df(df, nline, parmfrow = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>df</code></td>
+<td>
+<p>Posterior <code>data.frame</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nline</code></td>
+<td>
+<p>Number of chains</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parmfrow</code></td>
+<td>
+<p>Optional call to <code>par(mfrow)</code> for the number of rows &amp; columns of plot window.  Returns the graphics device to previous state afterward.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments or arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>tracedens_jags, trace_jags, trace_line
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">a &lt;- jags_df(asdf_jags_out, p="a")
+
+chaindens_df(a, nline=3, parmfrow=c(3,1))
+</code></pre>
+
+
+</div>

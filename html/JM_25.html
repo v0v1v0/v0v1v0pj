@@ -1,0 +1,213 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.survfitJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Method for survfitJM Objects</h2>
+
+<h3>Description</h3>
+
+<p>Produces plots of conditional probabilities of survival.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'survfitJM'
+plot(x, estimator = c("both", "mean", "median"), 
+    which = NULL, fun = NULL, conf.int = FALSE, 
+    fill.area = FALSE, col.area = "grey", col.abline = "black", col.points = "black",
+    add.last.time.axis.tick = FALSE, include.y = FALSE, main = NULL, 
+    xlab = NULL, ylab = NULL, ylab2 = NULL, lty = NULL, col = NULL, 
+    lwd = NULL, pch = NULL, ask = NULL, legend = FALSE, ...,
+    cex.axis.z = 1, cex.lab.z = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>survfitJM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>estimator</code></td>
+<td>
+<p>character string specifying, whether to include in the plot the mean of the conditional probabilities of survival,
+the median or both. The mean and median are taken as estimates of these conditional probabilities over the M replications of the
+Monte Carlo scheme described in <code>survfitJM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>a numeric or character vector specifying for which subjects to produce the plot. If a character vector, then is
+should contain a subset of the values of the <code>idVar</code> variable of the <code>newdata</code> argument of <code>survfitJM</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fun</code></td>
+<td>
+<p>a vectorized function defining a transformation of the survival curve. For example with <code>fun=log</code> the log-survival curve 
+is drawn.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conf.int</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, then a pointwise confidence interval is included in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fill.area</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the area defined by the confidence interval of the survival function is put in color.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.area</code></td>
+<td>
+<p>the color of the area defined by the confidence interval of the survival function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col.abline,col.points</code></td>
+<td>
+<p>the color for the vertical line and the points when <code>include.y</code> is <code>TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.last.time.axis.tick</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a tick is added in the x-axis for the last available time point for which a
+longitudinal measurement was available.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>include.y</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, two plots are produced per subject, i.e., the plot of conditional probabilities of survival 
+and a scatterplot of his longitudinal measurements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>a character string specifying the title in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>a character string specifying the x-axis label in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>a character string specifying the y-axis label in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab2</code></td>
+<td>
+<p>a character string specifying the y-axis label in the plotm when <code>include.y = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lty</code></td>
+<td>
+<p>what types of lines to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>which colors to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>the thickness of the lines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+<p>the type of points to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, the user is asked before each plot, see <code>par()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a legend is included in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.axis.z, cex.lab.z</code></td>
+<td>
+<p>the par <code>cex</code> argument for the axis at side 4, when <code>include.y = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>extra graphical parameters passed to <code>plot()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for longitudinal and time-to-event data. 
+<em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+<p>Rizopoulos, D. (2010) JM: An R Package for the Joint Modelling of Longitudinal and Time-to-Event Data. 
+<em>Journal of Statistical Software</em> <b>35</b> (9), 1–33. <a href="https://doi.org/10.18637/jss.v035.i09">doi:10.18637/jss.v035.i09</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfitJM</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># linear mixed model fit
+fitLME &lt;- lme(sqrt(CD4) ~ obstime + obstime:drug, 
+    random = ~ 1 | patient, data = aids)
+# cox model fit
+fitCOX &lt;- coxph(Surv(Time, death) ~ drug, data = aids.id, x = TRUE)
+
+# joint model fit
+fitJOINT &lt;- jointModel(fitLME, fitCOX, 
+    timeVar = "obstime", method = "weibull-PH-aGH")
+
+# sample of the patients who are still alive
+ND &lt;- aids[aids$patient == "141", ]
+ss &lt;- survfitJM(fitJOINT, newdata = ND, idVar = "patient", M = 50)
+plot(ss)
+plot(ss, include.y = TRUE, add.last.time.axis.tick = TRUE, legend = TRUE)
+</code></pre>
+
+
+</div>

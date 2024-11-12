@@ -1,0 +1,92 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>GeminiB</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimate Row-Row Covariance Structure Using Gemini</h2>
+
+<h3>Description</h3>
+
+<p>GeminiB estimates the row-row covariance, inverse covariance,
+correlation, and inverse correlation matrices using Gemini.
+For identifiability, the covariance factors A and B are scaled so
+that A has trace m, where m is the number of columns of X,
+A is the column-column covariance matrix, and B is the row-row
+covariance matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">GeminiB(X, rowpen, penalize.diagonal = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>Data matrix, of dimensions n by m.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rowpen</code></td>
+<td>
+<p>Glasso penalty parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>penalize.diagonal</code></td>
+<td>
+<p>Logical value indicating whether to penalize the
+off-diagonal entries of the correlation matrix.  Default is FALSE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>corr.B.hat</code></td>
+<td>
+<p>estimated correlation matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>corr.B.hat.inv</code></td>
+<td>
+<p>estimated inverse correlation matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.hat</code></td>
+<td>
+<p>estimated covariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B.hat.inv</code></td>
+<td>
+<p>estimated inverse covariance matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">n1 &lt;- 5
+n2 &lt;- 5
+n &lt;- n1 + n2
+m &lt;- 20
+X &lt;- matrix(rnorm(n * m), nrow=n, ncol=m)
+rowpen &lt;- sqrt(log(m) / n)
+out &lt;- GeminiB(X, rowpen, penalize.diagonal=FALSE)
+# Display the estimated correlation matrix rounded to two
+# decimal places.
+print(round(out$corr.B.hat, 2))
+</code></pre>
+
+
+</div>

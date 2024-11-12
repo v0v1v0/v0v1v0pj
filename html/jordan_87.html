@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>valid</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Validity methods</h2>
+
+<h3>Description</h3>
+
+<p>Validity methods, to check that objects are well-formed</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">valid_rsm(object)
+valid_chm(object)
+valid_qhm(object)
+valid_albert(object)
+is_ok_rsm(r)
+is_ok_chm(r)
+is_ok_qhm(r)
+is_ok_albert(r)
+is_ok_rsm(r)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>Putative jordan object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>Integer, number of rows in putative jordan object</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Validity methods.  The <code>validity_foo()</code> functions test for an object
+to be the right type, and the  <code>is_ok_foo()</code> functions test the
+number of rows being appropriate for a jordan object of some type; these
+functions return an error if not appropriate, or, for
+<code>jordan_matrix</code> objects, the size of the matrix worked with.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Return a Boolean</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> is_ok_qhm(45)   # 5x5 Hermitian quaternionic matrices
+#is_ok_qhm(46)   # FALSE
+</code></pre>
+
+
+</div>

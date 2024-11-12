@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jTestVaR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+VaR Back-testing
+</h2>
+
+<h3>Description</h3>
+
+<p>Provide some kinds of test for Value at risk.
+</p>
+<p>The null hypothesis is the equation of the probability of loss cross over VaR and the given ruin level.
+</p>
+<p>It will show how the calculated VaR can be accepted.
+</p>
+<p>See the report: Value at Risk.&lt;researchgate.net&gt;
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jTestVaR(Ret, VaR, p, test_significant, type)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Ret</code></td>
+<td>
+
+<p>Return series use to back-test.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>VaR</code></td>
+<td>
+
+<p>Value at Risk that has been calculated.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+
+<p>Given probability used to calculate VaR
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test_significant</code></td>
+<td>
+
+<p>Significant level of the test.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+
+<p>Kinds of test.
+</p>
+<p>. p_value 
+</p>
+<p>. pof 
+</p>
+<p>. tuff
+</p>
+<p>. mixkup
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See the report.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Statistic,Quantile and test result.
+</p>
+
+
+<h3>Note</h3>
+
+<p>viet-hung.vu@jvn.edu.vn
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Hung Vu
+</p>
+
+
+<h3>See Also</h3>
+
+<p>https://www.researchgate.net/profile/Vu_Hung4
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">y &lt;- c(11, 12, 10, 13, 12, 14, 13, 15, 13, 14, 12)
+s &lt;- jReturn(y)
+alpha &lt;- 0.2
+h &lt;- 0
+v &lt;- jVaR('non_adjust_hist',s,alpha,h)
+jTestVaR(s, v, alpha, 0.05, 'p_value')
+</code></pre>
+
+
+</div>

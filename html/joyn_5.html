@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_dt_by</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check dt <code>by</code> vars</h2>
+
+<h3>Description</h3>
+
+<p>check variable(s) by which data frames are joined: either a single <code>by</code> var, common to right and left dt,
+or
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_dt_by(x, y, by, by.x, by.y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>left table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>right table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>character: variable to join by (common variable to x and y)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by.x</code></td>
+<td>
+<p>character: specified var in x to join by</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by.y</code></td>
+<td>
+<p>character: specified var in y to join by</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character specifying checked variable(s) to join by
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+x = data.table(id1 = c(1, 1, 2, 3, 3),
+               id2 = c(1, 1, 2, 3, 4),
+               t   = c(1L, 2L, 1L, 2L, NA_integer_),
+               x   = c(16, 12, NA, NA, 15))
+y = data.table(id  = c(1, 2, 5, 6, 3),
+               id2 = c(1, 1, 2, 3, 4),
+               y   = c(11L, 15L, 20L, 13L, 10L),
+               x   = c(16:20))
+# example specifying by.x and by.y
+joyn:::check_dt_by(x, y, by.x = "id1", by.y = "id2")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

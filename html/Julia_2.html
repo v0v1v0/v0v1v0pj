@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>JuliaIterate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+JuliaIterate
+</h2>
+
+<h3>Description</h3>
+
+<p>'JuliaIterate' returns the number of iteration until a complex value
+diverges for the Julia map for a give complex number.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">JuliaIterate(z, C)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>z</code></td>
+<td>
+
+<p>A complex coordinate (initial value for the map).
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+
+<p>A complex constant.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>'JuliaIterate' returns the number of iteration until a complex value
+diverges for the Julia map for a give complex number.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Number of iterations.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Iterative function.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Mehmet Suzen &lt;mehmet.suzen@physics.org&gt;
+</p>
+
+
+<h3>References</h3>
+
+<p>The Fractal Geometry of Nature, Benoit B. Mandelbrot, W.H.Freeman &amp; Co Ltd (18 Nov 1982)
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>JuliaIterate</code> and <code>MandelIterate</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  z&lt;-0+0i
+  C &lt;- 1-1.6180339887;# Golden Ratio
+  it&lt;- JuliaIterate(z,C) 
+</code></pre>
+
+
+</div>

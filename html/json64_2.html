@@ -1,0 +1,46 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>j_encode</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Encoding Function</h2>
+
+<h3>Description</h3>
+
+<p>Used to encode a data.frame or list. By default, the output will be a base64 encoded JSON.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">j_encode(data, json = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A list or data.frame to encode.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>json</code></td>
+<td>
+<p>Defaults to TRUE. If TRUE, the output will be a base64 encoded JSON, else, the output will be an encoded string.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Transform a data.frame to an encoded JSON string
+df &lt;- iris
+encoded &lt;- j_encode(df, json = TRUE)
+
+</code></pre>
+
+
+</div>

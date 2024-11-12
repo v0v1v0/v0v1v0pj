@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coef</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Estimated Coefficients and Confidence Intervals for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Extracts estimated coefficients and confidence intervals from fitted joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JMbayes'
+coef(object, process = c("Longitudinal", "Event"), ...)
+
+## S3 method for class 'JMbayes'
+fixef(object, process = c("Longitudinal", "Event"), ...)
+
+## S3 method for class 'JMbayes'
+confint(object, parm = c("all", "Longitudinal", "Event"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>JMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>for which submodel (i.e., linear mixed model or survival model) to extract the estimated 
+coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parm</code></td>
+<td>
+<p>for which submodel (i.e., linear mixed model or survival model) to extract credible intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>When <code>process = "Event"</code> both methods return the same output. However, for <code>process = "Longitudinal"</code>,
+the <code>coef()</code> method returns the subject-specific coefficients, whereas <code>fixef()</code> only the fixed effects.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numeric vector or a matrix of the estimated parameters or confidence intervals for the fitted model.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>ranef.JMbayes</code>, <code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit
+fitLME &lt;- lme(sqrt(CD4) ~ obstime * drug - drug, 
+    random = ~ 1 | patient, data = aids)
+# cox model fit
+fitCOX &lt;- coxph(Surv(Time, death) ~ drug, data = aids.id, x = TRUE)
+
+# joint model fit
+fitJOINT &lt;- jointModelBayes(fitLME, fitCOX, 
+    timeVar = "obstime")
+
+# fixed effects for the longitudinal process
+fixef(fitJOINT)
+
+# fixed effects + random effects estimates for the longitudinal 
+# process
+coef(fitJOINT)
+
+# fixed effects for the event process
+fixef(fitJOINT, process = "Event")
+coef(fitJOINT, process = "Event")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>check_by_vars</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Check <code>by</code> input</h2>
+
+<h3>Description</h3>
+
+<p>This function checks the variable name(s) to be used as key(s) of the join
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">check_by_vars(by, x, y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>A vector of shared column names in <code>x</code> and <code>y</code> to merge on.
+This defaults to the shared key columns between the two tables.
+If <code>y</code> has no key columns, this defaults to the key of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x, y</code></td>
+<td>
+<p><code>data table</code>s. <code>y</code> is coerced to a <code>data.table</code> if
+it isn't one already.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list with information about by variables
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+x1 = data.frame(
+       id = c(1L, 1L, 2L, 3L, NA_integer_),
+       t  = c(1L, 2L, 1L, 2L, NA_integer_),
+       x  = 11:15)
+y1 = data.frame(id = 1:2,
+                y  = c(11L, 15L))
+# With var "id" shared in x and y
+joyn:::check_by_vars(by = "id", x = x1, y = y1)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

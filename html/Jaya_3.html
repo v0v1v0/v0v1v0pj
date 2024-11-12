@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>summary.jaya</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Function to summarize the Jaya function</h2>
+
+<h3>Description</h3>
+
+<p>Function to summarize the Jaya function
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jaya'
+summary(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>as an output object from 'jaya' function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters given to the function</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns the summary of output object from 'jaya' function
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Test Function to minimize
+square &lt;- function(x){return((x[1]^2)+(x[2]^2))}
+a &lt;- jaya(fun = square, lower = c(-100,-100), upper = c(100,100), maxiter = 10, n_var = 2)
+summary(a)
+</code></pre>
+
+
+</div>

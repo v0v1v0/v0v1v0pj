@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot_jackstrap_ks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Jackstrap KS:  This function plots p-value of Kolmogorov-Smirnov Test in decreasing order of leverage.</h2>
+
+<h3>Description</h3>
+
+<p>Plot Jackstrap KS:  This function plots p-value of Kolmogorov-Smirnov Test in decreasing order of leverage.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plot_jackstrap_ks(data_plot, model_plot)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data_plot</code></td>
+<td>
+<p>is the jackstrap object created by jackstrap function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model_plot</code></td>
+<td>
+<p>is the desired model. There are two models: 1 - The graphic shows the amount of removed DMU on x axis and p-value of K-S test on y axis;
+2 - The graphic shows DMU code on x axis and p-value of K-S test on y axis.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return the plot with p-value of K-S test and removed DMU or DMU code.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+ 
+   ##Plot the dispersion chart with p value of K-S test and amount of DMU removed.
+   plot_jackstrap_ks(effic_ks, 1)
+ 
+</code></pre>
+
+
+</div>

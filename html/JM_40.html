@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>wald.strata</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Wald Test for Stratification Factors </h2>
+
+<h3>Description</h3>
+
+<p>It performs a Wald test to test the hypothesis of equal spline coefficients among strata 
+in the approximation of baseline risk function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">wald.strata(fit)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>fit</code></td>
+<td>
+<p>an object of class <code>jointModel</code> with <code>method = "spline-PH-GH"</code>
+and with a strata specification in the survival part.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>an object of class <code>wald.strata</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alternative</code></td>
+<td>
+<p>a character string naming the alternative.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Result</code></td>
+<td>
+<p>a numeric matrix with the results of the Wald test.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>This test is valid when the same knots have been used across strata.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(log(serBilir) ~ drug * year - drug, random = ~ year | id, 
+    data = pbc2)
+fitSURV &lt;- coxph(Surv(years, status2) ~ drug + strata(hepatomegaly), 
+    data = pbc2.id, x = TRUE)
+fit.pbc &lt;- jointModel(fitLME, fitSURV, timeVar = "year", method = "spline-PH-aGH")
+wald.strata(fit.pbc)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

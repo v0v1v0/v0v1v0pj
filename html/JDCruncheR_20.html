@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-recode_indicator_num</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Ré-encodage en modalités des variables</h2>
+
+<h3>Description</h3>
+
+<p>Permet d'encoder des variables présentes dans la matrice des valeurs en
+modalités ajoutables à la matrice des modalités.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code> ou <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable_name</code></td>
+<td>
+<p>vecteur de chaînes de caractères contenant les noms des
+variables à recoder.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>voir l'argument éponyme de la fonction <code>cut</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>voir l'argument éponyme de la fonction <code>cut</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>autres paramètres de la fonction <code>cut</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>La fonction <code>recode_indicator_num()</code> renvoie le même objet,
+enrichi de l'indicateur choisi. Ainsi, si l'entrée <code>x</code> est une matrice
+QR_matrix, un objet de classe <code>QR_matrix</code> est renvoyé. Si le code
+d'entrée <code>x</code> est une matrice mQR, un objet de la classe
+<code>mQR_matrix</code> est renvoyé.
+</p>
+
+
+</div>

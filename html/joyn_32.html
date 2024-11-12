@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>process_by_vector</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Process the <code>by</code> vector</h2>
+
+<h3>Description</h3>
+
+<p>Gives as output a vector of names to be used for the specified
+table that correspond to the <code>by</code> argument for that table
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">process_by_vector(by, input = c("left", "right"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>character vector: by argument for join</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>character: either "left" or "right", indicating
+whether to give the left or right side of the equals ("=") if
+the equals is part of the <code>by</code> vector</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character vector
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">joyn:::process_by_vector(by = c("An = foo", "example"), input = "left")
+</code></pre>
+
+
+</div>

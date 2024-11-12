@@ -1,0 +1,787 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dataOvarian1</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Data on time-to-recurrence and 158 gene expressions for 912 ovarian cancer patients from 4 independent studies. 
+</h2>
+
+<h3>Description</h3>
+
+<p>Meta-analytic data containing 158 gene expressions and time-to-relapse information for ovarian cancer patients.
+The data include time-to-recurrence, residual tumour size (&gt;=1cm&gt; vs. &lt;1cm), and associated 158 gene expressions.
+The dataset is a subset of the curated ovarian data of Ganzfried et al (2013).
+We prepared the dataset by using "patientselection.config" in "Curated ovarian data" around October 2016. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data("dataOvarian1")</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 912 observations on the following 162 variables.
+</p>
+
+<dl>
+<dt><code>t.event</code></dt>
+<dd>
+<p>: time-to-recurrence in days</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>: event indicator (1=recurrence, 0=no recurrence)</p>
+</dd>
+<dt><code>group</code></dt>
+<dd>
+<p>: study ID; group=4, 9, 12, or 16</p>
+</dd>
+<dt><code>debulk</code></dt>
+<dd>
+<p>: residual tumour size (&gt;=1cm&gt; vs. &lt;1cm)</p>
+</dd>
+<dt><code>ABI3BP</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ADAM12</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ADORA3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ANKRD27</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>AP2M1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>AP3S1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ARHGAP28</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ARHGAP29</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ARTN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ASAP3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>B4GALT5</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>BCAP31</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>BRD4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>C1QTNF3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CALD1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CCNE1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CCNL1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CDC42</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CDV3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CEBPB</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CLIC4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL10A1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL11A1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL16A1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL3A1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL5A1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COL5A2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>COMP</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CRISPLD2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CRYAB</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CSE1L</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CTSK</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>CXCL12</code></dt>
+<dd>
+<p>a numeric vector of gene expressions.
+The CXCL12 gene expression is a predictive biomarker of survival in ovarian cancer (Popple et al. 2012).
+It has been known that CXCL12 promotes tumour growth, participates in tumour metastasis,
+and suppresses tumour immunity (Kryczek et al. 2007).
+The statistical significance of the CXCL12 expression on survival is first examined by Popple et al. (2012), and
+is further confirmed by Ganzfried et al. (2013) based on the meta-analysis of 14 independent studies.
+A meta-analysis using a joint model further confirmed that the expression of CXCL12 gene is predictive of
+both cancer relapse and death (Emura et al. 2017; 2018).</p>
+</dd>
+<dt><code>CYR61</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DCUN1D1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DDX27</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DIAPH3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DNAJB4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DNAJC13</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DNAJC8</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DPYSL3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>DVL3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>EFNB2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>EIF3K</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ELK1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ENPP1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>EPYC</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FABP4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FAM69A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FAP</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FERMT2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FGF1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FN1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FOSL2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>FSTL1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GABRG3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GAS1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GFRA1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GFRA3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GJC1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GLIPR1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>GPATCH1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>HLTF</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>HP1BP3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>HSD17B6</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>INHBA</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ITGB1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>JUN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KIAA0226</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KIAA0355</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KIAA1598</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KIN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KLHL25</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KPNA6</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KRT7</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>KRTAP5.8</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>L2HGDH</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>LGALS1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>LOX</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>LPP</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>LUM</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>LUZP1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MAP7D1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MAPRE1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MCL1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MEOX2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>METTL9</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MFN1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MICAL2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MMP12</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MRPS22</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MXD1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>MXRA8</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>N4BP2L2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NCOA3</code></dt>
+<dd>
+<p>a numeric vector of gene expressions.
+The NCOA3 gene encodes a nuclear receptor coactivator, and amplification of the gene
+occurs in breast and ovarian cancers (Anzick et al. 1997).
+The overexpression of NCOA3 is associated with tumor size (Spears et al. 2012) and
+tamoxifen resistance (Osborne et al. 2003), which are involved in the progression.
+Yoshida et al. (2005) reported that NCOA3 could contribute to ovarian cancer progression by promoting cell migration.
+In Emura et al. (2018), the overexpression of the gene was highly associated with time-to-relapse
+(Coefficient=0.194, P-value&lt;0.00001) and time-to-death (Coefficient=0.237, P-value&lt;0.00001).
+This result is consistent with the function of these reports.</p>
+</dd>
+<dt><code>NDRG3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NINJ1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NNMT</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NOTCH2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NPY</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NTM</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>NUAK1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>OAT</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>OLFML2B</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PARD3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PCYT1A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PDE1A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PDGFD</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PDPN</code></dt>
+<dd>
+<p>a numeric vector of gene expressions. The PDPN gene encodes the podoplanin protein.
+It is reported that cancer cells with higher PDPN expression have higher malignant potential due to enhanced platelet aggregation,
+which promotes alteration of metastasis, cell motility, and epithelial-mesenchymal transition (Shindo et al. 2013).
+Zhang et al. (2011) reported that overexpression of PDPN in fibroblasts is significantly associated with a poor prognosis in ovarian carcinoma.
+In Emura et al. (2018), the overexpression of the gene was highly associated with time-to-relapse
+(Coefficient=0.222, P-value&lt;0.00001) and time-to-death (Coefficient=0.161, P-value&lt;0.0001).</p>
+</dd>
+<dt><code>PGRMC1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PLAU</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PLOD2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PLSCR4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>POSTN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PPIC</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PRDM2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>PSMC4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>RAB22A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>RAB31</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>RAB32</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>RARRES1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>RPS16</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SERPINE1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SGK1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SH3PXD2A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SKIL</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SLC12A8</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SPARC</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SPHK1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>STAU1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SULF1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>SUPT5H</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TAGLN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TBCB</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TEAD1</code></dt>
+<dd>
+<p>a numeric vector of gene expressions.
+TEAD1 encodes a ubiquitous transcriptional enhancer factor that is a member of the TEA/ATTS domain family.
+It is reported that the protein level of TEAD1 was associated with poor prognosis in prostate cancer patients (Knight et al. 2008).
+In Emura et al. (2018), the overexpression of the gene was highly associated with
+time-to-relapse (Coefficient=0.195, P-value&lt;0.00001) and time-to-death (Coefficient=0.223, P-value&lt;0.00001).</p>
+</dd>
+<dt><code>TESK1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TGM5</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>THEMIS2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TIMP2</code></dt>
+<dd>
+<p>a numeric vector of gene expressions. TIMP2 is a member of the TIMP gene family.
+The proteins encoded by this gene family are natural inhibitors of the matrix metalloproteinases (MMPs).
+MMPs and their inhibitors (TIMP gene family) play an important regulatory role in the homeostasis of
+the extracellular matrix (Halon et al. 2012). In addition to inhibitors of MMPs,
+TIMP2 has additional functions that are associated with cell proliferation and survival (Bourboulia et al., 2011).
+In Emura et al. (2018), the overexpression of the gene was highly associated with time-to-relapse (Coefficient=0.235, P-value&lt;0.00001).</p>
+</dd>
+<dt><code>TIMP3</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TJP1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TP73.AS1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TPM2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TPM4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TSC22D2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TUBB2A</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TUBB6</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>TUFT1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>URI1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>USP48</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>VCAN</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>VSIG4</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>YWHAB</code></dt>
+<dd>
+<p>a numeric vector of gene expressions.
+YWHAB encodes a protein belonging to the 14-3-3 family of proteins,
+members of which mediate signal transduction by binding to phosphoserine-containing proteins.
+It is reported that the protein of YWHAB can regulate cell survival, proliferation, and motility (Tzivion 2006).
+Actually, it is reported that overexpression of this gene promotes tumor progression and was associated with
+extrahepatic metastasis and worse survival in hepatocellular carcinoma (Liu et al. 2011).
+In Emura et al. (2018), the overexpression of the gene was highly associated with
+time-to-relapse (Coefficient=0.169, P-value&lt;0.0001) and time-to-death (Coefficient=0.263, P-value&lt;0.00001)</p>
+</dd>
+<dt><code>ZFP36</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ZFP36L2</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ZMYM1</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ZNF148</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+<dt><code>ZNF79</code></dt>
+<dd>
+<p>a numeric vector</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>4 studies are combined (group=4, 9, 12, and 16). The numbers 4, 9, 12 and 16 corresponds to the IDs 
+from the original data of Ganzfried et al. (2013).</p>
+
+
+<h3>Source</h3>
+
+<p>Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for the ovarian cancer transcriptome, Database, Article ID bat013.
+</p>
+
+
+<h3>References</h3>
+
+<p>Bourboulia D, et al. (2011), Endogenous angiogenesis inhibitor blocks tumor growth via direct and indirect effects on tumor microenvironment. Am J Pathol 179:2589-600
+</p>
+<p>Emura T, Nakatochi M, Murotani K, Rondeau V (2017), A joint frailty-copula model between tumour progression and death for meta-analysis,
+Stat Methods Med Res 26(6):2649-66
+</p>
+<p>Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+</p>
+<p>Ganzfried BF et al. (2013), Curated ovarian data: clinically annotated data for the ovarian cancer transcriptome, Database, Article ID bat013.
+</p>
+<p>Halon A, et al. (2012), Enhanced immunoreactivity of TIMP-2 in the stromal compartment of tumor as a marker of favorable prognosis in ovarian cancer patients.
+J Histochem Cytochem 60:491-501
+</p>
+<p>Knight JF, et al. (2008), TEAD1 and c-Cbl are novel prostate basal cell markers that correlate with poor clinical outcome in prostate cancer. Br J Cancer 99:1849-58
+</p>
+<p>Kryczek I, et al. (2007), Stroma-derived factor (SDF-1/CXCL12) and human tumor pathogenesis. Am J Physiol 292:987-95
+</p>
+<p>Liu TA, et al. (2011), Increased expression of 14-3-3beta promotes tumor progression and predicts extrahepatic metastasis and worse survival
+in hepatocellular carcinoma. Am J Pathol 179:2698-708
+</p>
+<p>Osborne CK, et al. (2003), Role of the estrogen receptor coactivator AIB1 (SRC-3) and HER-2/neu in tamoxifen resistance in breast cancer. J Natl Cancer Inst 95:353-61
+</p>
+<p>Popple A, et al. (2012), The chemokine, CXCL12, is an independent predictor of poor survival in ovarian cancer. Br J Cancer 106:1306-13
+</p>
+<p>Shindo K, et al. (2013), Podoplanin expression in cancer-associated fibroblasts enhances tumor progression of invasive ductal carcinoma of the pancreas. Mol Cancer 12:168
+</p>
+<p>Tzivion G, et al. (2006), 14-3-3 proteins as potential oncogenes. Semin Cancer Biol 16:203-13
+</p>
+<p>Yoshida H, et al. (2005), Steroid receptor coactivator-3, a homolog of Taiman that controls cell migration in the Drosophila ovary,
+regulates migration of human ovarian cancer cells. Mol Cell Endocrinol 245:77-85
+</p>
+<p>Zhang Y, et al. (2011), Ovarian cancer-associated fibroblasts contribute to epithelial ovarian carcinoma metastasis by promoting angiogenesis,
+lymphangiogenesis and tumor cell invasion. Cancer Lett 303:47-55
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(dataOvarian1)
+######## univariate Cox ##########
+t.event=dataOvarian1$t.event
+event=dataOvarian1$event
+X.mat=dataOvarian1[,-c(1,2,3,4)] ## gene expression
+Symbol=colnames(dataOvarian1)[-c(1,2,3,4)] ## gene symbol
+
+p=ncol(X.mat)
+P_value=coef=NULL
+for(j in 1:p){
+  res=summary(coxph(Surv(t.event,event)~X.mat[,j]))$coefficients
+  P_value=c(P_value,res[5])
+  coef=c(coef,res[1])
+}
+data.frame( gene=Symbol[order(P_value)], P=P_value[order(P_value)], 
+coef=round(coef[order(P_value)],3) )
+</code></pre>
+
+
+</div>

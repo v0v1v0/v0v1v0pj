@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coxme.display</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>coxme.display: table for coxme.object (coxme package)</h2>
+
+<h3>Description</h3>
+
+<p>Make mixed effect model results from coxme.object (coxme package)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coxme.display(coxme.obj, dec = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coxme.obj</code></td>
+<td>
+<p>coxme.object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>Decimal point, Default: 2</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>Fixed effect table, random effect, metrics, caption
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(coxme)
+fit &lt;- coxme(Surv(time, status) ~ ph.ecog + age + (1 | inst), lung)
+coxme.display(fit)
+</code></pre>
+
+
+</div>

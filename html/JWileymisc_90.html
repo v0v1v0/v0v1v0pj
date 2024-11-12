@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>R2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calculate R2 Values</h2>
+
+<h3>Description</h3>
+
+<p>Generic function to return variance explained (R2)
+estimates from various models. In some cases these will be true
+R2 values, in other cases they may be pseudo-R2 values if
+R2 is not strictly defined for a model.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">R2(object, ...)
+
+## S3 method for class 'lm'
+R2(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to specific methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Depends on the method dispatch.
+</p>
+<p>The raw and adjusted r-squared value.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">R2(lm(mpg ~ qsec * hp, data = mtcars))
+</code></pre>
+
+
+</div>

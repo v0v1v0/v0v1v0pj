@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Best.Index</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jack-knife indices in a single topology m times and evaluates a 
+success rule.</h2>
+
+<h3>Description</h3>
+
+<p>The function jack-knifes the terminals and
+calculates the indices value m (=replicates) times.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Best.Index(tree = tree, distribution = distribution, jtip = jtip,
+  replicates = replicates, success = c(success))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tree</code></td>
+<td>
+<p>is a single tree with n terminals, an ape phylo object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution</code></td>
+<td>
+<p>species distributions in n areas, a data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jtip</code></td>
+<td>
+<p>is the proportion of terminals to delete, real (range 0-1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>replicates</code></td>
+<td>
+<p>is the number of replicates, an integer.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>success</code></td>
+<td>
+<p>the measure of the success, a vector.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function returns the success that correspond to  
+obtain the same ranking for X,Y positions, established as the vector
+success (by default success)).
+</p>
+<p>The function returns the success that corresponds to  
+obtain the same ranking for X,Y positions, established as the vector
+success (by default success))
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jrich)
+data(tree)
+data(distribution)
+
+Best.Index(tree = tree, distribution = distribution, jtip =0.5, replicates =10, success=1)
+
+
+</code></pre>
+
+
+</div>

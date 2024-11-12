@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add_gridlines</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Add and remove gridlines</h2>
+
+<h3>Description</h3>
+
+<p>These are convenience wrappers for editing <code>ggplot2::theme()</code>'s
+<code>panel.grid.major</code> and <code>panel.grid.minor</code> parameters with sensible
+defaults.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">add_gridlines(x = TRUE, y = TRUE, minor = TRUE)
+
+add_x_gridlines(minor = TRUE)
+
+add_y_gridlines(minor = TRUE)
+
+drop_gridlines(x = TRUE, y = TRUE, minor.only = FALSE)
+
+drop_x_gridlines(minor.only = FALSE)
+
+drop_y_gridlines(minor.only = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Apply changes to the x axis?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Apply changes to the y axis?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minor</code></td>
+<td>
+<p>Add minor gridlines in addition to major?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minor.only</code></td>
+<td>
+<p>Remove only the minor gridlines?</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,144 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tb1module2</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>tb1module2: table 1 shiny module server for reactive data.</h2>
+
+<h3>Description</h3>
+
+<p>Table 1 shiny module server for descriptive statistics for reactive data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tb1module2(
+  input,
+  output,
+  session,
+  data,
+  data_label,
+  data_varStruct = NULL,
+  nfactor.limit = 10,
+  design.survey = NULL,
+  showAllLevels = T,
+  argsExact = list(workspace = 2 * 10^7, simulate.p.value = T)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>input</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>output</code></td>
+<td>
+<p>output</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>session</code></td>
+<td>
+<p>session</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Reactive data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_label</code></td>
+<td>
+<p>Reactive data label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data_varStruct</code></td>
+<td>
+<p>Variable structure list of data, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nfactor.limit</code></td>
+<td>
+<p>maximum factor levels to include, Default: 10</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>design.survey</code></td>
+<td>
+<p>Reactive survey data of survey package. Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>showAllLevels</code></td>
+<td>
+<p>Show All label information with 2 categorical variables, Default: T</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>argsExact</code></td>
+<td>
+<p>Option for Fisher exact test memory limit.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Table 1 shiny module server for descriptive statistics.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table 1 shiny module server for descriptive statistics.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(DT)
+library(data.table)
+library(jstable)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      tb1moduleUI("tb1")
+    ),
+    mainPanel(
+      DTOutput("table1")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_tb1 &lt;- callModule(tb1module2, "tb1",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$table1 &lt;- renderDT({
+    tb &lt;- out_tb1()$table
+    cap &lt;- out_tb1()$caption
+    out.tb1 &lt;- datatable(tb, rownames = T, extension = "Buttons", caption = cap)
+    return(out.tb1)
+  })
+}
+</code></pre>
+
+
+</div>

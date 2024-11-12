@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lagk</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a lagged variable</h2>
+
+<h3>Description</h3>
+
+<p>Given a variable, create a k lagged version,
+optionally do it by a grouping factor, such as an ID.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lagk(x, k = 1, by)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the variable to lag</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>the length to lag it</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>a variable to lag by. Must be sorted.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a vector of the lagged values
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">lagk(1:4, 1)
+</code></pre>
+
+
+</div>

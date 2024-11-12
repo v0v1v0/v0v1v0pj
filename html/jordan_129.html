@@ -1,0 +1,98 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>r_to_n</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sizes of Matrix-based Jordan algebras</h2>
+
+<h3>Description</h3>
+
+<p>Given the number of rows in a (matrix-based) Jordan object, return the
+size of the underlying associative matrix algebra
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">r_to_n_rsm(r)
+r_to_n_chm(r)
+r_to_n_qhm(r)
+r_to_n_albert(r=27)
+n_to_r_rsm(n)
+n_to_r_chm(n)
+n_to_r_qhm(n)
+n_to_r_albert(n=3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Integer, underlying associative algebra being matrices of
+size <code class="reqn">n\times n</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>Integer, number of rows of independent representation of a
+matrix-based jordan object</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These functions are here for consistency, and the <code>albert</code> ones for
+completeness.
+</p>
+<p>For the record, they are:
+</p>
+
+<ul>
+<li>
+<p> Real symmetric matrices, <code>rsm</code>, <code class="reqn">r=n(n+1)/2</code>,
+<code class="reqn">n=(\sqrt{1+4r}-1)/2</code>
+</p>
+</li>
+<li>
+<p> Complex Hermitian matrices, <code>chm</code>, <code class="reqn">r=n^2</code>, 
+<code class="reqn">n=\sqrt{r}</code>
+</p>
+</li>
+<li>
+<p> Quaternion Hermitian matrices, <code>qhm</code>, <code class="reqn">r=n(2n-1)</code>, 
+<code class="reqn">n=(1+\sqrt{1+8r})/4</code>
+</p>
+</li>
+<li>
+<p> Albert algebras, <code class="reqn">r=27</code>, <code class="reqn">n=3</code>
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>Return non-negative integers</p>
+
+
+<h3>Note</h3>
+
+<p>I have not been entirely consistent in my use of these functions.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">r_to_n_qhm(nrow(rqhm()))
+</code></pre>
+
+
+</div>

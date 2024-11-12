@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jot_skim</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read in all values from a jot notepad</h2>
+
+<h3>Description</h3>
+
+<p>Read in all values from a jot notepad
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jot_skim(pad = jot_active())
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pad</code></td>
+<td>
+<p>path to file to open</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>value specified or list of all values
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tf &lt;- tempfile()
+jot_new_pad(tf)
+jot_activate(tf)
+jot('ex_val', 'ex')
+jot_skim()
+</code></pre>
+
+
+</div>

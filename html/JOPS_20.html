@@ -1,0 +1,155 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hist2dsm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smooth a 2D histogram</h2>
+
+<h3>Description</h3>
+
+<p>Fit a 2D smooth P-spline surface to a matrix of counts, assuming Poisson distributed observations.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hist2dsm(
+  Y,
+  nsegx = 10,
+  nsegy = nsegx,
+  bdeg = 3,
+  lambdax = 10,
+  lambday = lambdax,
+  dx = 3,
+  dy = dx,
+  Mu = Y + 0.01,
+  kappa = 1e-04,
+  tol = 1e-05
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a matrix of counts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegx</code></td>
+<td>
+<p>the number of knots along <code>x</code> (default=10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nsegy</code></td>
+<td>
+<p>the number of evenly spaced knots along <code>y</code> for Tensor product B-spline basis (default=10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the basis, default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambdax</code></td>
+<td>
+<p>the positive number for the tuning parameter along <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambday</code></td>
+<td>
+<p>the positive number for the tuning parameter along <code>y</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dx</code></td>
+<td>
+<p>the order of the difference penalty along <code>x</code>, default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dy</code></td>
+<td>
+<p>the order of the difference penalty along <code>y</code>, default is 3.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mu</code></td>
+<td>
+<p>the initialization of the mean (default <code>Y + 0.01</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>kappa</code></td>
+<td>
+<p>a (small, positive) number for ridge tuning parameter to stabilize estimation (default <code>1e-4</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>the convergence criterion (default <code>1e-5</code>).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>ed</code></td>
+<td>
+<p>the effective dimension of the smooth 2D surface.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mu</code></td>
+<td>
+<p>a matrix with the smooth estimates, with dimensions of <code>dim(Y)</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pen</code></td>
+<td>
+<p>the numerical value of the penalty.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x = faithful$eruptions
+y = faithful$waiting
+h = hist2d(x, y, c(100, 100))
+sm = hist2dsm(h$H, nsegx = 25, nsegy = 25, bdeg = 3, lambdax = 10, lambday = 10)
+image(h$xgrid, h$ygrid, sm$Mu, xlab = 'Eruption length (min)',
+      ylab = 'Waiting time (min)', main = 'Old Faithful')
+
+</code></pre>
+
+
+</div>

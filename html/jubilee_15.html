@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.macro_predict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction from UNRATE and GDP models</h2>
+
+<h3>Description</h3>
+
+<p>This utility performs the prediction from the linear models of UNRATE and GDP.
+The purpose of this method is to automate the prediction and to allow users
+experimenting optimization on the natural rate of interest.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.macro_predict(dtb, rs, new.tb3ms = NA, new.gs10 = NA)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtb</code></td>
+<td>
+<p>data table, usually this is <code>lm.dtb</code> of the <code>rs</code> object,
+with GDP log-return percent <code>(logrp.N, logrp.K)</code> calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rs</code></td>
+<td>
+<p>the list returned from <code>jubilee.macro_fit</code>, which provides
+regression parameters for the prediction (not the data).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.tb3ms</code></td>
+<td>
+<p>numeric, vector of new <code>rate.tb3ms</code> with length equal to NROW of dtb.
+Default is <code>NA</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>new.gs10</code></td>
+<td>
+<p>numeric, vector of new <code>rate.gs10</code> with length equal to NROW of dtb.
+Default is <code>NA</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The data table containing the predictions and all the required input columns
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+</div>

@@ -1,0 +1,122 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmdem.summaries</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Accessing Joint Mean and Dispersion Effect Model Fits
+</h2>
+
+<h3>Description</h3>
+
+<p>These functions are all <code>methods</code> for class <code>jmdem</code> or <code>summary.jmdem</code> objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmdem'
+formula(x, submodel = c("both", "mean", "dispersion"), ...)
+
+## S3 method for class 'jmdem'
+family(object, submodel = c("both", "mean", "dispersion"), ...)
+
+## S3 method for class 'jmdem'
+residuals(object, type = c("deviance", "pearson", "working",
+                           "response", "partial"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, object</code></td>
+<td>
+<p>the function family accesses the family objects which are stored within objects created by <code>jmdem.</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>submodel</code></td>
+<td>
+<p>character. The family of the specified submodel. For <code>both</code>, the families of the mean and dispersion submodels will be return in a list of 2 elements.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>character. For <code>residuals</code>, the type of residuals which should be returned. The alternatives are: "<code>deviance</code>" (default), "<code>pearson</code>", "<code>working</code>", "<code>response</code>", and "<code>partial</code>".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments passed to methods.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>family</code> is a generic function with methods for class "jmdem". See <code>family</code> for details.
+</p>
+<p>Here <code>formula</code> is referred to the case that it is called on a fitted <code>jmdem</code> model object. The default first, depending on the specified <code>submodel</code> argument, looks for a "<code>mean.formula</code>" and/or "<code>dispersion.formula</code>" component of the <code>jmdem</code> object (and evaluates it), then a "<code>mean.terms</code>" and/or "<code>dispersion.terms</code>" component, then a <code>mformula</code> and/or <code>dformula</code> parameter of the call (and evaluates its value) and finally a "<code>formula</code>" attribute.
+</p>
+<p>The references define the types of residuals: Davison &amp; Snell is a good reference for the usages of each.
+</p>
+<p>The partial residuals are a matrix of working residuals, with each column formed by omitting a term from the model.
+</p>
+<p>How <code>residuals</code> treats cases with missing values in the original fit is determined by the <code>na.action</code> argument of that fit. If <code>na.action = na.omit</code> omitted cases will not appear in the residuals, whereas if <code>na.action = na.exclude</code> they will appear, with residual value <code>NA</code>. See also <code>naresid</code>.
+</p>
+<p>For fits done with <code>y = FALSE</code> the response values are computed from other components.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Cox, D. R. and Snell, E. J. (1981). <em>Applied Statistics; Principles and Examples</em>. London: Chapman and Hall.
+</p>
+<p>Chambers, J. M. and Hastie, T. J. (1992) <em>Statistical Models in S</em>. Wadsworth &amp; Brooks/Cole.
+</p>
+<p>Davison, A. C. and Snell, E. J. (1991). <em>Residuals and diagnostics</em>. In: Statistical Theory and Modelling. In Honour of Sir David Cox, FRS, eds. Hinkley, D. V., Reid, N. and Snell, E. J., Chapman &amp; Hall.
+</p>
+<p>Dobson, A. J. (1983). <em>An Introduction to Statistical Modelling</em>. London: Chapman and Hall.
+</p>
+<p>Hastie, T. J. and Pregibon, D. (1992). <em>Generalized linear models</em>. Chapter 6 of <em>Statistical Models in S</em> eds J. M. Chambers and T. J. Hastie, Wadsworth &amp; Brooks/Cole.
+</p>
+<p>McCullagh P. and Nelder, J. A. (1989). <em>Generalized Linear Models</em>. London: Chapman and Hall.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jmdem</code>, <code>anova.jmdem</code>, <code>coef</code>, <code>deviance</code>, <code>df.residual</code>, <code>effects</code>, <code>fitted</code>, <code>weighted.residuals</code>, <code>residuals</code>, <code>residuals.jmdem</code>, <code>summary.jmdem</code>, <code>weights</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## The jmdem(...) example
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x, dformula = ~ z, 
+                            mfamily = poisson(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4), 
+                            lambda.true = c(2.5, 3), n = 100)
+                            
+fit &lt;- jmdem(mformula = y ~ x, dformula = ~ z, data = MyData, 
+             mfamily = poisson, dfamily = Gamma(link = "log"), 
+             dev.type = "deviance", method = "CG")
+
+coef(fit)
+plot(resid(fit), fitted(fit))
+abline(h = 0, lty = 2, col = "gray")
+</code></pre>
+
+
+</div>

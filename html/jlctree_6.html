@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_wald</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the Wald test statistic.</h2>
+
+<h3>Description</h3>
+
+<p>Computes the Wald test statistic.
+Not to be called directly by the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_wald(f, data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f</code></td>
+<td>
+<p>a two-sided formula of the fitted survival model, with the longitudinal outcome 
+being the first covariate on the right side of the formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data.frame containing covariates in <code>f</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The Wald test statistic.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>get_node_val</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> data(data_timevar);
+ f &lt;- Surv(time_L, time_Y, delta)~y+X3+X4+X5;
+ get_wald(f, data_timevar);
+
+</code></pre>
+
+
+</div>

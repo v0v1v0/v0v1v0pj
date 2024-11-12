@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>latin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Latin Square</h2>
+
+<h3>Description</h3>
+
+<p>Generates a Latin square, which is either standard or based on randomized rows and columns.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R"> latin(n, random = TRUE) </code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>An integer between 2 and 26, inclusively, denoting the number of treatment groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+<p>Logical; if <code>TRUE</code> (default), a Latin square with randomized rows and columns is produced.
+If <code>FALSE</code>, a standard non-random Latin square is produced.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Latin square is produced in matrix format with treatments labeled as <em>A</em>, <em>B</em>, <em>C</em>, etc.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>See Also</h3>
+
+<p><code>design.lsd</code> in <em>R</em>-package <code>agricolae</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">latin( 5, random=FALSE )
+latin( 6 ) # Default is random=TRUE
+</code></pre>
+
+
+</div>

@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>simhash</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simhash computation</h2>
+
+<h3>Description</h3>
+
+<p>Simhash worker uses the keyword extraction worker to find the keywords
+and uses simhash algorithm to compute simhash.  <code>dict</code> 
+<code>hmm</code>, <code>idf</code> and <code>stop_word</code> should be provided when initializing 
+jiebaR worker.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">simhash(code, jiebar)
+
+vector_simhash(code, jiebar)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>code</code></td>
+<td>
+<p>For <code>simhash</code>, a Chinese sentence or the path of a text file.
+For <code>vector_simhash</code>, a character vector of segmented words.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jiebar</code></td>
+<td>
+<p>jiebaR Worker.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>There is a symbol <code>&lt;=</code> for this function.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Qin Wenfeng
+</p>
+
+
+<h3>References</h3>
+
+<p>MS Charikar - Similarity Estimation Techniques from Rounding Algorithms
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>&lt;=.simhash</code> <code>worker</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+### Simhash
+words = "hello world"
+simhasher = worker("simhash",topn=1)
+simhasher &lt;= words
+distance("hello world" , "hello world!" , simhasher)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sendHTML</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Send HTML to a web page</h2>
+
+<h3>Description</h3>
+
+<p>Sends a piece of HTML code to a web page and adds it at the end
+or the <code>body</code> element. This function is a wrapper around <code>sendHTML</code> method of 
+class <code>Session</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sendHTML(html = "", sessionId = NULL, wait = 0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>html</code></td>
+<td>
+<p>HTML code that will be added to the web page.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>An ID of the session to which the HTML should be sent. Can also be a vector of multiple session IDs.
+If <code>NULL</code>, the HTML will be sent to all currently active sessions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wait</code></td>
+<td>
+<p>If <code>wait &gt; 0</code>, after sending the message, R will wait for a reply for a given number of seconds. 
+For this time (or until the reply is received), execution of other commands will be halted. Any incoming message 
+from the session will be considered as a reply.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>sendData</code>, <code>sendCommand</code>, <code>callFunction</code>,
+<code>openPage</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage(FALSE)
+
+sendHTML("Test...")
+sendHTML("This is &lt;b&gt;bold&lt;/b&gt;")
+sendHTML("&lt;table&gt;&lt;tr&gt;&lt;td&gt;1&lt;/td&gt;&lt;td&gt;2&lt;/td&gt;&lt;/tr&gt;&lt;tr&gt;&lt;td&gt;3&lt;/td&gt;&lt;td&gt;4&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;")
+## End(Not run)
+
+</code></pre>
+
+
+</div>

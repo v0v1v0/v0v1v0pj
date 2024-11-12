@@ -1,0 +1,137 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.pspfit</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plotting function for <code>psNormal</code>, <code>psPoisson</code>, <code>psBinomial</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>Plotting function for P-spline smooth with normal, Poisson, or binomial responses
+(<code>class pspfit</code>), with or without standard error bands.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'pspfit'
+plot(x, ..., se = 2, xlab = "", ylab = "", col = "black", pch = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>the P-spline object, usually from psNormal, psPoisson, psBinomial.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>se</code></td>
+<td>
+<p>a scalar, e.g. <code>se = 2</code> to produce twice se bands, set <code>se</code> &gt; 0 (or set <code>se</code>=0 to supress).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>label for the x-axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>label for the y-axis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col</code></td>
+<td>
+<p>color for points.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pch</code></td>
+<td>
+<p>point character.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>Plot</code></td>
+<td>
+<p>a plot of the mean (inverse link) smoothed normal, Poisson, or binomial responses, with or without se bands.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers and Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Eilers, P.H.C., Marx, B.D., and Durban, M. (2015).
+Twenty years of P-splines, <em>SORT</em>, 39(2): 149-186.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+#Extract data
+library(MASS)
+# Get the data
+data(mcycle)
+x = mcycle$times
+y = mcycle$accel
+fit1 = psNormal(x, y, nseg = 20, bdeg = 3, pord = 2, lambda = .8)
+plot(fit1, se = 2, xlab = "time (ms)", ylab = "accel")
+
+library(JOPS)
+library(boot)
+# Extract the data
+Count = hist(boot::coal$date, breaks=c(1851:1963), plot = FALSE)$counts
+Year = c(1851:1962)
+xl = min(Year)
+xr = max(Year)
+
+# Poisson smoothing
+nseg = 20
+bdeg = 3
+fit1=psPoisson(Year, Count, xl, xr, nseg, bdeg, pord = 2,
+lambda = 1)
+names(fit1)
+plot(fit1, xlab = "Year", ylab = "Count", se = 2)
+
+library(JOPS)
+#Extract data
+library(rpart)
+Kyphosis = kyphosis$Kyphosis
+Age  =kyphosis$Age
+y = 1 * (Kyphosis == "present")  # make y 0/1
+# Binomial smoothing
+fit1 = psBinomial(Age, y, xl = min(Age), xr = max(Age), nseg = 20,
+                 bdeg = 3, pord = 2, lambda = 1)
+names(fit1)
+plot(fit1, xlab = "Age", ylab = '0/1', se = 2)
+
+</code></pre>
+
+
+</div>

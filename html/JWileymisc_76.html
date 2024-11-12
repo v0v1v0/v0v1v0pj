@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modelTest</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Detailed Tests on Models</h2>
+
+<h3>Description</h3>
+
+<p>TODO: make me!
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">modelTest(object, ...)
+
+is.modelTest(x)
+
+as.modelTest(x)
+
+## S3 method for class 'vglm'
+modelTest(object, ...)
+
+## S3 method for class 'lm'
+modelTest(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted model object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to specific methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A object (e.g., list or a modelTest object) to
+test or attempt coercing to a modelTest object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Depends on the method dispatch.
+</p>
+<p>A list with two elements.
+<code>Results</code> contains a data table of the actual estimates.
+<code>Table</code> contains a nicely formatted character matrix.
+</p>
+<p>A list with two elements.
+<code>Results</code> contains a data table of the actual estimates.
+<code>Table</code> contains a nicely formatted character matrix.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">mtcars$cyl &lt;- factor(mtcars$cyl)
+m &lt;- VGAM::vglm(cyl ~ qsec,
+  family = VGAM::multinomial(), data = mtcars)
+modelTest(m)
+
+## clean up
+rm(m, mtcars)
+
+## Not run: 
+mtcars$cyl &lt;- factor(mtcars$cyl)
+mtcars$am &lt;- factor(mtcars$am)
+m &lt;- VGAM::vglm(cyl ~ qsec,
+  family = VGAM::multinomial(), data = mtcars)
+modelTest(m)
+
+m &lt;- VGAM::vglm(cyl ~ scale(qsec),
+  family = VGAM::multinomial(), data = mtcars)
+modelTest(m)
+
+m2 &lt;- VGAM::vglm(cyl ~ factor(vs) * scale(qsec),
+  family = VGAM::multinomial(), data = mtcars)
+modelTest(m2)
+
+m &lt;- VGAM::vglm(Species ~ Sepal.Length,
+  family = VGAM::multinomial(), data = iris)
+modelTest(m)
+
+set.seed(1234)
+sampdata &lt;- data.frame(
+  Outcome = factor(sample(letters[1:3], 20 * 9, TRUE)),
+  C1 = rnorm(20 * 9),
+  D3 = sample(paste0("L", 1:3), 20 * 9, TRUE))
+
+m &lt;- VGAM::vglm(Outcome ~ factor(D3),
+  family = VGAM::multinomial(), data = sampdata)
+modelTest(m)
+
+m &lt;- VGAM::vglm(Outcome ~ factor(D3) + C1,
+  family = VGAM::multinomial(), data = sampdata)
+modelTest(m)
+
+## End(Not run)
+m1 &lt;- lm(mpg ~ qsec * hp, data = mtcars)
+modelTest(m1)
+
+mtcars$cyl &lt;- factor(mtcars$cyl)
+m2 &lt;- lm(mpg ~ cyl, data = mtcars)
+modelTest(m2)
+
+m3 &lt;- lm(mpg ~ hp * cyl, data = mtcars)
+modelTest(m3)
+
+m4 &lt;- lm(sqrt(mpg) ~ hp * cyl, data = mtcars)
+modelTest(m4)
+
+m5 &lt;- lm(mpg ~ sqrt(hp) * cyl, data = mtcars)
+modelTest(m5)
+
+## cleanup
+rm(m1, m2, m3, m4, m5, mtcars)
+</code></pre>
+
+
+</div>

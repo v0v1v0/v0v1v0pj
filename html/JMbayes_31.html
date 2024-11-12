@@ -1,0 +1,328 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mvglmer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Multivariate Mixed Models
+</h2>
+
+<h3>Description</h3>
+
+<p>Fits multivariate mixed models under a Bayesian approach using JAGS.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mvglmer(formulas, data, families, engine = c("JAGS", "STAN"), 
+    overdispersion = FALSE, priors = NULL, init = NULL, control = NULL, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formulas</code></td>
+<td>
+<p>a list of R formulas representing the mixed models; 
+these should be <b>lme4</b>-type formulas.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data.frame that contains all the variable to be used when fitting the
+multivariate mixed model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>families</code></td>
+<td>
+<p>a list of families objects correspond to each outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>engine</code></td>
+<td>
+<p>a character string indicating whether to use JAGS or STAN to fit the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overdispersion</code></td>
+<td>
+<p>logical; for Poisson outcomes, should an overdispersion parameter
+be included.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a named list of user-specified prior parameters:
+</p>
+
+<dl>
+<dt>taus_betas</dt>
+<dd>
+<p>the prior precision parameter for the fixed effects; default
+is 0.001.</p>
+</dd>
+<dt>priorK.D</dt>
+<dd>
+<p>degrees of freedom for the wishart prior for the inverse
+covariance matrix of the random effects; default is number of random effects 
+plus one.</p>
+</dd>
+<dt>priorR.D</dt>
+<dd>
+<p>precision matrix of the wishart prior for the inverse
+covariance matrix of the random effects; default to a diagonal matrix with
+diagonal ellements given a Gamma prior with parameters <code>A_R.D</code> and 
+<code>A_R.D</code>.</p>
+</dd>
+<dt>A_R.D</dt>
+<dd>
+<p>the prior shape parameter of the Gamma prior for the diagonal 
+elements of the precision matrix of the wishart prior for the inverse 
+covariance matrix of the random effects; default is 0.5.</p>
+</dd>
+<dt>B_R.D</dt>
+<dd>
+<p>the prior shape parameter of the Gamma prior for the diagonal 
+elements of the precision matrix of the wishart prior for the inverse 
+covariance matrix of the random effects; default is 0.001.</p>
+</dd>
+<dt>tau_half_cauchy</dt>
+<dd>
+<p>prior precision parameter of a half-Cauchy distribution for 
+the precision parameter of a random intercept, when only a single outcome is
+specified with a single random effect; default is 0.1.</p>
+</dd>
+<dt>A_tau</dt>
+<dd>
+<p>the prior shape parameter for the precision of the error terms of
+Gaussian outcomes.</p>
+</dd>
+<dt>B_tau</dt>
+<dd>
+<p>the prior rate parameter for the precision of the error terms of
+Gaussian outcomes.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>init</code></td>
+<td>
+<p>a list of initial values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values with components:
+</p>
+        
+<dl>
+<dt>n.iter</dt>
+<dd>
+<p>integer specifying the total number of iterations after burn in; 
+default is 28000.</p>
+</dd>
+<dt>n.burnin</dt>
+<dd>
+<p>integer specifying how many of iterations to discard as burn-in; 
+default is 3000.</p>
+</dd>
+<dt>n.thin</dt>
+<dd>
+<p>integer specifying the thinning of the chains; 
+default is 50.</p>
+</dd>
+<dt>n.adapt</dt>
+<dd>
+<p>integer specifying the number of adapt iterations in which the 
+acceptance rates are checked; default is 3000.</p>
+</dd>
+<dt>n.chains</dt>
+<dd>
+<p>integer specifying the number of chains to use; default is 2.</p>
+</dd>
+<dt>n.processors</dt>
+<dd>
+<p>integer specifying the number of processors to use; 
+default is the number of available processors minus one.</p>
+</dd>
+<dt>working.directory</dt>
+<dd>
+<p>a character string giving the path on where to save
+the JAGS model; default is the working directory.</p>
+</dd>
+<dt>clear.model</dt>
+<dd>
+<p>logical; should the JAGS models be deleted after the model has
+run; default is <code>TRUE</code>.</p>
+</dd>
+<dt>seed</dt>
+<dd>
+<p>an integer setting the random seed; default is 1.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>options passed to the <code>control</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function creates a JAGS program representing a multivariate mixed effects that is run
+with JAGS using the <b>jagsUI</b> package. Currently only Gaussian, Bernoulli and Poisson
+longitudinal outcomes can be handled. 
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>mvglmer</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>mcmc</code></td>
+<td>
+<p>a list with the MCMC samples for each parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>components</code></td>
+<td>
+<p>a list with design matrices and responses vectors extracted by applying
+the <code>formulas</code> in <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a copy of <code>data</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a copy of the <code>control</code> values used in the fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmc.info</code></td>
+<td>
+<p>a list with information over the MCMC (i.e., time it took, iterations, 
+etc.).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DIC</code></td>
+<td>
+<p>the DIC value for the fitted model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pD</code></td>
+<td>
+<p>the pD valu for the fitted model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Rhat</code></td>
+<td>
+<p>a list with the Rhat convergence diagnostics for each parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>priors</code></td>
+<td>
+<p>a copy of the priors used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postMeans</code></td>
+<td>
+<p>a list with posterior means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>postModes</code></td>
+<td>
+<p>a list with posterior modes calculated using kernel desnisty estimation.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EffectiveSize</code></td>
+<td>
+<p>a list with effective sample sizes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>StErr</code></td>
+<td>
+<p>a list with posterior standard errors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>StDev</code></td>
+<td>
+<p>a list with posterior standard deviations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>CIs</code></td>
+<td>
+<p>a list with 95% credible intervals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Pvalues</code></td>
+<td>
+<p>a list of tail probabilities for containg the zero value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the matched call.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mvJointModelBayes</code>,
+<code>jointModelBayes</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+MixedModelFit &lt;- mvglmer(list(log(serBilir) ~ year + (year | id),
+                               spiders ~ year + (1 | id)), data = pbc2,
+                          families = list(gaussian, binomial))
+
+summary(MixedModelFit)
+plot(MixedModelFit)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

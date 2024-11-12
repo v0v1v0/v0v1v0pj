@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>prof</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>profile time and memory usage of a given R expression</h2>
+
+<h3>Description</h3>
+
+<p>profile time and memory usage of a given R expression
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">prof(expr, doit = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>An <code>R</code> expression to be evaluated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>doit</code></td>
+<td>
+<p>A boolean variable specifying whether profiling should be
+performed or not (intended for internal use).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Profiling is performed using <code>summaryRprof(memory="both")$by.self</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>Our memory profiling is not satistfactory yet!
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Rprof</code>
+</p>
+<p><code>summaryRprof</code>
+</p>
+
+
+</div>

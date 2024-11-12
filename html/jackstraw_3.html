@@ -1,0 +1,38 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find_k</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Find a number of clusters or principal components</h2>
+
+<h3>Description</h3>
+
+<p>There are a wide range of algorithms and visual techniques to identify
+a number of clusters or principal components embedded in the observed data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find_k()
+</code></pre>
+
+
+<h3>Details</h3>
+
+<p>It is critical to explore the eigenvalues, cluster stability, and visualization.
+See R packages <code>bootcluster</code>, <code>EMCluster</code>, and <code>nFactors</code>.
+</p>
+<p>Please see the R package <code>SC3</code>, which provides <code>estkTW()</code> function to
+find the number of significant eigenvalues according to the Tracy-Widom test.
+</p>
+<p><code>ADPclust</code> package includes <code>adpclust()</code> function that runs the algorithm
+on a range of K values. It helps you to identify the most suitable number of clusters.
+</p>
+<p>This package also provides an alternative methods in <code>permutationPA</code>.
+Through a resampling-based Parallel Analysis, it finds a number of significant components.
+</p>
+
+
+</div>

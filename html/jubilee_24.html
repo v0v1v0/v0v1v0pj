@@ -1,0 +1,43 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.repo.config</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Configuration of jubilee's data repository</h2>
+
+<h3>Description</h3>
+
+<p>This utility stores the data configuration for the jubilee's data repository.
+This is used internally to provide proper abstraction to the data sources,
+such as file name, URL, FRED symbol, column name, decimal format, etc.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.repo.config()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>The list of data elements and their attributes.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  c &lt;- jubilee.repo.config()
+  c$ie$url
+
+</code></pre>
+
+
+</div>

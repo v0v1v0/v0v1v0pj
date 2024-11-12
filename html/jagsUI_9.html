@@ -1,0 +1,149 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pp.check</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Posterior Predictive Checks for Bayesian Analyses fit in JAGS</h2>
+
+<h3>Description</h3>
+
+<p>A simple interface for generating a posterior predictive check plot for a JAGS analysis fit using jagsUI, based on the posterior distributions of discrepency metrics specified by the user and calculated and returned by JAGS (for example, sums of residuals). The user supplies the name of the discrepancy metric calculated for the real data in the argument <code>observed</code>, and the corresponding discrepancy for data simulated by the model in argument <code>simulated</code>. The posterior distributions of the two parameters will be plotted in X-Y space and a Bayesian p-value calculated.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  pp.check(x, observed, simulated, xlab='Observed data', ylab='Simulated data', 
+                     main='Posterior Predictive Check', ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A jagsUI object generated using the <code>jags</code> function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>observed</code></td>
+<td>
+<p>The name of the parameter (as a string) representing the fit of the observed data (e.g. residuals)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simulated</code></td>
+<td>
+<p>The name of the corresponding parameter (as a string) representing the fit of the new simulated data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlab</code></td>
+<td>
+<p>Customize x-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylab</code></td>
+<td>
+<p>Customize y-axis label</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>Customize plot title</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to plot.default</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+ 
+<p>Ken Kellner <a href="mailto:contact@kenkellner.com">contact@kenkellner.com</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  
+#Analyze Longley economic data in JAGS
+#Number employed as a function of GNP
+#See ?jags for a more detailed example
+
+#Get data
+data(longley)
+gnp &lt;- longley$GNP
+employed &lt;- longley$Employed
+n &lt;- length(employed)
+data &lt;- list(gnp=gnp,employed=employed,n=n)
+
+#Identify filepath of model file
+modfile &lt;- tempfile()
+
+#Write model
+#Note calculation of discrepancy stats fit and fit.new
+#(sums of residuals)
+writeLines("
+model{
+
+  #Likelihood
+  for (i in 1:n){ 
+
+    employed[i] ~ dnorm(mu[i], tau)     
+    mu[i] &lt;- alpha + beta*gnp[i]
+    
+    res[i] &lt;- employed[i] - mu[i]   
+    emp.new[i] ~ dnorm(mu[i], tau)
+    res.new[i] &lt;- emp.new[i] - mu[i]
+
+  }
+    
+  #Priors
+  alpha ~ dnorm(0, 0.00001)
+  beta ~ dnorm(0, 0.00001)
+  sigma ~ dunif(0,1000)
+  tau &lt;- pow(sigma,-2)
+  
+  #Derived parameters
+  fit &lt;- sum(res[])
+  fit.new &lt;- sum(res.new[])
+
+}
+", con=modfile)
+
+#Set parameters to monitor
+params &lt;- c('alpha','beta','sigma','fit','fit.new')
+
+#Run analysis
+
+out &lt;- jags(data = data,
+            inits = NULL,
+            parameters.to.save = params,
+            model.file = modfile,
+            n.chains = 3,
+            n.adapt = 100,
+            n.iter = 1000,
+            n.burnin = 500,
+            n.thin = 2)
+
+#Examine output summary
+
+out
+
+#Posterior predictive check plot
+
+pp.check(out, observed = 'fit', simulated = 'fit.new')
+
+</code></pre>
+
+
+</div>

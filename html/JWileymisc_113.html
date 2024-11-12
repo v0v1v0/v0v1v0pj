@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TukeyHSDgg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tukey HSD Plot</h2>
+
+<h3>Description</h3>
+
+<p>This calculates and displays means, confidence intervals
+as well as which groups are different based on Tukey's HSD.
+Inspired by http://stackoverflow.com/questions/18771516/is-there-a-function-to-add-aov-post-hoc-testing-results-to-ggplot2-boxplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TukeyHSDgg(x, y, d, ci = 0.95, idvar, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A categorical grouping variable name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A continuous outcome variable name.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>A dataset</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>A numeric value indicating the coverage of the
+confidence interval to use.  Defaults to 0.95.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idvar</code></td>
+<td>
+<p>An optional ID variable for multilevel data</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed on.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A ggplot graph object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## examples using it with single level data
+## differences based on an ANOVA and follow up contrasts
+mtcars$cyl &lt;- factor(mtcars$cyl)
+TukeyHSDgg("cyl", "mpg", mtcars)
+rm(mtcars)
+
+## Not run: 
+TukeyHSDgg("Species", "Sepal.Length", iris)
+
+## example based on multilevel data
+## differences based on model fit with lmer and follow up contrasts
+TukeyHSDgg("treatment", "decrease", OrchardSprays, idvar = "colpos")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

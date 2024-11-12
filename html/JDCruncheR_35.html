@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>QR_var_manipulation</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Editing the indicators list</h2>
+
+<h3>Description</h3>
+
+<p>Functions to remove indicators (<code>remove_indicators()</code>) or retrain some
+indicators only (<code>retain_indicators()</code>) from <code>QR_matrix</code> or
+<code>mQR_matrix</code> objects. The series names (column "series") cannot
+be removed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">remove_indicators(x, ...)
+
+retain_indicators(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>names of the variable to remove (or keep)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>remove_indicators()</code> returns the same object <code>x</code> reduced
+by the flags and variables used as arguments ... So if the input <code>x</code>
+is a QR_matrix, an object of class QR_matrix is returned. If the input
+<code>x</code> is a mQR_matrix, an object of class mQR_matrix is returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other var QR_matrix manipulation: 
+<code>add_indicator()</code>,
+<code>recode_indicator_num()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Path of matrix demetra_m
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extract the quality report from the demetra_m file
+QR &lt;- extract_QR(demetra_path)
+
+# Compute the score
+QR &lt;- compute_score(QR, n_contrib_score = 2)
+
+# Retain indicators
+retain_indicators(QR, "score", "m7") # retaining "score" and "m7"
+retain_indicators(QR, c("score", "m7")) # Same
+
+# Remove indicators
+QR &lt;- remove_indicators(QR, "score") # removing "score"
+
+extract_score(QR) # is NULL because we removed the score indicator
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>make_new_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make new data for generating predicted data from regression models.</h2>
+
+<h3>Description</h3>
+
+<p>This is a convenience function that helps automate the process
+of generating predicted data from regression model from a predictor(s). It
+is designed to give you the data frame for the <code>predict</code> method's <code>newdata</code>
+argument.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">make_new_data(
+  model,
+  pred,
+  pred.values = NULL,
+  at = NULL,
+  data = NULL,
+  center = TRUE,
+  set.offset = NULL,
+  num.preds = 100,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>The model (e.g., <code>lm</code>, <code>glm</code>, <code>merMod</code>, <code>svyglm</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred</code></td>
+<td>
+<p>The name of the focal predictor as a string. This is the variable
+for which, if you are plotting, you'd likely have along the x-axis (with
+the dependent variable as the y-axis).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pred.values</code></td>
+<td>
+<p>The values of <code>pred</code> you want to include. Default is NULL,
+which means a sequence of equi-spaced values over the range of a numeric
+predictor or each level of a non-numeric predictor.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>at</code></td>
+<td>
+<p>If you want to manually set the values of other variables in the
+model, do so by providing a named list where the names are the variables
+and the list values are vectors of the values. This can be useful
+especially when you are exploring interactions or other conditional
+predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data frame used in fitting the model. Default is NULL, in
+which case the data will be retrieved via <code>model.frame</code> or, if there are
+variable transformations in the formula, by looking in the environment
+for the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>Set numeric covariates to their mean? Default is TRUE. You
+may also just provide a vector of names (as strings) of covariates to
+center. Note that for <code>svyglm</code> models, the survey-weighted means are used.
+For models with weights, these are weighted means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>set.offset</code></td>
+<td>
+<p>If the model has an offset, the value to use for the offset
+variable. Default is NULL, in which case the median of the offset variable
+is used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num.preds</code></td>
+<td>
+<p>The number of predictions to generate. Default is 100.
+Ignored if <code>pred.values</code> is not <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Extra arguments passed to <code>get_formula()</code></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Please bear in mind that this does not generate the predictions. You will
+need to do that with a <code>predict</code> function for your model or another
+interface, such as the <code>prediction</code> package's titular function.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+fit &lt;- lm(Income ~ Frost + Illiteracy + Murder, data = as.data.frame(state.x77))
+# Basic use
+new_data &lt;- make_new_data(fit, pred = "Frost")
+# Set covariate to specific value
+new_data &lt;- make_new_data(fit, pred = "Frost", at = list(Murder = 5))
+# Set covariate to several specific values
+new_data &lt;- make_new_data(fit, pred = "Frost", at = list(Murder = c(5, 10, 15)))
+
+
+</code></pre>
+
+
+</div>

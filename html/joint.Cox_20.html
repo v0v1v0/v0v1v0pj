@@ -1,0 +1,276 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Weibull.simu</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Simulating data from the Weibull joint frailty-copula model</h2>
+
+<h3>Description</h3>
+
+<p>This function generate clustered (grouped) bivariate event times from the joint frailty-copula model
+with the Weibull baseline hazard functions.
+Simulating (X_ij,D_ij,C_ij), i=1,2,...,G, and j=1,2,...,N, where G is the number of studies (groups),
+and N is the number of individuals (patients) within each study.
+X_ij is time-to-event, D_ij is time-to-death, and C_ij is time-to-censoring.
+(X_ij, D_ij) and C_ij are independent.
+Dependence structure on (X_ij, D_ij) is modeled by a copula, which can be the Clayton (default), Frank, Gumbel, or BB1.
+Covariate effects are specified by the Cox models given a frailty term. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Weibull.simu(G,N,scale1,scale2,shape1,shape2,beta1,beta2,
+ eta,copula="Clayton",theta,d=0,alpha,beta12=0,C.max,
+ cmprsk=FALSE,tau=FALSE,Z.dist=runif,...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>G</code></td>
+<td>
+<p>The number of studies or groups</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>The number of patients within each study</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale1</code></td>
+<td>
+<p>scale parameter related to the baseline hazard for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale2</code></td>
+<td>
+<p>scale parameter related to the baseline hazard for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape1</code></td>
+<td>
+<p>shape parameter related to the baseline hazard for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shape2</code></td>
+<td>
+<p>shape parameter related to the baseline hazard for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta1</code></td>
+<td>
+<p>regression coefficients for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta2</code></td>
+<td>
+<p>regression coefficients for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>frailty variance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>copula</code></td>
+<td>
+<p>copula function; "Clayton" (default), "Gumbel", "Frank", or "BB1"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>copula parameter</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>BB1 copula's departure parameter from the Clayton (d=0 is the default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>parameter related to frailty, e.g., alpha=1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta12</code></td>
+<td>
+<p>regression coefficients for copula</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C.max</code></td>
+<td>
+<p>the upper bound for the censoring distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cmprsk</code></td>
+<td>
+<p>if TRUE, simulated data follow the competing risks setting</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tau</code></td>
+<td>
+<p>if TRUE, conditional Kendall's tau given Z is shown</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z.dist</code></td>
+<td>
+<p>the distribution of a covariate Z</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>parameters for Z.dist</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>See Wu et al. (2020) for the algorithms for the Clayton copula.
+The method was later extended by including covariate effects
+on a copula (beta12) via the conditional copula model of Emura et al. (2021),
+The available copulas are the Frank, Gumbel, and BB1 copulas.
+For the BB1 copula, please see Supplementary Material:Additional simulation studies under
+the copula misspecification in Emura et al. (2021),
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>: time to event</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>D</code></td>
+<td>
+<p>: time to death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>: time to independent censoring</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.event</code></td>
+<td>
+<p>: time to event (=min(X,D,C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>event</code></td>
+<td>
+<p>: event indicator (=I(X&lt;=D,X&lt;=C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>event1</code></td>
+<td>
+<p>: indicator for Event 1 (=I(X&lt;=D,X&lt;=C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>t.death</code></td>
+<td>
+<p>: time to death (=min(D,C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>death</code></td>
+<td>
+<p>: death indicator (=I(D&lt;=C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>event2</code></td>
+<td>
+<p>: indicator for Event 2 (=I(D&lt;X,D&lt;=C))</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>: study ID (=1,2,...,G)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>: covariate</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tau</code></td>
+<td>
+<p>: Conditional Kendall's tau given Z</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Takeshi Emura</p>
+
+
+<h3>References</h3>
+
+<p>Wu BH, Michimae H, Emura T (2020), Meta-analysis of individual patient data with semi-competing risks under
+the Weibull joint frailty-copula model. Comp Stat 35(4):1525-52
+</p>
+<p>Emura T, Shih JH, Ha ID, Wilke RA (2020), Comparison of the marginal hazard model and the sub-distribution hazard model for competing risks under an assumed copula,
+Stat Methods Med Res 29(8):2307-27
+</p>
+<p>Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
+individual patient data meta-analysis of randomized controlled trials,
+Stat Methods Med Res 30(12):2634-50
+</p>
+<p>Supplementary Material:Additional simulation studies under the copula misspecification
+in "Emura T, Sofeu C, Rondeau V (2021), Conditional copula models for correlated survival endpoints:
+individual patient data meta-analysis of randomized controlled trials,
+Stat Methods Med Res 30(12):2634-50"
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5)
+
+Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,copula="Gumbel",theta=2,alpha=1,C.max=5)
+
+Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5,Z.dist=rbinom,size=1,prob=0.5)
+
+## simulated data follow the competing risks setting
+Weibull.simu(G=5,N=2,scale1=1,scale2=1,shape1=1,shape2=1,
+        beta1=1,beta2=1,eta=0.5,theta=2,alpha=1,C.max=5,cmprsk=TRUE)
+</code></pre>
+
+
+</div>

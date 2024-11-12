@@ -1,0 +1,139 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coerce</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Coercion</h2>
+
+<h3>Description</h3>
+
+<p>Various coercions needed in the package</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">as.jordan(x,class)
+vec_to_rsm1(x)
+vec_to_chm1(x)
+vec_to_qhm1(x)
+vec_to_albert1(x)
+rsm1_to_vec(M)
+chm1_to_vec(M)
+qhm1_to_vec(M)
+albert1_to_vec(H)
+as.real_symmetric_matrix(x,d,single=FALSE)
+as.complex_herm_matrix(x,d,single=FALSE)
+as.quaternion_herm_matrix(x,d,single=FALSE)
+as.albert(x,single=FALSE)
+numeric_to_real_symmetric_matrix(x,d)
+numeric_to_complex_herm_matrix(x,d)
+numeric_to_quaternion_herm_matrix(x,d)
+numeric_to_albert(e1)
+as.list(x,...)
+matrix1_to_jordan(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x,e1</code></td>
+<td>
+<p>Numeric vector of independent entries</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M,H</code></td>
+<td>
+<p>A matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>Dimensionality of algebra</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>single</code></td>
+<td>
+<p>Boolean, indicating whether a single value is to be
+returned</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>class</code></td>
+<td>
+<p>Class of object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments, currently ignored</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The numeral “1” in a function name means that it operates on,
+or returns, a single element, usually a matrix.  Thus function
+<code>as.1matrix()</code> is used to convert a jordan object to a list of
+matrices.  Length one jordan objects are converted to a matrix.
+</p>
+<p>Functions <code>vec_to_rsm1()</code> et seq convert a numeric vector to a
+(symmetric, complex, quaternion, octonion) matrix, that is, elements
+of a matrix-based Jordan algebra.
+</p>
+<p>Functions <code>rsm1_to_vec()</code> convert a (symmetric, complex,
+quaternion, octonion) matrix to a numeric vector of independent
+components.  The upper triangular components are used; no checking for
+symmetry is performed (the lower triangular components, and non-real
+components of the diagonal, are discarded).
+</p>
+<p>Functions <code>as.real_symmetric_matrix()</code>,
+<code>as.complex_herm_matrix()</code>, <code>as.quaternion_herm_matrix()</code>
+and <code>as.albert()</code> take a numeric matrix and return a
+(matrix-based) Jordan object.
+</p>
+<p>Functions <code>numeric_to_real_symmetric_matrix()</code> have not been
+coded up yet.
+</p>
+<p>Function <code>matrix1_to_jordan()</code> takes a matrix and returns a
+length-1 (matrix based) Jordan vector.  It uses the class of the
+entries (real, complex, quaternion, octonion) to decide which type of
+Jordan to return.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Return a coerced value.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+vec_to_chm1(1:16)  # Hermitian matrix
+
+as.1matrix(rchm())
+
+as.complex_herm_matrix(matrix(runif(75),ncol=3))
+
+matrix1_to_jordan(cprod(matrix(rnorm(35),7,5)))
+matrix1_to_jordan(matrix(c(1,1+1i,1-1i,3),2,2))
+matrix1_to_jordan(Oil + matrix(1,3,3))
+
+
+</code></pre>
+
+
+</div>

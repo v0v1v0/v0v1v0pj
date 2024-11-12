@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_dupes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get rows of a <code>data.frame</code> with identical values for the specified variables.</h2>
+
+<h3>Description</h3>
+
+<p>For hunting duplicate records during data cleaning.  Specify the data.frame and the variable combination to search for duplicates and get back the duplicated rows.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_dupes(dat, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>The input data.frame.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unquoted variable names to search for duplicates. This takes a tidyselect specification.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a data.frame with the full records where the specified variables have duplicated values, as well as a variable <code>dupe_count</code> showing the number of rows sharing that combination of duplicated values. If the input data.frame was of class <code>tbl_df</code>, the output is as well.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">get_dupes(mtcars, mpg, hp)
+
+# or called with the magrittr pipe %&gt;% :
+mtcars %&gt;% get_dupes(wt)
+
+# You can use tidyselect helpers to specify variables:
+mtcars %&gt;% get_dupes(-c(wt, qsec))
+mtcars %&gt;% get_dupes(starts_with("cy"))
+</code></pre>
+
+
+</div>

@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cor2cov</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert a correlation matrix and standard deviations to a covariance matrix</h2>
+
+<h3>Description</h3>
+
+<p>This is a simple function designed to convert a correlation matrix
+(standardized covariance matrix) back to a covariance matrix.
+It is the opposite of <code>cov2cor</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cor2cov(V, sigma)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>V</code></td>
+<td>
+<p>an n x n correlation matrix.  Should be numeric, square, and symmetric.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sigma</code></td>
+<td>
+<p>an n length vector of the standard deviations. The length of the
+vector must match the number of columns in the correlation matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an n x n covariance matrix
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cov2cor</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># using a built in dataset
+cor2cov(cor(longley), sapply(longley, sd))
+
+# should match the above covariance matarix
+cov(longley)
+all.equal(cov(longley), cor2cov(cor(longley), sapply(longley, sd)))
+</code></pre>
+
+
+</div>

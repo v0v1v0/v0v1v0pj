@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>find.IF.JCR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>find.IF.JCR Journal Citation Reports (JCR) Impact Factor</h2>
+
+<h3>Description</h3>
+
+<p>This function gives the Impact Factor of the journal(s) provided by Journal Citation Reports (JCR) Thomson Reuters
+for the year 1997 to 2019. If the output shows a NA for a journal, it means that the journal has never been in JCR list.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">find.IF.JCR(journals, year, exact.match = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>journals</code></td>
+<td>
+<p>a <code>character vector</code> containing journals whose impact factor is required</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>year</code></td>
+<td>
+<p><code>scaler</code>, the year for which impact factor is required. If not mensioned, then impact factor for all year is displayed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact.match</code></td>
+<td>
+<p><code>logical</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>impact factor of the journal(s)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">   find.IF.JCR("ieee access")
+   find.IF.JCR( "ieee access", year=2016)
+
+
+</code></pre>
+
+
+</div>

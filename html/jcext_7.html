@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_ncdfcwt</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>create_ncdfcwt</h2>
+
+<h3>Description</h3>
+
+<p>Converts 3D arrays with daily frequencies of weather types to NETCDF files.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_ncdfcwt(cwt_out, times, centralp, onefile = TRUE, path = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cwt_out</code></td>
+<td>
+<p>List with a list for each grid point that contains two objects: CWT and indices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>times</code></td>
+<td>
+<p>Numeric with the dates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>centralp</code></td>
+<td>
+<p>Numeric with the centralp obtained from the main program.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>onefile</code></td>
+<td>
+<p>Logical. If TRUE one single output file with all WT is created, if FALSE
+one file per type is created.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>Path name to create the output file.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A netcdf file with all weather types or one file per type.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>createindex_ncdfextended_jc</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# This is a long running example
+cwtGlobal &lt;- extended_jc(press$msl, press$loni, press$lati, press$dates, gale=FALSE, num_cores=2)
+# Create ncdf file (one file with all types)
+create_ncdfcwt(cwtGlobal, press$dates, cwtGlobal$centralp, onefile = TRUE, path = NULL)
+
+
+</code></pre>
+
+
+</div>

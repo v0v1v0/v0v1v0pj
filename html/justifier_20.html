@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generate_id</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate unique identifier(s)</h2>
+
+<h3>Description</h3>
+
+<p>Convenience function to generate a unique identifiers for
+sources, assertions, justifications, and decisions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generate_id(
+  type,
+  prefix = paste(sample(letters, 4), collapse = ""),
+  stopOnIllegalChars = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The type of the justifier object; <code>D</code>, <code>J</code>, <code>A</code> or <code>S</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prefix</code></td>
+<td>
+<p>An identifier prefix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stopOnIllegalChars</code></td>
+<td>
+<p>Whether to <code>base::stop()</code> or produce a <code>base::warning()</code>
+when encountering illegal characters (i.e. anything other than a letter or
+underscore).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A character vector containing the identifier(s).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">generate_id(type = "S", 'sourceExample');
+generate_id(type = "A", 'assertionExample');
+</code></pre>
+
+
+</div>

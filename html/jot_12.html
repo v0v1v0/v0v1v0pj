@@ -1,0 +1,52 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jot_new_pad</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create new jot Notepad</h2>
+
+<h3>Description</h3>
+
+<p>Create new jot Notepad
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jot_new_pad(pad = ".jot.yaml", title)
+
+jot_new(pad = ".jot.yaml", title)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>pad</code></td>
+<td>
+<p>path to file to store new notepad.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>what to call the notepad. If not supplied, uses the name of the file.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>path to file, invisibly
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tf &lt;- tempfile()
+jot_new_pad(tf)
+</code></pre>
+
+
+</div>

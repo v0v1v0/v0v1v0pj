@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>setEnvironment</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set Environment</h2>
+
+<h3>Description</h3>
+
+<p>Defines the outer environment of the app. Outer environment is a parent for all session environments.
+It is used to store variables that are common for all the client sessions. The only way to make changes outside of
+the outer environment is to use the global assignment operator <code>&lt;&lt;-</code> if and only if changes are 
+made to the variable that does not exist in the outer environment.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">setEnvironment(envir)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>envir</code></td>
+<td>
+<p>Environment to be used as outer environment.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>By default, an environment where app was initialized (via <code>openPage</code> function or with <code>App$new()</code> call)
+is used.
+</p>
+<p>This function is a wrapper around <code>setEnvironment</code> method of class <code>App</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+e &lt;- new.env()
+setEnvironment(e)
+
+sendCommand("jrc.sendData('x', 10)", wait = 3)
+print(e$x)
+closePage()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

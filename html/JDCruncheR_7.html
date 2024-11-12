@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>export_xlsx.mQR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Exporting mQR_matrix objects in Excel files</h2>
+
+<h3>Description</h3>
+
+<p>To export several quality reports in Excel files
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mQR_matrix'
+export_xlsx(
+  x,
+  export_dir,
+  layout_file = c("ByComponent", "ByQRMatrix", "AllTogether"),
+  auto_format = TRUE,
+  overwrite = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>mQR_matrix</code> object to export.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>export_dir</code></td>
+<td>
+<p>export directory.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout_file</code></td>
+<td>
+<p>export parameter. By default,
+(<code>layout_file = "ByComponent"</code>) and an Excel file is exported for each
+part of the quality report matrix (modalities and values matrices). To group
+both modalities and values reports/sheets into a single Excel file, use the
+option <code>layout_file = "ByQRMatrix"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_format</code></td>
+<td>
+<p>logical indicating whether to format the output
+(<code>auto_format = TRUE</code> by default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>logical indicating whether to create an Excel file if it
+doesn't exist yet (<code>create = TRUE</code> by default)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other unused arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns invisibly (via <code>invisible(x)</code>) the same
+<code>mQR_matrix</code> object as <code>x</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other QR_matrix functions: 
+<code>export_xlsx()</code>,
+<code>export_xlsx.QR_matrix()</code>,
+<code>extract_QR()</code>,
+<code>rbind.QR_matrix()</code>,
+<code>sort()</code>,
+<code>weighted_score()</code>
+</p>
+
+
+</div>

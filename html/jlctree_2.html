@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>data_timeinv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A simulated dataset with time-invariant longitudinal outcome and covariates.</h2>
+
+<h3>Description</h3>
+
+<p>A simulated dataset with time-invariant longitudinal outcome,
+time-to-event, and time-invariant covariates.
+Since longitudinal outcome and all of the covariates are time-invariant, 
+there is only one observation per subject. 
+The time-to-event data is right-censored.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(data_timeinv)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 500 rows and 10 variables.
+</p>
+
+<dl>
+<dt>ID</dt>
+<dd>
+<p>subject identifier (1 - 500)</p>
+</dd>
+<dt>X1</dt>
+<dd>
+<p>continuous covariate between 0 and 1; time-invariant</p>
+</dd>
+<dt>X2</dt>
+<dd>
+<p>continuous covariate between 0 and 1; time-invariant</p>
+</dd>
+<dt>X3</dt>
+<dd>
+<p>binary covariate; time-invariant</p>
+</dd>
+<dt>X4</dt>
+<dd>
+<p>continuous covariate between 0 and 1; time-invariant</p>
+</dd>
+<dt>X5</dt>
+<dd>
+<p>categorical covariate taking values from 1, 2, 3, 4, 5; time-invariant</p>
+</dd>
+<dt>time_Y</dt>
+<dd>
+<p>right-censored event time</p>
+</dd>
+<dt>delta</dt>
+<dd>
+<p>censoring indicator, 1 if censored and 0 otherwise</p>
+</dd>
+<dt>y</dt>
+<dd>
+<p>longitudinal outcome; time-invariant</p>
+</dd>
+<dt>g</dt>
+<dd>
+<p>true latent class identifier 1, 2, 3, 4, which is determined by 
+the outcomes of <code class="reqn">1\{X1 &gt; 0.5\}</code> and <code class="reqn">1\{X2 &gt; 0.5\}</code>, with some noise</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># The data for the first five subjects (ID = 1 - 5):
+#
+#  ID   X1   X2 X3  X4 X5    time_Y delta         y g
+#   1 0.27 0.53  1 0.8  1 10.703940     0 0.8923776 2
+#   2 0.37 0.68  1 0.5  3  9.153915     1 0.6871529 2
+#   3 0.57 0.38  1 0.2  1  4.489658     1 0.8410745 3
+#   4 0.91 0.95  0 0.4  3  1.009941     1 2.1058681 4
+#   5 0.20 0.12  0 0.8  5 11.125094     0 0.1383508 1
+
+</code></pre>
+
+
+</div>

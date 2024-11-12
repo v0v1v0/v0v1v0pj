@@ -1,0 +1,58 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>composeFormula</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compose a formula string</h2>
+
+<h3>Description</h3>
+
+<p>Compose a formula string
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">composeFormula(lht, rht)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lht</code></td>
+<td>
+<p>list of character vectors making up the left</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rht</code></td>
+<td>
+<p>list of character vectors making up the right</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a string representation of the formula
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+composeFormula(list('a', 'b', c('a', 'b')))
+# ~a+b+a:b
+
+composeFormula('f', list('a', 'b', c('a', 'b')))
+# "f~a+b+a:b"
+
+composeFormula('with spaces', list('a', 'b', c('a', 'b')))
+'`with spaces`~a+b+a:b'
+
+</code></pre>
+
+
+</div>

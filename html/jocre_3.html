@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>csetMV</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Confidence regions and intervals for a normal mean and variance</h2>
+
+<h3>Description</h3>
+
+<p>Computes boundaries of (simultaneous) confidence regions for the mean and variance of a normal distribution using different methods.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">csetMV(dat, n, method, alpha=0.1, scale="var", steps=500)</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>A vector of numeric values assumed to follow a normal distribution. Not required for <code>method="cheng.iles"</code> or <code>"min.area"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>A numeric value giving the sample size. Only required for <code>method="cheng.iles"</code> or <code>"min.area"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string specifying the method to be used. See details for available <code>method</code>s.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>A numeric value giving the type I error level to be controlled. Default is <code>0.1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale</code></td>
+<td>
+<p>A character string specifying whether the variance (<code>var</code>) or standard deviation (<code>sd</code>) is to be plotted on the y axis. Not required for <code>method="cheng.iles"</code> or <code>"min.area"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>An integer setting the initial number of steps for the search algorithm. Default is <code>800</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Available <code>method</code>s are: <code>mood</code> for the classical region described in Mood (1950); <code>large</code> for the large-sample approximation region described in section 4.1 of Arnold &amp; Shavelle (1998); <code>plugin</code> for a plug-in variant of the large-sample approximation region described in section 4.2 of Arnold &amp; Shavelle (1998); <code>pluginF</code> for the plug-in variant of the large-sample approximation region described in section 4.3 of Arnold &amp; Shavelle (1998) using an asymptotic F distribution as in Douglas (1993); <code>lrt</code> for the likelihood ratio test region described in section 4.4 of Arnold &amp; Shavelle (1998); <code>cheng.iles</code> for the region described in Cheng &amp; Iles (1983); <code>min.area</code> for the minimum-area region described in Frey et al. (2009).</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>JOCMV</code>.</p>
+
+
+<h3>Note</h3>
+
+<p>Warning: please use with care! Some of the functionality has not yet been thoroughly tested.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Philip Pallmann (<a href="mailto:p.pallmann@lancaster.ac.uk">p.pallmann@lancaster.ac.uk</a>)</p>
+
+
+<h3>References</h3>
+
+<p>Barry C. Arnold &amp; Robert M. Shaville (1998) Joint confidence sets for the mean and variance of a normal distribution. The American Statistician, 52(2), 133–140.
+</p>
+<p>R. C. H. Cheng &amp; T. C. Iles (1983) Confidence bands for cumulative distribution functions of continuous random variables. Technometrics, 25(1), 77–86.
+</p>
+<p>J. B. Douglas (1993) Confidence regions for parameter pairs. The American Statistician, 47(1), 43–45.
+</p>
+<p>Jesse Frey, Osvaldo Marrero, Douglas Norton (2009) Minimum-area confidence sets for a normal distribution. Journal of Statistical Planning and Inference, 139(3), 1023–1032.
+</p>
+<p>Alexander M. Mood (1950) Introduction to the Theory of Statistics. McGraw-Hill, New York, NY.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>cset</code> for (simultaneous) confidence regions and intervals around multivariate normal means.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Simultaneous 90% confidence regions for the mean and variance or sd of univariate normal data
+
+univar &lt;- rnorm(n=50)
+
+moodvar &lt;- csetMV(dat=univar, method="mood", alpha=0.1, scale="var")
+summary(moodvar)
+plot(moodvar)
+
+moodsd &lt;- csetMV(dat=univar, method="mood", alpha=0.1, scale="sd")
+summary(moodsd)
+plot(moodsd)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

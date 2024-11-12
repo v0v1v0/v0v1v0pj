@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.predict</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Make prediction based on linear regression</h2>
+
+<h3>Description</h3>
+
+<p>Make prediction based on the linear regression of the forward return.
+Refer to the tutorial for more detail.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.predict(object, lm, data)
+
+jubilee.predict_real(object, lm, data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>object of jubilee class</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lm</code></td>
+<td>
+<p>the linear model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>data used to predict (similar to <code>newdata</code> of <code>stats::predict</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.table containing the prediction
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>References</h3>
+
+<p>See Section 7 of Stephen H.T. Lihn, "Jubilee Tectonic Model:
+Forecasting Long-Term Growth and Mean Reversion in the U.S. Stock Market."
+Available at <a href="http://dx.doi.org/10.2139/ssrn.3156574">http://dx.doi.org/10.2139/ssrn.3156574</a>
+</p>
+
+
+</div>

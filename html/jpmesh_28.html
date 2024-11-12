@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sf_jpmesh</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>1:200,000 Scale Maps Name with Meshcode of Japan.</h2>
+
+<h3>Description</h3>
+
+<p>Information for the 1:200,000 Scale Maps.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sf_jpmesh
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 175 rows 9 variables:
+</p>
+
+<ul>
+<li>
+<p>meshcode: 80km meshcode
+</p>
+</li>
+<li>
+<p>name: names for map
+</p>
+</li>
+<li>
+<p>name_roman: names for map (roman)
+</p>
+</li>
+<li>
+<p>lng_center: centroid coordiates of mesh
+</p>
+</li>
+<li>
+<p>lat_center: centroid coordiates of mesh
+</p>
+</li>
+<li>
+<p>lng_error: mesh area
+</p>
+</li>
+<li>
+<p>lat_error: mesh area
+</p>
+</li>
+<li>
+<p>type: evalueate value to mesh
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+plot(sf_jpmesh["name_roman"])
+
+## End(Not run)
+</code></pre>
+
+
+</div>

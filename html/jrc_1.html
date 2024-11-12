@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>allowDirectories</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Allow server to access files in a directory</h2>
+
+<h3>Description</h3>
+
+<p>This function adds paths to existing directories to the list of allowed directories,
+which can be accessed from the server. To any request for files from outside
+of the allowed directories the server will response with <code>403 Forbidden</code> error.
+<code>rootDirectory</code> (see <code>openPage</code>) can always be accessed. By default,
+when the app is initialized, current working directory  
+is added to the list of allowed directories. Further changes
+of the working directory will not have any affect on this list or files accessibility.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">allowDirectories(dirs = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>dirs</code></td>
+<td>
+<p>Vector of paths to existing directories. Can be absolute paths, or paths relative to 
+the current working directory. If the specified directory doesn't exist, it will be ignored and a
+warning will be produced. If <code>NULL</code>, returns absolute paths to all currently allowed directories.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>This function is a wrapper around <code>allowDirectories</code> method of class <code>App</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Absolute paths to all currently allowed directories, if <code>dirs = NULL</code>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>openPage</code> (check arguments <code>rootDirectory</code> and <code>allowedDirectories</code>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+openPage()
+# The directories must exist
+allowDirectories(c("~/directory1", "../anotherDirectory"))
+dirs &lt;- allowDirectories()
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

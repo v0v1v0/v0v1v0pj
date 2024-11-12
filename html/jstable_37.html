@@ -1,0 +1,134 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>TableSubgroupMultiGLM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>TableSubgroupMultiGLM: Multiple sub-group analysis table for GLM.</h2>
+
+<h3>Description</h3>
+
+<p>Multiple sub-group analysis table for GLM.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">TableSubgroupMultiGLM(
+  formula,
+  var_subgroups = NULL,
+  var_cov = NULL,
+  data,
+  family = "binomial",
+  decimal.estimate = 2,
+  decimal.percent = 1,
+  decimal.pvalue = 3,
+  line = F
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>formula with survival analysis.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_subgroups</code></td>
+<td>
+<p>Multiple sub-group variables for analysis, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var_cov</code></td>
+<td>
+<p>Variables for additional adjust, Default: NULL</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data or svydesign in survey package.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>family, "gaussian" or "binomial" or 'poisson' or 'quasipoisson'</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal.estimate</code></td>
+<td>
+<p>Decimal for estimate, Default: 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal.percent</code></td>
+<td>
+<p>Decimal for percent, Default: 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal.pvalue</code></td>
+<td>
+<p>Decimal for pvalue, Default: 3</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line</code></td>
+<td>
+<p>Include new-line between sub-group variables, Default: F</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This result is used to make forestplot.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Multiple sub-group analysis table.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>map</code>
+<code>bind</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survival)
+library(dplyr)
+lung %&gt;%
+  mutate(
+    status = as.integer(status == 1),
+    sex = factor(sex),
+    kk = factor(as.integer(pat.karno &gt;= 70)),
+    kk1 = factor(as.integer(pat.karno &gt;= 60))
+  ) -&gt; lung
+TableSubgroupMultiGLM(status ~ sex,
+  var_subgroups = c("kk", "kk1"),
+  data = lung, line = TRUE, family = "binomial"
+)
+
+## survey design
+library(survey)
+data.design &lt;- svydesign(id = ~1, data = lung)
+TableSubgroupMultiGLM(status ~ sex,
+  var_subgroups = c("kk", "kk1"),
+  data = data.design, family = "binomial"
+)
+</code></pre>
+
+
+</div>

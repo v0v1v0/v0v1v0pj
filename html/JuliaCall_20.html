@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_eval</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate string commands in julia and get the result back in R.</h2>
+
+<h3>Description</h3>
+
+<p><code>julia_eval</code> evaluates string commands in julia and
+returns the result to R.
+The returning julia object will be automatically converted
+to an R object or a JuliaObject wrapper,
+see the documentation of the argument 'need_return' for more details.
+'julia_eval' will not invoke julia display system.
+If you don't need the returning result in R or
+you want to invoke the julia display system, you can
+use <code>julia_command</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_eval(cmd, need_return = c("R", "Julia"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cmd</code></td>
+<td>
+<p>the command string you want to evaluate in julia.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>need_return</code></td>
+<td>
+<p>whether you want julia to return value as an R object or
+a wrapper for julia object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the R object automatically converted from julia object.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (identical(Sys.getenv("AUTO_JULIA_INSTALL"), "true")) { ## julia_setup is quite time consuming
+  ## doing initialization and automatic installation of Julia if necessary
+  julia_setup(installJulia = TRUE)
+  julia_eval("sqrt(2)")
+}
+
+</code></pre>
+
+
+</div>

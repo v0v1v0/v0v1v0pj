@@ -1,0 +1,117 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jaatha_model.coalmodel</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Use a coala model in Jaatha</h2>
+
+<h3>Description</h3>
+
+<p>This creates a Jaatha model from a coala model. Simulation for this model
+model are conducted via the <code>simulate</code> function for the coala model.
+The parameters that are
+estimated must be specified via <code>par_range</code> and the
+model must not have any other named parameters. Summary statistics present 
+in the coala model are used in Jaatha.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'coalmodel'
+create_jaatha_model(
+  x,
+  jsfs_summary = c("sums", "folded_sums", "none", "smooth"),
+  four_gamete_breaks = c(0.2, 0.5),
+  mcmf_breaks = c(0.5, 0.7, 0.9),
+  jsfs_part = c(1, 3),
+  jsfs_part_hi = c(1, 3),
+  ...,
+  scaling_factor = 1,
+  test = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The coala model</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jsfs_summary</code></td>
+<td>
+<p>The way the Joint Site Frquency Spectrum (JSFS) 
+is further summarized. Can be <code>sums</code> (default), <code>none</code> or 
+<code>"smoothing"</code>. For <code>sums</code>, 23 different areas of the JSFS
+are summed up, and the sums are used as indepented Poission statistcs.
+For <code>folded_sums</code>, the same sums will be calculate from the 
+unpolarized (folded) JSFS. This does only support two population spectra 
+and the default partitions at the moment. 
+For <code>none</code>, all entries are used as indepented Possion statistics.
+The value <code>smooth</code> is experimental so far and should not be used.
+This option has no effect if the JSFS is not a summary statistic of the 
+coala model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>four_gamete_breaks</code></td>
+<td>
+<p>Quantiles of the real data that will be used as 
+breaks for binning the Four Gamete test based statistic if present in the 
+model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mcmf_breaks</code></td>
+<td>
+<p>Quantiles of the real data that will be used as breaks
+for binning the MCMF statistic if present in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jsfs_part</code></td>
+<td>
+<p>Partitions used for the summarizing the JSFS. This is only 
+used if <code>jsfs_summary</code> is "sums". Is used as the <code>part</code> argument
+of <code>coarsen_jsfs</code>. Please go there for an explanation.
+If <code>folded_sums</code> is used as jsfs summary, the values of jsfs_part
+and jsfs_part_hi will be ignored, and their default values <code>c(1, 3)</code>
+will be used instead.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jsfs_part_hi</code></td>
+<td>
+<p>Same as <code>jsfs_part</code>, but used as <code>part_hi</code> 
+argument in <code>coarsen_jsfs</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters passed on to the dispatch function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaling_factor</code></td>
+<td>
+<p>If your model is a down-scaled version of your data,
+you can indicated this using this value. The estimated expectation values
+are multiplied with this factor before the likelihood is calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>A logical indicating whether a simulation is performed to test
+the model.</p>
+</td>
+</tr>
+</table>
+</div>

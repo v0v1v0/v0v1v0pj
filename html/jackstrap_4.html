@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jackstrap_ks</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jackstrap KS Method: Tool identifies outliers in Nonparametric Frontier.
+This function applies the developed technique by Sousa and Stosic (2005)
+Technical Efficiency of the Brazilian Municipalities: Correcting Nonparametric
+Frontier Meansurements for Outliers and to use the K-S test with criterion to define outliers.</h2>
+
+<h3>Description</h3>
+
+<p>Jackstrap KS Method: Tool identifies outliers in Nonparametric Frontier.
+This function applies the developed technique by Sousa and Stosic (2005)
+Technical Efficiency of the Brazilian Municipalities: Correcting Nonparametric
+Frontier Meansurements for Outliers and to use the K-S test with criterion to define outliers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jackstrap_ks(data, jackstrap_obj, num_cores = 1, perc = 0.9)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>is the dataset with input and output used to measure efficiency; Dataset need to have this form: 1th column: name of DMU (string); 2th column: code of DMU (integer); n columns of output variables; n columns of input variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jackstrap_obj</code></td>
+<td>
+<p>is the object created by the function jackstrap.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>num_cores</code></td>
+<td>
+<p>is the number of cores available to process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perc</code></td>
+<td>
+<p>is the percentage of DMU analyzed by K-S test.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Return the jackstrap object increased with informations as follows: "result_kstest_method" is p-values of K-S test obtained by removing sequencially one by one the high leverage DMU;
+"efficiency_ks_method" is efficiency indicators obtained by K-S test criterion.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> 
+ 
+    #Command measures efficiency with jackstrap method and K-S test criterion
+    efficiency_ks &lt;- jackstrap_ks (data=municipalities, jackstrap_obj=efficiency,
+                                   num_cores = 4)
+ 
+</code></pre>
+
+
+</div>

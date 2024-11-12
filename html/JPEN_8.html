@@ -1,0 +1,87 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lamvec</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>returns a vector of values of lambda for given value of gamma </h2>
+
+<h3>Description</h3>
+
+<p>returns 10 values of lambda for each gamma.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lamvec(c, gam, p)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>c</code></td>
+<td>
+
+<p>c is absolute maximum of off-diagonal entries of sample covariance matrix.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gam</code></td>
+<td>
+
+<p>gamma is a non-negative constant. 
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+
+<p>p is number of rows/columns of matrix.
+</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The lamvec function retuns a 10 values of lambda for each value of gamma. A larger value of lambda yields sparse estimate but need not be positive definite, however at least one combination of (lambda, gamma) will yield a positive definite solution. If two different combination of (lambda, gamma) yeilds same cross validation error, a larger values of lambda will be selected which results in more sparse solution.</p>
+
+
+<h3>Value</h3>
+
+<p>A vector of values of lambda for each combination of gama. By choosing c as the maximum of off-diagonal elements of sample covariance matrix, the largest value of lambda yields an estimate which diagonal matrix with elements proportional to the diagonal elements of sample covariance matrix.</p>
+
+
+<h3>Author(s)</h3>
+
+<p> Ashwini Maurya, Email: mauryaas@msu.edu
+</p>
+
+
+<h3>References</h3>
+
+<p>A Well Conditioned and Sparse Estimate of Covariance and Inverse Covariance Matrix Using Joint Penalty. Submitted.
+http://arxiv.org/pdf/1412.7907v2.pdf
+</p>
+
+
+<h3>See Also</h3>
+
+<p>jpen, jpen.inv, jpen.tune, jpen.tune.inv</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">p=10;n=100;Sig=diag(p);
+y=rmvnorm(n,mean=rep(0,p),sigma=Sig);
+gam=c(0.5);
+S=var(y);
+c=max(abs(S[row(S)!=col(S)]));
+lambda=lamvec(c,gam,p);
+</code></pre>
+
+
+</div>

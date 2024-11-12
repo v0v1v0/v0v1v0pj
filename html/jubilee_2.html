@@ -1,0 +1,50 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>daily2fraction</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converter from daily Date to fraction</h2>
+
+<h3>Description</h3>
+
+<p>Utility to convert from daily Date (R's Date object) to fraction.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">daily2fraction(d)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>array of Date object, or string in ISO <code>yyyy-mm-dd</code> format</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>numeric, year in fraction convention
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">  daily2fraction(as.Date("2017-01-15")) # 2017.038
+  daily2fraction(as.Date("2017-02-14")) # 2017.122
+  daily2fraction(as.Date("2017-07-15")) # 2017.538
+
+</code></pre>
+
+
+</div>

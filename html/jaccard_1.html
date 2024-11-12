@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaccard</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a Jaccard/Tanimoto similarity coefficient</h2>
+
+<h3>Description</h3>
+
+<p>Compute a Jaccard/Tanimoto similarity coefficient
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaccard(x, y, center = FALSE, px = NULL, py = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a binary vector (e.g., fingerprint)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center</code></td>
+<td>
+<p>whether to center the Jaccard/Tanimoto coefficient by its expectation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>px</code></td>
+<td>
+<p>probability of successes in <code>x</code> (optional)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>py</code></td>
+<td>
+<p>probability of successes in <code>y</code> (optional)</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>jaccard</code> returns a Jaccard/Tanimoto coefficient.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(1234)
+x = rbinom(100,1,.5)
+y = rbinom(100,1,.5)
+jaccard(x,y)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,78 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>survs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Defines the splitting function for a new splitting method of <code>rpart</code>.</h2>
+
+<h3>Description</h3>
+
+<p>Defines the splitting function for a new splitting method of <code>rpart</code>.
+Not to be called directly by the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">survs(y, wt, x, parms, continuous)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the response value as found in the formula that is passed in by <code>rpart</code>.
+Note that <code>rpart</code> will normally
+have removed any observations with a missing response.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wt</code></td>
+<td>
+<p>the weight vector from the call, if any.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of <code>x</code> values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parms</code></td>
+<td>
+<p>the vector or list (if any) supplied by the user as a
+<code>parms</code> argument to the call.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>continuous</code></td>
+<td>
+<p>if TRUE the <code>x</code> variable should be treated as continuous.
+The value of this parameter is determined by <code>rpart</code> automatically.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>See reference.
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://cran.r-project.org/package=rpart/vignettes/usercode.pdf">https://cran.r-project.org/package=rpart/vignettes/usercode.pdf</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>surve,survi</code>
+</p>
+
+
+</div>

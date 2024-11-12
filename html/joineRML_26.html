@@ -1,0 +1,75 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plotConvergence</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot convergence time series for parameter vectors from an <code>mjoint</code>
+object</h2>
+
+<h3>Description</h3>
+
+<p>Plot convergence time series for parameter vectors from an
+<code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">plotConvergence(object, params = "gamma", discard = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>params</code></td>
+<td>
+<p>a string indicating what parameters are to be shown. Options
+are <code>params='gamma'</code> for the time-to-event sub-model covariate
+coefficients, including the latent association parameters;
+<code>params='beta'</code> for the longitudinal sub-model fixed effects
+coefficients; <code>params='sigma2'</code> for the residual error variances from
+the longitudinal sub-model; <code>params='D'</code> for the lower triangular
+matrix of the variance-covariance matrix of random effects;
+<code>params='loglik'</code> for the log-likelihood.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>discard</code></td>
+<td>
+<p>logical; if <code>TRUE</code> then the 'burn-in' phase iterations of
+the MCEM algorithm are discarded. Default is <code>discard=FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Wei GC, Tanner MA. A Monte Carlo implementation of the EM algorithm and the
+poor man's data augmentation algorithms. <em>J Am Stat Assoc.</em> 1990;
+<strong>85(411)</strong>: 699-704.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>plot.mjoint</code>, <code>plot.default</code>,
+<code>par</code>, <code>abline</code>.
+</p>
+
+
+</div>

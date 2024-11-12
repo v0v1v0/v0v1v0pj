@@ -1,0 +1,45 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>apply_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Apply list input to a worker</h2>
+
+<h3>Description</h3>
+
+<p>Apply list input to a worker
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">apply_list(input, worker)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>input</code></td>
+<td>
+<p>a list of characters</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>worker</code></td>
+<td>
+<p>a worker</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">cutter = worker()
+apply_list(list("this is test", "that is not test"), cutter)
+apply_list(list("this is test", list("that is not test","ab c")), cutter)
+</code></pre>
+
+
+</div>

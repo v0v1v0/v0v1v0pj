@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juliaPut</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create a Julia proxy object from an R object</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to copy R vectors and matrices to Julia and keep
+them there.
+The returned proxy object can be used in place of the original vector or
+matrix.
+This is useful to prevent that large R vectors / matrices
+are repeatedly translated when using an object in multiple calls to Julia.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juliaPut(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an R object (can also be a translated Julia object)</p>
+</td>
+</tr></table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+
+   # Transfer a large vector to Julia and use it in multiple calls
+   x &lt;- juliaPut(rnorm(100))
+   # x is just a reference to a Julia vector now
+   juliaEval("using Statistics")
+   juliaCall("mean", x)
+   juliaCall("var", x)
+
+}
+
+
+</code></pre>
+
+
+</div>

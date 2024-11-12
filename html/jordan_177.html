@@ -1,0 +1,134 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Arith</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Methods for Function Arith in package Jordan</h2>
+
+<h3>Description</h3>
+
+<p>Methods for Arithmetic functions for jordans: <code>+</code>,
+<code>-</code>, <code>*</code>, <code>/</code>, <code>^</code>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jordan_negative(z)
+jordan_plus_jordan(e1,e2)
+jordan_plus_numeric(e1,e2)
+jordan_prod_numeric(e1,e2)
+jordan_power_jordan(e1,e2)
+albert_arith_albert(e1,e2)
+albert_arith_numeric(e1,e2)
+albert_inverse(e1)
+albert_power_albert(...)
+albert_power_numeric(e1,e2)
+albert_power_single_n(e1,n)
+albert_prod_albert(e1,e2)
+chm_arith_chm(e1,e2)
+chm_arith_numeric(e1,e2)
+chm_inverse(e1)
+chm_power_numeric(e1,e2)
+chm_prod_chm(e1,e2)
+numeric_arith_albert(e1,e2)
+numeric_arith_chm(e1,e2)
+numeric_arith_qhm(e1,e2)
+numeric_arith_rsm(e1,e2)
+qhm_arith_numeric(e1,e2)
+qhm_arith_qhm(e1,e2)
+qhm_inverse(x)
+qhm_power_numeric(e1,e2)
+qhm_prod_qhm(e1,e2)
+rsm_arith_numeric(e1,e2)
+rsm_arith_rsm(e1,e2)
+rsm_inverse(e1)
+rsm_power_numeric(e1,e2)
+rsm_prod_rsm(e1,e2)
+spin_plus_numeric(e1,e2)
+spin_plus_spin(e1,e2)
+spin_power_numeric(e1,e2)
+spin_power_single_n(e1,n)
+spin_power_spin(...)
+spin_prod_numeric(e1,e2)
+spin_prod_spin(e1,e2)
+spin_inverse(...)
+spin_negative(e1)
+vec_albertprod_vec(x,y)
+vec_chmprod_vec(x,y)
+vec_qhmprod_vec(x,y)
+vec_rsmprod_vec(x,y)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>z,e1,e2</code></td>
+<td>
+<p>Jordan objects or numeric vectors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Integer for powers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Further arguments (ignored)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x,y</code></td>
+<td>
+<p>Numeric vectors, Jordan objects in independent form</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The package implements the <code>Arith</code> group of <code>S4</code> generics so
+that idiom like <code>A + B*C</code> works as expected with jordans.
+</p>
+<p>Functions like <code>jordan_inverse()</code> and <code>jordan_plus_jordan()</code>
+are low-level helper functions.  The only really interesting operation
+is multiplication; functions like <code>jordan_prod_jordan()</code>.
+</p>
+<p>Names are implemented and the rules are inherited (via
+<code>onion::harmonize_oo()</code> and <code>onion::harmonize_on()</code>) from
+<code>rbind()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>generally return jordans</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+x &lt;- rspin()
+y &lt;- rspin()
+z &lt;- rspin()
+
+x*(y*(x*x)) - (x*y)*(x*x) # should be zero
+
+x + y*z
+
+
+
+</code></pre>
+
+
+</div>

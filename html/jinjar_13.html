@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>print.jinjar_template</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Print a template</h2>
+
+<h3>Description</h3>
+
+<p>Once a template has been parsed, it can be printed with color highlighting of
+the templating blocks.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jinjar_template'
+print(x, ..., n = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A parsed template (use <code>parse_template()</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>These dots are for future extensions and must be empty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Number of lines to show. If <code>Inf</code>, will print all lines. Default: <code>10</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">input &lt;- '&lt;!DOCTYPE html&gt;
+&lt;html lang="en"&gt;
+&lt;head&gt;
+    &lt;title&gt;{{ title }}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;ul id="navigation"&gt;
+    {% for item in navigation -%}
+        &lt;li&gt;&lt;a href="{{ item.href }}"&gt;{{ item.caption }}&lt;/a&gt;&lt;/li&gt;
+    {% endfor -%}
+    &lt;/ul&gt;
+{# a comment #}
+&lt;/body&gt;
+&lt;/html&gt;'
+
+x &lt;- parse_template(input)
+
+print(x)
+
+print(x, n = Inf)
+</code></pre>
+
+
+</div>

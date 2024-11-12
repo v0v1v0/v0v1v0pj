@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to_jlmer</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fit a Julia regression model using lme4 syntax</h2>
+
+<h3>Description</h3>
+
+<p>Fit a Julia regression model using lme4 syntax
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to_jlmer(
+  formula,
+  data,
+  family = c("gaussian", "binomial"),
+  jlmer_spec_opts = list(),
+  ...,
+  progress = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>Model formula in R syntax</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>A GLM family. Currently supports "gaussian" and "binomial".</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jlmer_spec_opts</code></td>
+<td>
+<p>List of options passed to <code>make_jlmer_spec()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Optional arguments passed to Julia for model fitting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress</code></td>
+<td>
+<p>If <code>TRUE</code>, prints the timing of iterations.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>jlmer_mod</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jlmer()</code>, <code>make_jlmer_spec()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+# Fitting a regression model with R formula syntax
+to_jlmer(weight ~ 1 + Diet, ChickWeight)
+
+# `lm()` equivalent
+summary(lm(weight ~ 1 + Diet, ChickWeight))$coef
+
+# Fitting a mixed model with {lme4} syntax
+to_jlmer(weight ~ 1 + Diet + (1 | Chick), ChickWeight)
+
+# Passing MixedModels.jl fit options to the `...`
+to_jlmer(weight ~ 1 + Diet + (1 | Chick), ChickWeight, REML = TRUE)
+
+
+
+
+</code></pre>
+
+
+</div>

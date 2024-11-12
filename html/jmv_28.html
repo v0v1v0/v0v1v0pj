@@ -1,0 +1,285 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>ttestIS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Independent Samples T-Test</h2>
+
+<h3>Description</h3>
+
+<p>The Student's Independent samples t-test (sometimes called a two-samples
+t-test) is used to test the null hypothesis that two groups have the
+same mean. A low p-value suggests that the null hypothesis is not true,
+and therefore the group means are different.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ttestIS(data, vars, group, students = TRUE, bf = FALSE,
+  bfPrior = 0.707, welchs = FALSE, mann = FALSE,
+  hypothesis = "different", norm = FALSE, qq = FALSE, eqv = FALSE,
+  meanDiff = FALSE, ci = FALSE, ciWidth = 95, effectSize = FALSE,
+  ciES = FALSE, ciWidthES = 95, desc = FALSE, plots = FALSE,
+  miss = "perAnalysis", formula)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vars</code></td>
+<td>
+<p>the dependent variables (not necessary when using a formula,
+see the examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>group</code></td>
+<td>
+<p>the grouping variable with two levels (not necessary when
+using a formula, see the examples)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>students</code></td>
+<td>
+<p><code>TRUE</code> (default) or <code>FALSE</code>, perform Student's
+t-tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bf</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Bayes factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bfPrior</code></td>
+<td>
+<p>a number between 0.01 and 2 (default 0.707), the prior width
+to use in calculating Bayes factors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>welchs</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Welch's
+t-tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mann</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Mann-Whitney U
+tests</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>hypothesis</code></td>
+<td>
+<p><code>'different'</code> (default), <code>'oneGreater'</code> or
+<code>'twoGreater'</code>, the alternative hypothesis; group 1 different to group
+2, group 1 greater than group 2, and group 2 greater than group 1
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>norm</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Shapiro-Wilk
+tests of normality</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qq</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Q-Q plots of
+residuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eqv</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), perform Levene's tests
+for homogeneity of variances</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>meanDiff</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide means and
+standard errors</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide confidence
+intervals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidth</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the width of
+confidence intervals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effectSize</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide effect
+sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciES</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide confidence
+intervals for the effect-sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ciWidthES</code></td>
+<td>
+<p>a number between 50 and 99.9 (default: 95), the width of
+confidence intervals for the effect sizes</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>desc</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+statistics</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>plots</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide descriptive
+plots</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>miss</code></td>
+<td>
+<p><code>'perAnalysis'</code> or <code>'listwise'</code>, how to handle
+missing values; <code>'perAnalysis'</code> excludes missing values for individual
+dependent variables, <code>'listwise'</code> excludes a row from all analyses if
+one of its entries is missing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>(optional) the formula to use, see the examples</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Student's independent t-test assumes that the data from each group
+are from a normal distribution, and that the variances of these groups
+are equal. If unwilling to assume the groups have equal variances, the
+Welch's t-test can be used in it's place. If one is additionally
+unwilling to assume the data from each group are from a normal
+distribution, the non-parametric Mann-Whitney U test can be used instead
+(However, note that the Mann-Whitney U test has a slightly different
+null hypothesis; that the distributions of each group is equal).
+</p>
+
+
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$ttest</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the t-test results </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assum$norm</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the normality tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assum$eqv</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the homogeneity of variances tests </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$desc</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table containing the group descriptives </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$plots</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an array of groups of plots </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$ttest$asDF</code>
+</p>
+<p><code>as.data.frame(results$ttest)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('ToothGrowth')
+
+ttestIS(formula = len ~ supp, data = ToothGrowth)
+
+#
+#  INDEPENDENT SAMPLES T-TEST
+#
+#  Independent Samples T-Test
+#  ----------------------------------------------------
+#                          statistic    df      p
+#  ----------------------------------------------------
+#    len    Student's t         1.92    58.0    0.060
+#  ----------------------------------------------------
+#
+
+</code></pre>
+
+
+</div>

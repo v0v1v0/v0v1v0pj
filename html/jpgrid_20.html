@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>parse_grid</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Parse grid square codes</h2>
+
+<h3>Description</h3>
+
+<p>Parse grid square codes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">parse_grid(x, grid_size = NULL, strict = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A character vector of grid square codes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>grid_size</code></td>
+<td>
+<p>A grid size.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strict</code></td>
+<td>
+<p>A scalar logical. Should the number of digits in the grid
+square code match a given number of digits? By default, <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">parse_grid("53394526313")
+parse_grid("53394526313", "80km")
+parse_grid("53394526313", "80km",
+           strict = FALSE)
+
+</code></pre>
+
+
+</div>

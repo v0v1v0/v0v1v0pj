@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>C2beta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute the coefficients from the continuum regression (CR) algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function converts the CR algorithm outputs to the regression coefficients
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">C2beta(X, Y, C, lambda)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The input feature matrix</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>The input response vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>C</code></td>
+<td>
+<p>The weight matrix computed from CR algorithm</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>Deprecated. Regularization parameter if L2 penalization is used for CR.
+JICO uses zero as default.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of regression coefficients to perform the prediction task.
+</p>
+
+
+</div>

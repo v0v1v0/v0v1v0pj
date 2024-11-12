@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>predJMbayes</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Prediction using <code>JMbayes2</code>
+</h2>
+
+<h3>Description</h3>
+
+<p>prediction of survival probability and longitudinal marker using <code>jmBayes2</code> for BIG data
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">predJMbayes(model, ids, process = "longitudinal", newdata, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>value of id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>see <code>jm</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>dataset having covariate information for the ids mentioned above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameter options, see <code>predict.jm</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>list of predicted value for the given id
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+ 
+##
+library(survival)
+library(nlme)
+library(dplyr)
+jmcs1&lt;-jmbayesBig(dtlong=long2,
+dtsurv = surv2 ,
+longm=y~ x7+visit,
+survm=Surv(time,status)~x1+visit,
+rd= ~ visit|id,
+timeVar='visit',
+nchain=1,
+samplesize=200,
+id='id')
+mod3&lt;-jmcs1
+ydt&lt;-long2%&gt;%filter(id%in%c(900))
+names(ydt)
+cdt&lt;-surv2[,'id']%&gt;%filter(id%in%c(900))
+names(cdt)
+newdata&lt;-full_join(ydt,cdt,by='id')
+P2&lt;-predJMbayes(model&lt;-mod3,ids&lt;-c(900),newdata=newdata,process = 'event')
+plot(P2$p1[[1]])
+
+##
+
+   
+</code></pre>
+
+
+</div>

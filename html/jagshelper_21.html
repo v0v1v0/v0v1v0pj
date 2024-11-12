@@ -1,0 +1,71 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nbyname</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Number of parameter nodes by parameter name</h2>
+
+<h3>Description</h3>
+
+<p>Returns a list of the numbers of parameter nodes saved in <code>jagsUI</code> output, by parameter name.
+As a default, what is returned for each list element is a vector of the array dimensions within the JAGS model
+(that is, excluding the dimension associated with the number of MCMC samples for each parameter node),
+or alternately, just the total number of parameter nodes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">nbyname(x, justtotal = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object from <code>jagsUI::jags()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>justtotal</code></td>
+<td>
+<p>Whether to just report the total number of parameters, as opposed to dimensions.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>list</code> with an element associated with each parameter.  Each element
+can be interpreted as the vector length or array dimension associated with the
+given parameter.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>nparam
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(jags_df(asdf_jags_out))
+
+nbyname(asdf_jags_out)
+
+nparam(SS_out)
+nbyname(SS_out)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>aids</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Didanosine versus Zalcitabine in HIV Patients</h2>
+
+<h3>Description</h3>
+
+<p>A randomized clinical trial in which both longitudinal and survival data were collected to compare the efficacy and 
+safety of two antiretroviral drugs in treating patients who had failed or were intolerant of zidovudine (AZT) therapy.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 1408 observations on the following 9 variables.
+</p>
+
+<dl>
+<dt><code>patient</code></dt>
+<dd>
+<p>patients identifier; in total there are 467 patients.</p>
+</dd>
+<dt><code>Time</code></dt>
+<dd>
+<p>the time to death or censoring.</p>
+</dd>
+<dt><code>death</code></dt>
+<dd>
+<p>a numeric vector with 0 denoting censoring and 1 death.</p>
+</dd>
+<dt><code>CD4</code></dt>
+<dd>
+<p>the CD4 cells count.</p>
+</dd>
+<dt><code>obstime</code></dt>
+<dd>
+<p>the time points at which the CD4 cells count was recorded.</p>
+</dd>
+<dt><code>drug</code></dt>
+<dd>
+<p>a factor with levels <code>ddC</code> denoting zalcitabine and <code>ddI</code> denoting didanosine.</p>
+</dd>
+<dt><code>gender</code></dt>
+<dd>
+<p>a factor with levels <code>female</code> and <code>male</code>.</p>
+</dd>
+<dt><code>prevOI</code></dt>
+<dd>
+<p>a factor with levels <code>AIDS</code> denoting previous opportunistic infection (AIDS 
+diagnosis) at study entry, and <code>noAIDS</code> denoting no previous infection.</p>
+</dd>
+<dt><code>AZT</code></dt>
+<dd>
+<p>a factor with levels <code>intolerance</code> and <code>failure</code> denoting AZT intolerance and 
+AZT failure, respectively.</p>
+</dd>
+</dl>
+<h3>Note</h3>
+
+<p>The data frame <code>aids.id</code> contains the first CD4 cell count measurement for each patient. This data frame is used to 
+fit the survival model.
+</p>
+
+
+<h3>References</h3>
+
+<p>Goldman, A., Carlin, B., Crane, L., Launer, C., Korvick, J., Deyton, L. and Abrams, D. (1996) Response of CD4+ and
+clinical consequences to treatment using ddI or ddC in patients with advanced HIV infection. <em>Journal of Acquired
+Immune Deficiency Syndromes and Human Retrovirology</em> <b>11</b>, 161–169.
+</p>
+<p>Guo, X. and Carlin, B. (2004) Separate and joint modeling of longitudinal and event time data using standard
+computer packages. <em>The American Statistician</em> <b>58</b>, 16–24.
+</p>
+
+
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jipApprox-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jipApprox: Approximate inclusion probabilities for survey sampling</h2>
+
+<h3>Description</h3>
+
+<p>Approximate joint-inclusion probabilities in Unequal Probability Sampling,
+or compute Monte Carlo approximations of the first and second-order inclusion
+probabilities of a general sampling design as in Fattorini (2006)
+&lt;doi:10.1093/biomet/93.2.269&gt;.
+</p>
+
+
+<h3>Approximation of Joint-inclusion probabilities</h3>
+
+<p>Function <code>jip_approx</code> provides a number of approximations of the
+second-order inclusion probabilities that require only the first-order inclusion
+probabilities. These approximations may be employed in unequal probability sampling
+design with high entropy. A more flexible approximation may be obtained by using
+function <code>jip_MonteCarlo</code>, which estimates inclusion probabilities
+through a Monte Carlo simulation.
+</p>
+<p>The variance of the Horvitz-Thompson total estimator may be then estimated by
+plugging the approximated joint probabilities into the Horvitz-Thompson or
+Sen-Yates-Grundy variance estimator using function <code>HTvar</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Roberto Sichera <a href="mailto:rob.sichera@gmail.com">rob.sichera@gmail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Matei, A.; Tillé, Y., 2005. Evaluation of variance approximations and estimators
+in maximum entropy sampling with unequal probability and fixed sample size.
+Journal of Official Statistics 21 (4), 543-570.
+</p>
+<p>Haziza, D.; Mecatti, F.; Rao, J.N.K. 2008.
+Evaluation of some approximate variance estimators under the Rao-Sampford
+unequal probability sampling design. Metron LXVI (1), 91-108.
+</p>
+<p>Fattorini, L. 2006.
+Applying the Horvitz-Thompson criterion in complex designs: A computer-intensive
+perspective for estimating inclusion probabilities.
+Biometrika 93 (2), 269-278
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Useful links:
+</p>
+
+<ul><li>
+<p> Report bugs at <a href="https://github.com/rhobis/jipApprox/issues">https://github.com/rhobis/jipApprox/issues</a>
+</p>
+</li></ul>
+</div>

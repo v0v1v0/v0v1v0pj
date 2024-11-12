@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dev_calc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Deviance calculation for GLM P-spline fitting.</h2>
+
+<h3>Description</h3>
+
+<p>Calculates the deviance and returns the ML estimated dispersion parameter
+for a variety of response distributions for P-spline fitting within the GLM framework.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dev_calc(
+  family = "gaussian",
+  y,
+  mu,
+  m_binomial = 0 * y + 1,
+  r_gamma = 0 * y + 1
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the response distribution, e.g. <code>"gaussian", "binomial", "poisson", "Gamma"</code> distribution. Quotes are needed; default <code>"family = gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>the glm response vector of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>the P-spline estimated mean for the glm response vector of length <code>m</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m_binomial</code></td>
+<td>
+<p>a vector of binomial trials having <code>length(y)</code>, when <code>family = "binomial"</code>. Default is 1 vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_gamma</code></td>
+<td>
+<p>a vector of gamma shape parameters, when <code>family = "Gamma"</code>. Default is 1 vector.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list with two fields:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>dev</code></td>
+<td>
+<p>the estimated deviance.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dispersion_parm</code></td>
+<td>
+<p>the ML estimated dispersion parameter.</p>
+</td>
+</tr>
+</table>
+</div>

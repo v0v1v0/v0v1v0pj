@@ -1,0 +1,128 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jinjar_config</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Configure the templating engine</h2>
+
+<h3>Description</h3>
+
+<p>Create an object to configure the templating engine behavior (e.g. customize
+the syntax). The default values have been chosen to match the Jinja defaults.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jinjar_config(
+  loader = NULL,
+  block_open = "{%",
+  block_close = "%}",
+  variable_open = "{{",
+  variable_close = "}}",
+  comment_open = "{#",
+  comment_close = "#}",
+  line_statement = NULL,
+  trim_blocks = FALSE,
+  lstrip_blocks = FALSE,
+  ignore_missing_files = FALSE
+)
+
+default_config()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>loader</code></td>
+<td>
+<p>How the engine discovers templates. Choices:
+</p>
+
+<ul>
+<li> <p><code>NULL</code> (default), disables search for templates.
+</p>
+</li>
+<li>
+<p> Path to template directory.
+</p>
+</li>
+<li>
+<p> A <code>loader</code> object.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>block_open, block_close</code></td>
+<td>
+<p>The opening and closing delimiters
+for control blocks. Default: <code style="white-space: pre;">⁠"{%"⁠</code> and <code style="white-space: pre;">⁠"%}"⁠</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable_open, variable_close</code></td>
+<td>
+<p>The opening and closing delimiters
+for print statements. Default: <code>"{{"</code> and <code>"}}"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comment_open, comment_close</code></td>
+<td>
+<p>The opening and closing delimiters
+for comments. Default: <code>"{#"</code> and <code>"#}"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line_statement</code></td>
+<td>
+<p>The prefix for an inline statement. If <code>NULL</code> (the
+default), inline statements are disabled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trim_blocks</code></td>
+<td>
+<p>Remove first newline after a block. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lstrip_blocks</code></td>
+<td>
+<p>Remove inline whitespace before a block. Default: <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore_missing_files</code></td>
+<td>
+<p>Ignore <code>include</code> or <code>extends</code> statements when
+the auxiliary template cannot be found. If <code>FALSE</code> (default), then an error
+is raised.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>"jinjar_config"</code> object.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The equivalent Jinja class is <code>Environment</code>, but this term has special
+significance in R (see <code>environment()</code>).
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jinjar_config()
+</code></pre>
+
+
+</div>

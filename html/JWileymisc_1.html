@@ -1,0 +1,42 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>.allmissing</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Determine which if any variables are all missing in a dataset</h2>
+
+<h3>Description</h3>
+
+<p>Internal function.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">.allmissing(data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A dataset to check each variable if all missing / non finite / zero character vectors</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p><code>FALSE</code> if no variable(s) all missing, else an informative string message.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">JWileymisc:::.allmissing(mtcars)
+cat(JWileymisc:::.allmissing(data.frame(a = NA, b = 1)), fill = TRUE)
+</code></pre>
+
+
+</div>

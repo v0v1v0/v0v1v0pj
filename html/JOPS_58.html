@@ -1,0 +1,351 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>psSignal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Smooth signal (multivariate calibration) regression using P-splines.</h2>
+
+<h3>Description</h3>
+
+<p>Smooth signal (multivariate calibration) regression using P-splines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">psSignal(
+  y,
+  x_signal,
+  x_index = c(1:ncol(x_signal)),
+  nseg = 10,
+  bdeg = 3,
+  pord = 3,
+  lambda = 1,
+  wts = 1 + 0 * y,
+  family = "gaussian",
+  link = "default",
+  m_binomial = 1 + 0 * y,
+  r_gamma = wts,
+  y_predicted = NULL,
+  x_predicted = x_signal,
+  ridge_adj = 0,
+  int = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a (glm) response vector, usually continuous, binomial or count data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_signal</code></td>
+<td>
+<p>a matrix of continuous regressor with <code>nrow(x_signal) == length(y)</code>, often
+a discrete digitization of a signal or histogram or time series.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_index</code></td>
+<td>
+<p>a vector to of length <code>ncol(x_signal) == p</code>, associated with the
+ordering index of the signal. Default is <code>1:ncol(x_signal)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of evenly spaced segments between <code>xl</code> and <code>xr</code> (default 10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the basis, usually 1, 2, or 3 (defalult).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the order of the difference penalty, usually 1, 2, or 3 (defalult).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the (positive) tuning parameter for the penalty (default 1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wts</code></td>
+<td>
+<p>the weight vector of <code>length(y)</code>; default is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the response distribution, e.g.
+<code>"gaussian", "binomial", "poisson", "Gamma"</code> distribution; quotes are needed. Default is <code>"gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function, one of <code>"identity"</code>, <code>"log"</code>, <code>"sqrt"</code>,
+<code>"logit"</code>, <code>"probit"</code>, <code>"cloglog"</code>, <code>"loglog"</code>, <code>"reciprocal"</code>;
+quotes are needed (default <code>"identity"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m_binomial</code></td>
+<td>
+<p>a vector of binomial trials having length(y); default is 1 vector for <code>family = "binomial"</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r_gamma</code></td>
+<td>
+<p>a vector of gamma shape parameters. Default is 1 vector for <code>family = "Gamma"</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_predicted</code></td>
+<td>
+<p>a vector of responses associated
+with <code>x_predicted</code> which are used to calculate standard error of external prediction. Default is NULL.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_predicted</code></td>
+<td>
+<p>a matrix of external signals to yield external prediction.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ridge_adj</code></td>
+<td>
+<p>A ridge penalty tuning parameter, which can be set to small value, e.g. <code>1e-8</code> to stabilize estimation, (default 0).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>int</code></td>
+<td>
+<p>set to TRUE or FALSE to include intercept term in linear predictor (default TRUE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Support functions needed: <code>pspline_fitter</code>, <code>bbase</code> and <code>pspline_checker</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coef</code></td>
+<td>
+<p>a vector with <code>length(n)</code> of estimated P-spline coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>a vector with <code>length(m)</code> of estimated means.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>a vector of <code>length(m)</code> of estimated linear predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>the B-spline basis (for the coefficients), with dimension <code>p</code> by <code>n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deviance</code></td>
+<td>
+<p>the deviance of fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff_df</code></td>
+<td>
+<p>the approximate effective dimension of fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aic</code></td>
+<td>
+<p>AIC.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>df_resid</code></td>
+<td>
+<p>approximate df residual.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta</code></td>
+<td>
+<p>a vector of length <code>p</code>, containing estimated smooth signal coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>std_beta</code></td>
+<td>
+<p>a vector of length <code>p</code>, containing standard errors of smooth signal coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv</code></td>
+<td>
+<p>leave-one-out standard error prediction, when <code>family = "gaussian"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cv_predicted</code></td>
+<td>
+<p>standard error prediction for <code>y_predict</code>, when <code>family = "gaussian"</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of evenly spaced B-spline segments.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of B-splines.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pord</code></td>
+<td>
+<p>the order of the difference penalty.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the positive tuning parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>the family of the response.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>link</code></td>
+<td>
+<p>the link function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_intercept</code></td>
+<td>
+<p>the estimated y-intercept (when <code>int = TRUE</code>.)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>int</code></td>
+<td>
+<p>a logical variable related to use of y-intercept in model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dispersion_param</code></td>
+<td>
+<p>estimate of dispersion, <code>Dev/df_resid</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>summary_predicted</code></td>
+<td>
+<p>inverse link prediction vectors, and twice se bands.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta_predicted</code></td>
+<td>
+<p>estimated linear predictor of <code>length(y)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>press_mu</code></td>
+<td>
+<p>leave-one-out prediction of mean, when <code>family = "gaussian"</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bin_percent_correct</code></td>
+<td>
+<p>percent correct classification based on 0.5 cut-off, when <code>family = binomial</code>, NULL otherwise.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_index</code></td>
+<td>
+<p>a vector to of length <code>ncol(x_signal) == p</code>, associated with the ordering of the signal.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Brian Marx
+</p>
+
+
+<h3>References</h3>
+
+<p>Marx, B.D. and Eilers, P.H.C. (1999). Generalized linear regression for sampled signals and
+curves: A P-spline approach. <em>Technometrics</em>, 41(1): 1-13.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Get the data
+library(fds)
+data(nirc)
+iindex &lt;- nirc$x
+X &lt;- nirc$y
+sel &lt;- 50:650 # 1200 &lt;= x &amp; x&lt;= 2400
+X &lt;- X[sel, ]
+iindex &lt;- iindex[sel]
+dX &lt;- diff(X)
+diindex &lt;- iindex[-1]
+y &lt;- as.vector(labc[1, 1:40]) # percent fat
+oout &lt;- 23
+dX &lt;- t(dX[, -oout])
+y &lt;- y[-oout]
+fit1 &lt;- psSignal(y, dX, diindex, nseg = 25, bdeg = 3, lambda = 0.0001,
+pord = 2, family = "gaussian", link = "identity", x_predicted = dX, int = TRUE)
+plot(fit1, xlab = "Coefficient Index", ylab = "ps Smooth Coeff")
+title(main = "25 B-spline segments with tuning = 0.0001")
+names(fit1)
+</code></pre>
+
+
+</div>

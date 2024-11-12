@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>theme_nice</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A nice, flexible <code>ggplot2</code> theme</h2>
+
+<h3>Description</h3>
+
+<p><code>theme_nice</code> is designed to work like any other complete theme from
+<code>ggplot</code>. It has a nice appearance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">theme_nice(
+  legend.pos = "right",
+  style = c("white", "light", "dark_blue", "dark_gray"),
+  base_size = 11,
+  base_family = "",
+  base_line_size = base_size/22,
+  base_rect_size = base_size/22
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>legend.pos</code></td>
+<td>
+<p>One of <code>"right"</code>, <code>"left"</code>, <code>"top"</code>, <code>"bottom"</code> (outside
+the plotting area), <code>"topleft"</code>, <code>"topright"</code>, <code>"topmiddle"</code>,
+<code>"bottomleft"</code>, <code>"bottomright"</code>, or <code>"bottommiddle"</code> (inside the plotting
+area).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>style</code></td>
+<td>
+<p>One of <code>"white"</code>, <code>"light"</code>, <code>"dark_blue"</code>, or <code>"dark_gray"</code>.
+<code>"white"</code> sets the background to white, <code>"light"</code> to light gray,
+<code>"dark_gray"</code> to dark gray, <code>"dark_blue"</code> to dark blue.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_size</code></td>
+<td>
+<p>base font size, given in pts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_family</code></td>
+<td>
+<p>base font family</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_line_size</code></td>
+<td>
+<p>base size for line elements</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>base_rect_size</code></td>
+<td>
+<p>base size for rect elements</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jacob Long <a href="mailto:jacob.long@sc.edu">jacob.long@sc.edu</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Create plot with ggplot2
+library(ggplot2)
+plot &lt;- ggplot(mpg, aes(cty, hwy)) +
+  geom_jitter() + theme_nice()
+
+
+</code></pre>
+
+
+</div>

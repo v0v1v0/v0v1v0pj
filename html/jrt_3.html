@@ -1,0 +1,279 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jcc.plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot the category curves for a judge.</h2>
+
+<h3>Description</h3>
+
+<p>This function returns the Judge Category Curves (JCC) plot from a <code>jrt</code> object and the judge number. This is a wrapper function and adaptation of the <code>itemplot</code> function in the package <code>mirt</code> (Chalmers, 2012). It also uses the plotting functions of the packages <code>directlabels</code> and <code>ggplot2</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jcc.plot(
+  jrt.object,
+  judge = "all",
+  labelled = T,
+  greyscale = F,
+  vertical.labels = F,
+  title = "auto",
+  column.names = "auto",
+  manual.facet.names = "auto",
+  manual.line.names = "auto",
+  overlay.reliability = F,
+  color.palette = "D3",
+  category.name.for.legend = "",
+  name.for.reliability = "auto",
+  theta.span = 3.5,
+  line.width = 0.8,
+  line.opacity = 1,
+  key.width = 3,
+  legend.position = "right",
+  legend.columns = "",
+  theme = "bw",
+  text.size = 10,
+  title.size = text.size + 4,
+  font.family = "sans",
+  remove.gridlines = T,
+  facet.rows = NULL,
+  facet.cols = NULL,
+  facet.title.position = "top",
+  precision = 20,
+  debug = F,
+  mirt.object.input = F,
+  item = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jrt.object</code></td>
+<td>
+<p>A object of the <code>jrt</code> class (created by the function <code>jrt</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>judge</code></td>
+<td>
+<p>A numerical to indicate which judge(s) to plot. Default is <code>all</code> which plots all category curves of all judges. Alternatively, a single integer may be used to plot the JCC for one judge, or a vector of integers to plot multiple judges in a faceted plot. Note that, if a (Generalized) Rating Scale Model was used, then judges may have been removed for the model to be fitted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labelled</code></td>
+<td>
+<p>A logical to indicate whether the curves should be labelled with boxed labels (<code>TRUE</code>, default) or whether a legend should be used instead (<code>FALSE</code>). This uses the package <code>directlabels</code>. Note that the rendering is slower (and may take more time to show in GUI) when the plot is labelled.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>greyscale</code></td>
+<td>
+<p>A logical to indicate whether to plot in greyscale (<code>TRUE</code>, default) as opposed to color (<code>FALSE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vertical.labels</code></td>
+<td>
+<p>A logical to indicate whether the labels should be vertically oriented (<code>TRUE</code>), as opposed to oriented inthe angle of the trace curve (<code>FALSE</code>, the default).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title</code></td>
+<td>
+<p>A character title for the plot. By default it is created automatically based on the judge number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>column.names</code></td>
+<td>
+<p>A character to indicate what a column corresponds to (Defaults to <code>"auto"</code>, which uses what was set in the estimation function <code>jrt</code>, whose default is <code>"judge"</code>, but you may use <code>"Rater"</code>, <code>"Expert"</code>, <code>"Item"</code>, etc.). This is used to create automatic titles.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>manual.facet.names</code></td>
+<td>
+<p>A vector to indicate the names to give to the different facets. Defaults to <code>"auto"</code>, which will automatically name them. If not using <code>"auto"</code>, the vector length should be equal to the total number of items/judges (not the total in the plot but the total in the dataset).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>manual.line.names</code></td>
+<td>
+<p>A vector to indicate the individual names to give to the different response categories (or different category curves). Defaults to <code>"auto"</code>, which names categories from 1 to the number of categories. If not using <code>"auto"</code>, the vector supplied should be of the same length as the number of response categories (use the <code>name.for.reliability</code> argument to change it for reliability).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overlay.reliability</code></td>
+<td>
+<p>A logical to indicate whether to overlay the reliability function of the item (default is <code>FALSE</code>). If overlayed (<code>TRUE</code>), the reliability function will be contrast with the category curves by being in color if the category curves are in blackandwhite, and in black dashed if the category curves are in color.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color.palette</code></td>
+<td>
+<p>A character value to indicate the colour palette to use. Defaults to <code>"D3"</code> from "ggsci". Use <code>""</code> for the default of <code>ggplot2</code>. The palettes are supplied as arguments to <code>ggplot2</code>. See here for a list of palettes. In addition, most palettes from the package <code>ggsci</code> are available (e.g., <code>"npg"</code>, <code>"aas"</code>, <code>"nejm"</code>, <code>"lancet"</code>, <code>"jama"</code>, <code>"d3"</code>). Use <code>vignette("ggsci")</code> for details. Make sure there are enough colors in the palette. Alternatively, you can pass a vector of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>category.name.for.legend</code></td>
+<td>
+<p>A character to indicate how to call categories in the legend. Default to <code>"Category"</code> but for example you may try <code>"Cat."</code> or even <code>""</code> to save space.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>name.for.reliability</code></td>
+<td>
+<p>A character to indicate a preferred name for reliability in the legend or labels. Defaults to <code>"auto"</code>, which adapts to whether labels are used.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta.span</code></td>
+<td>
+<p>A numeric indicating the maximum <code class="reqn">\theta</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line.width</code></td>
+<td>
+<p>A numeric indicating the width of the trace lines (default is <code>2.5</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>line.opacity</code></td>
+<td>
+<p>A numeric vector to indicate opacities for the different category lines. Defaults to <code>1</code>. Must be of length equal to the number of categories + 1 (for the reliability line, even if not plotted). For example if there are 5 response categories this vector should be of length 6.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>key.width</code></td>
+<td>
+<p>A numeric to indicate the width of the legend key (default is <code>3</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.position</code></td>
+<td>
+<p>A character string or vector of coordinates to position the legend key. Defaults to <code>"right"</code>. Other possibilities include notably <code>"bottom"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>legend.columns</code></td>
+<td>
+<p>A numeric to indicate after how many legend key elements to add a line break. Especially useful if using <code>legend.position = "bottom"</code> if you want line breaks between each key. Defaults to <code>""</code>, which automatically saves space based on the legend position (line breaks are used if the legend in positioned on the side of the graph).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theme</code></td>
+<td>
+<p>A character value to indicate the background color theme used by <code>ggplot2</code>. Defaults to <code>"bw"</code>. Can be <code>"light"</code>, <code>"dark"</code>, <code>"minimal"</code>, <code>"classic"</code>, <code>"gray"</code>, <code>"bw"</code> or <code>"linedraw"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text.size</code></td>
+<td>
+<p>A numeric value to control the size of the text on the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>title.size</code></td>
+<td>
+<p>A numeric value to control the size of the plot title (defaults to <code>text.size+4</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>font.family</code></td>
+<td>
+<p>A character value to control the font family used on the graph. Defaults to <code>"sans"</code>. Other possible values include <code>"serif"</code> or <code>"mono"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>remove.gridlines</code></td>
+<td>
+<p>A logical value to remove the gridlines (default is <code>TRUE</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>facet.rows</code></td>
+<td>
+<p>A numeric to change the number of rows for faceted plots. Use this one or <code>facet.cols</code>, not both. Defaults to <code>NULL</code>, which uses <code>ggplot2</code>'s automatic layout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>facet.cols</code></td>
+<td>
+<p>A numeric to change the number of columns for faceted plots. Use this one or <code>facet.row</code>, not both. Defaults to <code>NULL</code>, which uses <code>ggplot2</code>'s automatic layout.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>facet.title.position</code></td>
+<td>
+<p>A character string to indicate the position of the facet titles for faceted plts. Defaults to <code>"top"</code>, but can be <code>"bottom"</code>, <code>"left"</code>, or <code>"right"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>precision</code></td>
+<td>
+<p>A numeric to indicate the degree of precision used to plot the category curves. Higher values will increase the accuracy of the graph and make the curves look smoother, but the data generated to plot the graph will be bigger, which will slow down the function. Lower values will do the opposite. Values between <code>10</code> and <code>100</code> are recommended, <code>20</code> is the default and sufficient for most uses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>debug</code></td>
+<td>
+<p>A logical to report debug messages (used in development).
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mirt.object.input</code></td>
+<td>
+<p>A logical allowing to input directly an <code>mirt</code> object as a <code>jrt.object</code> argument, even though this should be detected automatically. See <code>mirt</code> package documentation, and note that this is a secondary use that may lead to inconsistent results at this point.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>item</code></td>
+<td>
+<p>For convenience, this argument, more standard to IRT packages, can be used instead of the <code>judge</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A plot of the category curves.
+</p>
+
+
+<h3>References</h3>
+
+<p>Chalmers, R., P. (2012). mirt: A Multidimensional Item Response Theory
+Package for the R Environment. <em>Journal of Statistical Software, 48</em>(6), 1-29. <a href="https://doi.org/10.18637/jss.v048.i06">doi:10.18637/jss.v048.i06</a>
+</p>
+<p>Myszkowski, N., &amp; Storme, M. (2019). Judge Response Theory? A call to upgrade our psychometrical account of creativity judgments. <em>Psychology of Aesthetics, Creativity and the Arts, 13</em>(2), 167-175. <a href="https://doi.org/10.1037/aca0000225">doi:10.1037/aca0000225</a>
+</p>
+<p>Myszkowski, N. (2021). Development of the R library “jrt”: Automated item response theory procedures for judgment data and their application with the consensual assessment techniques. <em>Psychology of Aesthetics, Creativity and the Arts, 15</em>(3), 426-438. <a href="https://doi.org/10.1037/aca0000287">doi:10.1037/aca0000287</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+# Load dataset
+data &lt;- jrt::ratings
+
+# Fit model
+fit &lt;- jrt(data, irt.model = "PCM")
+
+# JCC of the first judge
+jcc.plot(fit, 1)
+
+# See vignette for more options
+
+</code></pre>
+
+
+</div>

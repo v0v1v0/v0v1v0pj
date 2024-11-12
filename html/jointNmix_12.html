@@ -1,0 +1,181 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointNmix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Joint N-mixture models 
+</h2>
+
+<h3>Description</h3>
+
+<p>Fits joint N-mixture models for site-associated species
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jointNmix(sp1, sp2, start, method = "BFGS", K, mixture = c("P", "P"), 
+          Xp1, Xp2, Xl1, Xl2, Xpsi, includepsi = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>sp1</code></td>
+<td>
+<p>observation matrix for species 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sp2</code></td>
+<td>
+<p>observation matrix for species 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>initial values for the optimization process</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>optimization method passed to <code>optim</code>. Defaults to <code>"BFGS"</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>truncation number of the infinite summations in the log-likelihood. Defaults to <code>max(sp1, sp2) + 100</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mixture</code></td>
+<td>
+<p>two-character vector for latent abundance distributions. <code>"P"</code> for Poisson and <code>"NB"</code> for negative binomial. Defaults to <code>c("P","P")</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xp1</code></td>
+<td>
+<p>model matrix for detection probabilities of species 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xp2</code></td>
+<td>
+<p>model matrix for detection probabilities of species 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xl1</code></td>
+<td>
+<p>model matrix for abundance of species 1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xl2</code></td>
+<td>
+<p>model matrix for linking parameter of species 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Xpsi</code></td>
+<td>
+<p>model matrix for abundance of species 2</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>includepsi</code></td>
+<td>
+<p>logical. If FALSE, psi is not estimated and set to zero</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function fits a bivariate extension to Royle's (2004) N-mixture model to data on the abundance of two species collected at R sites over T time occasions. The model for observation on site i at time t for species 1 can be specified as </p>
+<p style="text-align: center;"><code class="reqn">Y_{1it}|N_{1i} ~ Bin(N_{1i},p_{1it})</code>
+</p>
+<p style="text-align: center;"><code class="reqn">N_{1i} ~ a count distribution with mean \lambda_{1i}.</code>
+</p>
+<p> The model for species 2 is </p>
+<p style="text-align: center;"><code class="reqn">Y_{2it}|N_{1i},N_{2i} ~ Bin(N_{2i},p_{2it})</code>
+</p>
+<p style="text-align: center;"><code class="reqn">N_{2i}|N_{1i} ~ a count distribution with mean \psi+\lambda_{2i}N_{1i}.</code>
+</p>
+<p> Here, users may define a Poisson or negative binomial distribution for the latent abundances N_1i and N_2i.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>jointNmix</code> and <code>Nmix</code>, for which many methods are available (see <code>methods(class = "jointNmix")</code> and <code>methods(class = "Nmix")</code>)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>References</h3>
+
+<p>Moral, R.A., Hinde, J., Demétrio, C.G.B., Reigada, C. and Godoy, W.A.C. (submitted) Models for jointly estimating abundance of two unmarked site-associated species subject to imperfect detection.</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Nmix</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## simulating data with poisson latent abundances
+R &lt;- 10 # sites
+T &lt;- 10 # time occasions
+lambda1 &lt;- 5
+psi &lt;- 3
+p1 &lt;- .3
+p2 &lt;- .6
+lambda2 &lt;- .5
+set.seed(1234); N1 &lt;- rpois(R, lambda1)
+set.seed(1234); N2 &lt;- rpois(R, psi + lambda2*N1)
+y1 &lt;- y2 &lt;- matrix(0, ncol=T, nrow=R)
+set.seed(1234); for(i in 1:R) y1[,i] &lt;- rbinom(T, N1, p1)
+set.seed(1234); for(i in 1:R) y2[,i] &lt;- rbinom(T, N2, p2)
+
+Xp &lt;- cbind(rep(1, R*T))
+Xl &lt;- cbind(rep(1, R))
+
+## Not run: 
+## fitting the Poisson-Poisson joint N-mixture model
+fitpp &lt;- jointNmix(y1, y2, Xp1=Xp, Xp2=Xp, Xl1=Xl, Xl2=Xl, mixture=c("P","P"), K=30)
+
+## fitting the negbin-Poisson joint N-mixture model
+fitnbp &lt;- jointNmix(y1, y2, Xp1=Xp, Xp2=Xp, Xl1=Xl, Xl2=Xl, mixture=c("NB","P"), K=30)
+
+## likelihood-ratio test between P-P and NB-P models
+anova(fitpp, fitnbp)
+
+## comparing using AIC
+lapply(list(fitpp, fitnbp), AIC)
+
+## conditional posterior probability functions for abundances
+plot(fitpp, posterior = TRUE)
+
+## estimated abundances vs. true abundances
+data.frame(getranef.jointNmix(fitpp), N1, N2)
+  
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pairwise.chisq.test</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pairwise Chi-Square Tests</h2>
+
+<h3>Description</h3>
+
+<p>This function performs pairwise Chi-Square tests for two factors.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pairwise.chisq.test(A, B, p.adjust.method = "bonferroni")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>A</code></td>
+<td>
+<p>A factor with two or moew levels. The first variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>A factor with two or more levels. The second variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p.adjust.method</code></td>
+<td>
+<p>A string specifying the method for adjusting p-values. Default is "bonferroni".</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function creates all possible pairs of levels of factor B and performs a Chi-Square test for each pair of B on variable A. The p-values are adjusted according to the specified method.
+#' This function is created for educational purposes only. For exact p-values, consider using <code>reporttools::pairwise.fisher.test()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A data frame with the results of the pairwise Chi-Square tests. Includes the groups, Chi-Square statistic, degrees of freedom, p-values, adjusted p-values, and significance stars.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(123)
+A &lt;- factor(sample(c("Male", "Female"), 100, replace = TRUE))
+B &lt;- factor(sample(c("Location1", "Location2", "Location3"), 100, replace = TRUE))
+pairwise.chisq.test(A, B, "holm")
+</code></pre>
+
+
+</div>

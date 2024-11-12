@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>recode_indicator_num</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Converting "values variables" into "modalities variables"</h2>
+
+<h3>Description</h3>
+
+<p>To transform variables from the values matrix into categorical variables
+that can be added into the modalities matrix.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">recode_indicator_num(
+  x,
+  variable_name,
+  breaks = c(0, 0.01, 0.05, 0.1, 1),
+  labels = c("Good", "Uncertain", "Bad", "Severe"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable_name</code></td>
+<td>
+<p>a vector of strings containing the names of the
+variables to convert.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>breaks</code></td>
+<td>
+<p>see function <code>cut</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>labels</code></td>
+<td>
+<p>see function <code>cut</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters of the <code>cut</code> function.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The function <code>recode_indicator_num()</code> returns the same object,
+enhanced with the chosen indicator. So if the input <code>x</code> is a QR_matrix,
+an object of class <code>QR_matrix</code> is returned. If the input <code>x</code> is a
+mQR_matrix, an object of class <code>mQR_matrix</code> is returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other var QR_matrix manipulation: 
+<code>QR_var_manipulation</code>,
+<code>add_indicator()</code>
+</p>
+
+
+</div>

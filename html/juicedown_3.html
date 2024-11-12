@@ -1,0 +1,76 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>anki_setup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Hide/Show text</h2>
+
+<h3>Description</h3>
+
+<p>This function inserts JavaScript code for anki texts.
+Call this function in a code chunk somewhere in your R Markdown file.
+Use <code>anki()</code> function with a inline r code, to make a hidden block.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">anki_setup(
+  background = "yellow",
+  color = "blue",
+  border = "slateblue",
+  padding = 3,
+  margin = 3,
+  cursor = "pointer"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>background</code></td>
+<td>
+<p>character. Background color of the blank box.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>color</code></td>
+<td>
+<p>character. Font color of the answer of the blank box.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>border</code></td>
+<td>
+<p>character. Border color of the blank box.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>padding</code></td>
+<td>
+<p>integer. Space between the answer text and the border.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>margin</code></td>
+<td>
+<p>integer. Left and right margin around the border.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cursor</code></td>
+<td>
+<p>character.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>character. CSS/JavaScript code for anki texts.
+</p>
+
+
+</div>

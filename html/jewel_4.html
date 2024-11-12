@@ -1,0 +1,136 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generateData_rewire</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate a set of scale-free graphs and corresponding datasets (using the graphs as their Gaussian graphical models)</h2>
+
+<h3>Description</h3>
+
+<p>Function first generates <code>K</code> scale-free graphs with <code>p</code> vertices. They have the same order and degree distribution and share most of the edges, but some edges may vary (user can control how many).
+Function then generates corresponding precision and covariance matrices, all of the size <code>p</code> by <code>p</code> (see the paper for the details of the procedure).
+Then for each <code>l</code>-th element of vector <code>n</code> it generates <code>K</code> data matrices, each of the size <code>n_l</code> by <code>p</code>, 
+i.e., for the same underlying graphs we can generate several sets of <code>K</code> datasets with different sample sizes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generateData_rewire(
+  K,
+  p,
+  n,
+  power = 1,
+  m = 1,
+  perc = 0.05,
+  int = NULL,
+  ncores = NULL,
+  makePlot = TRUE,
+  verbose = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>number of graphs/data matrices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>number of nodes in the true graphs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>a numerical vector of the sample sizes for each desired set of 
+<code>K</code> data matrices. Can be a vector of one element if the user wishes to 
+obtain only one dataset of <code>K</code> matrices.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>power</code></td>
+<td>
+<p>a number, power of preferential attachment for the Barabasi-Albert 
+algorithm for the generation of the scale-free graph. Bigger number means 
+more connected hubs. The default value is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>number of edges to add at each step of Barabasi-Albert algorithm 
+for generation of the scale-free graph. The default value is 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>perc</code></td>
+<td>
+<p>a number, tuning parameter for the difference between graphs. 
+Number of trials to perform in the rewiring procedure of the first graph is 
+<code>p * perc</code>. Bigger the number, more different are the graphs.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>int</code></td>
+<td>
+<p>a vector of two numbers, <code>a</code> and <code>b</code>. Entries of 
+precision matrices are sampled from the uniform distribution on the interval 
+<code>[-b, -a] + [a, b]</code>. The default values are <code>a = 0.2, b = 0.8</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncores</code></td>
+<td>
+<p>number of cores to use in parallel data generation. 
+If <code>NULL</code>, set to <code class="reqn">\#physical cores - 1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>makePlot</code></td>
+<td>
+<p>If makePlot = FALSE, plotting of the generated graphs is 
+disabled. The default value is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>If verbose = FALSE, tracing information printing is disabled. 
+The default value is TRUE.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The following list is returned
+</p>
+
+<ul>
+<li> <p><code>Graphs</code> – a list of adjacency matrices of the <code>K</code> generated graphs.
+</p>
+</li>
+<li> <p><code>CommomGraph</code> - a matrix, common part (intersection) of the <code>K</code> generated graphs.
+</p>
+</li>
+<li> <p><code>Data</code> - a list of lists, for each sample size of the input vector <code>n</code> one obtains <code>K</code> data matrices, each of the size <code>n_l</code> by <code>p</code>.
+</p>
+</li>
+<li> <p><code>Sigma</code> - a list of <code>K</code> covariance matrices of the size <code>p</code> by <code>p</code>.
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data &lt;- generateData_rewire(K = 3, p = 50, n = 20, ncores = 1, verbose = FALSE)
+</code></pre>
+
+
+</div>

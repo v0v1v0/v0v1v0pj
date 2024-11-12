@@ -1,0 +1,210 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>feature_scaling</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Feature Scaling</h2>
+
+<h3>Description</h3>
+
+<p>Scale features in a datasets.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">feature_rescale(x, x_min = NULL, x_max = NULL)
+
+feature_derescale(x_rescaled, x_min, x_max)
+
+feature_norm(x, x_norm = NULL)
+
+feature_denorm(x_norm_std, x_norm = NULL)
+
+feature_standardize(x, x_mean = NULL, x_sd = NULL)
+
+feature_destandardize(x_std, x_mean = NULL, x_sd = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Numeric values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_min</code></td>
+<td>
+<p>Minimum non-normalized numeric value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_max</code></td>
+<td>
+<p>Maximum non-normalized numeric value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_rescaled</code></td>
+<td>
+<p>Rescaled values of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_norm</code></td>
+<td>
+<p>Euclidean norm of x</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_norm_std</code></td>
+<td>
+<p>Euclidean vector of normalized <code>x</code> values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_mean</code></td>
+<td>
+<p>Mean of <code>x</code> values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_sd</code></td>
+<td>
+<p>Standard Deviation of <code>x</code> values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x_std</code></td>
+<td>
+<p>Z-transformed <code>x</code> values</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The following functions provide a means to either scale features or
+to descale the features and return them to normal. These functions
+are ideal for working with optimizers.
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+Feature Scale       </td>
+<td style="text-align: left;"> Feature Descale      </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+feature_rescale     </td>
+<td style="text-align: left;"> feature_derescale    </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+feature_norm        </td>
+<td style="text-align: left;"> feature_denorm       </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+feature_standardize </td>
+<td style="text-align: left;"> feature_destandardize
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>numeric</code> vector.
+</p>
+
+
+<h3>Feature Rescaling</h3>
+
+<p>Convert the original data <code class="reqn">x</code> to <code class="reqn">x_{scaled}</code>:
+</p>
+<p style="text-align: center;"><code class="reqn">x[scaled] = (x-x[min])/(x[max]-x[min])</code>
+</p>
+
+<p>To move from the rescaled value <code class="reqn">x_{scaled}</code> to the original value <code class="reqn">x</code> use:
+</p>
+<p style="text-align: center;"><code class="reqn">x = x[scaled] * (x[max] - x[min]) + x[min]</code>
+</p>
+
+
+
+<h3>Feature Standardization</h3>
+
+<p>Convert the original data <code class="reqn">x</code> to <code class="reqn">x_{std}</code>:
+</p>
+<p style="text-align: center;"><code class="reqn">x[std] = (x-avg[x])/(sigma[x])</code>
+</p>
+
+<p>To move from the standardized value <code class="reqn">x_{std}</code> to the original value <code class="reqn">x</code> use:
+</p>
+<p style="text-align: center;"><code class="reqn">x = x[std] * sigma[x] + avg[x]</code>
+</p>
+
+
+
+<h3>Feature Normalization</h3>
+
+<p>Convert the original data <code class="reqn">x</code> to <code class="reqn">x_{norm}</code>:
+</p>
+<p style="text-align: center;"><code class="reqn">x[norm] = (x)/||x||</code>
+</p>
+
+<p>To move from the normalized value <code class="reqn">x_{norm}</code> to the original value <code class="reqn">x</code> use:
+</p>
+<p style="text-align: center;"><code class="reqn">x = x[norm] * ||x||</code>
+</p>
+
+
+
+<h3>Author(s)</h3>
+
+<p>James Balamuta
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Rescaling Features
+temperatures = c(94.2, 88.1, 32, 0)
+
+temp_min = min(temperatures)
+temp_max = max(temperatures)
+
+temperatures_norm   = feature_rescale(temp_min, temp_max)
+temperatures_denorm = feature_derescale(temperatures_norm, temp_min, temp_max)
+
+all.equal(temperatures, temperatures_denorm)
+ 
+# Norming Features
+x = 1:10
+
+x_norm = sqrt(sum(x^2))
+
+x_norm_std = feature_norm(x, x_norm)
+
+x_recover = feature_denorm(x_norm_std, x_norm)
+all.equal(x, x_recover)
+
+# Standardizing Features
+x      = 1:10
+
+x_mean = mean(x)
+x_sd   = sd(x)
+
+x_std  = feature_standardize(x, x_mean, x_sd)
+x_recovery = feature_destandardize(x, x_mean, x_sd)
+
+all.equal(x, x_recovery)
+</code></pre>
+
+
+</div>

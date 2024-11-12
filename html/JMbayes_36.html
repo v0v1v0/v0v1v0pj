@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>MCMC Diagnostics for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Produces MCMC diagnostics plots.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JMbayes'
+plot(x, which = c("trace", "autocorr", "density", "CPO", "weightFun"), 
+    param = c("betas", "sigma", "D", "gammas", "alphas", "Dalphas", 
+        "shapes", "Bs.gammas", "tauBs"), ask = TRUE, max.t = NULL, 
+    from = 0, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>JMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which types of plots to produce.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>param</code></td>
+<td>
+<p>for which parameter to produce the MCMC diagnostic plots; default is for all parameters.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>logical, if <code>TRUE</code> the user is asked for input, before a new figure is drawn.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>max.t</code></td>
+<td>
+<p>numeric scalar; up to which time point to plot the weight function, default is up to the
+third quantile of the observed event times.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>numeric scalar; from which time point to start plotting the weight function, default is zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit
+fitLME &lt;- lme(log(serBilir) ~ drug * year, random = ~ 1 | id, data = pbc2)
+
+# survival regression fit
+fitSURV &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+
+# joint model fit, under the (default) Weibull model
+fitJOINT &lt;- jointModelBayes(fitLME, fitSURV, timeVar = "year")
+
+plot(fitJOINT)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

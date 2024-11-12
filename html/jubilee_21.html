@@ -1,0 +1,95 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.read_fred_file</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal utility to read FRED file</h2>
+
+<h3>Description</h3>
+
+<p>This utility reads the internal static file, optionally amends with FRED online data,
+and returns the values of a given symbol.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.read_fred_file(fraction, local_file, symbol, online = FALSE,
+  daily_symbol = NULL, period = "M")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fraction</code></td>
+<td>
+<p>numeric, the fraction to return the value. 
+The utility will lookup within a month to find value.
+For debug purpose, set it to <code>NULL</code>, and the intermediate 
+data table will be returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>local_file</code></td>
+<td>
+<p>character, the file name of an internal file.
+For debug purpose, set it to <code>NULL</code>, and the process will
+initiate the source data from FRED via <code>symbol</code>, 
+instead of a local file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p>character, the FRED symbol.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>online</code></td>
+<td>
+<p>logical, whether to fetch online data from FRED. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>daily_symbol</code></td>
+<td>
+<p>character, the FRED symbol to read daily data that supplements 
+the monthly data. Default is <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>period</code></td>
+<td>
+<p>charater, length-1 string indicating the data period of the symbol.
+M is monthly, Q is quarterly. Default is <code>M</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The values of the symbol, numeric with the same length as <code>fraction</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  repo &lt;- jubilee.repo(online=FALSE)
+  a &lt;- jubilee.read_fred_file(repo@ie$fraction, "BAA.csv", "BAA")
+  tail(a)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,84 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>weighted_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Weighted score calculation</h2>
+
+<h3>Description</h3>
+
+<p>Function to weight a pre-calculated score
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">weighted_score(x, pond = 1)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pond</code></td>
+<td>
+<p>the weights to use. Can be an integer, a vector of integers, the
+name of one of the quality report variables or a list of weights for the
+<code>mQR_matrix</code> objects.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>the input with an additionnal weighted score
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other QR_matrix functions: 
+<code>export_xlsx()</code>,
+<code>export_xlsx.QR_matrix()</code>,
+<code>export_xlsx.mQR_matrix()</code>,
+<code>extract_QR()</code>,
+<code>rbind.QR_matrix()</code>,
+<code>sort()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Path of matrix demetra_m
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extract the quality report from the demetra_m file
+QR &lt;- extract_QR(demetra_path)
+
+# Compute the score
+QR &lt;- compute_score(QR, n_contrib_score = 2)
+
+# Weighted score
+QR &lt;- weighted_score(QR, 2)
+print(QR)
+
+# Extract the weighted score
+QR$modalities$score_pond
+
+</code></pre>
+
+
+</div>

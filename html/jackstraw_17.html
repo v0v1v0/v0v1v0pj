@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>permutationPA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Permutation Parallel Analysis</h2>
+
+<h3>Description</h3>
+
+<p>Estimate a number of significant principal components from a permutation test.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">permutationPA(dat, B = 100, threshold = 0.05, verbose = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>a data matrix with <code>m</code> rows as variables and <code>n</code> columns as observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>a number (a positive integer) of resampling iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>threshold</code></td>
+<td>
+<p>a numeric value between 0 and 1 to threshold p-values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>a logical indicator as to whether to print the progress.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Adopted from <code>sva::num.sv</code>, and based on Buja and Eyuboglu (1992)
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>permutationPA</code> returns
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>r</code></td>
+<td>
+<p>an estimated number of significant principal components based on thresholding p-values at <code>threshold</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>a list of p-values for significance of principal components</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Buja A and Eyuboglu N. (1992) Remarks on parallel analysis. Multivariate Behavioral Research, 27(4), 509-540
+</p>
+
+
+</div>

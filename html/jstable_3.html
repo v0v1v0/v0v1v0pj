@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>coxExp</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>coxExp: transform the unit of coefficients in cox model(internal function)</h2>
+
+<h3>Description</h3>
+
+<p>Transform the unit of coefficients to "HR"
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">coxExp(cox.coef, dec)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>cox.coef</code></td>
+<td>
+<p>cox model coefficients</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>Decimal point</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>The transforemed coefficients(95
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(coxme)
+fit &lt;- coxme(Surv(time, status) ~ ph.ecog + age + (1 | inst), lung)
+jstable:::coxExp(jstable:::coxmeTable(fit))
+</code></pre>
+
+
+</div>

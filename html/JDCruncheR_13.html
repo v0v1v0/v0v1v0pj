@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-export_xlsx.mQR_matrix</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Export des objets mQR_matrix dans des fichiers Excel</h2>
+
+<h3>Description</h3>
+
+<p>Permet d'exporter dans des fichiers Excel une liste de bilan qualité
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>mQR_matrix</code> à exporter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>export_dir</code></td>
+<td>
+<p>dossier d'export des résultats.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>layout_file</code></td>
+<td>
+<p>paramètre d'export. Par défaut,
+(<code>layout_file = "ByComponent"</code>) et un fichier Excel est exporté par
+composante de la matrice bilan qualité (matrice des modalités ou des
+valeurs), dont chaque feuille correspond à un bilan qualité. Pour avoir un
+fichier par bilan qualité dont chaque feuille correspond à la composante
+exportée, utiliser <code>layout_file = "ByQRMatrix"</code>.
+La modalité <code>layout_file = "AllTogether"</code> correspond à la création d'un
+fichier avec 2 feuilles par bilan qualité (<code>Values</code> et
+<code>Modalities</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>auto_format</code></td>
+<td>
+<p>booléen indiquant s'il faut formatter la sortie
+(<code>auto_format = TRUE</code> par défaut).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>booléen indiquant s'il faut ré-écrire créer le fichier Excel
+s'il existe déjà (<code>create = TRUE</code> par défaut)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>autres argument non utilisés</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Renvoie de manière invisible (via <code>invisible(x)</code>) le même objet
+<code>mQR_matrix</code> que <code>x</code>.
+</p>
+
+
+</div>

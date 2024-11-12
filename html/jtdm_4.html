@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_sigma</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get the inferred residual covariance matrix</h2>
+
+<h3>Description</h3>
+
+<p>Get the samples from the posterior distribution of the residual covariance matrix, together with the posterior mean and quantiles.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_sigma(m)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>a model fitted with <code>jtdm_fit</code></p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A list containing:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>Ssamples</code></td>
+<td>
+<p> Sample from the posterior distribution of the residual covariance matrix. It is an array where the first two dimensions are the rows and columns of the matrix, and the third dimensions are the samples from the posterior distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Smean</code></td>
+<td>
+<p> Posterior mean of the residual covariance matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Sq975,Sq025</code></td>
+<td>
+<p> 97.5% and 0.25% posterior quantiles of the residual covariance matrix.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(Y)  
+data(X) 
+# Short MCMC to obtain a fast example: results are unreliable !
+m = jtdm_fit(Y=Y, X=X, formula=as.formula("~GDD+FDD+forest"), sample = 1000) 
+# get the inferred residual covariance
+Sigma =get_sigma(m)
+</code></pre>
+
+
+</div>

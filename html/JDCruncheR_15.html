@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-extract_QR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extraction d'un bilan qualité</h2>
+
+<h3>Description</h3>
+
+<p>Permet d'extraire un bilan qualité à partir du fichier CSV contenant la
+matrice des diagnostics.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>matrix_output_file</code></td>
+<td>
+<p>fichier CSV contenant la matrice des diagnostics.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>séparateur de caractères utilisé dans le fichier csv (par défaut
+<code>sep = ";"</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec</code></td>
+<td>
+<p>séparateur décimal utilisé dans le fichier csv (par défaut
+<code>dec = ","</code>)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>La fonction permet d'extraire un bilan qualité à partir d'un
+fichier csv contenant l'ensemble des
+diagnostics (généralement fichier <em>demetra_m.csv</em>).
+</p>
+<p>Ce fichier peut être obtenu en lançant le cruncher
+(<code>cruncher</code> ou
+<code>cruncher_and_param</code>) avec l'ensemble des
+paramètres de base pour les paramètres à exporter et l'option
+<code>csv_layout = "vtable"</code> (par défaut) pour le format de sortie des
+fichiers csv (option de <code>cruncher_and_param</code> ou de
+<code>create_param_file</code> lors de la création du fichier
+de paramètres).
+</p>
+<p>Le résultat de cette fonction est un objet <code>QR_matrix</code> qui est
+une liste de trois paramètres :
+</p>
+
+<ul>
+<li>
+<p> le paramètre <code>modalities</code> est un <code>data.frame</code> contenant un
+ensemble de variables sous forme catégorielle (Good, Uncertain, Bad,
+Severe).
+</p>
+</li>
+<li>
+<p> le paramètre <code>values</code> est un <code>data.frame</code> contenant les valeurs
+associées aux indicateurs présents dans <code>modalities</code> (i.e. :
+p-valeurs, statistiques, etc.) ainsi que des variables qui n'ont pas de
+modalité (fréquence de la série et modèle ARIMA).
+</p>
+</li>
+<li>
+<p> le paramètre <code>score_formula</code> est initié à <code>NULL</code> : il contiendra
+la formule utilisée pour calculer le score (si le calcul est fait).
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>Un objet de type <code>QR_matrix</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Chemin menant au fichier demetra_m.csv
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extraire le bilan qualité à partir du fichier demetra_m.csv
+QR &lt;- extract_QR(demetra_path)
+
+print(QR)
+
+# Extraire les modalités de la matrice
+QR$modalities
+# Or:
+QR[["modalities"]]
+
+</code></pre>
+
+
+</div>

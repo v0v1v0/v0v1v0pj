@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_setup</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Do initial setup for the JuliaCall package.</h2>
+
+<h3>Description</h3>
+
+<p><code>julia_setup</code> does the initial setup for the JuliaCall package.
+It setups automatic type conversion, Julia display systems, etc,
+and is necessary for every new R session to use the package.
+If not carried out manually, it will be invoked automatically before other julia_xxx functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">julia_setup(
+  JULIA_HOME = NULL,
+  verbose = TRUE,
+  installJulia = FALSE,
+  install = TRUE,
+  force = FALSE,
+  useRCall = TRUE,
+  rebuild = FALSE,
+  sysimage_path = NULL
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>JULIA_HOME</code></td>
+<td>
+<p>the file folder which contains julia binary,
+if not set, JuliaCall will look at the global option JULIA_HOME,
+if the global option is not set,
+JuliaCall will then look at the environmental variable JULIA_HOME,
+if still not found, JuliaCall will try to use
+the julia in path.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>whether to print out detailed information
+about <code>julia_setup</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>installJulia</code></td>
+<td>
+<p>whether to install julia automatically when julia is not found,
+whose default value is FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>install</code></td>
+<td>
+<p>whether to execute installation script for dependent julia packages, whose default value is TRUE;
+but can be set to FALSE to save startup time when no installation of dependent julia packages is needed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>whether to force julia_setup to execute again.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>useRCall</code></td>
+<td>
+<p>whether or not you want to use RCall.jl in julia,
+which is an amazing package to access R in julia.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rebuild</code></td>
+<td>
+<p>whether to rebuild RCall.jl, whose default value is FALSE to save startup time.
+If a new version of R is used, then this parameter needs to be set to TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sysimage_path</code></td>
+<td>
+<p>path to the precompiled custom sys image.
+Path can be either an absolute path or relative to the current directory.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The julia interface, which is an environment with the necessary methods
+like command, source and things like that to communicate with julia.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (identical(Sys.getenv("AUTO_JULIA_INSTALL"), "true")) { ## julia_setup is quite time consuming
+  julia &lt;- julia_setup(installJulia = TRUE)
+}
+
+</code></pre>
+
+
+</div>

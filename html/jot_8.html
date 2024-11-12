@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jot_open</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Open and Close jot Notepads</h2>
+
+<h3>Description</h3>
+
+
+<ul>
+<li> <p><code>jot_open()</code> and <code>jot_activate()</code> opens an existing notepad and sets it to active.
+</p>
+</li>
+<li> <p><code>jot_current()</code> and <code>jot_active()</code> return the path to the current notepad.
+</p>
+</li>
+<li> <p><code>jot_close()</code> and <code>jot_deactivate()</code> closes the open notepad, if there is one.
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">jot_open(pad)
+
+jot_activate(pad)
+
+jot_active()
+
+jot_current()
+
+jot_close()
+
+jot_deactivate()
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>pad</code></td>
+<td>
+<p>path to file to open</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>path to pad, invisibly
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">tf &lt;- tempfile()
+jot_new_pad(tf)
+jot_open(tf)
+jot_active()
+jot_current()
+jot_close()
+jot_active()
+</code></pre>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bags_to_tfidf</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes a TF-IDF weight vectors for a set of word bags.</h2>
+
+<h3>Description</h3>
+
+<p>Computes a TF-IDF weight vectors for a set of word bags.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bags_to_tfidf(data)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the list containing the input word bags.</p>
+</td>
+</tr></table>
+<h3>References</h3>
+
+<p>Senin Pavel and Malinchik Sergey,
+SAX-VSM: Interpretable Time Series Classification Using SAX and Vector Space Model.
+Data Mining (ICDM), 2013 IEEE 13th International Conference on, pp.1175,1180, 7-10 Dec. 2013.
+</p>
+<p>Salton, G., Wong, A., Yang., C.,
+A vector space model for automatic indexing. Commun. ACM 18, 11, 613-620, 1975.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">bag1 = data.frame(
+   "words" = c("this", "is", "a", "sample"),
+   "counts" = c(1, 1, 2, 1),
+   stringsAsFactors = FALSE
+   )
+bag2 = data.frame(
+   "words" = c("this", "is", "another", "example"),
+   "counts" = c(1, 1, 2, 3),
+   stringsAsFactors = FALSE
+   )
+ll = list("bag1" = bag1, "bag2" = bag2)
+tfidf = bags_to_tfidf(ll)
+</code></pre>
+
+
+</div>

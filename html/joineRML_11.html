@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>formula.mjoint</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract model formulae from an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>Extract model formulae from an <code>mjoint</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'mjoint'
+formula(x, process = c("Longitudinal", "Event"), k = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model of
+time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>character string: if <code>process='Longitudinal'</code> a fixed
+effects formula from the (multivariate) longitudinal sub-model is returned
+for the <code>k</code>-th outcome. Else, if <code>process='Event'</code>, the
+time-to-event model formula is returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>k</code></td>
+<td>
+<p>integer: a number between 1 and <em>K</em> (the total number of
+longitudinal outcomes) that specifies the longitudinal outcome of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none are used.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An object of class "formula" which contains a symbolic model formula
+for the separate sub-model fixed effect terms only.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Pinheiro JC, Bates DM. <em>Mixed-Effects Models in S and S-PLUS.</em> New York:
+Springer Verlag; 2000.
+</p>
+<p>Wulfsohn MS, Tsiatis AA. A joint model for survival and longitudinal data
+measured with error. <em>Biometrics.</em> 1997; <strong>53(1)</strong>: 330-339.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>formula</code> for the generic method description, and
+<code>ranef.mjoint</code>.
+</p>
+
+
+</div>

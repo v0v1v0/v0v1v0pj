@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fine_separate</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Separate more fine mesh order</h2>
+
+<h3>Description</h3>
+
+<p>Return contains fine mesh codes
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">fine_separate(meshcode = NULL, .type = "standard", ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>meshcode</code></td>
+<td>
+<p><code>character</code>. mesh code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>.type</code></td>
+<td>
+<p>Specify the <code>subdivision</code> if you want to get a 100m mesh.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters for paste</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>meshcode
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">fine_separate("5235")
+fine_separate("523504")
+fine_separate("52350432")
+fine_separate("523504321")
+fine_separate("5235043211")
+# to 100m mesh code
+fine_separate("64414315", .type = "subdivision")
+</code></pre>
+
+
+</div>

@@ -1,0 +1,414 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>left_join</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Left join two data frames</h2>
+
+<h3>Description</h3>
+
+<p>This is a <code>joyn</code> wrapper that works in a similar
+fashion to dplyr::left_join
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">left_join(
+  x,
+  y,
+  by = intersect(names(x), names(y)),
+  copy = FALSE,
+  suffix = c(".x", ".y"),
+  keep = NULL,
+  na_matches = c("na", "never"),
+  multiple = "all",
+  unmatched = "drop",
+  relationship = NULL,
+  y_vars_to_keep = TRUE,
+  update_values = FALSE,
+  update_NAs = update_values,
+  reportvar = getOption("joyn.reportvar"),
+  reporttype = c("factor", "character", "numeric"),
+  roll = NULL,
+  keep_common_vars = FALSE,
+  sort = TRUE,
+  verbose = getOption("joyn.verbose"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>data frame: referred to as <em>left</em> in R terminology, or <em>master</em> in
+Stata terminology.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>data frame: referred to as <em>right</em> in R terminology, or <em>using</em> in
+Stata terminology.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>a character vector of variables to join by. If NULL, the default,
+joyn will do a natural join, using all variables with common names across
+the two tables. A message lists the variables so that you can check they're
+correct (to suppress the message, simply explicitly list the variables that
+you want to join). To join by different variables on x and y use a vector
+of expressions. For example, <code>by = c("a = b", "z")</code> will use "a" in <code>x</code>, "b"
+in <code>y</code>, and "z" in both tables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>copy</code></td>
+<td>
+<p>If <code>x</code> and <code>y</code> are not from the same data source,
+and <code>copy</code> is <code>TRUE</code>, then <code>y</code> will be copied into the
+same src as <code>x</code>.  This allows you to join tables across srcs, but
+it is a potentially expensive operation so you must opt into it.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffix</code></td>
+<td>
+<p>If there are non-joined duplicate variables in <code>x</code> and
+<code>y</code>, these suffixes will be added to the output to disambiguate them.
+Should be a character vector of length 2.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep</code></td>
+<td>
+<p>Should the join keys from both <code>x</code> and <code>y</code> be preserved in the
+output?
+</p>
+
+<ul>
+<li>
+<p> If <code>NULL</code>, the default, joins on equality retain only the keys from <code>x</code>,
+while joins on inequality retain the keys from both inputs.
+</p>
+</li>
+<li>
+<p> If <code>TRUE</code>, all keys from both inputs are retained.
+</p>
+</li>
+<li>
+<p> If <code>FALSE</code>, only keys from <code>x</code> are retained. For right and full joins,
+the data in key columns corresponding to rows that only exist in <code>y</code> are
+merged into the key columns from <code>x</code>. Can't be used when joining on
+inequality conditions.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>na_matches</code></td>
+<td>
+<p>Should two <code>NA</code> or two <code>NaN</code> values match?
+</p>
+
+<ul>
+<li> <p><code>"na"</code>, the default, treats two <code>NA</code> or two <code>NaN</code> values as equal, like
+<code>%in%</code>, <code>match()</code>, and <code>merge()</code>.
+</p>
+</li>
+<li> <p><code>"never"</code> treats two <code>NA</code> or two <code>NaN</code> values as different, and will
+never match them together or to any other values. This is similar to joins
+for database sources and to <code>base::merge(incomparables = NA)</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multiple</code></td>
+<td>
+<p>Handling of rows in <code>x</code> with multiple matches in <code>y</code>.
+For each row of <code>x</code>:
+</p>
+
+<ul>
+<li> <p><code>"all"</code>, the default, returns every match detected in <code>y</code>. This is the
+same behavior as SQL.
+</p>
+</li>
+<li> <p><code>"any"</code> returns one match detected in <code>y</code>, with no guarantees on which
+match will be returned. It is often faster than <code>"first"</code> and <code>"last"</code>
+if you just need to detect if there is at least one match.
+</p>
+</li>
+<li> <p><code>"first"</code> returns the first match detected in <code>y</code>.
+</p>
+</li>
+<li> <p><code>"last"</code> returns the last match detected in <code>y</code>.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>unmatched</code></td>
+<td>
+<p>How should unmatched keys that would result in dropped rows
+be handled?
+</p>
+
+<ul>
+<li> <p><code>"drop"</code> drops unmatched keys from the result.
+</p>
+</li>
+<li> <p><code>"error"</code> throws an error if unmatched keys are detected.
+</p>
+</li>
+</ul>
+<p><code>unmatched</code> is intended to protect you from accidentally dropping rows
+during a join. It only checks for unmatched keys in the input that could
+potentially drop rows.
+</p>
+
+<ul>
+<li>
+<p> For left joins, it checks <code>y</code>.
+</p>
+</li>
+<li>
+<p> For right joins, it checks <code>x</code>.
+</p>
+</li>
+<li>
+<p> For inner joins, it checks both <code>x</code> and <code>y</code>. In this case, <code>unmatched</code> is
+also allowed to be a character vector of length 2 to specify the behavior
+for <code>x</code> and <code>y</code> independently.
+</p>
+</li>
+</ul>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>relationship</code></td>
+<td>
+<p>Handling of the expected relationship between the keys of
+<code>x</code> and <code>y</code>. If the expectations chosen from the list below are
+invalidated, an error is thrown.
+</p>
+
+<ul>
+<li> <p><code>NULL</code>, the default, doesn't expect there to be any relationship between
+<code>x</code> and <code>y</code>. However, for equality joins it will check for a many-to-many
+relationship (which is typically unexpected) and will warn if one occurs,
+encouraging you to either take a closer look at your inputs or make this
+relationship explicit by specifying <code>"many-to-many"</code>.
+</p>
+<p>See the <em>Many-to-many relationships</em> section for more details.
+</p>
+</li>
+<li> <p><code>"one-to-one"</code> expects:
+</p>
+
+<ul>
+<li>
+<p> Each row in <code>x</code> matches at most 1 row in <code>y</code>.
+</p>
+</li>
+<li>
+<p> Each row in <code>y</code> matches at most 1 row in <code>x</code>.
+</p>
+</li>
+</ul>
+</li>
+<li> <p><code>"one-to-many"</code> expects:
+</p>
+
+<ul><li>
+<p> Each row in <code>y</code> matches at most 1 row in <code>x</code>.
+</p>
+</li></ul>
+</li>
+<li> <p><code>"many-to-one"</code> expects:
+</p>
+
+<ul><li>
+<p> Each row in <code>x</code> matches at most 1 row in <code>y</code>.
+</p>
+</li></ul>
+</li>
+<li> <p><code>"many-to-many"</code> doesn't perform any relationship checks, but is provided
+to allow you to be explicit about this relationship if you know it
+exists.
+</p>
+</li>
+</ul>
+<p><code>relationship</code> doesn't handle cases where there are zero matches. For that,
+see <code>unmatched</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y_vars_to_keep</code></td>
+<td>
+<p>character: Vector of variable names in <code>y</code> that will be
+kept after the merge. If TRUE (the default), it keeps all the brings all
+the variables in y into x. If FALSE or NULL, it does not bring any variable
+into x, but a report will be generated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>update_values</code></td>
+<td>
+<p>logical: If TRUE, it will update all values of variables
+in x with the actual of variables in y with the same name as the ones in x.
+<strong>NAs from y won't be used to update actual values in x</strong>. Yet, by default,
+NAs in x will be updated with values in y. To avoid this, make sure to set
+<code>update_NAs = FALSE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>update_NAs</code></td>
+<td>
+<p>logical: If TRUE, it will update NA values of all variables
+in x with actual values of variables in y that have the same name as the
+ones in x. If FALSE, NA values won't be updated, even if <code>update_values</code> is
+<code>TRUE</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reportvar</code></td>
+<td>
+<p>character: Name of reporting variable. Default is ".joyn".
+This is the same as variable "_merge" in Stata after performing a merge. If
+FALSE or NULL, the reporting variable will be excluded from the final
+table, though a summary of the join will be display after concluding.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reporttype</code></td>
+<td>
+<p>character: One of <em>"character"</em> or <em>"numeric"</em>. Default is
+<em>"character"</em>. If <em>"numeric"</em>, the reporting variable will contain  numeric
+codes of the source and the contents of each observation in the joined
+table. See below for more information.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>roll</code></td>
+<td>
+<p>double: <em>to be implemented</em></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_common_vars</code></td>
+<td>
+<p>logical: If TRUE, it will keep the original variable
+from y when both tables have common variable names. Thus, the prefix "y."
+will be added to the original name to distinguish from the resulting
+variable in the joined table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort</code></td>
+<td>
+<p>logical: If TRUE, sort by key variables in <code>by</code>. Default is
+FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical: if FALSE, it won't display any message (programmer's
+option). Default is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Arguments passed on to <code>joyn</code>
+</p>
+
+<dl>
+<dt><code>match_type</code></dt>
+<dd>
+<p>character: one of <em>"m:m"</em>, <em>"m:1"</em>, <em>"1:m"</em>, <em>"1:1"</em>.
+Default is <em>"1:1"</em> since this the most restrictive. However, following
+Stata's recommendation, it is better to be explicit and use any of the
+other three match types (See details in <em>match types sections</em>).</p>
+</dd>
+<dt><code>allow.cartesian</code></dt>
+<dd>
+<p>logical: Check documentation in official <a href="https://rdatatable.gitlab.io/data.table/reference/merge.html/">web site</a>.
+Default is <code>NULL</code>, which implies that if the join is "1:1" it will be
+<code>FALSE</code>, but if the join has any "m" on it, it will be converted to <code>TRUE</code>.
+By specifying <code>TRUE</code> of <code>FALSE</code> you force the behavior of the join.</p>
+</dd>
+<dt><code>suffixes</code></dt>
+<dd>
+<p>A character(2) specifying the suffixes to be used for making
+non-by column names unique. The suffix behaviour works in a similar fashion
+as the base::merge method does.</p>
+</dd>
+<dt><code>yvars</code></dt>
+<dd>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#superseded"><img src="../help/figures/lifecycle-superseded.svg" alt="[Superseded]"></a>: use now <code>y_vars_to_keep</code></p>
+</dd>
+<dt><code>keep_y_in_x</code></dt>
+<dd>
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#superseded"><img src="../help/figures/lifecycle-superseded.svg" alt="[Superseded]"></a>: use now
+<code>keep_common_vars</code></p>
+</dd>
+<dt><code>msg_type</code></dt>
+<dd>
+<p>character: type of messages to display by default</p>
+</dd>
+<dt><code>na.last</code></dt>
+<dd> <p><code>logical</code>. If <code>TRUE</code>, missing values in the data are placed last; if <code>FALSE</code>, they are placed first; if <code>NA</code> they are removed.
+<code>na.last=NA</code> is valid only for <code>x[order(., na.last)]</code> and its
+default is <code>TRUE</code>. <code>setorder</code> and <code>setorderv</code> only accept
+<code>TRUE</code>/<code>FALSE</code> with default <code>FALSE</code>. </p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An data frame of the same class as <code>x</code>. The properties of the output
+are as close as possible to the ones returned by the dplyr alternative.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other dplyr alternatives: 
+<code>anti_join()</code>,
+<code>full_join()</code>,
+<code>inner_join()</code>,
+<code>right_join()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Simple left join
+library(data.table)
+
+x1 = data.table(id = c(1L, 1L, 2L, 3L, NA_integer_),
+                t  = c(1L, 2L, 1L, 2L, NA_integer_),
+                x  = 11:15)
+y1 = data.table(id = c(1,2, 4),
+                y  = c(11L, 15L, 16))
+left_join(x1, y1, relationship = "many-to-one")
+</code></pre>
+
+
+</div>

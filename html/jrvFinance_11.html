@@ -1,0 +1,205 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bonds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bond pricing using yield to maturity.</h2>
+
+<h3>Description</h3>
+
+<p>bond.price computes the price given the yield to maturity
+bond.duration computes the duration given the yield to maturity
+bond.yield computes the yield to maturity given the price
+bond.prices, bond.durations and bond.yields are wrapper functions
+that use <code>mapply</code> to vectorize bond.price, bond.duration and bond.yield
+All arguments to bond.prices, bond.durations and bond.yields
+can be vectors.
+On the other hand, bond.price, bond.duration and bond.yield do not allow vectors 
+Standard compounding and day count conventions are supported for all functions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bond.price(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  yield,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  comp.freq = freq,
+  redemption_value = 100
+)
+
+bond.yield(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  price,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  comp.freq = freq,
+  redemption_value = 100
+)
+
+bond.duration(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  yield,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  modified = FALSE,
+  comp.freq = freq,
+  redemption_value = 100
+)
+
+bond.TCF(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  redemption_value = 100
+)
+
+bond.prices(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  yield,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  comp.freq = freq,
+  redemption_value = 100
+)
+
+bond.yields(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  price,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  comp.freq = freq,
+  redemption_value = 100
+)
+
+bond.durations(
+  settle,
+  mature,
+  coupon,
+  freq = 2,
+  yield,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E"),
+  modified = FALSE,
+  comp.freq = freq,
+  redemption_value = 100
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>settle</code></td>
+<td>
+<p>The settlement date for which the bond is traded. Can be a
+character string or any object that can be converted into date using
+<code>as.Date</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mature</code></td>
+<td>
+<p>The maturity date of the bond. Can be a character string or
+any object that can be converted into date using <code>as.Date</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coupon</code></td>
+<td>
+<p>The coupon rate in decimal (0.10 or 10e-2 for 10%)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+<p>The frequency of coupon payments: 1 for annual, 2 for
+semi-annual, 12 for monthly.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>yield</code></td>
+<td>
+<p>The yield to maturity of the bond</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convention</code></td>
+<td>
+<p>The daycount convention</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comp.freq</code></td>
+<td>
+<p>The frequency of compounding of the bond yield: 1 for
+annual, 2 for semi-annual, 12 for monthly. Usually same as freq.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>redemption_value</code></td>
+<td>
+<p>The principal amount that the bond will pay on maturity or call.
+Typically necessary when the bond is expected to be called at premium to par.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>price</code></td>
+<td>
+<p>The clean price of the bond.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>modified</code></td>
+<td>
+<p>A logical value used in duration. <code>TRUE</code> to return Modified
+Duration, <code>FALSE</code> otherwise</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>bond.TCF</code> returns a list of three components
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>t</code></td>
+<td>
+<p>A vector of cash flow dates in number of years</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cf</code></td>
+<td>
+<p>A vector of cash flows</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>accrued</code></td>
+<td>
+<p>The accrued interest</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Prof. Jayanth R. Varma <a href="mailto:jrvarma@iima.ac.in">jrvarma@iima.ac.in</a>
+</p>
+
+
+</div>

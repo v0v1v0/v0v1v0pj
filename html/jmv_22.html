@@ -1,0 +1,187 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mancova</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>MANCOVA</h2>
+
+<h3>Description</h3>
+
+<p>Multivariate Analysis of (Co)Variance (MANCOVA) is used to explore the 
+relationship between multiple dependent variables, and one or more 
+categorical and/or continuous explanatory variables.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mancova(data, deps, factors = NULL, covs = NULL,
+  multivar = list("pillai", "wilks", "hotel", "roy"), boxM = FALSE,
+  shapiro = FALSE, qqPlot = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the data as a data frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deps</code></td>
+<td>
+<p>a string naming the dependent variable from <code>data</code>,
+variable must be numeric</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>factors</code></td>
+<td>
+<p>a vector of strings naming the factors from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>covs</code></td>
+<td>
+<p>a vector of strings naming the covariates from <code>data</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>multivar</code></td>
+<td>
+<p>one or more of <code>'pillai'</code>, <code>'wilks'</code>,
+<code>'hotel'</code>, or <code>'roy'</code>; use Pillai's Trace, Wilks' Lambda,
+Hotelling's Trace, and Roy's Largest Root multivariate statistics,
+respectively</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>boxM</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Box's M test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shapiro</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide Shapiro-Wilk
+test</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>qqPlot</code></td>
+<td>
+<p><code>TRUE</code> or <code>FALSE</code> (default), provide a Q-Q plot of
+multivariate normality</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A results object containing:
+</p>
+
+<table>
+<tr>
+<td style="text-align: left;">
+  <code>results$multivar</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$univar</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$boxM</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$shapiro</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> a table </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+  <code>results$assump$qqPlot</code> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> </td>
+<td style="text-align: left;"> an image </td>
+</tr>
+<tr>
+<td style="text-align: left;">
+</td>
+</tr>
+</table>
+<p>Tables can be converted to data frames with <code>asDF</code> or <code>as.data.frame</code>. For example:
+</p>
+<p><code>results$multivar$asDF</code>
+</p>
+<p><code>as.data.frame(results$multivar)</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data('iris')
+
+mancova(data = iris,
+    deps = vars(Sepal.Length, Sepal.Width, Petal.Length, Petal.Width),
+    factors = Species)
+
+#
+#  MANCOVA
+#
+#  Multivariate Tests
+#  ---------------------------------------------------------------------------
+#                                     value     F       df1    df2    p
+#  ---------------------------------------------------------------------------
+#    Species    Pillai's Trace          1.19    53.5      8    290    &lt; .001
+#               Wilks' Lambda         0.0234     199      8    288    &lt; .001
+#               Hotelling's Trace       32.5     581      8    286    &lt; .001
+#               Roy's Largest Root      32.2    1167      4    145    &lt; .001
+#  ---------------------------------------------------------------------------
+#
+#
+#  Univariate Tests
+#  -----------------------------------------------------------------------------------------------
+#                 Dependent Variable    Sum of Squares    df     Mean Square    F         p
+#  -----------------------------------------------------------------------------------------------
+#    Species      Sepal.Length                   63.21      2        31.6061     119.3    &lt; .001
+#                 Sepal.Width                    11.34      2         5.6725      49.2    &lt; .001
+#                 Petal.Length                  437.10      2       218.5514    1180.2    &lt; .001
+#                 Petal.Width                    80.41      2        40.2067     960.0    &lt; .001
+#    Residuals    Sepal.Length                   38.96    147         0.2650
+#                 Sepal.Width                    16.96    147         0.1154
+#                 Petal.Length                   27.22    147         0.1852
+#                 Petal.Width                     6.16    147         0.0419
+#  -----------------------------------------------------------------------------------------------
+#
+
+</code></pre>
+
+
+</div>

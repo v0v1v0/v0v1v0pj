@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>dneymanA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Neyman-A probability function</h2>
+
+<h3>Description</h3>
+
+<p>Computes the probability function of the Neyman-A distribution</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">dneymanA(x, lambda1, lambda2, K, log = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>vector of values</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda1, lambda2</code></td>
+<td>
+<p>parameters of the distribution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>truncation value for the infinite summation</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>log</code></td>
+<td>
+<p>logical. If TRUE, the logarithm of the probabilities is returned</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The Neyman-A distribution has probability function </p>
+<p style="text-align: center;"><code class="reqn">\frac{e^{-\lambda_1}\lambda_2^{x}}{x!}\sum_{k=0}^\infty\frac{(\lambda_1e^{-\lambda_2})^kk^x}{k!}</code>
+</p>
+<p> and is an overdispersion model. The summation is truncated to K.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- 0:10
+dneymanA(x, lambda1 = 2, lambda2 = 1.5, K = 50)
+</code></pre>
+
+
+</div>

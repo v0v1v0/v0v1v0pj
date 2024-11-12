@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jsonNormalize</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Normalize a JSON string</h2>
+
+<h3>Description</h3>
+
+<p>Attempts to normalize or fix a JSON string. Trailing commas
+are removed, and all keys of the normalized JSON string are double-quoted.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jsonNormalize(jstring, prettify = FALSE, to = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jstring</code></td>
+<td>
+<p>a character string, the JSON string to be normalized, or
+the path to a JSON file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>prettify</code></td>
+<td>
+<p>Boolean, whether to prettify the normalized JSON string</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>to</code></td>
+<td>
+<p><code>NULL</code> to return the normalized JSON string, otherwise
+the path to a JSON file to which the normalized JSON string will be
+written</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The normalized JSON string.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The special JavaScript values <code>undefined</code> and <code>NaN</code> are not
+allowed in JSON strings. If one of them occurs in the input string, it is
+replaced by the empty string.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jsonNormalize)
+# the keys of the following JSON string are not quoted
+jstring &lt;- "[{area:30,ind:[5,3.7], cluster:true,},{ind:[],cluster:false},]"
+cat(jsonNormalize(jstring, prettify = TRUE))
+</code></pre>
+
+
+</div>

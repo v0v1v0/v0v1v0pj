@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SimSickleJrSmall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>A small SickleJr object containing a subset of data from the
+<code style="white-space: pre;">⁠SimData⁠</code> data object. Contains the completed analysis from the
+'Getting Started' vignette for a small subset of 10 cells with 150 genes and
+700 peaks. The clusters derived from this dataset are not accurate; this dataset
+is intended for use with code examples.</h2>
+
+<h3>Description</h3>
+
+<p>A small SickleJr object containing a subset of data from the
+<code style="white-space: pre;">⁠SimData⁠</code> data object. Contains the completed analysis from the
+'Getting Started' vignette for a small subset of 10 cells with 150 genes and
+700 peaks. The clusters derived from this dataset are not accurate; this dataset
+is intended for use with code examples.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(SimSickleJrSmall)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A SickleJr object containing a completed analysis using jrSiCKLSNMF
+</p>
+
+<dl>
+<dt>count.matrices</dt>
+<dd>
+<p>Contains a list of 2 sparse matrices, each containing a different
+simulated omics modality measured on the same set of single cells</p>
+</dd>
+<dt>normalized.count.matrices</dt>
+<dd>
+<p>The normalized versions of the count matrices
+contained in slot <code>count.matrices</code></p>
+</dd>
+<dt>graph.laplacian.list</dt>
+<dd>
+<p>A list of sparse matrices containing the graph
+Laplacians corresponding to the KNN feature-feature similarity graphs constructed
+for each omics modality</p>
+</dd>
+<dt>rowRegularization</dt>
+<dd>
+<p>A string indicating the row regularization: here it
+is set to <code>"None"</code></p>
+</dd>
+<dt>diffFunc</dt>
+<dd>
+<p>A string specifying the function to measure the discrepancy
+between the normalized data and the fitted matrices: here, it is set to "klp"
+for the Poisson Kullback-Leibler divergence</p>
+</dd>
+<dt>lambdaWlist</dt>
+<dd>
+<p>A list holding the graph regularization parameters: here,
+they are 10 and 50</p>
+</dd>
+<dt>lambdaH</dt>
+<dd>
+<p>A numeric indicating the value for the sparsity parameter.
+Here it is equals 500</p>
+</dd>
+<dt>Wlist</dt>
+<dd>
+<p>A list holding the fitted <code class="reqn">\mathbf{W}^v</code> matrices</p>
+</dd>
+<dt>H</dt>
+<dd>
+<p>A matrix holding <code class="reqn">\mathbf{H}</code></p>
+</dd>
+<dt>WHinitials</dt>
+<dd>
+<p>A list of initial values for <code class="reqn">\mathbf{W}^v</code> and <code class="reqn">\mathbf{H}</code></p>
+</dd>
+<dt>lossCalcSubsample</dt>
+<dd>
+<p>A vector containing a subset on which to calculate the loss</p>
+</dd>
+<dt>latent.factor.elbow.values</dt>
+<dd>
+<p>A data frame holding the loss and the number of latent factor that is used for diagnostic plots</p>
+</dd>
+<dt>minibatch</dt>
+<dd>
+<p>A Boolean indicating whether or not to use the mini-batch algorithm: <code>FALSE</code> here</p>
+</dd>
+<dt>clusterdiagnostics</dt>
+<dd>
+<p>Diagnostic plots and results</p>
+</dd>
+<dt>clusters</dt>
+<dd>
+<p>A list holding the <code>"kmeans"</code> clustering results</p>
+</dd>
+<dt>metadata</dt>
+<dd>
+<p>A list holding metadata; here this is just cell type information</p>
+</dd>
+<dt>loss</dt>
+<dd>
+<p>A list holding a vector called "Loss"</p>
+</dd>
+<dt>umap</dt>
+<dd>
+<p>A list holding various UMAP approximations</p>
+</dd>
+<dt>plots</dt>
+<dd>
+<p>A list holding ggplots corresponding to different diagnostics and visualizations</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="https://github.com/ellisdoro/jrSiCKLSNMF_Simulations">jrSicKLSNMF Simulations</a>
+</p>
+
+
+</div>

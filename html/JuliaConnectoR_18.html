@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>juliaLet</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluate Julia code in a <code>let</code> block using values of R variables</h2>
+
+<h3>Description</h3>
+
+<p>R variables can be passed as named arguments, which are inserted
+for those variables in the Julia expression that have the same name
+as the named arguments. The given Julia code is executed in Julia
+inside a <code>let</code> block and the result is translated back to R.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">juliaLet(expr, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>expr</code></td>
+<td>
+<p>Julia code, given as one-element character vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>arguments that will be introduced as variables in the
+<code>let</code> block. The values are transferred to Julia and
+assigned to the variables introduced in the <code>let</code> block.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>A simple, nonsensical example for explaining the principle:
+</p>
+<p><code>juliaLet('println(x)', x = 1)</code>
+</p>
+<p>This is the same as
+</p>
+<p><code>juliaEval('let x = 1.0; println(x) end')</code>
+</p>
+<p>More complex objects cannot be simply represented in a string like in
+this simple example any more.
+That is the problem that <code>juliaLet</code> solves.
+</p>
+<p>Note that the evaluation is done in a <code>let</code> block. Therefore,
+changes to global variables in the Julia session are only possible by
+using the keyword <code>global</code> in front of the Julia variables
+(see examples).
+</p>
+
+
+<h3>Value</h3>
+
+<p>The value returned from Julia, translated to an R data structure.
+If Julia returns <code>nothing</code>, an invisible <code>NULL</code> is returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">if (juliaSetupOk()) {
+
+   # Intended use: Create a complex Julia object
+   # using Julia syntax and data from the R workspace
+   juliaLet('[1 =&gt; x, 17 =&gt; y]', x = rnorm(1), y = rnorm(2))
+
+   # Assign a global variable
+   # (although not recommended for a functional style)
+   juliaLet("global x = xval", xval = rnorm(10))
+   juliaEval("x")
+
+}
+
+
+</code></pre>
+
+
+</div>

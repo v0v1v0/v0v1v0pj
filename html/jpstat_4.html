@@ -1,0 +1,86 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>estat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Access 'e-Stat' data</h2>
+
+<h3>Description</h3>
+
+<p>The <code>estat()</code> gets the meta-information of a statistical table by using <code>getMetaInfo</code> of the 'e-Stat' API,
+and returns an <code>estat</code> object that allows editing of meta-information by <code>dplyr::filter()</code> and <code>dplyr::select()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">estat(
+  appId = deprecated(),
+  statsDataId,
+  lang = c("J", "E"),
+  query = list(),
+  path = "rest/3.0/app/json/"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>appId</code></td>
+<td>
+<p>(Deprecated) an 'appId' of 'e-Stat' API.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>statsDataId</code></td>
+<td>
+<p>A statistical data ID on 'e-Stat'.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>A language, Japanese (<code>"J"</code>) or English (<code>"E"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>query</code></td>
+<td>
+<p>A list of additional queries.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>An e-Stat API path.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>estat</code> object.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><a href="https://www.e-stat.go.jp">https://www.e-stat.go.jp</a>
+</p>
+<p><a href="https://www.e-stat.go.jp/en">https://www.e-stat.go.jp/en</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+estat("Your appId", "https://www.e-stat.go.jp/dbview?sid=0003433219")
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

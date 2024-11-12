@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generating van der Waerden and Exponential Scores</h2>
+
+<h3>Description</h3>
+
+<p>Generates van der Waerden scores (i.e., normal quantiles) and exponential 
+(similar to Savage) scores, for combined data <code>x</code> and <code>y</code>.</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R"> score(x, y = NULL, expon = FALSE) </code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A positive integer equal to the number of desired scores when <code>y</code> is <code>NULL</code>,
+or <code>x</code> is a vector of observations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>An optional vector of observations, typically used with two-sample tests.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>expon</code></td>
+<td>
+<p>Logical; if <code>FALSE</code> (default), van der Waerden scores are computed, even for ties.
+If <code>TRUE</code>, Exponential scores are computed, and interpolation is used for ties.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The scored values for <code>x</code> are the output, when <code>y</code> is <code>NULL</code>.</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Scored values for <code>x</code>, when <code>y</code> is not <code>NULL</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>Scored values for <code>y</code>, when <code>y</code> is not <code>NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The formulas computed within <code>score</code> are based on the textbook by Higgins (2004).</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Steven T. Garren, James Madison University, Harrisonburg, Virginia, USA</p>
+
+
+<h3>References</h3>
+
+<p>Higgins, J. J. (2004) <em>Introduction to Modern Nonparametric Statistics</em>.</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">score( 10 )
+
+score( 15, expon=TRUE )
+
+score( c(4,7,6,22,13), c(15,16,7) )  # Two samples, including a tie. 
+</code></pre>
+
+
+</div>

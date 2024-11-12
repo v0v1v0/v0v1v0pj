@@ -1,0 +1,104 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_get_book</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract meta information for books</h2>
+
+<h3>Description</h3>
+
+<p><code>jst_get_book()</code> extracts meta-data from JSTOR-XML files for book chapters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_get_book(file_path)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>file_path</code></td>
+<td>
+<p>A <code>.xml</code>-file for a book or research report.</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code>tibble</code> containing the extracted meta-data with the following
+columns:
+</p>
+
+<ul>
+<li>
+<p> file_name <em>(chr)</em>: The filename of the original .xml-file. Can be used
+for joining with other data for the same file.
+</p>
+</li>
+<li>
+<p> discipline <em>(chr)</em>: The discipline from the discipline names used on JSTOR.
+</p>
+</li>
+<li>
+<p> book_id <em>(chr)</em>: The book id of type "jstor", which is not a registered
+DOI.
+</p>
+</li>
+<li>
+<p> book_title <em>(chr)</em>: The title of the book.
+</p>
+</li>
+<li>
+<p> book_subtitle <em>(chr)</em>: The subtitle of the book.
+</p>
+</li>
+<li>
+<p> pub_day <em>(int)</em>: Publication day, if specified.
+</p>
+</li>
+<li>
+<p> pub_month <em>(int)</em>: Publication month, if specified.
+</p>
+</li>
+<li>
+<p> pub_year <em>(int)</em>: Year of publication.
+</p>
+</li>
+<li>
+<p> isbn <em>(chr)</em>: One or more entries for the book's ISBN. If two or more,
+separated by <code>"; "</code>.
+</p>
+</li>
+<li>
+<p> publisher_name <em>(chr)</em>: The name of the publisher.
+</p>
+</li>
+<li>
+<p> publisher_loc <em>(chr)</em>: The location of the publisher.
+</p>
+</li>
+<li>
+<p> n_pages <em>(int)</em>: The number of pages.
+</p>
+</li>
+<li>
+<p> language <em>(chr)</em>: The language of the book.
+</p>
+</li>
+</ul>
+<p>A note about publication dates: always the first entry is being extracted,
+which should correspond to the oldest date, in case there is more than one
+date.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jst_get_book(jst_example("book.xml"))
+</code></pre>
+
+
+</div>

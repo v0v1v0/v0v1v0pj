@@ -1,0 +1,126 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>score.jmdem, wald.jmdem</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Asymptotic tests for fits of joint mean and dispersion effects models
+</h2>
+
+<h3>Description</h3>
+
+<p>Computes a score (Rao) or Wald chi-squared test statistics for comparing two <code>jmdem</code> models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">score.jmdem(object, ...)
+
+wald.jmdem(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>a model or <code>list</code> of two or more models fitted by <code>jmdem</code> to be tested. Pairwise tests will be conducted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>a <code>list</code> of two or more fitted models to be tested.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Given a vector of model coefficients of length p, <code class="reqn">\Theta = (\theta_1, \ldots, \theta_q, \theta_{q+1}, \ldots, \theta_p)^T</code>, the score and Wald tests are usually used to test the null hypothesis against an alternative
+</p>
+<p style="text-align: center;"><code class="reqn">H_0: \theta_{q+1} = \ldots = \theta_p = 0 vs. H_0 not true</code>
+</p>
+
+<p>Thus, they are asymptotic tests on the explanatory power of one or more regressors. And the result of the score and Wald tests only makes sense if the models involved are nested, i.e. all coefficients of a "smaller" (null, restricted) model are included in a "bigger" (alternative, unrestricted) model.
+</p>
+<p>The main difference between the score and Wald tests is that the score test only requires the knowledge of the fitted coefficients of the "small" model. The Wald test, on the other hand, only need the estimates of the "bigger" model. Nevertheless, these tests are asymptotically equivalent, i.e. for large samples, the test statistics of these tests on the same set of models should be very close.
+</p>
+<p>The key assumption is that the coefficient estimates asymptotically follow a (multivariate) normal distribution with mean and variance equal to the model parameters and their variance-covariance matrix.
+</p>
+<p><code>score.jmdem</code> and <code>wald.jmdem</code> extract the fitted coefficients and their variance-covariance matrix from the model objects, and evaluate the test statistics subsequently. So it is not necessary to specify the coefficients and variance-covariance matrix in the function arguments.
+</p>
+<p><code>score.jmdem</code> and <code>wald.jmdem</code> only return the test statistics. They are asymptotically chi-square distributed with <code class="reqn">p - q</code> degrees of freedom.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>score.jmdem</code> and <code>wald.jmdem</code> return a column matrix containing the test statistics of the pairwise comparisons of all models given by the user in <code>object</code> and <code>...</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>The score test is sometimes also called the Rao's score test or Lagrange multiplier (LM) test in different literatures.
+</p>
+<p>Normally, asymptotic tests include likelihood ratio (LR), Rao's score and Wald tests. The likelihood ratio test is omitted here because the comparison of the deviances of two joint mean and dispersion effects models is questionable, if not even invalid. One important argument is that the dependent variables of two different dispersion submodels given two different mean submodels are not the identical.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Karl Wu Ka Yui (karlwuky@suss.edu.sg)
+</p>
+
+
+<h3>References</h3>
+
+<p>Engle, R.F. (1983). <em>Wald, Likelihood Ratio, and Lagrange Multiplier Tests in Econometrics</em>. In Intriligator, M. D.; Griliches, Z. <em>Handbook of Econometrics</em>. <strong>II</strong>. Elsevier. pp. 796-801.
+</p>
+<p>McCullagh P. and Nelder, J.A. (1989) <em>Generalized Linear Models</em>. London: Chapman and Hall.
+</p>
+<p>Wu, K.Y.K., Li, W.K. (2016). <em>On a dispersion model with Pearson residual responses</em>. Comput. Statist. Data Anal., <strong>103</strong>, 17-27.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>anova.jmdem</code>, <code>anova</code>, <code>jmdem</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Example in jmdem(...)
+MyData &lt;- simdata.jmdem.sim(mformula = y ~ x + delta, dformula = ~ z, 
+                            mfamily = gaussian(), 
+                            dfamily = Gamma(link = "log"), 
+                            beta.true = c(0.5, 4, 1), 
+                            lambda.true = c(2.5, 3), n = 100)
+
+fit &lt;- jmdem(mformula = y ~ x + delta, dformula = ~ z, data = MyData, 
+             mfamily = gaussian, dfamily = Gamma, dev.type = "pearson", 
+             method = "BFGS", df.adj = TRUE)
+
+fit.1 &lt;- update(fit, mformula = . ~ . - delta)
+
+fit.2 &lt;- update(fit.1, mformula = . ~ . - x)
+
+## conduct a Wald tests
+wald.jmdem(fit, fit.1, fit.2)
+
+## should deliver the same results as above
+wald.jmdem(object = list(fit, fit.1, fit.2))
+
+## conduct the score test and compute the p-value directly.
+raotest &lt;- score.jmdem(fit, fit.2)
+pchisq(raotest, df = abs(df.residual(fit) - df.residual(fit.2)), 
+       lower.tail = FALSE)
+</code></pre>
+
+
+</div>

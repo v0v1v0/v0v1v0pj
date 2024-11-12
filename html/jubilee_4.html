@@ -1,0 +1,77 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Constructor of the jubilee class</h2>
+
+<h3>Description</h3>
+
+<p>Construct an jubilee object which holds raw and derived data,
+channel regression results, and other derived analytical quantities.
+This object is the main object to perform various forecasts and analyses.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee(dtb, lookback.channel = 45, fwd.rtn.duration = 20,
+  force = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dtb</code></td>
+<td>
+<p>data.table from the <code>jubilee.repo</code> object, typically it is the <code>ie</code> slot.
+The user is allowed to provide custom data object to research different markets,
+as long as the column names are compliant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lookback.channel</code></td>
+<td>
+<p>numeric, look-back channel in years to calculate mean-reversion. Default is 45.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fwd.rtn.duration</code></td>
+<td>
+<p>numeric, forward return duration in years. Default is 20.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>force</code></td>
+<td>
+<p>logical, if FALSE, allowed to retrieve previous object stored in option. Default is <code>TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an object of the jubilee class
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Stephen H. Lihn
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+  repo &lt;- jubilee.repo(online=FALSE)
+  ju &lt;- jubilee(repo@ie, 45, 20)
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

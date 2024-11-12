@@ -1,0 +1,150 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>segmentByRBS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Recursive Binary Segmentation (low-level)</h2>
+
+<h3>Description</h3>
+
+<p>Low-level function for multivariate Recursive Binary Segmentation (RBS)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">segmentByRBS(Y, K, minRegionSize = 2, verbose = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>A <code>n*p</code> signal to be segmented</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>K</code></td>
+<td>
+<p>The number of change points to find</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>minRegionSize</code></td>
+<td>
+<p>Regions with less than <code>minRegionSize</code> are not
+split</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>A <code>logical</code> value: should extra information be output ?
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function recrusively looks for the best candidate change point
+according to binary segmentation. This is the low-level function. It is
+generally advised to use the wrapper <code>doRBS</code> which also works on
+data frames and has a convenient argument <code>stat</code>.
+</p>
+<p>See <code>jointSeg</code> for combining recursive binary segmentation with
+pruning by dynamic programming (<code>pruneByDP</code>).
+</p>
+<p>See <code>PSSeg</code> for segmenting genomic signals from SNP arrays.
+</p>
+<p>Each dimension of the original signal is scaled before segmentation, using
+<code>estimateSd</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements: </p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>bkp</code></td>
+<td>
+<p>A <code>vector</code> of <code>K</code>
+estimated breakpoint positions, sorted by order of appearance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rse</code></td>
+<td>
+<p>the residual squared error (RSE) for the successive
+segmentations</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gain</code></td>
+<td>
+<p>The gain provided by each breakpoints in terms of
+difference between RSE </p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Morgane Pierre-Jean and Pierre Neuvial
+</p>
+
+
+<h3>References</h3>
+
+<p>Gey, S., &amp; Lebarbier, E. (2008). Using CART to Detect Multiple
+Change Points in the Mean for Large Sample.
+http://hal.archives-ouvertes.fr/hal-00327146/
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>PSSeg</code>, <code>jointSeg</code>, <code>doRBS</code>,
+<code>pruneByDP</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+p &lt;- 2
+trueK &lt;- 10
+len &lt;- 1e4
+sim &lt;- randomProfile(len, trueK, 1, p)
+Y &lt;- sim$profile
+K &lt;- 2*trueK
+res &lt;- segmentByRBS(Y, K)
+getTpFp(res$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+cols &lt;- rep(2, K)
+cols[1:trueK] &lt;- 3
+par(mfrow=c(p,1))
+for (ii in 1:p) {
+    plot(Y[, ii], pch=19, cex=0.2)
+    abline(v=res$bkp[1:trueK], col= cols)
+    abline(v=sim$bkp, col=8, lty=2)
+}
+
+## NA:s in one dimension at a true breakpoint
+jj &lt;- sim$bkp[1]
+Y[jj-seq(-10, 10), p] &lt;- NA
+res2 &lt;- segmentByRBS(Y, K)
+getTpFp(res2$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+## NA:s in both dimensions at a true breakpoint
+Y[jj-seq(-10, 10), ] &lt;- NA
+res3 &lt;- segmentByRBS(Y, K)
+getTpFp(res3$bkp, sim$bkp, tol=10, relax = -1)   ## true and false positives
+
+</code></pre>
+
+
+</div>

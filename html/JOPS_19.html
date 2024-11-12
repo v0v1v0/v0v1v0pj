@@ -1,0 +1,118 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>hist2d</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a 2D histogram</h2>
+
+<h3>Description</h3>
+
+<p>Compute a two-dimesnional histogram from two vectors (of the same length), <code>x</code> and <code>y</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">hist2d(x, y, nb = c(100, 100), xlim = range(x), ylim = range(y))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a numeric vector.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a numeric vector of the same length as <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nb</code></td>
+<td>
+<p>a vector <code>c(nbx, nby)</code>, or a scalar <code>nb</code>, providing the number of bins for x, and y; default is 100; see details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xlim</code></td>
+<td>
+<p>a vector <code>c(xmin, xmax)</code> containing the limits of the domain of <code>x</code>; default <code>range(x)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ylim</code></td>
+<td>
+<p>a vector <code>c(ymin, ymax)</code> containing the limits of the domain of <code>y</code>; default <code>range(y)</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>nb</code> is scalar, it is extended to <code>c(nb, nb)</code>, so that both dimensions will have the same number of bins.
+</p>
+<p>Elements of <code>x</code> (<code>y</code>) that fall outside the range specified by <code>xlim</code> (<code>ylim</code>) are not counted.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>H</code></td>
+<td>
+<p>a matrix of dimension <code>nbx</code> by <code>nby</code> containing bin counts.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xgrid</code></td>
+<td>
+<p>a vector of length <code>nbx</code> representing centers of the bins for <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ygrid</code></td>
+<td>
+<p>a vector of length <code>nby</code> representing centers of the bins for <code>y</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xbin</code></td>
+<td>
+<p>a vector giving the bin number of each element of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ybin</code></td>
+<td>
+<p>a vector giving the bin number of each element of <code>y</code>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(faithful)
+x = faithful$eruptions
+y = faithful$waiting
+C = hist2d(x, y, c(50,50))
+image(C$xgrid, C$ygrid, C$H, xlab='Eruption length (min)', ylab='Waiting time (min)')
+title('Old Faithful geyser')
+
+</code></pre>
+
+
+</div>

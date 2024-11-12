@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getSessionVariable</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get a variable from a client session environment</h2>
+
+<h3>Description</h3>
+
+<p>This function returns a variable, how it is seen from a session, e.g. for all the received function calls and
+commands. It searches for the variable in the session environment first, and then, if variable is not found, checks enclosing 
+frames of the environment, starting from the outer environment of the app (see <code>setEnvironment</code>). If the variable
+doesn't exist, throws an error.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getSessionVariable(varName, sessionId = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>varName</code></td>
+<td>
+<p>Name of the variable to search for. Must be a character.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sessionId</code></td>
+<td>
+<p>ID of the session. If there is only one active session, this argument becomes optional.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function
+is a wrapper around method <code>sessionVariables</code> of the class <code>Session</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Requested variable
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>setSessionVariables</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# to run this example an installed web browser is required
+f &lt;- function(x) {x * 3}
+openPage(allowedFunctions = "f", allowedVariables = "k", sessionVars = list(k = 0))
+k &lt;- getSessionVariable("k")
+getPage()$openPage(FALSE)
+id1 &lt;- getSessionIds()[1]
+id2 &lt;- getSessionIds()[2]
+sendCommand("jrc.callFunction('f', [10], 'k')", sessionId = id1, wait = 3)
+sendCommand("jrc.callFunction('f', [20], 'k')", sessionId = id2, wait = 3)
+k1 &lt;- getSessionVariable("k", id1)
+k2 &lt;- getSessionVariable("k", id2)
+
+closePage()
+## End(Not run)
+
+</code></pre>
+
+
+</div>

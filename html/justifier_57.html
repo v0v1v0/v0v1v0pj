@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>to_specList</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Producing a list of specifications</h2>
+
+<h3>Description</h3>
+
+<p>This function is for internal use, but has been exported in
+case it's useful for people working 'manually' with
+lists of justifications.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">to_specList(x, types, type, idsRequired = TRUE, silent = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The list to parse.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>types</code></td>
+<td>
+<p>The class to assign to the specification
+list (the <code>justifierSpecList</code> object to return).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>The class to assign to each specification
+(in addition to <code>justifierSpec</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idsRequired</code></td>
+<td>
+<p>Whether to require identifiers.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>silent</code></td>
+<td>
+<p>Whether to be chatty or silent.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list of classes <code>c("justifierSpecList", types)</code> where
+each element is a specification of class
+<code>c("justifierSpec", type)</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">### Specify an example text
+exampleFile &lt;-
+  system.file("extdata",
+              "simple-example.jmd",
+              package="justifier");
+
+### Show contents
+cat(readLines(exampleFile), sep="\n");
+
+### Load it with yum::load_and_simplify()
+loadedMinutes &lt;- yum::load_and_simplify(exampleFile);
+
+### Show contents
+names(loadedMinutes);
+
+### Show classes
+class(loadedMinutes["assertion"]);
+
+### Convert to specification list
+res &lt;- to_specList(loadedMinutes["assertion"],
+                   type="assertion",
+                   types="assertions");
+### Show classes
+class(res);
+
+### Show original and parsed objects
+loadedMinutes["assertion"];
+res;
+
+</code></pre>
+
+
+</div>

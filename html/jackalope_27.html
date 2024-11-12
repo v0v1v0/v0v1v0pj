@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>write_fasta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Write a <code>ref_genome</code> or <code>haplotypes</code> object to a FASTA file.</h2>
+
+<h3>Description</h3>
+
+<p>This file produces 1 FASTA file for a <code>ref_genome</code> object and one file
+for each haplotype in a <code>haplotypes</code> object.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">write_fasta(
+  obj,
+  out_prefix,
+  compress = FALSE,
+  comp_method = "bgzip",
+  text_width = 80,
+  show_progress = FALSE,
+  n_threads = 1,
+  overwrite = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>A <code>ref_genome</code> or <code>haplotypes</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_prefix</code></td>
+<td>
+<p>Prefix for the output file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>compress</code></td>
+<td>
+<p>Logical specifying whether or not to compress output file, or
+an integer specifying the level of compression, from 1 to 9.
+If <code>TRUE</code>, a compression level of <code>6</code> is used.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>comp_method</code></td>
+<td>
+<p>Character specifying which type of compression to use if any
+is desired. Options include <code>"gzip"</code> and <code>"bgzip"</code>.
+This is ignored if <code>compress</code> is <code>FALSE</code>. Defaults to <code>"bgzip"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>text_width</code></td>
+<td>
+<p>The number of characters per line in the output fasta file.
+Defaults to <code>80</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>show_progress</code></td>
+<td>
+<p>Logical for whether to show a progress bar.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_threads</code></td>
+<td>
+<p>Number of threads to use if writing from a <code>haplotypes</code> object.
+Threads are split among haplotypes, so it's not useful to provide more threads
+than haplotypes.
+This argument is ignored if <code>obj</code> is a <code>ref_genome</code> object, or if
+OpenMP is not enabled.
+Defaults to <code>1</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Logical for whether to overwrite existing file(s) of the
+same name, if they exist. Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+</div>

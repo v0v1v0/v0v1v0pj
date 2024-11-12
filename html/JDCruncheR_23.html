@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>fr-weighted_score</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Calcul d'un score pondéré pour chaque observation</h2>
+
+<h3>Description</h3>
+
+<p>Permet de pondérer un score déjà calculé en fonction de variables.
+</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>objet de type <code>QR_matrix</code> ou <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pond</code></td>
+<td>
+<p>pondération à appliquer au score. Il peut s'agir d'un nombre,
+d'un vecteur de nombres, du nom d'une des variables du bilan qualité ou d'une
+liste de pondérations pour les objets <code>mQR_matrix</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>L'objet en entrée avec le score recalculé
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Chemin menant au fichier demetra_m.csv
+demetra_path &lt;- file.path(
+    system.file("extdata", package = "JDCruncheR"),
+    "WS/ws_ipi/Output/SAProcessing-1",
+    "demetra_m.csv"
+)
+
+# Extraire le bilan qualité à partir du fichier demetra_m.csv
+QR &lt;- extract_QR(demetra_path)
+
+# Calculer le score
+QR &lt;- compute_score(QR, n_contrib_score = 2)
+print(QR)
+
+# Pondérer le score
+QR &lt;- weighted_score(QR, 2)
+print(QR)
+
+# Extraire le score pondéré
+QR$modalities$score_pond
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,64 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>abundance-prediction</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get empirical Bayes predictions of the latent abundances</h2>
+
+<h3>Description</h3>
+
+<p>Computes the conditional abundance distribution given the data and model estimates</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getranef.uniNmix(obj, distr = FALSE)
+getranef.jointNmix(obj, distr = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>obj</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distr</code></td>
+<td>
+<p>logical. If TRUE, returns the matrix of conditional probabilities. If FALSE, returns the expected values of the conditional distributions, i.e. the abundance estimates</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>These functions returnt the empirical Bayes estimates of the latent abundances from univariate and joint N-mixture models, as described by Royle (2004) and Moral et al. (submitted), respectively.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>References</h3>
+
+<p>Royle, J.A. (2004) Models for estimating population size from spatially replicated counts. Biometrics 60:108-105.
+</p>
+<p>Moral, R.A., Hinde, J., Demétrio, C.G.B., Reigada, C. and Godoy, W.A.C. (submitted) Models for jointly estimating abundance of two unmarked site-associated species subject to imperfect detection.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Nmix</code>
+<code>jointNmix</code>
+</p>
+
+
+</div>

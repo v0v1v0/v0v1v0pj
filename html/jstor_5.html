@@ -1,0 +1,147 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jst_combine_outputs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Combine outputs from converted files</h2>
+
+<h3>Description</h3>
+
+<p><code>jst_combine_outputs()</code> helps you to manage the multitude of files you might
+receive after running <code>jst_import()</code> or <code>jst_import_zip()</code> with more than
+one batch.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jst_combine_outputs(
+  path,
+  write_to_file = TRUE,
+  out_path = NULL,
+  overwrite = FALSE,
+  clean_up = FALSE,
+  warn = TRUE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>path</code></td>
+<td>
+<p>A path to a directory, containing .csv-files from
+<code>jst_import()</code> or <code>jst_import_zip()</code>, or a vector of files which are to be
+imported.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>write_to_file</code></td>
+<td>
+<p>Should combined data be written to a file?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>out_path</code></td>
+<td>
+<p>A directory where to write the combined files. If no
+directory is supplied and <code>write_to_file</code> is <code>TRUE</code>, the combined files are
+written to <code>path</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>overwrite</code></td>
+<td>
+<p>Should files be overwritten?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>clean_up</code></td>
+<td>
+<p>Do you want to remove the original batch files? Use with
+caution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>warn</code></td>
+<td>
+<p>Should warnings be raised, if the file type cannot be determined?</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Splitting the output of <code>jst_import()</code> or <code>jst_import_zip()</code> might be done
+for multiple reasons, but in the end you possibly want to combine all outputs
+into one file/data.frame. This function makes a few assumptions in order to
+combine files:
+</p>
+
+<ul>
+<li>
+<p> Files with similar names (except for trailing dashes with numbers) belong
+together and will be combined into one file.
+</p>
+</li>
+<li>
+<p> The names of the combined files can be determined from the original files.
+If you want to combine <code style="white-space: pre;">⁠foo-1.csv⁠</code> and <code style="white-space: pre;">⁠foo-2.csv⁠</code>, the combined file will
+be <code>combined_foo.csv</code>.
+</p>
+</li>
+<li>
+<p> The directory only contains files which were imported via
+<code>jst_import()</code> or <code>jst_import_zip()</code>. If the directory contains other
+<code>.csv</code> files, you should supply a character vector with paths to only those
+files, which you want to import.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>Either writes to disk, or returns a list with all combined files.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jst_re_import()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># set up a temporary directory
+tmp &lt;- tempdir()
+
+# find multiple files
+file_list &lt;- rep(jst_example("article_with_references.xml"), 2)
+
+# convert and write to file
+jst_import(file_list, "article", out_path = tmp, .f = jst_get_article,
+             n_batches = 2, show_progress = FALSE)
+             
+# combine outputs
+jst_combine_outputs(tmp)
+list.files(tmp, "csv")
+
+## Not run: 
+# Trying to combine the files again raises an error.
+jst_combine_outputs(tmp)
+
+## End(Not run)
+
+# this doesn't
+jst_combine_outputs(tmp, overwrite = TRUE)
+
+# we can remove the original files too
+jst_combine_outputs(tmp, overwrite = TRUE, clean_up = TRUE)
+list.files(tmp, "csv")
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,68 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>webland</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Information on real estate transaction prices API</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">webland_trade(lang = c("ja", "en"))
+
+webland_city(lang = c("ja", "en"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>lang</code></td>
+<td>
+<p>Language.</p>
+</td>
+</tr></table>
+<h3>Details</h3>
+
+<p>Collect data from the information on real estate transaction prices API
+provided by Japan's Ministry of Land, Infrastructure, Transport and Tourism.
+</p>
+
+
+<h3>Value</h3>
+
+<p><code>webland_trade()</code> a <code>webland_trade</code> object. By creating a query with <code>itemise()</code> and
+applying <code>collect()</code>, The real estate transaction prices are collected.
+</p>
+<p><code>webland_city()</code> a <code>webland_city</code> object. Obtains a list of target
+municipalities in the same way as <code>webland_trade()</code>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Collect trade data
+webland_trade() |&gt;
+  itemise(from = "20151",
+          to = "20152",
+          city_code = "13102") |&gt;
+  collect()
+
+# Collect target municipalities
+webland_city() |&gt;
+  itemise(pref_code = "13") |&gt;
+  collect()
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

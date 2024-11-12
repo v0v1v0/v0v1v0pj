@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joyn_msg</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>display type of joyn message</h2>
+
+<h3>Description</h3>
+
+<p>display type of joyn message
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joyn_msg(msg_type = getOption("joyn.msg_type"), msg = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>msg_type</code></td>
+<td>
+<p>character: one or more of the following:
+all, basic, info, note, warn, timing, or err</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>msg</code></td>
+<td>
+<p>character vector to be parsed to <code>cli::cli_abort()</code>. Default is
+NULL. It only works if <code>"err" %in% msg_type</code>. This is an internal argument.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>returns data frame with message invisibly. print message in console
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Messages functions
+<code>clear_joynenv()</code>,
+<code>joyn_msgs_exist()</code>,
+<code>joyn_report()</code>,
+<code>msg_type_dt()</code>,
+<code>store_msg()</code>,
+<code>style()</code>,
+<code>type_choices()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(data.table)
+x1 = data.table(id = c(1L, 1L, 2L, 3L, NA_integer_),
+t  = c(1L, 2L, 1L, 2L, NA_integer_),
+x  = 11:15)
+
+y1 = data.table(id = 1:2,
+                y  = c(11L, 15L))
+df &lt;- joyn(x1, y1, match_type = "m:1")
+joyn_msg("basic")
+joyn_msg("all")
+</code></pre>
+
+
+</div>

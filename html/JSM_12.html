@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>liver</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Prednisone versus Placebo in Liver Cirrhosis Patients
+</h2>
+
+<h3>Description</h3>
+
+<p>A randomized control trial in which both survival and longitudinal data were collected to examine the development of prothrombin index over time and its relationship with the survival outcome. 488 patients were randomly allocated to prednisone (251) or placebo (237) and followed until death or end of the study.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 2968 observations on the following 9 variables.
+</p>
+
+<dl>
+<dt><code>ID</code></dt>
+<dd>
+<p>patient ID, there are 488 patients in total.</p>
+</dd>
+<dt><code>Time</code></dt>
+<dd>
+<p>survival time, i.e. time to death or censoring.</p>
+</dd>
+<dt><code>death</code></dt>
+<dd>
+<p>death indicator: 0 denotes censoring; 1 denotes death.</p>
+</dd>
+<dt><code>obstime</code></dt>
+<dd>
+<p>time points at which the longitudinal measurements, i.e. prothrombin index, are recorded.</p>
+</dd>
+<dt><code>proth</code></dt>
+<dd>
+<p>prothrombin index measured at <code>obstime</code>.</p>
+</dd>
+<dt><code>Trt</code></dt>
+<dd>
+<p>treatment indicator with two levels: <code>placebo</code> and <code>prednisone</code>.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>same with <code>obstime</code>, starting time of the interval which contains the time of the prothrombin index measurement.</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd>
+<p>ending time of the interval which contains the time of the prothrombin index measurement.</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, i.e. death, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Andersen, P. K., Borgan O., Gill, R. D. and Kieding, N. (1993) <em>Statistical Models Based on Counting Processes</em>. New York: Springer.
+</p>
+
+
+<h3>References</h3>
+
+<p>Henderson, R., Diggle, P. and Dobson, A. (2002) Identification and efficacy of longitudinal markers for survival. <em>Biostatistics</em> <b>3</b>, 33–50
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>liver.long</code>,
+<code>liver.surv</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(liver)
+</code></pre>
+
+
+</div>

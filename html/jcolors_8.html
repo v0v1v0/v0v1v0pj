@@ -1,0 +1,113 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>scale_color_jcolors_contin</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>continuous jcolors color scales</h2>
+
+<h3>Description</h3>
+
+<p>continuous jcolors color scales
+</p>
+<p>jcolors color scales
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">scale_color_jcolors_contin(
+  palette = c("default", "pal2", "pal3", "pal4", "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+
+scale_colour_jcolors_contin(
+  palette = c("default", "pal2", "pal3", "pal4", "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+
+scale_fill_jcolors_contin(
+  palette = c("default", "pal2", "pal3", "pal4", "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+
+scale_color_jcolors(
+  palette = c("default", "pal2", "pal3", "pal4", "pal5", "pal6", "pal7", "pal8", "pal9",
+    "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+
+scale_colour_jcolors(
+  palette = c("default", "pal2", "pal3", "pal4", "pal5", "pal6", "pal7", "pal8", "pal9",
+    "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+
+scale_fill_jcolors(
+  palette = c("default", "pal2", "pal3", "pal4", "pal5", "pal6", "pal7", "pal8", "pal9",
+    "pal10", "pal11", "pal12", "rainbow"),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>palette</code></td>
+<td>
+<p>Character string indicating a palette of colors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional parameters for <code>discrete_scale</code></p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(ggplot2)
+
+plt &lt;- ggplot(data.frame(x = rnorm(10000), y = rexp(10000, 1.5)), aes(x = x, y = y)) +
+   geom_hex() + coord_fixed()
+
+plt + scale_fill_jcolors_contin() + theme_bw()
+
+plt + scale_fill_jcolors_contin("pal2", bias = 1.5) + theme_bw()
+
+plt + scale_fill_jcolors_contin("pal3") + theme_bw()
+
+
+library(ggplot2)
+data(morley)
+
+pltl &lt;- ggplot(data = morley, aes(x = Run, y = Speed,
+group = factor(Expt),
+colour = factor(Expt))) +
+    geom_line(size = 2) +
+    theme_bw() +
+    theme(panel.background = element_rect(fill = "grey97"),
+          panel.border = element_blank())
+
+pltd &lt;- ggplot(data = morley, aes(x = Run, y = Speed,
+group = factor(Expt),
+colour = factor(Expt))) +
+    geom_line(size = 2) +
+    theme_bw() +
+    theme(panel.background = element_rect(fill = "grey15"),
+          panel.border = element_blank(),
+          panel.grid.major = element_line(color = "grey45"),
+          panel.grid.minor = element_line(color = "grey25"))
+
+pltl + scale_color_jcolors(palette = "default")
+
+pltd + scale_color_jcolors(palette = "default")
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,90 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>calendar2jdn</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>jdn</h2>
+
+<h3>Description</h3>
+
+<p>Functions for calculating Julian Date from Gregorian or Julian Date Number and functions for calculating Gregorian or Julian Date from Julian Date Number.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">calendar2jdn(date, jdn = c("jdn", "mjd"), calendar = c("gregorian", "julian"))
+
+jdn2calendar(
+  n,
+  jdn = c("jdn", "mjd"),
+  calendar = c("gregorian", "julian"),
+  sep = "/"
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>date</code></td>
+<td>
+<p>Date to be converted. It should always include the year, month, and day.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jdn</code></td>
+<td>
+<p>Select Julius Date Number or Modified Julius Date Number.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>calendar</code></td>
+<td>
+<p>Select whether the calendar is Gregorian or Julian.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>Julian Date Number or Modified Julian Date Number value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sep</code></td>
+<td>
+<p>The way the date is separated when the last date is written.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>* 'jdn2calendar' returns a string type date.
+</p>
+<p>* 'calendar2jdn' returns a a numeric vector.
+</p>
+
+
+<h3>References</h3>
+
+<p>Julian Day Number - Wikipedia [ja] (JD, <a href="https://ja.wikipedia.org/wiki/%E3%83%A6%E3%83%AA%E3%82%A6%E3%82%B9%E9%80%9A%E6%97%A5">https://ja.wikipedia.org/wiki/%E3%83%A6%E3%83%AA%E3%82%A6%E3%82%B9%E9%80%9A%E6%97%A5</a>)
+</p>
+<p>Fliegel, H. F., Van Flandern, T. C. (1968), <a href="https://doi.org/10.1145/364096.364097">doi:10.1145/364096.364097</a>, "A Machine Algorithm for Processing Calendar Dates", Communications of the ACM 11, p. 657.
+</p>
+<p>Hatcher, D. A. (1984, BibCode:1984QJRAS..25...53H) "Simple formulae for Julian day numbers and calendar dates, Quarterly Journal of the Royal Astronomical Society", v. 25, p. 53-55, <a href="https://adsabs.harvard.edu/full/1984QJRAS..25...53H">https://adsabs.harvard.edu/full/1984QJRAS..25...53H</a>.
+</p>
+<p>Meeus, J. (1998, ISBN:0943396638) "Astronomical Algorithms. Willmann-Bell", Second English Edition.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">jdn2calendar(2459216)
+calendar2jdn("2021/1/1")
+
+</code></pre>
+
+
+</div>

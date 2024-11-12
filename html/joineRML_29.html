@@ -1,0 +1,143 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>renal</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Renal transplantation data</h2>
+
+<h3>Description</h3>
+
+<p>This is a dataset on 407 patients suffering from chronic kidney
+disease who underwent a primary renal transplantation with a graft from a
+deceased or living donor in the University Hospital of the Catholic
+University of Leuven (Belgium) between 21 January 1983 and 16 August 2000.
+Chronic kidney (renal) disease is a progressive loss of renal function over
+a period of months or years through five stages. Each stage is a
+progression through an abnormally low and progressively worse glomerular
+filtration rate (GFR). The dataset records 3 repeated measures (2
+continuous and 1 binary), and an event time.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(renal)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>This is a list with 4 data frames: </p>
+
+<ol>
+<li>
+<p><code>prot</code>: repeated measurement data for proteinuria (binary) that
+measures whether the kidneys succeed in sustaining the proteins in the
+blood and not discard them in the urine.
+</p>
+</li>
+<li>
+<p><code>haem</code>: repeated measurement data for blood haematocrit level
+(continuous) that measures whether the kidneys produce adequate amounts of
+the hormone erythropoietin that regulates the red blood cell production.
+</p>
+</li>
+<li>
+<p><code>gfr</code>: repeated measurement data for GFR (continuous) that
+measures the filtration rate of the kidneys.
+</p>
+</li>
+<li>
+<p><code>surv</code>: time-to-event data for renal graft failure.
+</p>
+</li>
+</ol>
+<p><strong>All datasets</strong> have the common data columns, which are in long
+format for the 3 longitudinal data data frames, and 1-per-subject for the
+time-to-event data frame: </p>
+
+<dl>
+<dt><code>id</code></dt>
+<dd>
+<p>number for patient identification.</p>
+</dd>
+<dt><code>age</code></dt>
+<dd>
+<p>age of patient at day of surgery (years).</p>
+</dd>
+<dt><code>weight</code></dt>
+<dd>
+<p>preoperative weight of patient (kg).</p>
+</dd>
+<dt><code>sex</code></dt>
+<dd>
+<p>gender of patient.</p>
+</dd>
+<dt><code>fuyears</code></dt>
+<dd>
+<p>maximum follow up time, with transplant date as the
+time origin (years).</p>
+</dd>
+<dt><code>failure</code></dt>
+<dd>
+<p>censoring indicator (<code>1=</code>graft failure and
+<code>0=</code>censored).</p>
+</dd>
+</dl>
+<p><strong>The longitudinal datasets only</strong> contain 2 further columns:
+</p>
+
+<dl>
+<dt><code>time</code></dt>
+<dd>
+<p>observed time point, with surgery date as the time
+origin (years).</p>
+</dd>
+<dt>biomarker value</dt>
+<dd>
+<p>a recorded measurement of the biomarker taken at
+time <code>time</code>. The 3 biomarkers (one per data frame) are: </p>
+
+<ul>
+<li>
+<p><code>proteinuria</code>: recorded as binary indicator: present or
+not-present. Present in the <code>prot</code> data.
+</p>
+</li>
+<li>
+<p><code>haematocrit</code>: recorded as percentage (%) of the ratio of the
+volume of red blood cells to the total volume of blood. Present in the
+<code>haem</code> data.
+</p>
+</li>
+<li>
+<p><code>gfr</code>: measured as ml/min/1.73<code class="reqn">m^2</code>. Present in the
+<code>gfr</code> data.
+</p>
+</li>
+</ul>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Dr Dimitris Rizopoulos (<a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a>).
+</p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos D, Ghosh, P. A Bayesian semiparametric multivariate joint model
+for multiple longitudinal outcomes and a time-to-event. <em>Stat Med.</em>
+2011; <strong>30(12)</strong>: 1366-80.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>pbc2</code>, <code>heart.valve</code>,
+<code>epileptic.qol</code>.
+</p>
+
+
+</div>

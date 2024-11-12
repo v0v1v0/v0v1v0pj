@@ -1,0 +1,112 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pbc</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Mayo Clinic Primary Biliary Cirrhosis Data
+</h2>
+
+<h3>Description</h3>
+
+<p>A randomized control trial from Mayo Clinic in which both survival and longitudinal data were collected from 1974 to 1984 to study the progression of primary biliary cirrhosis.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 1945 observations on the following 16 variables.
+</p>
+
+<dl>
+<dt><code>ID</code></dt>
+<dd>
+<p>patient ID, there are 312 patients in total.</p>
+</dd>
+<dt><code>Time</code></dt>
+<dd>
+<p>survival time (in years), i.e. time to death, transplantion or censoring.</p>
+</dd>
+<dt><code>death</code></dt>
+<dd>
+<p>death indicator: 0 denotes transplantion or censoring; 1 denotes death.</p>
+</dd>
+<dt><code>obstime</code></dt>
+<dd>
+<p>time points at which the longitudinal measurements, e.g. serum bilirubin, albumin and alkaline phosphatase, are recorded.</p>
+</dd>
+<dt><code>serBilir</code></dt>
+<dd>
+<p>serum bilirubin measured at <code>obstime</code> (mg/dl).</p>
+</dd>
+<dt><code>albumin</code></dt>
+<dd>
+<p>albumin measured at <code>obstime</code> (gm/dl).</p>
+</dd>
+<dt><code>alkaline</code></dt>
+<dd>
+<p>alkaline phosphatase measured at <code>obstime</code> (U/litter).</p>
+</dd>
+<dt><code>platelets</code></dt>
+<dd>
+<p>platelets per cubic measured at <code>obstime</code> (ml/1000).</p>
+</dd>
+<dt><code>drug</code></dt>
+<dd>
+<p>drug indicator with two levels: <code>placebo</code> and <code>D-penicil</code>.</p>
+</dd>
+<dt><code>age</code></dt>
+<dd>
+<p>age of patient at study entry.</p>
+</dd>
+<dt><code>gender</code></dt>
+<dd>
+<p>gender indicator with two levels: <code>male</code> and <code>female</code>.</p>
+</dd>
+<dt><code>ascites</code></dt>
+<dd>
+<p>ascites indicator with two levels: <code>No</code> and <code>Yes</code>.</p>
+</dd>
+<dt><code>hepatom</code></dt>
+<dd>
+<p>hepatomegaly indicator with two levels: <code>No</code> and <code>Yes</code>.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>same with <code>obstime</code>, starting time of the interval which contains the time of the logitudinal measurements.</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd>
+<p>ending time of the interval which contains the time of the longitudinal measurements.</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, i.e. death, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p><a href="http://lib.stat.cmu.edu/datasets/pbcseq">http://lib.stat.cmu.edu/datasets/pbcseq</a>
+</p>
+<p>Fleming, T. and Harrington, D. (1991) <em>Counting Processes and Survival Analysis</em>. Wiley, New York.
+</p>
+
+
+<h3>References</h3>
+
+<p>Murtaugh, P. A., Dickson, E. R., Van Dam, G. M., Malincho, M., Grambsch, P. M., Langworthy, A. L., and Gips, C. H. (1994) Primary biliary cirrhosis: Prediction of short-term survival based on repeated patient visits. <em>Hepatology</em> <b>20</b>, 126–134.
+</p>
+<p>Therneau, T. and Grambsch, P. (2000) <em>Modeling Survival Data: Extending the Cox Model</em>. New York: Springer.
+</p>
+<p>Ding, J. and Wang, J. L. (2008) Modeling longitudinal data with nonparametric multiplicative random effects jointly with survival data. <em>Biometrics</em> <b>64</b>, 546–556.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(pbc)
+</code></pre>
+
+
+</div>

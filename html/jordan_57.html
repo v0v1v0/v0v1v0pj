@@ -1,0 +1,101 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jordan</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create jordan objects</h2>
+
+<h3>Description</h3>
+
+<p>Creation methods for jordan objects</p>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>A matrix with columns representing independent entries in a
+matrix-based Jordan algebra</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a,V</code></td>
+<td>
+<p>Scalar and vector components of a spin factor</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The functions documented here are the creation methods for the five
+types of jordan algebra.
+</p>
+
+<ul>
+<li>
+<p><code>quaternion_herm_matrix()</code>
+</p>
+</li>
+<li>
+<p><code>complex_herm_matrix()</code>
+</p>
+</li>
+<li>
+<p><code>real_symmetric_matrix()</code>
+</p>
+</li>
+<li>
+<p><code>albert()</code>
+</p>
+</li>
+<li>
+<p><code>spin()</code>
+</p>
+</li>
+</ul>
+<p>(to generate quick “get you going” Jordan algebra objects, use
+the <code>rrsm()</code> family of functions, documented at <code>random.Rd</code>).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Return jordans or Boolean as appropriate</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>See Also</h3>
+
+<p><code>random</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+A &lt;- real_symmetric_matrix(1:10)  # vector of length 1
+as.1matrix(A)                     # in matrix form
+
+complex_herm_matrix(cbind(1:25,2:26))
+quaternion_herm_matrix(1:15)
+
+albert(1:27)
+spin(-6,cbind(1:12,12:1))
+
+
+x &lt;- rrsm() ; y &lt;- rrsm() ; z &lt;- rrsm()  # also works with the other Jordans
+
+x*(y*z) - (x*y)*z         # Jordan algebra is not associative...
+(x*y)*(x*x) - x*(y*(x*x)) # but satisfies the Jordan identity
+
+
+</code></pre>
+
+
+</div>

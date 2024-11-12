@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>pad_number</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Pad Numeric Numbers</h2>
+
+<h3>Description</h3>
+
+<p>Add zeros before start of the number
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">pad_number(x)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A <code>vector</code></p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>A <code style="white-space: pre;">⁠character vector⁠</code> that is padded to the length of the
+maximum entry.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>James Balamuta
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Padding applied
+pad_number(8:10)
+
+# No padding applied
+pad_number(2:3)
+
+# Pads non-negative number with 0.
+# This needs to be improved slightly...
+pad_number(-1:1)
+</code></pre>
+
+
+</div>

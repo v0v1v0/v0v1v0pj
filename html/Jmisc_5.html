@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>generateSignificance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Generate t-statistics, p-value and significance</h2>
+
+<h3>Description</h3>
+
+<p>Generate t-statistics, p-value and significance from
+estimates and its sd. Estimates and its SD is the first and
+second column respectively
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">generateSignificance(x, row_names)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A matrix or data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>row_names</code></td>
+<td>
+<p>names of row</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>a data.frame
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>TszKin Julian Chan <a href="mailto:ctszkin@gmail.com">ctszkin@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n&lt;-1000
+x_data&lt;-cbind(rnorm(n,mean=0),rnorm(n,mean=1))
+x_estimates&lt;-cbind(apply(x_data,2,mean),apply(x_data,2,sd)/sqrt(n))
+generateSignificance(x_estimates)
+generateSignificance(x_estimates,row_names=c("mean0","mean1") )
+</code></pre>
+
+
+</div>

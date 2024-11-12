@@ -1,0 +1,60 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_thresholds</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get all (default) thresholds</h2>
+
+<h3>Description</h3>
+
+<p>Get all (default) thresholds
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_thresholds(test_name, default = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>test_name</code></td>
+<td>
+<p>String. The name of the test to get.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>default</code></td>
+<td>
+<p>Boolean. (default is TRUE)
+If TRUE, the default threshold will be returned.
+If FALSE the current used thresholds.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>If <code>test_name</code> is missing, all threshold will be returned.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+# Get all default thresholds
+get_thresholds(default = TRUE)
+
+# Get all current thresholds
+get_thresholds(default = FALSE)
+
+# Get all current thresholds
+get_thresholds(test_name = "oos_mean", default = FALSE)
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_fasta</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read a fasta file.</h2>
+
+<h3>Description</h3>
+
+<p>Accepts uncompressed and gzipped fasta files.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_fasta(fasta_files, fai_files = NULL, cut_names = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fasta_files</code></td>
+<td>
+<p>File name(s) of the fasta file(s).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fai_files</code></td>
+<td>
+<p>File name(s) of the fasta index file(s).
+Providing this argument speeds up the reading process significantly.
+If this argument is provided, it must be the same length as the <code>fasta_files</code>
+argument.
+Defaults to <code>NULL</code>, which indicates the fasta file(s) is/are not indexed.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut_names</code></td>
+<td>
+<p>Boolean for whether to cut chromosome names at the first space.
+This argument is ignored if <code>fai_file</code> is not <code>NULL</code>.
+Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>ref_genome</code> object.
+</p>
+
+
+</div>

@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>add_indicator</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Adding an indicator in QR_matrix objects</h2>
+
+<h3>Description</h3>
+
+<p>Function to add indicators in <code>QR_matrix</code> objects.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">add_indicator(x, indicator, variable_name, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a <code>QR_matrix</code> or <code>mQR_matrix</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indicator</code></td>
+<td>
+<p>a <code>vector</code> or a <code>data.frame</code> (cf. details).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variable_name</code></td>
+<td>
+<p>a string containing the name of the variables to add.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters of the function <code>merge</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The function <code>add_indicator()</code> adds the chosen indicator to the
+values matrix of a quality report. Therefore, because said indicator isn't
+added in the modalities matrix, it cannot be used to calculate a score
+(except for weighting). Before using the added variable for score
+calculation, it will have to be coded with the function
+<code>recode_indicator_num</code>.
+</p>
+<p>The new indicator can be a <code>vector</code> or a <code>data.frame</code>. In both
+cases, its format must allow for pairing:
+</p>
+
+<ul>
+<li>
+<p> a <code>vector</code>'s elements must be named and these names must match those
+of the quality report (variable "series");
+</p>
+</li>
+<li>
+<p> a <code>data.frame</code> must contain a "series" column that matches with the
+quality report's series.
+</p>
+</li>
+</ul>
+<h3>Value</h3>
+
+<p>This function returns the same object, enhanced with the chosen
+indicator. So if the input <code>x</code> is a QR_matrix, an object of class
+<code>QR_matrix</code> is returned. If the input <code>x</code> is a mQR_matrix, an
+object of class <code>mQR_matrix</code> is returned.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Traduction française
+</p>
+<p>Other var QR_matrix manipulation: 
+<code>QR_var_manipulation</code>,
+<code>recode_indicator_num()</code>
+</p>
+
+
+</div>

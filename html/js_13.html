@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>uglify</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compress and Reformat JavaScript Code</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://www.npmjs.com/package/uglify-js">UglifyJS</a> is a JavaScript
+compressor/minifier written in JavaScript. It also contains tools that allow one
+to automate working with JavaScript code.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">uglify_reformat(text, beautify = FALSE, ...)
+
+uglify_optimize(text, ...)
+
+uglify_files(files, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>text</code></td>
+<td>
+<p>a character vector with JavaScript code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beautify</code></td>
+<td>
+<p>prettify (instead of minify) code</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>files</code></td>
+<td>
+<p>a character vector of filenames</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments for the <a href="https://lisperator.net/uglifyjs/compress">optimizer</a>
+or <a href="https://lisperator.net/uglifyjs/codegen">generator</a>.</p>
+</td>
+</tr>
+</table>
+<h3>References</h3>
+
+<p>UglifyJS2 Documentation: <a href="https://lisperator.net/uglifyjs/">https://lisperator.net/uglifyjs/</a>.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">code &lt;- "function test(x, y){ x = x || 1; y = y || 1; return x*y;}"
+cat(uglify_optimize(code))
+cat(uglify_reformat(code, beautify = TRUE, indent_level = 2))
+</code></pre>
+
+
+</div>

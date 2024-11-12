@@ -1,0 +1,180 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>tar_jags_run</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Run a JAGS model and return the whole output object.</h2>
+
+<h3>Description</h3>
+
+<p>Not a user-side function. Do not invoke directly.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">tar_jags_run(
+  jags_lines,
+  parameters.to.save,
+  data,
+  inits,
+  n.cluster,
+  n.chains,
+  n.iter,
+  n.burnin,
+  n.thin,
+  jags.module,
+  RNGname,
+  jags.seed,
+  stdout,
+  stderr,
+  progress.bar,
+  refresh
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>jags_lines</code></td>
+<td>
+<p>Character vector of lines from a JAGS model file.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameters.to.save</code></td>
+<td>
+<p>Model parameters to save, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>inits</code></td>
+<td>
+<p>Initial values of model parameters, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.cluster</code></td>
+<td>
+<p>Number of parallel processes, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.chains</code></td>
+<td>
+<p>Number of MCMC chains, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.iter</code></td>
+<td>
+<p>Number if iterations (including warmup), passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.burnin</code></td>
+<td>
+<p>Number of warmup iterations, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n.thin</code></td>
+<td>
+<p>Thinning interval, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jags.module</code></td>
+<td>
+<p>Character vector of JAGS modules to load, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>RNGname</code></td>
+<td>
+<p>Choice of random number generator, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jags.seed</code></td>
+<td>
+<p>Seeds to apply to JAGS, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stdout</code></td>
+<td>
+<p>Character of length 1, file path to write the stdout stream
+of the model when it runs. Set to <code>NULL</code> to print to the console.
+Set to <code>R.utils::nullfile()</code> to suppress stdout.
+Does not apply to messages, warnings, or errors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>stderr</code></td>
+<td>
+<p>Character of length 1, file path to write the stderr stream
+of the model when it runs. Set to <code>NULL</code> to print to the console.
+Set to <code>R.utils::nullfile()</code> to suppress stderr.
+Does not apply to messages, warnings, or errors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress.bar</code></td>
+<td>
+<p>Type of progress bar, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refresh</code></td>
+<td>
+<p>Frequency for refreshing the progress bar, passed to
+<code>R2jags::jags()</code> or <code>R2jags::jags.parallel()</code>.
+See the argument documentation of the
+<code>R2jags::jags()</code> and <code>R2jags::jags.parallel()</code> help files for details.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>An <code>R2jags</code> output object.
+</p>
+
+
+</div>

@@ -1,0 +1,160 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>LAPS_dens</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Bayesian density estimation</h2>
+
+<h3>Description</h3>
+
+<p>Bayesian density estimation with P-splines and Laplace approximation.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">LAPS_dens(B, P, y, loglambdas, tol = 1e-05, mon = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>B</code></td>
+<td>
+<p>matrix (<code>m</code> by <code>n</code>) with B-spline basis, see <code>bbase()</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>P</code></td>
+<td>
+<p>penalty matrix (<code>n</code> by <code>n</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>vector (length <code>m</code>) of counts, usually a histogram.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>loglambdas</code></td>
+<td>
+<p>a vector of values of logarithms of <code>lambda</code> to explore.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tol</code></td>
+<td>
+<p>convergence tolerance (relative change in coefficients), default <code>1e-5</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mon</code></td>
+<td>
+<p>TRUE or FALSE to monitor the iteration history (default FALSE).</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The B-spline basis should be based on the midpoints of the histogram bins.
+See the example below.
+This function is based on the paper of Gressani and Lambert (2018) and code input by Oswaldo Gressani.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with elements:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>P-spline coefficients of length <code>n</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>weights from the Laplace approximation, which sum to 1 and are
+the same length as <code>loglambdas</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mu</code></td>
+<td>
+<p>a vector of length <code>m</code> of expected values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Cov</code></td>
+<td>
+<p>covariance matrix (<code>m</code> by <code>m</code>) of <code>log(mu)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>the penalty parameter.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ed</code></td>
+<td>
+<p>the effective model dimension.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+<p>Gressani, O. and Lambert, P. (2018).
+Fast Bayesian inference using Laplace approximations in a flexible promotion time cure model based on P-splines.
+<em>Computational Statistics and Data Analysis</em> 124, 151-167.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Smoothing a histogram of Old Faithful eruption durations
+data(faithful)
+durations = faithful[, 1]  # Eruption length
+
+# Histogram with narrow bin widths
+bw = 0.05
+hst = hist(durations, breaks = seq(1, 6, by = bw), plot = TRUE)
+x = hst$mids
+y = hst$counts
+
+# B-spline basis matrices, for fitting and plotting
+nseg = 30
+B = bbase(x, nseg = nseg)
+xg = seq(min(x), max(x), by = 0.01)
+Bg = bbase(xg, nseg = nseg)
+n = ncol(B)
+
+# Penalty matrix
+D2 = diff(diag(n), diff = 2)
+P2 = t(D2) %*% D2
+
+# Fit the model
+loglambs = seq(-1, 2, by = 0.05)
+laps2 = LAPS_dens(B, P2, y, loglambs, mon = FALSE)
+fhat2 = exp(Bg %*% laps2$alpha)
+lines(xg, fhat2, col = "blue", lwd = 2)
+</code></pre>
+
+
+</div>

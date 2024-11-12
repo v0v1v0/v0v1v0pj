@@ -1,0 +1,91 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>spbase</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compute a sparse B-spline basis on evenly spaced knots</h2>
+
+<h3>Description</h3>
+
+<p>Constructs a sparse B-spline basis on evenly spaced knots.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">spbase(x, xl = min(x), xr = max(x), nseg = 10, bdeg = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector of argument values, at which the B-spline basis functions
+are to be evaluated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xl</code></td>
+<td>
+<p>the lower limit of the domain of <code>x</code> (default <code>min(x)</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xr</code></td>
+<td>
+<p>the upper limit of the domain of <code>x</code> (default <code>max(x)</code>) .</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nseg</code></td>
+<td>
+<p>the number of evenly spaced segments between <code>xl</code> and <code>xr</code> (default 10).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bdeg</code></td>
+<td>
+<p>the degree of the basis, usually 1, 2, or 3 (default).</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A sparse matrix (in <code>spam</code> format) with <code>length(x)</code>  of rows= and <code>nseg + bdeg</code> columns.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Eilers, P.H.C. and Marx, B.D. (1996). Flexible smoothing with
+B-splines and penalties (with comments and rejoinder), <em>Statistical Science</em>, 11: 89-121.
+</p>
+<p>Eilers, P.H.C. and Marx, B.D. (2021). <em>Practical Smoothing, The Joys of
+P-splines.</em> Cambridge University Press.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(JOPS)
+# Basis  on grid
+x = seq(0, 4, length = 1000)
+B = spbase(x, 0, 4, nseg = 50, bdeg = 3)
+nb1 = ncol(B)
+matplot(x, B, type = 'l', lty = 1, lwd = 1, xlab = 'x', ylab = '')
+cat('Dimensions of B:', nrow(B), 'by', ncol(B), 'with', length(B@entries), 'non-zero elements' )
+
+</code></pre>
+
+
+</div>

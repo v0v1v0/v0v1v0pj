@@ -1,0 +1,127 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>adaboost</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>AdaBoost Classifier</h2>
+
+<h3>Description</h3>
+
+<p>An implementation of the AdaBoost algorithm from Freund and Shapire (1997)
+applied to decision tree classifiers.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">adaboost(X, y, tree_depth = 3, n_rounds = 100, verbose = FALSE,
+  control = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>A matrix of continuous predictors.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>A vector of responses with entries in <code>c(-1, 1)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>tree_depth</code></td>
+<td>
+<p>The depth of the base tree classifier to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_rounds</code></td>
+<td>
+<p>The number of rounds of boosting to use.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Whether to print the number of iterations.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>A <code>rpart.control</code> list that controls properties of fitted
+decision trees.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns an object of class <code>adaboost</code> containing the following values:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>alphas</code></td>
+<td>
+<p>Weights computed in the adaboost fit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>trees</code></td>
+<td>
+<p>The trees constructed in each round of boosting.  Storing trees
+allows one to make predictions on new data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>confusion_matrix</code></td>
+<td>
+<p>A confusion matrix for the in-sample fits.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>Trees are grown using the CART algorithm implemented in the <code>rpart</code>
+package.  In order to conserve memory, the only parts of the fitted
+tree objects that are retained are those essential to making predictions.
+In practice, the number of rounds of boosting to use is chosen by
+cross-validation.
+</p>
+
+
+<h3>References</h3>
+
+<p>Freund, Y. and Schapire, R. (1997). A decision-theoretic
+generalization of online learning and an application to boosting, Journal of
+Computer and System Sciences 55: 119-139.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Generate data from the circle model
+set.seed(111)
+dat = circle_data(n = 500)
+train_index = sample(1:500, 400)
+
+ada = adaboost(dat$X[train_index,], dat$y[train_index], tree_depth = 2,
+               n_rounds = 200, verbose = TRUE)
+print(ada)
+yhat_ada = predict(ada, dat$X[-train_index,])
+
+# calculate misclassification rate
+mean(dat$y[-train_index] != yhat_ada)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

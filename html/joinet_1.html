@@ -1,0 +1,107 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joinet-package</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Multivariate Elastic Net Regression</h2>
+
+<h3>Description</h3>
+
+<p>The R package <code>joinet</code> implements multivariate
+ridge and lasso regression using stacked generalisation.
+This multivariate regression typically outperforms
+univariate regression at predicting correlated outcomes.
+It provides predictive and interpretable models
+in high-dimensional settings.
+</p>
+
+
+<h3>Details</h3>
+
+<p>Use function <code>joinet</code> for model fitting.
+Type <code>library(joinet)</code> and then <code>?joinet</code> or
+<code>help("joinet)"</code> to open its help file.
+</p>
+<p>See the vignette for further examples.
+Type <code>vignette("joinet")</code> or <code>browseVignettes("joinet")</code>
+to open the vignette.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p><strong>Maintainer</strong>: Armin Rauschenberger <a href="mailto:armin.rauschenberger@uni.lu">armin.rauschenberger@uni.lu</a> (<a href="https://orcid.org/0000-0001-6498-4801">ORCID</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p><a href="https://orcid.org/0000-0001-6498-4801">Armin Rauschenberger</a>
+and
+<a href="https://orcid.org/0000-0003-3977-7469">Enrico Glaab</a>
+(2021)
+"Predicting correlated outcomes from molecular data".
+<em>Bioinformatics</em> 37(21):3889–3895.
+<a href="https://doi.org/10.1093/bioinformatics/btab576">doi:10.1093/bioinformatics/btab576</a>.
+(Click
+<a href="https://orbilu.uni.lu/bitstream/10993/47788/1/joinet.pdf">here</a>
+to access PDF.)
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Useful links:
+</p>
+
+<ul>
+<li> <p><a href="https://github.com/rauschenberger/joinet">https://github.com/rauschenberger/joinet</a>
+</p>
+</li>
+<li> <p><a href="https://rauschenberger.github.io/joinet/">https://rauschenberger.github.io/joinet/</a>
+</p>
+</li>
+<li>
+<p> Report bugs at <a href="https://github.com/rauschenberger/joinet/issues">https://github.com/rauschenberger/joinet/issues</a>
+</p>
+</li>
+</ul>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+## Not run: 
+#--- data simulation ---
+n &lt;- 50; p &lt;- 100; q &lt;- 3
+X &lt;- matrix(rnorm(n*p),nrow=n,ncol=p)
+Y &lt;- replicate(n=q,expr=rnorm(n=n,mean=rowSums(X[,1:5])))
+# n samples, p inputs, q outputs
+
+#--- model fitting ---
+object &lt;- joinet(Y=Y,X=X)
+# slot "base": univariate
+# slot "meta": multivariate
+
+#--- make predictions ---
+y_hat &lt;- predict(object,newx=X)
+# n x q matrix "base": univariate
+# n x q matrix "meta": multivariate 
+
+#--- extract coefficients ---
+coef &lt;- coef(object)
+# effects of inputs on outputs
+# q vector "alpha": intercepts
+# p x q matrix "beta": slopes
+
+#--- model comparison ---
+loss &lt;- cv.joinet(Y=Y,X=X)
+# cross-validated loss
+# row "base": univariate
+# row "meta": multivariate
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

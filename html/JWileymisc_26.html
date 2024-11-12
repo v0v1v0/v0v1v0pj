@@ -1,0 +1,94 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>APAStyler.modelTest.lm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>APAStyler method for model tests from a linear model</h2>
+
+<h3>Description</h3>
+
+<p>APAStyler method for model tests from a linear model
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'modelTest.lm'
+APAStyler(
+  object,
+  format = list(FixedEffects = c("%s%s [%s, %s]"), EffectSizes = c("f2 = %s, %s")),
+  digits = 2,
+  pcontrol = list(digits = 3, stars = TRUE, includeP = FALSE, includeSign = FALSE,
+    dropLeadingZero = TRUE),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A <code>modelTest.lm</code> class object,
+results from running <code>modelTest()</code> function on a
+class <code>lm</code> object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>format</code></td>
+<td>
+<p>A list giving the formatting style to be used for
+the fixed effecvts and effect sizes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>digits</code></td>
+<td>
+<p>A numeric value indicating the number of digits to print.
+This is still in early implementation stages and currently does not
+change all parts of the output (which default to 2 decimals per
+APA style).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>pcontrol</code></td>
+<td>
+<p>A list controlling how p values are formatted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Styled results.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m1 &lt;- lm(mpg ~ qsec * hp, data = mtcars)
+APAStyler(modelTest(m1))
+
+APAStyler(modelTest(m1),
+format = list(
+  FixedEffects = "%s, %s\n(%s, %s)",
+  EffectSizes = "Cohen's f2 = %s (%s)"),
+pcontrol = list(digits = 4,
+  stars = FALSE, includeP = TRUE,
+  includeSign = TRUE,
+  dropLeadingZero = TRUE))
+
+## clean up
+rm(m1)
+</code></pre>
+
+
+</div>

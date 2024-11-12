@@ -1,0 +1,53 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>shift</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>shift a vector by <code>shift_by</code> unit</h2>
+
+<h3>Description</h3>
+
+<p>Repeat a vector by row
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">shift(x, shift_by)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>shift_by</code></td>
+<td>
+<p>number of shift</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>TszKin Julian Chan <a href="mailto:ctszkin@gmail.com">ctszkin@gmail.com</a>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">d&lt;-data.frame(x=1:15)
+#generate lead variable
+d$df_lead2&lt;-shift(d$x,2)
+#generate lag variable
+d$df_lag2&lt;-shift(d$x,-2)
+</code></pre>
+
+
+</div>

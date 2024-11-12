@@ -1,0 +1,44 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmcmMod-class</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Class "jmcmMod" of Fitted Joint Mean-Covariance Models.</h2>
+
+<h3>Description</h3>
+
+<p>Class "jmcmMod" of Fitted Joint Mean-Covariance Models.
+</p>
+
+
+<h3>Slots</h3>
+
+
+<dl>
+<dt><code>call</code></dt>
+<dd>
+<p>the matched call</p>
+</dd>
+<dt><code>opt</code></dt>
+<dd>
+<p>the optimization result returned by optimizeJmcm</p>
+</dd>
+<dt><code>args</code></dt>
+<dd>
+<p>arguments m, Y, X, Z, W, time</p>
+</dd>
+<dt><code>triple</code></dt>
+<dd>
+<p>an integer vector of length three containing the degrees of the
+three polynomial functions for the mean structure, the log innovation
+-variances and the autoregressive or moving average coefficients when
+'mcd' or 'acd' is specified for cov.method. It refers to the mean structure,
+variances and angles when 'hpc' is specified for cov.method.</p>
+</dd>
+<dt><code>devcomp</code></dt>
+<dd>
+<p>the deviance components list</p>
+</dd>
+</dl>
+</div>

@@ -1,0 +1,49 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>justinstall</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>simply install packages</h2>
+
+<h3>Description</h3>
+
+<p>Simple utility to install packages from a number of sources. It only install if it not present already.
+It does not attach any packages, existing or to be installed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">justinstall(to_install)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>to_install</code></td>
+<td>
+<p>tibble or data.frame with packages to install (see vignette for details)</p>
+</td>
+</tr></table>
+<h3>Value</h3>
+
+<p>no output
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+to_install &lt;- tibble::tibble(package=c("tidyverse","ochRe","customthemes"),
+                             source=c("CRAN","Github","r-universe"),
+                             url=c("","ropenscilabs/ochRe","https://carlosyanez.r-universe.dev"))
+
+just.install::justinstall(to_install)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,74 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cpt_list</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Conditional probability list</h2>
+
+<h3>Description</h3>
+
+<p>A check and conversion of cpts to be used in the junction tree algorithm
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cpt_list(x, g = NULL)
+
+## S3 method for class 'list'
+cpt_list(x, g = NULL)
+
+## S3 method for class 'data.frame'
+cpt_list(x, g)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Either a named list with cpts in form of array-like object(s)
+where names must be the child node or a <code>data.frame</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>Either a directed acyclic graph (DAG) as an igraph object or a
+decomposable graph as an igraph object. If <code>x</code> is a list,
+<code>g</code> must be <code>NULL</code>. The procedure then deduce the graph
+from the conditional probability tables.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+library(igraph)
+el &lt;- matrix(c(
+"A", "T",
+"T", "E",
+"S", "L",
+"S", "B",
+"L", "E",
+"E", "X",
+"E", "D",
+"B", "D"),
+ nc = 2,
+ byrow = TRUE
+)
+
+g &lt;- igraph::graph_from_edgelist(el) 
+cl &lt;- cpt_list(asia, g)
+
+print(cl)
+dim_names(cl)
+names(cl)
+plot(get_graph(cl))
+</code></pre>
+
+
+</div>

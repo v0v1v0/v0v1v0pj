@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jaya</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Jaya Algorithm, a gradient-free optimization algorithm.
+Maximization of a function using Jaya Algorithm (JA).
+A population based method which repeatedly modifies a population of individual solutions.
+Capable of solving both constrained and unconstrained optimization problems.
+Does not contain any hyperparameters.</h2>
+
+<h3>Description</h3>
+
+<p>Jaya Algorithm, a gradient-free optimization algorithm.
+Maximization of a function using Jaya Algorithm (JA).
+A population based method which repeatedly modifies a population of individual solutions.
+Capable of solving both constrained and unconstrained optimization problems.
+Does not contain any hyperparameters.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jaya(fun, lower, upper, popSize = 50, maxiter, n_var, seed = NULL,
+  suggestions = data.frame(), opt = "minimize")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fun</code></td>
+<td>
+<p>as a function to be optimized</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lower</code></td>
+<td>
+<p>as a vector of lower bounds for the vaiables in the function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>upper</code></td>
+<td>
+<p>as a vector of upper bounds for the vaiables in the function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>popSize</code></td>
+<td>
+<p>as population size</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>as number of iterations to run for finding optimum solution</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_var</code></td>
+<td>
+<p>as number of variables used in the function to optimize</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>seed</code></td>
+<td>
+<p>as an integer vector containing the random number generator state</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suggestions</code></td>
+<td>
+<p>as a data frame of solutions string to be included in the initial population</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>opt</code></td>
+<td>
+<p>as a string either "maximize" or "minimize" the function</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Test Function to minimize
+square &lt;- function(x){return((x[1]^2)+(x[2]^2))}
+jaya(fun = square, lower = c(-100,-100), upper = c(100,100), maxiter = 10, n_var = 2)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>profilelikelihood</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Profile the likelihood surface of Julia mixed effects models</h2>
+
+<h3>Description</h3>
+
+<p>Profile the likelihood surface of Julia mixed effects models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">profilelikelihood(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A Julia MixedModel of class <code>jlme</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Not implemented</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>MixedModels.profile() output as object of class <code>jlmeprof</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+jlme_setup(restart = TRUE)
+
+jmod &lt;- jlmer(Reaction ~ Days + (Days | Subject), lme4::sleepstudy)
+tidy(jmod)
+
+prof &lt;- profilelikelihood(jmod)
+prof
+
+tidy(prof)
+
+stop_julia()
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,106 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>epilepsy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+CBZ versus LTG in Epilepsy Patients
+</h2>
+
+<h3>Description</h3>
+
+<p>A randomised control trial, the SANAD (standard and new antiepileptic drugs) study, in which both survival and longitudinal data were collected to investigate the effect of drug titration on the relative effects of two antiepileptic drugs, namely <code>CBZ</code> (carbamazepine, a standard drug) and <code>LTG</code> (lamotrigine, a new drug), on treatment failure. Treatment failure, i.e. withdrawal of the randomized drug, is the event of interest. Two main reasons for withdrawal are unacceptable adverse effects (UAE) and inadequate seizure control (ISC).
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 2797 observations on the following 16 variables.
+</p>
+
+<dl>
+<dt><code>ID</code></dt>
+<dd>
+<p>patient ID, there are 605 patients in total.</p>
+</dd>
+<dt><code>Time</code></dt>
+<dd>
+<p>survival time, i.e. time to withdrawal or censoring.</p>
+</dd>
+<dt><code>withdraw</code></dt>
+<dd>
+<p>withdrawal indicator: 0 denotes censoring; 1 denotes withdrawal.</p>
+</dd>
+<dt><code>withdrawUAE</code></dt>
+<dd>
+<p>withdrawal due to UAE indicator: 1 denotes withdrawal due to UAE; 0 otherwise.</p>
+</dd>
+<dt><code>withdrawISC</code></dt>
+<dd>
+<p>withdrawal due to ISC indicator: 1 denotes withdrawal due to ISC; 0 otherwise.</p>
+</dd>
+<dt><code>obstime</code></dt>
+<dd>
+<p>time points at which the longitudinal measurements, i.e. the dose, are recorded.</p>
+</dd>
+<dt><code>dose</code></dt>
+<dd>
+<p>calibrated dose measured at <code>obstime</code>.</p>
+</dd>
+<dt><code>drug</code></dt>
+<dd>
+<p>drug indicator with two levels: <code>CBZ</code> and <code>LTG</code>.</p>
+</dd>
+<dt><code>age</code></dt>
+<dd>
+<p>age of patient at study entry.</p>
+</dd>
+<dt><code>gender</code></dt>
+<dd>
+<p>gender indicator with two levels: <code>male</code> and <code>female</code>.</p>
+</dd>
+<dt><code>disab</code></dt>
+<dd>
+<p>learning disability indicator with two levels: <code>No</code> and <code>Yes</code>.</p>
+</dd>
+<dt><code>start</code></dt>
+<dd>
+<p>same with <code>obstime</code>, starting time of the interval which contains the time of the dose measurement.</p>
+</dd>
+<dt><code>stop</code></dt>
+<dd>
+<p>ending time of the interval which contains the time of the dose measurement.</p>
+</dd>
+<dt><code>event</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, i.e. withdrawal, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+<dt><code>eventUAE</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, i.e. withdrawal due to UAE, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+<dt><code>eventISC</code></dt>
+<dd>
+<p>event indicator suggesting whether the event-of-interest, i.e. withdrawal due to ISC, happens in the interval given by <code>start</code> and <code>stop</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Marson, A. G., AI-Kharusi, A. M., Alwaidh, M., Appleton, R., Baker, G. A., Chadwick, D. W., Cramp, C., Cockerell, O. C. Cooper, P. N., Doughty, J. et al. (2007) The SANAD study of effectiveness of carbamazepine, gabapentin, lamotrigine, oxcarbazepine, or topiramate for treatment of partial epilepsy: an unblinded randomised controlled trial. <em>The Lancet</em> <b>369</b>, 1000–1015.
+</p>
+
+
+<h3>References</h3>
+
+<p>Williamson P. R., Kolamunnage-Dona R., Philipson P. and Marson A. G. (2008) Joint modelling of longitudinal and competing risks data. <em>Statistics in Medicine</em> <b>27</b>, 6426–6438.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(epilepsy)
+</code></pre>
+
+
+</div>

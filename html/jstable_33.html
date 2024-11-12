@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>svyregress.display</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>svyregress.display: table for svyglm.object</h2>
+
+<h3>Description</h3>
+
+<p>table for svyglm.object (survey package).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">svyregress.display(svyglm.obj, decimal = 2)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>svyglm.obj</code></td>
+<td>
+<p>svyglm.object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>decimal</code></td>
+<td>
+<p>digit, Default: 2</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>DETAILS
+</p>
+
+
+<h3>Value</h3>
+
+<p>table
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(survey)
+data(api)
+apistrat$tt &lt;- c(rep(1, 20), rep(0, nrow(apistrat) - 20))
+dstrat &lt;- svydesign(id = ~1, strata = ~stype, weights = ~pw, data = apistrat, fpc = ~fpc)
+ds &lt;- svyglm(api00 ~ ell + meals + cname + mobility, design = dstrat)
+ds2 &lt;- svyglm(tt ~ ell + meals + cname + mobility, design = dstrat, family = quasibinomial())
+svyregress.display(ds)
+svyregress.display(ds2)
+</code></pre>
+
+
+</div>

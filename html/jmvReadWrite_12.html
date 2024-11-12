@@ -1,0 +1,102 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>read_omv</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Read files created of the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)</h2>
+
+<h3>Description</h3>
+
+<p>Read files created of the statistical spreadsheet 'jamovi' (<a href="https://www.jamovi.org">https://www.jamovi.org</a>)
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">read_omv(
+  fleInp = "",
+  useFlt = FALSE,
+  rmMsVl = FALSE,
+  sveAtt = TRUE,
+  getSyn = FALSE,
+  getHTM = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>fleInp</code></td>
+<td>
+<p>Name (including the path, if required) of the 'jamovi'-file to be read ("FILENAME.omv"; default: "")</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>useFlt</code></td>
+<td>
+<p>Apply filters (remove the lines where the filter is set to 0; default: FALSE)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rmMsVl</code></td>
+<td>
+<p>Remove values defined as missing values (replace them with NA; default: FALSE)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sveAtt</code></td>
+<td>
+<p>Store attributes that are not required in the data set (if you want to write the same data set using write_omv; default: FALSE)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>getSyn</code></td>
+<td>
+<p>Extract syntax from the analyses in the 'jamovi'-file and store it in the attribute "syntax" (default: FALSE)?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>getHTM</code></td>
+<td>
+<p>Store index.html in the attribute "HTML" (default: FALSE)?</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data frame (can be directly used with functions included in the R-package <code>jmv</code> and syntax from 'jamovi'; also compatible with the format of the
+R-package <code>foreign</code>)
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+nmeInp &lt;- system.file("extdata", "ToothGrowth.omv", package = "jmvReadWrite")
+data &lt;- jmvReadWrite::read_omv(fleInp = nmeInp, getSyn = TRUE)
+# if the syntax couldn't be extracted, an empty list - length = 0 - is returned,
+# otherwise, the commands are shown and the first analysis is run, with the output
+# from the second analysis being assigned to the variable result
+if (length(attr(data, "syntax")) &gt;= 1) {
+    print(attr(data, "syntax"))
+    if (nzchar(system.file(package = "jmv"))) {
+        # the print-function is only used to force devtools::run_examples() to show output
+        eval(parse(text = paste0("result = ", attr(data, "syntax")[1])))
+        # without assigning the output to a variable, the command would be:
+        # eval(parse(text = attr(data, "syntax")[1]))
+        print(names(result))
+        print(result$main)
+        # -&gt; "main"      "assump"    "contrasts" "postHoc"   "emm"       "residsOV"
+        # (the names of the six output tables)
+    }
+}
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

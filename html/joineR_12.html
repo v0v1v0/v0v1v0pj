@@ -1,0 +1,116 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mental</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Mental health trial data</h2>
+
+<h3>Description</h3>
+
+<p>The data is obtained from a trial in which chronically ill
+mental health patients were randomized across two treatments: placebo and
+an active drug. A questionnaire instrument was used to assess each
+patient's mental state at weeks 0, 1, 2, 4, 6 and 8 post-randomisation, a
+high recorded score implying a severe condition. Some of the 100 patients
+dropped out of the study for reasons that were thought to be related to
+their mental state, and therefore potentially informative; others dropped
+out for reasons unrelated to their mental state.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(mental)
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A balanced data set with respect to the times at which observations 
+recorded. The data consists of the following variables on each patient:
+</p>
+
+<dl>
+<dt><code>id</code></dt>
+<dd>
+<p>integer: patient identifier.</p>
+</dd>
+<dt><code>Y.t0</code></dt>
+<dd>
+<p>integer: mental state assessment in week 0. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>Y.t1</code></dt>
+<dd>
+<p>integer: mental state assessment in week 1. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>Y.t2</code></dt>
+<dd>
+<p>integer: mental state assessment in week 2. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>Y.t4</code></dt>
+<dd>
+<p>integer: mental state assessment in week 4. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>Y.t6</code></dt>
+<dd>
+<p>integer: mental state assessment in week 6. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>Y.t8</code></dt>
+<dd>
+<p>integer: mental state assessment in week 8. Coded
+<code>NA</code> if missing.</p>
+</dd>
+<dt><code>treat</code></dt>
+<dd>
+<p>integer: treatment allocation. Coded as <code>0 =
+  </code>placebo; <code>1 = </code>active drug.</p>
+</dd>
+<dt><code>n.obs</code></dt>
+<dd>
+<p>integer: number of non-missing mental state 
+assessments.</p>
+</dd>
+<dt><code>surv.time</code></dt>
+<dd>
+<p>numeric: imputed dropout time in weeks. Coded as
+<code>surv.time = 8.002</code> for completers.</p>
+</dd>
+<dt><code>cens.ind</code></dt>
+<dd>
+<p>integer: censoring indicator. Coded as <code>0 =
+  </code>completer or non-informative dropout; <code>1 = </code>potentially informative
+dropout.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Peter J. Diggle (p.diggle@lancaster.ac.uk)
+</p>
+
+
+<h3>References</h3>
+
+<p>Henderson R, Diggle PJ, Dobson A. Joint modelling of longitudinal 
+measurements and event time data. <em>Biostatistics.</em> 2000; <strong>1(4)</strong>: 
+465-480.
+</p>
+<p>Diggle PJ, Farewell D, Henderson R. Longitudinal data with dropout:
+objectives, assumptions and a proposal (with Discussion). <em>Applied
+Statistics.</em> 2007; <strong>56</strong>: 499-550.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>heart.valve</code>, <code>liver</code>, 
+<code>epileptic</code>.
+</p>
+
+
+</div>

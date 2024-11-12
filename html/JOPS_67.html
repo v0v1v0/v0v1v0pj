@@ -1,0 +1,235 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SpATS.nogeno</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Two-dimensional P-spline smoothing</h2>
+
+<h3>Description</h3>
+
+<p>Two-dimensional smoothing of scattered data points with tensor product P-splines.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SpATS.nogeno(
+  response,
+  spatial,
+  fixed = NULL,
+  random = NULL,
+  data,
+  family = gaussian(),
+  offset = 0,
+  weights = NULL,
+  control = list(maxit = 100)
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>response</code></td>
+<td>
+<p>a character string with the name of the variable that contains the response variable of interest.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>spatial</code></td>
+<td>
+<p>a right hand <code>formula</code> object specifying the spatial P-Spline model. See <code>SAP</code> and <code>PSANOVA</code> for more details about how to specify the spatial trend.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fixed</code></td>
+<td>
+<p>an optional right hand <code>formula</code> object specifying the fixed effects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>random</code></td>
+<td>
+<p>an optional right hand <code>formula</code> object specifying the random effects. Currently, only sets of independent and identically distributed random effects can be incorporated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame containing the variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>family</code></td>
+<td>
+<p>object of class <code>family</code> specifying the distribution and link function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>offset</code></td>
+<td>
+<p>an optional numerical vector containing an a priori known component to be included in the linear predictor during fitting.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>an optional numerical vector of weights to be used in the fitting process. By default, the weights are considered to be one.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function is a modified version of the function  <code>SpATS</code> in the package <code>SpATS</code>. The difference is that genotypes have been removed.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the matched call.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>the original supplied data argument with a new column with the weights used during the fitting process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>a list with the model components: response, spatial, fixed and/or random.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>fitted</code></td>
+<td>
+<p>a numeric vector with the fitted values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>residuals</code></td>
+<td>
+<p>a numeric vector with deviance residuals.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>psi</code></td>
+<td>
+<p>a two-length vector with the values of the dispersion parameters at convergence. For Gaussian responses both elements coincide, being the (REML) estimate of dispersion parameter. For non-Gaussian responses, the result depends on the argument <code>update.psi</code> of the <code>controlSpATS</code> function. If this argument was specified to <code>FALSE</code> (the default), the first component of the vector corresponds to the default value used for the dispersion parameter (usually 1). The second element, correspond to the (REML) estimate of the dispersion parameter at convergence. If the argument <code>update.psi</code> was specified to <code>TRUE</code>, both components coincide (as in the Gaussian case).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var.comp</code></td>
+<td>
+<p>a numeric vector with the (REML) variance component estimates. This vector contains the variance components associated with the spatial trend, as well as those related with the random model terms.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eff.dim</code></td>
+<td>
+<p>a numeric vector with the estimated effective dimension (or effective degrees of freedom) for each model component (spatial, fixed and/or random).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim</code></td>
+<td>
+<p>a numeric vector with the (model) dimension of each model component (spatial, fixed and/or random). This value corresponds to the number of parameters to be estimated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dim.nom</code></td>
+<td>
+<p>a numeric vector with the (nominal) dimension of each component (spatial, fixed and/or random). For the random terms of the model, this value corresponds to upper bound for the effective dimension (i.e., the maximum effective dimension a random term can achive). This nominal dimension is <code class="reqn">rank[X, Z_k] - rank[X]</code>, where <code class="reqn">Z_k</code> is the design matrix of the <code class="reqn">k</code>th random factor and <code class="reqn">X</code> is the design matrix of the fixed part of the model. In most cases (but not always), the nominal dimension corresponds to the model dimension minus one, “lost” due to the implicit constraint that ensures the mean of the random effects to be zero.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nobs</code></td>
+<td>
+<p>number of observations used to fit the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>niterations</code></td>
+<td>
+<p>number of iterations EM-algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>deviance</code></td>
+<td>
+<p>the (REML) deviance at convergence (i.e., <code class="reqn">-2</code> times the restricted log-likelihood).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>coeff</code></td>
+<td>
+<p>a numeric vector with the estimated fixed and random effect coefficients.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>terms</code></td>
+<td>
+<p>a list with the model terms: response, spatial, fixed and/or random. The information provided here is useful for printing and prediction purposes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>vcov</code></td>
+<td>
+<p>inverse of the coefficient matrix of the mixed models equations. The inverse is needed for the computation of standard errors. For computational issues, the inverse is returned as a list: C22_inv corresponds to the coefficient matrix associated with the spatial, the fixed and the random components.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Maria-Xose Rodriguez-Alvarez and Paul Eilers
+</p>
+
+
+<h3>References</h3>
+
+<p>Rodriguez-Alvarez, M.X, Boer, M.P., van Eeuwijk, F.A., and Eilers, P.H.C. (2018). Correcting for spatial heterogeneity in plant breeding experiments with P-splines. Spatial Statistics, 23, 52 - 71. https://doi.org/10.1016/j.spasta.2017.10.003.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Get the data
+library(SemiPar)
+data(ethanol)
+
+# Fit the PS-ANOVA model
+ps2d &lt;- SpATS.nogeno(response = "NOx",
+                     spatial = ~PSANOVA(E, C,  nseg = c(20, 20), nest.div = c(2, 2)),
+                     data = ethanol,
+                     control = list(maxit = 100, tolerance = 1e-05,
+                                    monitoring = 0, update.psi = FALSE))
+
+# Report effective dimensions, if desired
+# print(summary(ps2d))
+
+# Compute component surface and their sum on a fine grid
+Tr = obtain.spatialtrend(ps2d, grid = c(100, 100))
+
+# Plot surface and contours
+image(Tr$row.p, Tr$col.p, Tr$fit, col = terrain.colors(100), xlab = 'C', ylab = 'E')
+contour(Tr$row.p, Tr$col.p, Tr$fit, add = TRUE, col = 'blue')
+points(ethanol$C, ethanol$E, pch = '+')
+</code></pre>
+
+
+</div>

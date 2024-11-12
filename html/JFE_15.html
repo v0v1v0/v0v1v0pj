@@ -1,0 +1,80 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getFed</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Download financial and economic time series data from the Fed</h2>
+
+<h3>Description</h3>
+
+<p>It downloads financial and economic time series data from the Fed.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getFed(var.name="UNRATE", from="1900-01-01",end=Sys.Date(), do.plot=TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>var.name</code></td>
+<td>
+
+<p>The name of variable as used by &lt;"https://fred.stlouisfed.org"&gt;. For example, "UNRATE" denotes unemployment rate, "CPIAUCSL" is monthly consumer price index, "GDP" is Gross domestic product, and "ICSA" is the initial claim seasonally adjusted. User please check with the web for symbol.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>from</code></td>
+<td>
+<p>The starting date, the default is 1900-01-01 to ensure the very beginning.
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>end</code></td>
+<td>
+<p>The ending date of data retrieved, the default is Sys.Date().</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>do.plot</code></td>
+<td>
+<p>Whether to plot the retrieved data, the default is TRUE. Please set this value to be FALSE to avoid too many plotting, if you want to loop more downloads. It applies functionseriesPlot() from package fBasics.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function connects with &lt;"https://fred.stlouisfed.org"&gt; and downloads the specified market data. The rownames of downloaded data is embedded by the timestamp already.
+</p>
+
+
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The data retrieved.</p>
+</td>
+</tr></table>
+<h3>Author(s)</h3>
+
+<p>Ho Tsung-wu &lt;tsungwu@ntnu.edu.tw&gt;, College of Management, National Taiwan Normal University.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">#To save time, the example below is commented.
+#getFed(var.name="UNRATE")$data
+
+</code></pre>
+
+
+</div>

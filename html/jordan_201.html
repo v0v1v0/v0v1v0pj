@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>zero</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The zero Jordan object</h2>
+
+<h3>Description</h3>
+
+<p>Package idiom for the zero Jordan object, and testing</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">is.zero(x)
+is_zero_jordan(e1,e2=0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x,e1</code></td>
+<td>
+<p>Jordan object to test for zeroness</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>e2</code></td>
+<td>
+<p>Dummy numeric object to make the <code>Arith</code> method work</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>One often wants to test a jordan object for being zero, and natural
+idiom would be <code>rchm()==0</code>.  The helper function is
+<code>is_zero_jordan()</code>, and the generic is <code>is.zero()</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns a Boolean</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Robin K. S. Hankin</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">rrsm()*0 == 0
+</code></pre>
+
+
+</div>

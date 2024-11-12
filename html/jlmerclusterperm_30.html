@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>julia_model_tidiers</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Tidier methods for Julia regression models</h2>
+
+<h3>Description</h3>
+
+<p>Tidier methods for Julia regression models
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jlmer_mod'
+tidy(x, effects = c("var_model", "ran_pars", "fixed"), ...)
+
+## S3 method for class 'jlmer_mod'
+glance(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>An object of class <code>jlmer_mod</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>effects</code></td>
+<td>
+<p>One of "var_model", "ran_pars", or "fixed"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Unused</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+
+
+
+# Fixed-effects only model
+mod1 &lt;- to_jlmer(weight ~ 1 + Diet, ChickWeight)
+tidy(mod1)
+glance(mod1)
+
+# Mixed model
+mod2 &lt;- to_jlmer(weight ~ 1 + Diet + (1 | Chick), ChickWeight)
+tidy(mod2)
+glance(mod2)
+
+# Select which of fixed/random effects to return
+tidy(mod2, effects = "fixed")
+tidy(mod2, effects = "ran_pars")
+
+
+
+
+</code></pre>
+
+
+</div>

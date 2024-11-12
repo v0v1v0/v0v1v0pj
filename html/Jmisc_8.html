@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>oapply</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Outer apply</h2>
+
+<h3>Description</h3>
+
+<p>Outer apply It use the expand.grid to compute all possible
+combination of <code>X</code> and <code>Y</code>, then call the mapply
+with the combination generated and <code>FUN</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">oapply(X, Y, FUN, switch_order = FALSE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>first argument to <code>FUN</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>second argument to <code>FUN</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>FUN</code></td>
+<td>
+<p>a function to apply. See mapply</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>switch_order</code></td>
+<td>
+<p>Switch the order of <code>X</code> and
+<code>Y</code> in expand.grid</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other arguments to mapply</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>same as mapply.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>TszKin Julian Chan <a href="mailto:ctszkin@gmail.com">ctszkin@gmail.com</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p>mapply
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">oapply(11:15,1:5,choose)
+oapply(11:15,1:5,choose,switch_order=TRUE)
+</code></pre>
+
+
+</div>

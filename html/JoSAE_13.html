@@ -1,0 +1,131 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>landsat</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> LANDSAT data:
+Prediction of County Crop Areas Using Survey and Satellite Data </h2>
+
+<h3>Description</h3>
+
+<p> The <code>landsat</code> data.frame is a compilation (by Battese
+et al., 1988) of survey and satellite data. It consists of data on
+segments (primary sampling unit; 1 segement =approx= 250 hectares) under
+corn and soybeans for 12 counties in north-central Iowa; see Details,
+below.
+</p>
+<p>The landsat data.frame was made available by Tobias Schoch with the R
+package rsae. Since rsae was archived as of R 3.0.2, the data and this
+description was copied from rsae 0.1-4 in the archives.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(landsat)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 37 observations on the following 10 variables.
+</p>
+
+<dl>
+<dt><code>SegmentsInCounty</code></dt>
+<dd>
+<p>a numeric vector; no. of segments per county
+</p>
+</dd>
+<dt><code>SegementID</code></dt>
+<dd>
+<p>a numeric vector; sample segment identifier (per county)
+</p>
+</dd>
+<dt><code>HACorn</code></dt>
+<dd>
+<p>a numeric vector; hectares of corn for each sample segment (as reported in the June 1978 Enumerative Survey)
+</p>
+</dd>
+<dt><code>HASoybeans</code></dt>
+<dd>
+<p>a numeric vector; hectares of soybeans for each sample segment (as reported in the June 1978 Enumerative Survey)
+</p>
+</dd>
+<dt><code>PixelsCorn</code></dt>
+<dd>
+<p>a numeric vector; no. of pixels classified as corn for each sample segment (LANDSAT readings)
+</p>
+</dd>
+<dt><code>PixelsSoybeans</code></dt>
+<dd>
+<p>a numeric vector; no. of pixels classified as soybeans for each sample segment (LANDSAT readings)
+</p>
+</dd>
+<dt><code>MeanPixelsCorn</code></dt>
+<dd>
+<p>a numeric vector; county mean number of pixels classified as corn
+</p>
+</dd>
+<dt><code>MeanPixelsSoybeans</code></dt>
+<dd>
+<p>a numeric vector; county mean number of pixels classified as soybeans
+</p>
+</dd>
+<dt><code>outlier</code></dt>
+<dd>
+<p>a logical vector; flags observation no. 33 as outlier
+</p>
+</dd>
+<dt><code>CountyName</code></dt>
+<dd>
+<p>a factor with levels (i.e., county names) <code>Cerro Gordo</code> <code>Hamilton</code> <code>Worth</code> <code>Humboldt</code> <code>Franklin</code> <code>Pocahontas</code> <code>Winnebago</code> <code>Wright</code> <code>Webster</code> <code>Hancock</code> <code>Kossuth</code> <code>Hardin</code>
+</p>
+</dd>
+</dl>
+<h3>Details</h3>
+
+<p>The <code>landsat</code> data is a compilation (by Battese et al., 1988) of the LANDSAT satellite data from the U.S. Department of Agriculture (USDA) and the 1978 June Enumerative Survey. 
+</p>
+
+
+<h4>Survey data</h4>
+
+<p>The survey data on the areas under corn and soybeans (reported in hectares) in the 37 segments of the 12 counties (north-central Iowa) have been determined by USDA Statistical Reporting Service staff, who interviewed farm operators. A segment is about 250 hectares.
+</p>
+
+
+
+<h4>Satellite data</h4>
+
+<p>For the LANDSAT satellite data, information is recorded as "pixels". The USDA has been engaged in research toward transforming satellite information into good estimates of crop areas at the individual pixel and segments level. A pixel is about 0.45 hectares. The satellite (LANDSAT) readings were obtained during August and September 1978.
+</p>
+
+<p>Data for more than one sample segment are available for several counties (i.e, unbalanced data). 
+</p>
+<p>Observations No. 33 has been flaged as outlier (cf., Battese et al. (1988, p. 28).
+</p>
+
+
+<h3>Source</h3>
+
+<p>The data <code>landsat</code> is from Table 1 of Battese et al. (1988,
+p. 29).
+</p>
+<p>Schoch (2011) rsae: Robust Small Area Estimation, R package version 0.1-4: http://cran.r-project.org/src/contrib/Archive/rsae/rsae_0.1-4.tar.gz
+</p>
+
+
+<h3>References</h3>
+
+<p>Battese, G.E, R.M. Harter, and W.A. Fuller (1988): An Error-Components Model for Prediction of County Crop Areas Using Survey and Satellite Data, <em>Journal of the American Statistical Association</em> 83, pp. 28–36.  
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(landsat)
+</code></pre>
+
+
+</div>

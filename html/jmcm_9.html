@@ -1,0 +1,62 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jmcmControl</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Control of Joint Mean Covariance Model Fitting</h2>
+
+<h3>Description</h3>
+
+<p>Construct control structures for joint mean covariance model
+fitting
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jmcmControl(trace = FALSE, profile = TRUE, ignore.const.term = TRUE,
+  original.poly.order = FALSE, errormsg = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>trace</code></td>
+<td>
+<p>whether or not the value of the objective function and the
+parameters should be print on every trace'th iteration.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>profile</code></td>
+<td>
+<p>whether or not parameters should be estimated sequentially
+using the idea of profile likelihood.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ignore.const.term</code></td>
+<td>
+<p>whether or not the constant term should be considered 
+when calculating log-likelihood and BIC.
+function</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>original.poly.order</code></td>
+<td>
+<p>whether or not the original poly order p q d should 
+be used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>errormsg</code></td>
+<td>
+<p>whether or not the error message should be print</p>
+</td>
+</tr>
+</table>
+</div>

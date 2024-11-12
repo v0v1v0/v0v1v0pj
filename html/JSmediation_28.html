@@ -1,0 +1,232 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mdt_moderated</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fits a moderated mediation model</h2>
+
+<h3>Description</h3>
+
+<p>Given a data frame, a predictor (<code>IV</code>), an outcome (<code>DV</code>), a
+mediator (<code>M</code>), and a moderator (<code>Mod</code>) conducts a joint-significant test
+for moderated mediation (see Yzerbyt, Muller, Batailler, &amp; Judd, 2018).You
+can learn about moderated mediation in <code>vignette("moderated-mediation")</code>
+</p>
+<p><code>add_index.moderated_mediation</code> computes the moderated mediation index.
+<code>compute_indirect_effect_for</code> is used to compute the indirect effect
+index for a specific value of the moderator.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mdt_moderated(data, IV, DV, M, Mod)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A data frame containing the variables in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>IV</code></td>
+<td>
+<p>An unquoted variable in the data frame which will be used as
+the independent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>DV</code></td>
+<td>
+<p>An unquoted variable in the data frame which will be used as
+the dependent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>An unquoted variable in the data frame which will be used as
+the mediator.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Mod</code></td>
+<td>
+<p>An unquoted variable in the data frame which will be used as
+the moderator.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>With moderated mediation analysis, one tests whether the
+indirect effect of <code class="reqn">X</code> on <code class="reqn">Y</code> through <code class="reqn">M</code> is moderated by
+<code class="reqn">Mod</code>. The hypothesis behind this test is that <code class="reqn">X</code> has an effect on
+<code class="reqn">M</code> (<code class="reqn">a</code>) which has an effect on <code class="reqn">Y</code> (<code class="reqn">b</code>), meaning that
+<code class="reqn">X</code> has an indirect effect on <code class="reqn">Y</code> through <code class="reqn">M</code>.
+</p>
+<p>Total moderation of the indirect effect of <code class="reqn">X</code> on <code class="reqn">Y</code> can be
+described as follows:
+</p>
+<p><code class="reqn">c * Mod = c' * Mod + (a * Mod) * b + a * (b * Mod)</code>
+</p>
+<p>with <code class="reqn">c * Mod</code> the total moderation of the indirect effect, <code class="reqn">c' *
+  Mod</code> the moderation of the direct effect, <code class="reqn">(a * Mod) * b</code>, the
+moderation of the indirect effect passing by the moderation of <code class="reqn">a</code>, and
+<code class="reqn">a * (b * Mod)</code>, the moderation of the indirect effect passing by the
+moderation of <code class="reqn">b</code> (see Models section; Muller et al., 2005).
+</p>
+<p>Either both <code class="reqn">a * Mod</code> and <code class="reqn">b</code> or both <code class="reqn">a</code> and <code class="reqn">b * Mod</code>
+need to be simultaneously significant for a moderation of the indirect
+effect to be claimed (Muller et al., 2005).
+</p>
+
+
+<h3>Value</h3>
+
+<p>Returns an object of class "<code>mediation_model</code>".
+</p>
+<p>An object of class "<code>mediation_model</code>" is a list containing at least
+the components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>A character string containing the type of model that has been
+conducted (e.g., <code>"simple mediation"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>A character string containing the approach that has been
+used to conduct the mediation analysis (usually
+<code>"joint significance"</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>params</code></td>
+<td>
+<p>A named list of character
+strings describing the variables used in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>paths</code></td>
+<td>
+<p>A named list containing information on each relevant path of
+the mediation model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indirect_index</code></td>
+<td>
+<p>A boolean indicating whether an indirect effect index
+has been computed or not. Defaults to <code>FALSE</code>. See
+<code>add_index</code> to compute mediation index.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>indirect_index_infos</code></td>
+<td>
+<p>(Optional) An object of class
+<code>"indirect_index"</code>. Appears when one applies <code>add_index</code>
+to an object of class <code>"mediation_model"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>js_models</code></td>
+<td>
+<p>A list of objects of class <code>"lm"</code>. Contains every
+model relevant to joint-significance testing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>The original data frame that has been passed through
+<code>data</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Models</h3>
+
+<p>In a moderated mediation model, three models will be used:
+</p>
+
+<ul>
+<li> <p><code class="reqn">Y_i = b_{40} + \mathbf{b_{41}} X_i + b_{42} Mo_i + \mathbf{b_{43}}
+  XMo_i </code>
+</p>
+</li>
+<li> <p><code class="reqn">M_i = b_{50} + \mathbf{b_{51}} X_i + b_{52} Mo_i + \mathbf{b_{53}
+  XMo_i}</code>
+</p>
+</li>
+<li> <p><code class="reqn">Y_i = b_{60} + \mathbf{c'_{61}} X_i + b_{62} Mo_i + \mathbf{b_{63}
+  Xmo_i} + \mathbf{b_{64} Me_i} + \mathbf{b_{65} MeMo_i}</code>
+</p>
+</li>
+</ul>
+<p>with <code class="reqn">Y_i</code>, the outcome value for the <em>i</em>th observation,
+<code class="reqn">X_i</code>, the predictor value for the <em>i</em>th observation,
+<code class="reqn">Mo_i</code>, the moderator value for the <em>i</em>th observation, and
+<code class="reqn">M_i</code>, the mediator value for the <em>i</em>th observation.
+</p>
+<p>Coefficients associated with <code class="reqn">a</code>, <code class="reqn">a \times Mod</code>, <code class="reqn">b</code>,
+<code class="reqn">b \times Mod</code>, <code class="reqn">c</code>, <code class="reqn">c \times Mod</code>,
+<code class="reqn">c'</code>, and <code class="reqn">c' \times Mod</code>, paths are respectively
+<code class="reqn">b_{51}</code>, <code class="reqn">b_{53}</code>, <code class="reqn">b_{64}</code>,
+<code class="reqn">b_{65}</code>, <code class="reqn">b_{41}</code>, <code class="reqn">b_{43}</code>,
+<code class="reqn">b_{61}</code>, and <code class="reqn">b_{63}</code> (see Muller et al., 2005).
+</p>
+
+
+<h3>Variable coding</h3>
+
+<p>Because joint-significance tests use linear models
+behind the scenes, variables involved in the model have to be numeric.
+<code>mdt_simple</code> will give an error if non-numeric variables are
+specified in the model.
+</p>
+<p>If you need to convert a dichotomous categorical variable to a numeric one,
+please refer to the <code>build_contrast</code> function.
+</p>
+<p>Note that variable coding is especially important in models with multiple
+predictors as is the case in the model used to conduct a joint-significance
+test of moderated mediation. Muller et al. (2005) recommend using variables
+that are either contrast-coded or centered. Using <code>mdt_moderated</code> with
+a DV, a mediator, or a moderator that is neither contrast-coded nor
+centered will give a warning message.
+</p>
+
+
+<h3>References</h3>
+
+<p>Muller, D., Judd, C. M., &amp; Yzerbyt, V. Y. (2005). When moderation
+is mediated and mediation is moderated. <em>Journal of Personality and
+Social Psychology</em>, 89(6), 852-863. doi: 10.1037/0022-3514.89.6.852
+</p>
+<p>Yzerbyt, V., Muller, D., Batailler, C., &amp; Judd, C. M. (2018). New
+recommendations for testing indirect effects in mediational models: The
+need to report and test component paths. <em>Journal of Personality and
+Social Psychology</em>, <em>115</em>(6), 929–943. doi: 10.1037/pspa0000132
+</p>
+
+
+<h3>See Also</h3>
+
+<p>Other mediation models: 
+<code>mdt_simple()</code>,
+<code>mdt_within()</code>
+</p>
+
+
+</div>

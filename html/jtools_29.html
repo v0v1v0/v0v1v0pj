@@ -1,0 +1,171 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>center_mod</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Center variables in fitted regression models</h2>
+
+<h3>Description</h3>
+
+<p><code>center_mod</code> (previously known as <code>center_lm</code>) takes fitted regression models
+and mean-centers the
+continuous variables in the model to aid interpretation, especially in
+the case of models with interactions. It is a wrapper to
+<code>scale_mod</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">center_mod(
+  model,
+  binary.inputs = "0/1",
+  center.response = FALSE,
+  data = NULL,
+  apply.weighted.contrasts = getOption("jtools-weighted.contrasts", FALSE),
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>model</code></td>
+<td>
+<p>A regression model of type <code>lm</code>, <code>glm</code>, or
+<code>svyglm</code>; others may work as well but have not been
+tested.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>binary.inputs</code></td>
+<td>
+<p>Options for binary variables. Default is <code>0/1</code>;
+<code>0/1</code> keeps original scale; <code>-0.5,0.5</code> rescales 0 as -0.5 and 1
+as 0.5; <code>center</code> subtracts the mean; and <code>full</code> treats them
+like other continuous variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center.response</code></td>
+<td>
+<p>Should the response variable also be centered?
+Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>If you provide the data used to fit the model here, that data
+frame is used to re-fit the model instead of the <code>stats::model.frame()</code>
+of the model. This is particularly useful if you have variable
+transformations or polynomial terms specified in the formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>apply.weighted.contrasts</code></td>
+<td>
+<p>Factor variables cannot be scaled, but you
+can set the contrasts such that the intercept in a regression model will
+reflect the true mean (assuming all other variables are centered). If set
+to TRUE, the argument will apply weighted effects coding to all factors.
+This is similar to the R default effects coding, but weights according to
+how many observations are at each level. An adapted version of
+<code>contr.wec()</code> from the <code>wec</code> package is used to do this. See
+that package's documentation and/or Grotenhuis et al. (2016) for more
+info.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Arguments passed on to <code>gscale()</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>This function will mean-center all continuous variables in a
+regression model for ease of interpretation, especially for those models
+that have
+interaction terms. The mean for <code>svyglm</code> objects is calculated using
+<code>svymean</code>, so reflects the survey-weighted mean. The weight variables
+in <code>svyglm</code> are not centered, nor are they in other <code>lm</code> family
+models.
+</p>
+<p>This function re-estimates the model, so for large models one should
+expect
+a runtime equal to the first run.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The functions returns a <code>lm</code> or <code>glm</code> object, inheriting
+from whichever class was supplied.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Jacob Long <a href="mailto:jacob.long@sc.edu">jacob.long@sc.edu</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Bauer, D. J., &amp; Curran, P. J. (2005). Probing interactions in fixed and
+multilevel regression: Inferential and graphical techniques.
+<em>Multivariate Behavioral Research</em>, <em>40</em>(3), 373-400.
+</p>
+<p>Cohen, J., Cohen, P., West, S. G., &amp; Aiken, L. S. (2003). <em>Applied
+multiple regression/correlation analyses for the behavioral sciences</em> (3rd
+ed.). Mahwah, NJ: Lawrence Erlbaum Associates, Inc.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>sim_slopes</code> performs a simple slopes analysis.
+</p>
+<p><code>interact_plot</code> creates attractive, user-configurable plots of
+interaction models.
+</p>
+<p>standardization, scaling, and centering tools
+<code>center()</code>,
+<code>gscale()</code>,
+<code>scale_mod()</code>,
+<code>standardize()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+fit &lt;- lm(formula = Murder ~ Income * Illiteracy,
+          data = as.data.frame(state.x77))
+fit_center &lt;- center_mod(fit)
+
+# With weights
+fitw &lt;- lm(formula = Murder ~ Income * Illiteracy,
+           data = as.data.frame(state.x77),
+           weights = Population)
+fitw_center &lt;- center_mod(fitw)
+
+# With svyglm
+if (requireNamespace("survey")) {
+library(survey)
+data(api)
+dstrat &lt;- svydesign(id = ~1, strata = ~stype, weights = ~pw,
+                    data = apistrat, fpc =~ fpc)
+regmodel &lt;- svyglm(api00 ~ ell * meals, design = dstrat)
+regmodel_center &lt;- center_mod(regmodel)
+}
+
+</code></pre>
+
+
+</div>

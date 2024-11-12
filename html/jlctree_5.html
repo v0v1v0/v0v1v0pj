@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>get_node_val</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Computes the test statistic at the current node.</h2>
+
+<h3>Description</h3>
+
+<p>Computes the test statistic at the current node.
+Not to be called directly by the user.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">get_node_val(f1, f2, data, lrt = TRUE, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>f1</code></td>
+<td>
+<p>a two-sided formula of the fitted survival model, without the longitudinal outcome in 
+the right side of the formula. Only needed when <code>lrt</code>=TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>f2</code></td>
+<td>
+<p>a two-sided formula of the fitted survival model, same as <code>f1</code> but with the longitudinal outcome 
+being the first covariate on the right side of the formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data.frame containing covariates in <code>f2</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lrt</code></td>
+<td>
+<p>if TRUE, use likelihood ratio test, otherwise use 
+Wald test. Default is TRUE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>further arguments to pass to or from other methods.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The test statistic at the current node.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>get_lrt,get_wald</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"> data(data_timevar);
+ f1 &lt;- Surv(time_L, time_Y, delta)~X3+X4+X5;
+ f2 &lt;- Surv(time_L, time_Y, delta)~y+X3+X4+X5;
+ get_node_val(f1, f2, data_timevar, lrt=TRUE);
+
+</code></pre>
+
+
+</div>

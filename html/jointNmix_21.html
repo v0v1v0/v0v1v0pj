@@ -1,0 +1,85 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointNmix-methods</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Methods for joint Nmix objects</h2>
+
+<h3>Description</h3>
+
+<p>Fitted values, residual extraction, simulation and print method for joint N-mixture models</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointNmix'
+fitted(object, ...)
+## S3 method for class 'jointNmix'
+print(x, round = TRUE, ...)
+## S3 method for class 'jointNmix'
+residuals(object, type = c("ordinary", "standardized"), ...)
+## S3 method for class 'jointNmix'
+simulate(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object, x</code></td>
+<td>
+<p>fitted model object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>round</code></td>
+<td>
+<p>logical. Round the estimates?</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>type of residuals to be returned. May be ordinary or standardized</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>not used</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p><code>fitted.uniNmix</code> prints the fitted values for the model fit; <code>residuals.uniNmix</code> returns the ordinary (</p>
+<p style="text-align: center;"><code class="reqn">r_i^o=y_i-\hat{\mu}_i</code>
+</p>
+<p>) or standardized (</p>
+<p style="text-align: center;"><code class="reqn">r_i^s=\frac{y_i-\hat{\mu}_i}{\mbox{Var}(Y_i)}</code>
+</p>
+<p>) residuals; <code>simulate.uniNmix</code> simulates one sample from the fitted model.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Rafael A. Moral &lt;rafael_moral@yahoo.com.br&gt;, Clarice G. B. Demétrio and John Hinde
+</p>
+
+
+<h3>References</h3>
+
+<p>Moral, R.A., Hinde, J., Demétrio, C.G.B., Reigada, C. and Godoy, W.A.C. (submitted) Models for jointly estimating abundance of two unmarked site-associated species subject to imperfect detection.</p>
+
+
+<h3>See Also</h3>
+
+<p><code>Nmix</code>
+<code>jointNmix</code>
+</p>
+
+
+</div>

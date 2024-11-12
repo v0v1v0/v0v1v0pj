@@ -1,0 +1,141 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modelPerformance</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Return Indices of Model Performance</h2>
+
+<h3>Description</h3>
+
+<p>Generic function. Generally returns things like
+fit indices, absolute error metrics, tests of
+overall model significance.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">modelPerformance(object, ...)
+
+as.modelPerformance(x)
+
+is.modelPerformance(x)
+
+## S3 method for class 'lm'
+modelPerformance(object, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>A fitted model object. The class of the model
+determines which specific method is called.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional arguments passed to specific methods.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A object (e.g., list or a modelPerformance object) to
+test or attempt coercing to a modelPerformance object.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>For <code>lm</code> class objects, return number of observations,
+AIC, BIC, log likelihood, R2, overall model F test, and p-value.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A <code>data.table</code> with results.
+</p>
+<p>A list with a <code>data.table</code> with the following elements:
+</p>
+
+<dl>
+<dt>Model</dt>
+<dd>
+<p>A character string indicating the model type, here lm</p>
+</dd>
+<dt>N_Obs</dt>
+<dd>
+<p>The number of observations</p>
+</dd>
+<dt>AIC</dt>
+<dd>
+<p>Akaike Information Criterion</p>
+</dd>
+<dt>BIC</dt>
+<dd>
+<p>Bayesian Information Criterion</p>
+</dd>
+<dt>LL</dt>
+<dd>
+<p>log likelihood</p>
+</dd>
+<dt>LLDF</dt>
+<dd>
+<p>log likelihood degrees of freedom</p>
+</dd>
+<dt>Sigma</dt>
+<dd>
+<p>Residual variability</p>
+</dd>
+<dt>R2</dt>
+<dd>
+<p>in sample variance explained</p>
+</dd>
+<dt>F2</dt>
+<dd>
+<p>Cohen's F2 effect size R2 / (1 - R2)</p>
+</dd>
+<dt>AdjR2</dt>
+<dd>
+<p>adjusted variance explained</p>
+</dd>
+<dt>F</dt>
+<dd>
+<p>F value for overall model significance test</p>
+</dd>
+<dt>FNumDF</dt>
+<dd>
+<p>numerator degrees of freedom for F test</p>
+</dd>
+<dt>FDenDF</dt>
+<dd>
+<p>denominator degrees of freedom for F test</p>
+</dd>
+<dt>P</dt>
+<dd>
+<p>p-value for overall model F test</p>
+</dd>
+</dl>
+<h3>Examples</h3>
+
+<pre><code class="language-R">modelPerformance(lm(mpg ~ qsec * hp, data = mtcars))
+
+modelPerformance(lm(mpg ~ hp, data = mtcars))
+
+## Not run: 
+modelPerformance(lm(mpg ~ 0 + hp, data = mtcars))
+modelPerformance(lm(mpg ~ 1, data = mtcars))
+modelPerformance(lm(mpg ~ 0, data = mtcars))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

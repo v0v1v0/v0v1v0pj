@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>update_na_values</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Update NA and/or values</h2>
+
+<h3>Description</h3>
+
+<p>The function updates NAs and/or values in the following way:
+</p>
+
+<ul>
+<li>
+<p> If only update_NAs is TRUE: update NAs of var in x with values of var y of the same name
+</p>
+</li>
+<li>
+<p> If only update_values = TRUE: update all values, but NOT NAs, of var in x with values of var y of the same name.
+NAs from y are not used to update values in x . (e.g., if x.var = 10 and y.var = NA, x.var remains 10)
+</p>
+</li>
+<li>
+<p> If both update_NAs and update_values are TRUE, both NAs and values in x are updated as described above
+</p>
+</li>
+<li>
+<p> If both update_NAs and update_values are FALSE, no update
+</p>
+</li>
+</ul>
+<h3>Usage</h3>
+
+<pre><code class="language-R">update_na_values(
+  dt,
+  var,
+  reportvar = getOption("joyn.reportvar"),
+  suffixes = getOption("joyn.suffixes"),
+  rep_NAs = FALSE,
+  rep_values = FALSE
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dt</code></td>
+<td>
+<p>joined data.table</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>var</code></td>
+<td>
+<p>variable(s) to be updated</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>reportvar</code></td>
+<td>
+<p>character: Name of reporting variable. Default is ".joyn".
+This is the same as variable "_merge" in Stata after performing a merge. If
+FALSE or NULL, the reporting variable will be excluded from the final
+table, though a summary of the join will be display after concluding.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffixes</code></td>
+<td>
+<p>A character(2) specifying the suffixes to be used for making
+non-by column names unique. The suffix behaviour works in a similar fashion
+as the base::merge method does.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rep_NAs</code></td>
+<td>
+<p>inherited from joyn update_NAs</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rep_values</code></td>
+<td>
+<p>inherited from joyn update_values</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.table
+</p>
+
+
+</div>

@@ -1,0 +1,158 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>continuum.multigroup.iter</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>The Joint and Individual Component Regression (JICO) algorithm</h2>
+
+<h3>Description</h3>
+
+<p>This function iteratively solves the multi-group regression problem using the JICO algorithm.
+JICO paper: Wang, P., Wang, H., Li, Q., Shen, D., &amp; Liu, Y. (2022).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">continuum.multigroup.iter(
+  X.list,
+  Y.list,
+  lambda = 0,
+  gam,
+  rankJ,
+  rankA,
+  maxiter = 1000,
+  conv = 1e-07,
+  center.X = TRUE,
+  scale.X = TRUE,
+  center.Y = TRUE,
+  scale.Y = TRUE,
+  orthIndiv = FALSE,
+  I.initial = NULL,
+  sd = 0
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X.list</code></td>
+<td>
+<p>The list of feature matrices from multiple groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y.list</code></td>
+<td>
+<p>The list of feature vectors from multiple groups.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>Deprecated. Regularization parameter if L2 penalization is used for CR.
+JICO uses zero as default.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>gam</code></td>
+<td>
+<p>The gamma parameter in the CR algorithm. Set gam=0 for OLS model, gam=0.5 for PLS model,
+gam &gt;= 1e10 for PCR model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rankJ</code></td>
+<td>
+<p>The rank for the joint component.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>rankA</code></td>
+<td>
+<p>The ranks for individual components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>maxiter</code></td>
+<td>
+<p>The maximum number of iterations to conduct before algorithm convergence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>conv</code></td>
+<td>
+<p>The tolerance level for convergence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center.X</code></td>
+<td>
+<p>Boolean. If X should be preprocessed with centralization.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.X</code></td>
+<td>
+<p>Boolean. If X should be preprocessed with scaling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>center.Y</code></td>
+<td>
+<p>Boolean. If Y should be preprocessed with centralization.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scale.Y</code></td>
+<td>
+<p>Boolean. If Y should be preprocessed with scaling.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>orthIndiv</code></td>
+<td>
+<p>Boolean. If we impose the orthogonality constraint on individual components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>I.initial</code></td>
+<td>
+<p>The initial values for individual components.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sd</code></td>
+<td>
+<p>The standard deviation used to generate random initial values for individual weight vectors.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The estimated parameters from JICO.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">set.seed(76)
+X1 = MASS::mvrnorm(50, rep(0, 200), diag(200)) # covariates of the first group
+X2 = MASS::mvrnorm(50, rep(0, 200), diag(200)) # covariates of the second group
+X.list = list(X1, X2)
+
+Y1 = matrix(stats::rnorm(50)) # responses for the first group
+Y2 = matrix(stats::rnorm(50)) # responses for the second group
+Y.list = list(Y1, Y2)
+
+ml.JICO = continuum.multigroup.iter(
+  X.list, Y.list, gam=1e10, rankJ=1, rankA=c(1, 1), 
+  maxiter = 300
+)
+</code></pre>
+
+
+</div>

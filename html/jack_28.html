@@ -1,0 +1,89 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SkewFactorialSchurPol</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew factorial Schur polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Computes the skew factorial Schur polynomial associated to a
+given skew partition.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SkewFactorialSchurPol(n, lambda, mu, a, i0)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>number of variables</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>a</code></td>
+<td>
+<p>vector of <code>bigq</code> numbers, or vector of elements coercible
+to <code>bigq</code> numbers; this vector corresponds to the sequence denoted by
+<code class="reqn">a</code> in the
+<a href="https://www.kurims.kyoto-u.ac.jp/EMIS/journals/SLC/opapers/s28macdonald.pdf">reference paper</a>,
+section <strong>6th Variation</strong> (in this paper <code class="reqn">a</code> is a doubly
+infinite sequence, but only a finite number of indices are not involved);
+the length of this vector must be large enough (an error will be thrown
+if it is too small) but it is not easy to know the minimal possible length</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>i0</code></td>
+<td>
+<p>positive integer, the index of <code>a</code> that must be considered
+as the zero index of the sequence denoted by <code class="reqn">a</code> in the reference
+paper</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>qspray</code> polynomial.
+</p>
+
+
+<h3>References</h3>
+
+<p>I.G. Macdonald.
+<em>Schur functions: theme and variations</em>.
+Publ. IRMA Strasbourg, 1992.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># for a=c(0, 0, ...), the skew factorial Schur polynomial is the
+# skew Schur polynomial; let's check
+n &lt;- 4
+lambda &lt;- c(3, 3, 2, 2); mu &lt;- c(2, 2)
+a &lt;- rep(0, 9)
+i0 &lt;- 3
+skewFactorialSchurPoly &lt;- SkewFactorialSchurPol(n, lambda, mu, a, i0)
+skewSchurPoly &lt;- SkewSchurPol(n, lambda, mu)
+skewFactorialSchurPoly == skewSchurPoly # should be TRUE
+</code></pre>
+
+
+</div>

@@ -1,0 +1,57 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>set_joyn_options</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Set joyn options</h2>
+
+<h3>Description</h3>
+
+<p>This function is used to change the value of one or more joyn options
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">set_joyn_options(..., env = .joynenv)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>pairs of option = value</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>env</code></td>
+<td>
+<p>environment, which is joyn environment by default</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>joyn new options and values invisibly as a list
+</p>
+
+
+<h3>See Also</h3>
+
+<p>JOYn options functions
+<code>get_joyn_options()</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">joyn:::set_joyn_options(joyn.verbose = FALSE, joyn.reportvar = "joyn_status")
+joyn:::set_joyn_options() # return to default options
+</code></pre>
+
+
+</div>

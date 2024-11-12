@@ -1,0 +1,55 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>convert_to_NA</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Convert string values to true <code>NA</code> values.</h2>
+
+<h3>Description</h3>
+
+<p>Converts instances of user-specified strings into <code>NA</code>.  Can operate on either a single vector or an entire data.frame.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">convert_to_NA(dat, strings)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dat</code></td>
+<td>
+<p>vector or data.frame to operate on.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>strings</code></td>
+<td>
+<p>character vector of strings to convert.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>Returns a cleaned object.  Can be a vector, data.frame, or <code>tibble::tbl_df</code> depending on the provided input.
+</p>
+
+
+<h3>Warning</h3>
+
+<p>Deprecated, do not use in new code. Use <code>dplyr::na_if()</code> instead.
+</p>
+
+
+<h3>See Also</h3>
+
+<p>janitor_deprecated
+</p>
+
+
+</div>

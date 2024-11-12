@@ -1,0 +1,133 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>joint.object</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitted <code>joint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>An object returned by the <code>joint</code> function, inheriting from
+class <code>joint</code> and representing a fitted joint model for longitudinal
+and time-to-event (or competing risks) data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">joint.object
+</code></pre>
+
+
+<h3>Format</h3>
+
+<p>An object of class <code>NULL</code> of length 0.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list with the following components. </p>
+
+<dl>
+<dt><code>coefficients</code></dt>
+<dd>
+<p>a list with the estimated coefficients. The 
+components of this list are: </p>
+
+<dl>
+<dt><code>fixed</code></dt>
+<dd>
+<p>longitudinal and survival sub-model fixed effects.</p>
+</dd>
+<dt><code>random</code></dt>
+<dd>
+<p>the BLUPs of the random effects.</p>
+</dd>
+<dt><code>latent</code></dt>
+<dd>
+<p>the latent association parameter(s) from the
+time-to-event sub-model.</p>
+</dd>
+</dl>
+</dd>
+<dt><code>sigama.z</code></dt>
+<dd>
+<p>a numeric double for the residual standard error.</p>
+</dd>
+<dt><code>sigma.u</code></dt>
+<dd>
+<p>the variance-covariance matrix of the random
+effects.</p>
+</dd>
+<dt><code>hazard</code></dt>
+<dd>
+<p>a vector of the (centered) baseline hazards at each
+unique failure time.</p>
+</dd>
+<dt><code>log.lik</code></dt>
+<dd>
+<p>the log-likelihood from the joint model fit and
+sub-model contributions.</p>
+</dd>
+<dt><code>numIter</code></dt>
+<dd>
+<p>the number of EM algorithm iterations.</p>
+</dd>
+<dt><code>convergence</code></dt>
+<dd>
+<p>a logical value of whether convergence was
+achieved or not.</p>
+</dd>
+<dt><code>model</code></dt>
+<dd>
+<p>see <code>joint</code> for details.</p>
+</dd>
+<dt><code>sepassoc</code></dt>
+<dd>
+<p>see <code>joint</code> for details.</p>
+</dd>
+<dt><code>sepests</code></dt>
+<dd>
+<p>see <code>joint</code> for details.</p>
+</dd>
+<dt><code>compRisk</code></dt>
+<dd>
+<p>a logical value indicating whether competing risks
+were detected or not.</p>
+</dd>
+<dt><code>sep.loglike</code></dt>
+<dd>
+<p>the log-likelihood from the joint model fit (with
+association set to zero) and separately fitted sub-model contributions.</p>
+</dd>
+<dt><code>formulae</code></dt>
+<dd>
+<p>a list of model formulae. See <code>joint</code>
+for details.</p>
+</dd>
+<dt><code>data</code></dt>
+<dd>
+<p>a <code>jointdata</code> object. See
+<code>joint</code> for details.</p>
+</dd>
+<dt><code>call</code></dt>
+<dd>
+<p>the model call. Can be used by
+<code>update</code>.</p>
+</dd>
+</dl>
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>joint</code>.
+</p>
+
+
+</div>

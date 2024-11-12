@@ -1,0 +1,73 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SchurR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Evaluation of Schur polynomials</h2>
+
+<h3>Description</h3>
+
+<p>Evaluates a Schur polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SchurR(x, lambda, algorithm = "DK")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>numeric or complex vector or bigq vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lambda</code></td>
+<td>
+<p>an integer partition, given as a vector of decreasing
+integers</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>algorithm</code></td>
+<td>
+<p>the algorithm used, either <code>"DK"</code> (Demmel-Koev)
+or <code>"naive"</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A numeric or complex scalar or a <code>bigq</code> rational number.
+</p>
+
+
+<h3>References</h3>
+
+<p>J. Demmel &amp; P. Koev.
+<em>Accurate and efficient evaluation of Schur and Jack functions</em>.
+Mathematics of computations, vol. 75, n. 253, 223-229, 2005.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>SchurPolR</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(2,3,4)
+SchurR(x, c(2,1,1))
+prod(x) * sum(x)
+</code></pre>
+
+
+</div>

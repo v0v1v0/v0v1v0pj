@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot.jointMeanCov</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Quantile Plot of Test Statistics</h2>
+
+<h3>Description</h3>
+
+<p>This function displays a quantile plot of test statistics,
+based on the output of the functions
+<code>jointMeanCovGroupCen</code> or <code>jointMeanCovModSelCen</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointMeanCov'
+plot(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>output of <code>jointMeanCovGroupCen</code> or <code>jointMeanCovModSelCen</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other plotting arguments passed to
+<code>qqnorm</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Examples</h3>
+
+<pre><code class="language-R"># Define sample sizes
+n1 &lt;- 5
+n2 &lt;- 5
+n &lt;- n1 + n2
+m &lt;- 200
+
+# Generate data with row and column covariance
+# matrices each autorogressive of order 1 with
+# parameter 0.2.  The mean is defined so the first
+# three columns have true differences in group means
+# equal to four.
+Z &lt;- matrix(rnorm(m * n), nrow=n, ncol=m)
+A &lt;- outer(1:m, 1:m, function(i, j) 0.2^abs(i - j))
+B &lt;- outer(1:n, 1:n, function(i, j) 0.2^abs(i - j))
+M &lt;- matrix(0, nrow=nrow(Z), ncol=ncol(Z))
+group.one.indices &lt;- 1:5
+group.two.indices &lt;- 6:10
+M[group.one.indices, 1:3] &lt;- 2
+M[group.two.indices, 1:3] &lt;- -2
+X &lt;- t(chol(B)) %*% Z %*% chol(A) + M
+
+# Apply Algorithm 2 (jointMeanCovModSelCen) and plot the
+# test statistics.
+rowpen &lt;- sqrt(log(m) / n)
+out &lt;- jointMeanCovModSelCen(X, group.one.indices, rowpen)
+plot(out)
+</code></pre>
+
+
+</div>

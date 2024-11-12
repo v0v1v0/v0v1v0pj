@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>opt.dose</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Optimal Interval-valued Dose under the Individualized Interval-valued Dose Rule via (Residual) Jump Q-learning.</h2>
+
+<h3>Description</h3>
+
+<p>This function assigns each individual to one of the subintervals of the entire dosage according to his/her baseline covariates under the estimated I2DR.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">  opt.dose(X,I2DR)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>The patient’s baseline covariates, coule be a matrix, including continous or discrete covariates.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>I2DR</code></td>
+<td>
+<p>The Individualized Interval-valued Dose Rule found by the function "JQL" or "RJQL".</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<table><tr style="vertical-align: top;">
+<td><code>opt.dose</code></td>
+<td>
+<p>The optimal Interval-valued dosage for each individual.</p>
+</td>
+</tr></table>
+<h3>References</h3>
+
+<p>Jump Q-learning for Individualized Interval-valued Dose Rule.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">n=50
+d=4
+x=matrix(runif(n*(d-1),-1,1),nrow=n,ncol=d-1)
+a=runif(n,0,1)
+y=(1+x[,1])*(a&gt;=0&amp;a&lt;0.35)+(x[,1]-x[,2])*(a&gt;=0.35&amp;a&lt;0.65)+(1-x[,2])*(a&gt;=0.65&amp;a&lt;=1)+rnorm(n,0,1)
+rule=find.I2DR(Y=y,A=a,X=x)
+n0=10
+xnew=matrix(runif(n0*(d-1),-1,1),nrow=n0,ncol=d-1)
+opt.dose(X=xnew,I2DR=rule)
+</code></pre>
+
+
+</div>

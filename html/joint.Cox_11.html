@@ -1,0 +1,182 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>F.windows</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Dynamic prediction of death under the joint frailty-copula model</h2>
+
+<h3>Description</h3>
+
+<p>Dynamic prediction of death using a joint frailty-copula model. 
+Probability of death between t and t+w is calculated given a tumour progression time X and covariates Z1 and Z2. 
+If X&lt;=t, the prediction probability is F(t,t+w|X=x, Z1, Z2). If X&gt;t, the prediction probability is F(t,t+w|X&gt;t, Z1, Z2). 
+This is a vector version of F.window.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">F.windows(time, widths, X, Z1, Z2, beta1, beta2, eta, theta, alpha,
+ g, h, xi1, xi3, Fplot = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>prediction time (=t)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>widths</code></td>
+<td>
+<p>length of window (=w)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>time of tumour progression &lt; time</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z1</code></td>
+<td>
+<p>a vector of covariates for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z2</code></td>
+<td>
+<p>a vector of covariates for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta1</code></td>
+<td>
+<p>regression coefficients for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>beta2</code></td>
+<td>
+<p>regression coefficients for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>eta</code></td>
+<td>
+<p>frailty variance</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+<p>copula parameter</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>alpha</code></td>
+<td>
+<p>parameter related to frailty; usually alpha=1</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>g</code></td>
+<td>
+<p>parameters related to the baseline hazard for progression</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>h</code></td>
+<td>
+<p>parameters related to the baseline hazard for death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi1</code></td>
+<td>
+<p>lower bound for time to event</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>xi3</code></td>
+<td>
+<p>upper bound for time to death</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Fplot</code></td>
+<td>
+<p>if FALSE, the plot is not shown</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Predicted probability of death is calculated given the event status (X&lt;=t or X&gt;t) and covariates (Z1 and Z2).
+</p>
+
+
+<h3>Value</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>time </code></td>
+<td>
+<p>t</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>widths </code></td>
+<td>
+<p>w</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X </code></td>
+<td>
+<p>X</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F_event_at_X </code></td>
+<td>
+<p>F(t,t+w|X=x, Z1, Z2)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>F_noevent </code></td>
+<td>
+<p>F(t,t+w|X&gt;t, Z1, Z2)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Takeshi Emura</p>
+
+
+<h3>References</h3>
+
+<p>Emura T, Nakatochi M, Matsui S, Michimae H, Rondeau V (2018), Personalized dynamic prediction of death according to tumour progression and high-dimensional
+genetic factors: meta-analysis with a joint model, Stat Methods Med Res 27(9):2842-58
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">w=c(0,0.5,1,1.5,2)
+par(mfrow=c(1,2))
+F.windows(time=1,X=0.2,widths=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
+F.windows(time=1,X=0.8,widths=w,Z1=1,Z2=1,beta1=1,beta2=1,eta=0.5,theta=8,
+         alpha=1,g=rep(1,5),h=rep(1,5),xi1=0,xi3=3)
+</code></pre>
+
+
+</div>

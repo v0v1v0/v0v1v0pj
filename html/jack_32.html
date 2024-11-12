@@ -1,0 +1,51 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>SkewKostkaFoulkesPolynomial</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Skew Kostka-Foulkes polynomial</h2>
+
+<h3>Description</h3>
+
+<p>Computes a skew Kostka-Foulkes polynomial.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">SkewKostkaFoulkesPolynomial(lambda, mu, nu)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>lambda, mu</code></td>
+<td>
+<p>integer partitions defining the skew partition:
+<code>lambda</code> is the outer partition and <code>mu</code> is the inner partition
+(so <code>mu</code> must be a subpartition of <code>lambda</code>)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nu</code></td>
+<td>
+<p>integer partition; the condition
+<code>sum(nu)==sum(lambda)-sum(mu)</code> is necessary in order to get a
+non-zero polynomial</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The skew Kostka-Foulkes polynomial associated to the skew
+partitiion defined by <code>lambda</code> and <code>mu</code> and to the partition
+<code>nu</code>. This is a univariate <code>qspray</code> polynomial whose value
+at <code>1</code> is the skew Kostka number associated to the skew partition
+defined by <code>lambda</code> and <code>mu</code> and to the partition <code>nu</code>.
+</p>
+
+
+</div>

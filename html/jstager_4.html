@@ -1,0 +1,66 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jstage_references</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Scrape J-STAGE References</h2>
+
+<h3>Description</h3>
+
+<p>Scrapes all available references from a J-STAGE article web page.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jstage_references(url, depth = 1, citedby = FALSE, wait = 1, quiet = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>url</code></td>
+<td>
+<p>The URL or DOI of the J-STAGE article web page.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>depth</code></td>
+<td>
+<p>Integer. The depth to which references should be scraped. For example, a
+depth of 2 means the references of the specified paper and recursively the
+references of those references are scraped, and so on.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>citedby</code></td>
+<td>
+<p>Logical. Set to <code>TRUE</code> to retrieve the list of cited-by references instead
+of the reference list. When set to <code>TRUE</code>, <code>depth</code> is automatically set to
+1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>wait</code></td>
+<td>
+<p>Numeric. The number of seconds to wait between each request to reduce
+server load.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>quiet</code></td>
+<td>
+<p>Logical. Set to <code>FALSE</code> to display information about the progress.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame with the DOI of each reference.
+</p>
+
+
+</div>

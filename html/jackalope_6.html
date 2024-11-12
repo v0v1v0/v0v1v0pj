@@ -1,0 +1,59 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>haps_functions</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Organize higher-level information for creating haplotypes.</h2>
+
+<h3>Description</h3>
+
+<p>The following functions organize information that gets passed to <code>create_haplotypes</code>
+to generate haplotypes from a reference genome.
+Each function represents a method of generation and starts with <code>"haps_"</code>.
+The first three are phylogenomic methods, and all functions but <code>haps_vcf</code>
+will use molecular evolution information when passed to <code>create_haplotypes</code>.
+</p>
+
+
+<h3>Details</h3>
+
+
+<dl>
+<dt><code>haps_theta</code></dt>
+<dd>
+<p>Uses an estimate for theta, the population-scaled
+mutation rate, and a desired number of haplotypes.</p>
+</dd>
+<dt><code>haps_phylo</code></dt>
+<dd>
+<p>Uses phylogenetic tree(s) from <code>phylo</code>
+object(s) or NEWICK file(s), one tree per chromosome or one for all
+chromosomes.</p>
+</dd>
+<dt><code>haps_gtrees</code></dt>
+<dd>
+<p>Uses gene trees, either in the form of
+an object from the <code>scrm</code> or <code>coala</code> package or
+a file containing output in the style of the <code>ms</code> program.</p>
+</dd>
+<dt><code>haps_ssites</code></dt>
+<dd>
+<p>Uses matrices of segregating sites,
+either in the form of
+<code>scrm</code> or <code>coala</code> coalescent-simulator object(s), or
+a <code>ms</code>-style output file.</p>
+</dd>
+<dt><code>haps_vcf</code></dt>
+<dd>
+<p>Uses a haplotype call format (VCF) file that
+directly specifies haplotypes.</p>
+</dd>
+</dl>
+<h3>See Also</h3>
+
+<p><code>create_haplotypes</code>
+</p>
+
+
+</div>

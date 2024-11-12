@@ -1,0 +1,82 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>as.data.frame.JuliaProxy</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Coerce a Julia Table to a Data Frame</h2>
+
+<h3>Description</h3>
+
+<p>Get the data from a Julia proxy object that implements the Julia
+<a href="https://github.com/JuliaData/Tables.jl"><code>Tables</code></a> interface,
+and create an R data frame from it.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'JuliaProxy'
+as.data.frame(x, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a proxy object pointing to a Julia object that implements the interface
+of the package Julia package <code>Tables</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>(not used)</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Strings are not converted to factors.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+if (juliaSetupOk() &amp;&amp; Sys.getenv("NOT_CRAN") == "true") {
+   # (This example is not run on CRAN as it takes a little too long.)
+
+   # Demonstrate the usage with the Julia package "IndexedTables" (v1.0)
+
+   # Install the package first if it is not installed:
+   # juliaEval('import Pkg; Pkg.add("IndexedTables")')
+
+   # Import "IndexedTables" package
+   IndexedTables &lt;- juliaImport("IndexedTables")
+
+   mydf &lt;- data.frame(x = c(1, 2, 3),
+                      y = c("a", "b", "c"),
+                      z = c(TRUE, FALSE, NA),
+                      stringsAsFactors = FALSE)
+
+   # Create a table in Julia, e. g. via IndexedTables
+   mytbl &lt;- IndexedTables$table(mydf)
+
+   # This table can, e g. be queried and
+   # the result can be translated to an R data frame.
+   seltbl &lt;- IndexedTables$select(mytbl, juliaExpr("(:x, :y)"))[1:2]
+
+   # Translate selection of Julia table into R data frame
+   as.data.frame(seltbl)
+
+}
+
+
+</code></pre>
+
+
+</div>

@@ -1,0 +1,138 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>modular</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Modular Functions for Joint Mean Covariance Model Fits</h2>
+
+<h3>Description</h3>
+
+<p>Modular Functions for joint mean covariance model fits
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">ldFormula(formula, data = NULL, triple = c(3, 3, 3), cov.method = c("mcd",
+  "acd", "hpc"), optim.method = c("default", "BFGS"),
+  control = jmcmControl(), start = NULL)
+
+optimizeJmcm(m, Y, X, Z, W, time, cov.method, optim.method, control, start)
+
+mkJmcmMod(opt, args, triple, cov.method, optim.method, mc)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>a two-sided linear formula object describing the covariates
+for both the mean and covariance matrix part of the model, with the response,
+the corresponding subject id and measurement time on the left of a operator~,
+divided by vertical bars ("|").</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>a data frame containing the variables named in formula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>triple</code></td>
+<td>
+<p>an integer vector of length three containing the degrees of the
+three polynomial functions for the mean structure, the log innovation
+-variances and the autoregressive or moving average coefficients when 'mcd'
+or 'acd' is specified for cov.method. It refers to the degree for the mean
+structure, variances and angles when 'hpc' is specified for cov.method.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cov.method</code></td>
+<td>
+<p>covariance structure modelling method,
+choose 'mcd' (Pourahmadi 1999), 'acd' (Chen and Dunson 2013) or 'hpc'
+(Zhang et al. 2015).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>optim.method</code></td>
+<td>
+<p>optimization method, choose 'default' or 'BFGS' (vmmin in R)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list (of correct class, resulting from jmcmControl())
+containing control parameters, see the *jmcmControl documentation for
+details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>start</code></td>
+<td>
+<p>starting values for the parameters in the model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>m</code></td>
+<td>
+<p>an integer vector of number of measurements for each subject.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Y</code></td>
+<td>
+<p>a vector of responses for all subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>X</code></td>
+<td>
+<p>model matrix for mean structure model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Z</code></td>
+<td>
+<p>model matrix for the diagonal matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>W</code></td>
+<td>
+<p>model matrix for the lower triangular matrix.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>time</code></td>
+<td>
+<p>a vector of time from the data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>opt</code></td>
+<td>
+<p>optimized results returned by optimizeJmcm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>args</code></td>
+<td>
+<p>arguments returned by ldFormula.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mc</code></td>
+<td>
+<p>matched call from the calling function.</p>
+</td>
+</tr>
+</table>
+</div>

@@ -1,0 +1,282 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jointModelObject</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Fitted jointModel Object</h2>
+
+<h3>Description</h3>
+
+<p>An object returned by the <code>jointModel</code> function, inheriting from class <code>jointModel</code> and representing a fitted
+joint model for longitudinal and time-to-event data. Objects of this class have methods for the generic functions 
+<code>anova</code>, <code>coef</code>, <code>fitted</code>, <code>fixed.effects</code>, <code>logLik</code>, <code>plot</code>, <code>print</code>, 
+<code>random.effects</code>, <code>residuals</code>, <code>summary</code>, and <code>vcov</code>.
+</p>
+
+
+<h3>Value</h3>
+
+<p>The following components must be included in a legitimate <code>jointModel</code> object.
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>coefficients</code></td>
+<td>
+<p>a list with the estimated coefficients. The components of this list are:
+</p>
+
+<dl>
+<dt>betas</dt>
+<dd>
+<p>the vector of fixed effects for the linear mixed effects model.</p>
+</dd>
+<dt>sigma</dt>
+<dd>
+<p>the measurement error standard deviation for the linear mixed effects model.</p>
+</dd>
+<dt>gammas</dt>
+<dd>
+<p>the vector of baseline covariates for the survival model.</p>
+</dd>
+<dt>alpha</dt>
+<dd>
+<p>the association parameter(s).</p>
+</dd>
+<dt>Dalpha</dt>
+<dd>
+<p>the association parameter(s) corresponding to the slope of the true trajectory.</p>
+</dd>
+<dt>sigma.t</dt>
+<dd>
+<p>the scale parameter for the Weibull survival model; returned only when
+<code>method = "weibull-PH-GH"</code> or <code>method = "weibull-AFT-GH"</code>.</p>
+</dd>
+<dt>xi</dt>
+<dd>
+<p>the parameter of the piecewise constant baseline hazard; returned only when
+<code>method = "piecewise-PH-GH"</code>.</p>
+</dd>
+<dt>gamma.bs</dt>
+<dd>
+<p>the coefficients of the B-splines use to approximate the baseline hazard;
+returned only when <code>method = "spline-PH-GH"</code>.</p>
+</dd>
+<dt>lambda0</dt>
+<dd>
+<p>a two-column numeric matrix with the first column containing the estimated baseline hazard values,
+and the second the unique sorted event times; returned only when <code>method = "Cox-PH-GH"</code>.</p>
+</dd>
+<dt>D</dt>
+<dd>
+<p>the variance-covariance matrix of the random effects.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Hessian</code></td>
+<td>
+<p>the Hessian matrix evaluated at the estimated parameter values.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>logLik</code></td>
+<td>
+<p>the log-likelihood value.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>EB</code></td>
+<td>
+<p>a list with components:
+</p>
+
+<dl>
+<dt>post.b</dt>
+<dd>
+<p>the estimated random effects values.</p>
+</dd>
+<dt>post.vb</dt>
+<dd>
+<p>the estimated variance for the random effects estimates.</p>
+</dd>
+<dt>Zb</dt>
+<dd>
+<p>the estimated random effects part of the linear predictor for the longitudinal outcome (i.e., <code class="reqn">Z</code>
+is the design matrix for the random effects <code class="reqn">b</code>).</p>
+</dd>
+<dt>Ztimeb</dt>
+<dd>
+<p>the estimated random effects part of the linear predictor for the survival outcome (i.e.,
+evaluated at the observed event times).</p>
+</dd>
+<dt>Ztime2b</dt>
+<dd>
+<p>the estimated random effects part of the linear predictor for the survival outcome (i.e.,
+for the <code class="reqn">i</code>th sample unit is evaluated at all event times that are less or equal to the <code class="reqn">i</code>th
+observed event time); returned only when <code>method = "Cox-PH-GH"</code>.</p>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knots</code></td>
+<td>
+<p>the numeric vector of the knots positions; returned only when <code>method = "spline-PH-GH"</code>,
+<code>method = "piecewise-PH-GH"</code> or <code>method = "ch-Laplace"</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>iters</code></td>
+<td>
+<p>the number of iterations in the optimization algorithm.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convergence</code></td>
+<td>
+<p>convergence identifier: 0 corresponds to successful convergence, whereas 1 to a problem
+(i.e., when 1, usually more iterations are required).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n</code></td>
+<td>
+<p>the number of sample units.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>N</code></td>
+<td>
+<p>the total number of repeated measurements for the longitudinal outcome.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ni</code></td>
+<td>
+<p>a vector with the number of repeated measurements for each sample unit.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d</code></td>
+<td>
+<p>a numeric vector with 0 denoting censored observation and 1 events.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>the grouping vector for the longitudinal responses.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>a list with the design matrices for the longitudinal and event processes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>y</code></td>
+<td>
+<p>a list with the response vectors for the longitudinal and event processes.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data.id</code></td>
+<td>
+<p>a <code>data.frame</code> containing the variables for the linear mixed effects model at the time of the
+event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>method</code></td>
+<td>
+<p>the value of the <code>method</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>termsY</code></td>
+<td>
+<p>the <code>terms</code> component of the <code>lmeObject</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>termsT</code></td>
+<td>
+<p>the <code>terms</code> component of the <code>survObject</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formYx</code></td>
+<td>
+<p>the formula for the fixed effects part of the longitudinal model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formYz</code></td>
+<td>
+<p>the formula for the random effects part of the longitudinal model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>formT</code></td>
+<td>
+<p>the formula for the survival model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>timeVar</code></td>
+<td>
+<p>the value of the <code>timeVar</code> argument</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>the value of the <code>control</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parameterization</code></td>
+<td>
+<p>the value of the <code>parameterization</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>interFact</code></td>
+<td>
+<p>the value of the <code>interFact</code> argument</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>derivForm</code></td>
+<td>
+<p>the value of the <code>derivForm</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lag</code></td>
+<td>
+<p>the value of the <code>lag</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>call</code></td>
+<td>
+<p>the matched call.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code>
+</p>
+
+
+</div>

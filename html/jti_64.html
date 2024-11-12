@@ -1,0 +1,63 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>set_evidence</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Enter Evidence</h2>
+
+<h3>Description</h3>
+
+<p>Enter evidence into a the junction tree object that has not been propagated
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">set_evidence(x, evidence, initialize_cpts = TRUE)
+
+## S3 method for class 'jt'
+set_evidence(x, evidence, initialize_cpts = FALSE)
+
+## S3 method for class 'charge'
+set_evidence(x, evidence, initialize_cpts = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>A junction tree object, <code>jt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>evidence</code></td>
+<td>
+<p>A named vector. The names are the variabes and the elements
+are the evidence.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>initialize_cpts</code></td>
+<td>
+<p><code>TRUE</code> if the CPTs should be initialized and then
+create the clique potentials. Only relevant on objects returned from <code>compile</code>.</p>
+</td>
+</tr>
+</table>
+<h3>See Also</h3>
+
+<p><code>jt</code>, <code>mpe</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R"># See the 'jt' function
+</code></pre>
+
+
+</div>

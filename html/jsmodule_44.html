@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>lineUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>lineUI: shiny module UI for lineplot</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for lineplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">lineUI(id, label = "lineplot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module UI for lineplot
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for lineplot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(ggplot2)
+library(ggpubr)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      lineUI("line")
+    ),
+    mainPanel(
+      optionUI("line"),
+      plotOutput("line_plot"),
+      ggplotdownUI("line")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_line &lt;- lineServer("line",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$line_plot &lt;- renderPlot({
+    print(out_line())
+  })
+}
+</code></pre>
+
+
+</div>

@@ -1,0 +1,93 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>daycount</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Day count and year fraction for bond pricing</h2>
+
+<h3>Description</h3>
+
+<p>Implements 30/360, ACT/360, ACT/360 and 30/360E day count conventions.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">yearFraction(
+  d1,
+  d2,
+  r1,
+  r2,
+  freq = 2,
+  convention = c("30/360", "ACT/ACT", "ACT/360", "30/360E")
+)
+
+daycount.actual(d1, d2, variant = c("bond"))
+
+daycount.30.360(d1, d2, variant = c("US", "EU", "IT"))
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>d1</code></td>
+<td>
+<p>The starting date of period for day counts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>d2</code></td>
+<td>
+<p>The ending date of period for day counts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r1</code></td>
+<td>
+<p>The starting date of reference period for ACT/ACT day counts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>r2</code></td>
+<td>
+<p>The ending date of reference period for ACT/ACT day counts</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>freq</code></td>
+<td>
+<p>The frequency of coupon payments: 1 for annual, 2 for
+semi-annual, 12 for monthly.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>convention</code></td>
+<td>
+<p>The daycount convention</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variant</code></td>
+<td>
+<p>Three variants of the 30/360 convention are implemented, but
+only one variant of ACT/ACT is currently implemented</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Prof. Jayanth R. Varma <a href="mailto:jrvarma@iima.ac.in">jrvarma@iima.ac.in</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>The 30/360 day count was converted from C++ code in the
+QuantLib library
+</p>
+
+
+</div>

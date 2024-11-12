@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jags_df</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract data.frame</h2>
+
+<h3>Description</h3>
+
+<p>Extracts the posterior samples from <code>jagsUI</code> output in the form of
+a <code>data.frame</code>.  This simpler construction has a few benefits: operations may
+be more straightforward, and posterior objects will be smaller files and can be
+written to an external table or .csv, etc.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jags_df(x, p = NULL, exact = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object from <code>jagsUI::jags()</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Optional string to begin posterior names.  If <code>NULL</code> is used, all parameters will be returned.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether name must be an exact match (<code>TRUE</code>) or with initial sub-string matching only supplied characters (<code>FALSE</code>).
+Defaults to <code>FALSE.</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> with a column associated with each parameter and a row
+associated with each MCMC iteration.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>pull_post
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">out_df &lt;- jags_df(asdf_jags_out)
+</code></pre>
+
+
+</div>

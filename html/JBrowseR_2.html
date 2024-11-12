@@ -1,0 +1,96 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>assembly</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Create an assembly for a custom JBrowse view</h2>
+
+<h3>Description</h3>
+
+<p>Creates the necessary configuration string for an
+indexed fasta or bgzip fasta so that it can be used
+as the assembly in a JBrowse custom linear genome view.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">assembly(assembly_data, bgzip = FALSE, aliases = NULL, refname_aliases = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>assembly_data</code></td>
+<td>
+<p>the URL to your fasta file</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>bgzip</code></td>
+<td>
+<p>whether or not your fasta is bgzip compressed</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>aliases</code></td>
+<td>
+<p>a vector of strings of the aliases for the assembly</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>refname_aliases</code></td>
+<td>
+<p>the URL to a file containing reference
+name aliases. For more info see
+<a href="https://jbrowse.org/jb2/docs/config_guide#configuring-reference-name-aliasing">https://jbrowse.org/jb2/docs/config_guide#configuring-reference-name-aliasing</a></p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>The string returned by <code>assembly</code> is stringified JSON.
+JBrowseR is an interface to JBrowse 2, which receives its
+configuration in JSON format. The stringified JSON returned
+by <code>assembly</code> is parsed into a JavaScript object in the
+browser, and is used to configure the genome browser.
+</p>
+<p>It is important to note that while only the fasta file is
+passed as an argument, <code>assembly</code> assumes that a fasta
+index of the same name is located with the fasta file (as
+well as a gzi file in the case of a bgzip fasta).
+</p>
+<p>For example:
+</p>
+<p><code>assembly("data/hg38.fa")</code>
+</p>
+<p>Assumes that <code>data/hg38.fa.fai</code> also exists.
+</p>
+<p><code>assembly("data/hg38.fa", bgzip = TRUE)</code>
+</p>
+<p>Assumes that <code>data/hg38.fa.fai</code> and <code>data/hg38.fa.gzi</code> both exist.
+</p>
+<p>This is a JBrowse 2 convention, and the default naming output of samtools
+and bgzip.
+</p>
+<p>For more information on creating these files, visit
+<a href="https://jbrowse.org/jb2/docs/quickstart_web#adding-a-genome-assembly">https://jbrowse.org/jb2/docs/quickstart_web#adding-a-genome-assembly</a>
+</p>
+
+
+<h3>Value</h3>
+
+<p>a character vector of JBrowseR assembly configuration
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">assembly("https://jbrowse.org/genomes/hg19/fasta/hg19.fa.gz", bgzip = TRUE)
+</code></pre>
+
+
+</div>

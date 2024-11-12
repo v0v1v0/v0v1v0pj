@@ -1,0 +1,65 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>compare.lm</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Compare Linear Models</h2>
+
+<h3>Description</h3>
+
+<p>This function fits and compares several models (linear, quadratic, cubic, exponential, logarithmic, sigmoidal, power, logistic) to a given set of dependent and independent variables. It returns either a summary of the models with their R-squared values or predicted values based on the models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">compare.lm(dep, ind, predict = FALSE, steps = 0.01)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>dep</code></td>
+<td>
+<p>A numeric vector representing the dependent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind</code></td>
+<td>
+<p>A numeric vector representing the independent variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predict</code></td>
+<td>
+<p>Logical. If TRUE, the function returns predicted values for each model. Defaults to FALSE.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>steps</code></td>
+<td>
+<p>Numeric. The step size for generating x-values for predictions. Only used if predict is TRUE. Defaults to 0.01.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A data frame. If predict is FALSE, returns a data frame with the R-squared values for each model. If predict is TRUE, returns a data frame with the original data and predicted values for each model.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x &lt;- c(6, 9, 12, 14, 30, 35, 40, 47, 51, 55, 60)
+y &lt;- c(14, 28, 50, 70, 89, 94, 90, 75, 59, 44, 27)
+compare.lm(y, x)
+compare.lm(y, x, predict=TRUE)
+
+</code></pre>
+
+
+</div>

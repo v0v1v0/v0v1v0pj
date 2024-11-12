@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>liver.long</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Prednisone versus Placebo in Liver Cirrhosis Patients - Longitudinal Data
+</h2>
+
+<h3>Description</h3>
+
+<p>A randomized control trial in which both survival and longitudinal data were collected to examine the development of prothrombin index over time and its relationship with the survival outcome. 488 patients were randomly allocated to prednisone (251) or placebo (237) and followed until death or end of the study. <code>liver.long</code> only contains the longitudinal data of the trial, with one row per prothrombin index measurement.
+</p>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 2968 observations on the following 3 variables.
+</p>
+
+<dl>
+<dt><code>ID</code></dt>
+<dd>
+<p>patient ID, there are 488 patients in total.</p>
+</dd>
+<dt><code>obstime</code></dt>
+<dd>
+<p>time points at which the longitudinal measurements, i.e. prothrombin index, are recorded.</p>
+</dd>
+<dt><code>proth</code></dt>
+<dd>
+<p>prothrombin index measured at <code>obstime</code>.</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+<p>Andersen, P. K., Borgan O., Gill, R. D. and Kieding, N. (1993) <em>Statistical Models Based on Counting Processes</em>. New York: Springer.
+</p>
+
+
+<h3>References</h3>
+
+<p>Henderson, R., Diggle, P. and Dobson, A. (2002) Identification and efficacy of longitudinal markers for survival. <em>Biostatistics</em> <b>3</b>, 33–50
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>liver</code>,
+<code>liver.surv</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">head(liver.long)
+</code></pre>
+
+
+</div>

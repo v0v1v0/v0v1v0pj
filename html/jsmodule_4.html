@@ -1,0 +1,83 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>boxUI</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>boxUI: shiny module UI for boxplot</h2>
+
+<h3>Description</h3>
+
+<p>Shiny module UI for boxplot
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">boxUI(id, label = "boxplot")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>id</code></td>
+<td>
+<p>id</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>label</code></td>
+<td>
+<p>label</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Shiny module UI for boxplot
+</p>
+
+
+<h3>Value</h3>
+
+<p>Shiny module UI for boxplot
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(shiny)
+library(ggplot2)
+library(ggpubr)
+ui &lt;- fluidPage(
+  sidebarLayout(
+    sidebarPanel(
+      boxUI("box")
+    ),
+    mainPanel(
+      optionUI("box"),
+      plotOutput("box_plot"),
+      ggplotdownUI("box")
+    )
+  )
+)
+
+server &lt;- function(input, output, session) {
+  data &lt;- reactive(mtcars)
+  data.label &lt;- reactive(jstable::mk.lev(mtcars))
+
+  out_box &lt;- boxServer("box",
+    data = data, data_label = data.label,
+    data_varStruct = NULL
+  )
+
+  output$box_plot &lt;- renderPlot({
+    print(out_box())
+  })
+}
+</code></pre>
+
+
+</div>

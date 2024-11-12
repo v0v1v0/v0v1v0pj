@@ -1,0 +1,79 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>Calculate.Index</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Indices values and Jack-knife indices for a single topology.</h2>
+
+<h3>Description</h3>
+
+<p>The funtion calculates standard and terminal jack-knifed indices I and W 
+[see Miranda-Esquivel 2016], along with Posadas et al. 2001 modifications.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">Calculate.Index(tree = tree, distribution = distribution, jtip = 0,
+  verbose = TRUE, standard = "distribution")
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>tree</code></td>
+<td>
+<p>is a single tree with n terminals, an ape phylo object.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>distribution</code></td>
+<td>
+<p>species distributions in n areas, a data.frame</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>jtip</code></td>
+<td>
+<p>is the proportion of terminals to delete, real (range 0-1).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Boolean. If TRUE, the output reports the number of deleted terminals/topologies.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>standard</code></td>
+<td>
+<p>"distribution" or "tree" to standarize by the 
+by the sum of indices in the distribution or  the sum of indices in the tree</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Miranda-Esquivel Daniel R.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">library(jrich)
+data(tree)
+data(distribution)
+## Standarized by the sum of indices in the distribution
+Calculate.Index(tree=tree, distribution = distribution, verbose=TRUE, standard = "distribution")
+
+## Standarized by the sum of indices in the tree (as figure 1 in Miranda-Esquivel 2016)
+Calculate.Index(tree=tree, distribution = distribution, verbose=TRUE, standard = "tree")
+
+
+</code></pre>
+
+
+</div>

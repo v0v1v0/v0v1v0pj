@@ -1,0 +1,110 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>CalculateMom</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Calculate Moment Estimators for Relatedness Parameters
+</h2>
+
+<h3>Description</h3>
+
+<p>Function <code>CalculateMom</code> computes moment estimators for a set of
+relatedness parameters (kinship, inbreeding, least one IBD out of three
+and T4) using the genotype data and the allele frequencies.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">CalculateMom(Xgen, mafvec, ind.sub = 1:nrow(Xgen), verbose = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>Xgen</code></td>
+<td>
+<p>Genotype data coded in (0,1,2) format</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>mafvec</code></td>
+<td>
+<p>A vector of minor allele frequencies</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ind.sub</code></td>
+<td>
+<p>Index for subsetting individuals</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>Print output on the progress of the algorithm if <code>verbose=TRUE</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A list object with four fields:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>T1</code></td>
+<td>
+<p>The pairwise coancestry or kinship coefficients (symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T2</code></td>
+<td>
+<p>The pairwise inbreeding coefficients (non-symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T3</code></td>
+<td>
+<p>The pairwise Least one IBD out of three (symmetric)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>T4</code></td>
+<td>
+<p>T4 (skew-symmetric)</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Jan Graffelman (jan.graffelman@upc.edu)</p>
+
+
+<h3>References</h3>
+
+<p>Csuros, M. (2014) Non-identifiability of identity coefficients at biallelic loci. Theoretical Population
+Biology 92, pp. 22-29. <a href="https://doi.org/10.1016/j.tpb.2013.11.001">doi:10.1016/j.tpb.2013.11.001</a>.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>BoxplotTheta</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(SimulatedPedigree)
+Xgen &lt;- as.matrix(SimulatedPedigree[,6:ncol(SimulatedPedigree)])
+mafvec &lt;- mafvector(Xgen)
+Theta.mom &lt;- CalculateMom(Xgen[1:10,],mafvec)
+</code></pre>
+
+
+</div>

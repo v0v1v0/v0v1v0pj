@@ -1,0 +1,105 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>reclassificationJS</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>reclassificationJS: Function for reclassification table and statistics</h2>
+
+<h3>Description</h3>
+
+<p>Modified function of PredictABEL::reclassification: return output table
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">reclassificationJS(
+  data,
+  cOutcome,
+  predrisk1,
+  predrisk2,
+  cutoff,
+  dec.value = 3,
+  dec.p = 3
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>Data frame or matrix that includes the outcome and predictors variables.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cOutcome</code></td>
+<td>
+<p>Column number of the outcome variable.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predrisk1</code></td>
+<td>
+<p>Vector of predicted risks of all individuals using initial model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>predrisk2</code></td>
+<td>
+<p>Vector of predicted risks of all individuals using updated model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cutoff</code></td>
+<td>
+<p>Cutoff values for risk categories. Define the cut-off values. Ex: c(0,.20,.30,1)</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.value</code></td>
+<td>
+<p>digits of value, Default: 4</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>dec.p</code></td>
+<td>
+<p>digits of p, Default: 3</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Modified function of PredictABEL::reclassification
+</p>
+
+
+<h3>Value</h3>
+
+<p>Table including NRI(categorical), NRI(continuous), IDI with 95
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>rcorrp.cens</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">m1 &lt;- glm(vs ~ am + gear, data = mtcars, family = binomial)
+m2 &lt;- glm(vs ~ am + gear + wt, data = mtcars, family = binomial)
+reclassificationJS(
+  data = mtcars, cOutcome = 8,
+  predrisk1 = predict(m1, type = "response"),
+  predrisk2 = predict(m2, type = "response"), cutoff = c(0, .20, .40, 1)
+)
+</code></pre>
+
+
+</div>

@@ -1,0 +1,70 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>piecewiseExp.ph</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Proportional Hazards Models with Piecewise Constant Baseline Hazard Function </h2>
+
+<h3>Description</h3>
+
+<p>Based on a fitted Cox model this function fits the corresponding relative risk model with a 
+piecewise constant baseline hazard using the Poisson regression equivalence
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">piecewiseExp.ph(coxObject, knots = NULL, length.knots = 6)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>coxObject</code></td>
+<td>
+<p> an object of class <code>coxph</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>knots</code></td>
+<td>
+<p>A numeric vector denoting the internal knots (cut points) defining the intervals in which the baseline hazard is assumed constant.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>length.knots</code></td>
+<td>
+<p>a numeric value denoting the number of internal knots to use in the fit. 
+Used when <code>knots = NULL</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an object of class <code>glm</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">coxFit &lt;- coxph(Surv(Time, death) ~ drug, data = aids.id, x = TRUE)
+piecewiseExp.ph(coxFit)
+</code></pre>
+
+
+</div>

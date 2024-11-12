@@ -1,0 +1,72 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>net.hubs</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Get degrees of most connected nodes.
+</h2>
+
+<h3>Description</h3>
+
+<p>List the degrees of the most connected nodes in each class.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">net.hubs(theta, nhubs = 10)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>theta</code></td>
+<td>
+
+<p>A list of pXp matrices, each an estimated sparse inverse covariance matrix.  (For example, the result of FGL or GGL.)
+</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nhubs</code></td>
+<td>
+
+<p>The number of hubs to be identified.  net.hubs() will list the degree of the nhubs most connected nodes in each class.
+</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>hubs, a list of length K, each element of which is a vector giving the degree of the most connected nodes in the corresponding class.</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Patrick Danaher
+</p>
+
+
+<h3>References</h3>
+
+<p>Patrick Danaher, Pei Wang and Daniela Witten (2011).  The joint graphical lasso for inverse covariance estimation across multiple classes.  http://arxiv.org/abs/1111.0324
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## load an example dataset with K=two classes, p=200 features, and n=100 samples per class:
+data(example.data)
+str(example.data)
+## run fgl:
+fgl.results = JGL(Y=example.data,penalty="fused",lambda1=.25,lambda2=.1)
+## get hubs list:
+net.hubs(fgl.results$theta)
+</code></pre>
+
+
+</div>

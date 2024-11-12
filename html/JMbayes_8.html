@@ -1,0 +1,97 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bma.combine</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2> Combines Predictions for Bayesian Model Averaging </h2>
+
+<h3>Description</h3>
+
+<p>Combines estimated survival probabilities or predictions for longitudinal responses.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bma.combine(..., JMlis = NULL, weights = NULL)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>objects inheriting from class <code>survfit.JMbayes</code> or <code>predict.JMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>JMlis</code></td>
+<td>
+<p>a list of <code>survfit.JMbayes</code> or <code>predict.JMbayes</code> objects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>weights</code></td>
+<td>
+<p>a numeric vector of weights to be applied in each object.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>an object of class <code>survfit.JMbayes</code> or <code>predict.JMbayes</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2016). The R package JMbayes for fitting joint models for longitudinal and
+time-to-event data using MCMC. <em>Journal of Statistical Software</em> <b>72(7)</b>, 1–45.
+doi:10.18637/jss.v072.i07.
+</p>
+<p>Rizopoulos, D., Hatfield, L., Carlin, B. and Takkenberg, J. (2014). Combining dynamic predictions from joint models for longitudinal and time-to-event data using Bayesian model averaging. <em>Journal of the American Statistical Association</em> 
+<b>109</b>, 1385–1397.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# we construct the composite event indicator (transplantation or death)
+pbc2$status2 &lt;- as.numeric(pbc2$status != "alive")
+pbc2.id$status2 &lt;- as.numeric(pbc2.id$status != "alive")
+
+# we fit two joint models using splines for the subject-specific 
+# longitudinal trajectories and a spline-approximated baseline
+# risk function; the first one with the current value parameterization
+# and the other with the shared random effects parameterization
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 2), data = pbc2,
+              random = ~ ns(year, 2) | id)
+survFit &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+
+jointFit1 &lt;- jointModelBayes(lmeFit, survFit, timeVar = "year")
+jointFit2 &lt;- update(jointFit1, param = "shared-RE")
+
+# we compute survival probabilities for Subject 2 with 
+# different weights
+ND &lt;- pbc2[pbc2$id == 2, ] # the data of Subject 2
+survPreds1 &lt;- survfitJM(jointFit1, newdata = ND, weight = 0.4)
+survPreds2 &lt;- survfitJM(jointFit2, newdata = ND, weight = 0.6)
+
+survPreds.bma &lt;- bma.combine(survPreds1, survPreds2)
+survPreds.bma
+plot(survPreds.bma)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

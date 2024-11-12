@@ -1,0 +1,54 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>sanitize_for_DiagrammeR</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Sanitize for DiagrammeR</h2>
+
+<h3>Description</h3>
+
+<p>Basically a wrapper for <code>gsub()</code> to sanitize a string for
+DiagrammeR
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">sanitize_for_DiagrammeR(
+  x,
+  regExReplacements = justifier::opts$get("regExReplacements")
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The string or vector</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>regExReplacements</code></td>
+<td>
+<p>A list of two-element character vectors; first element
+should be the element to search, and the second element, the replacement.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The sanitized character vector
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">justifier::sanitize_for_DiagrammeR("This is or isn't problematic");
+</code></pre>
+
+
+</div>

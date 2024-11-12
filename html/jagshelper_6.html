@@ -1,0 +1,88 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>chaindens_jags</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>By-chain kernel densities of <code>jagsUI</code> object</h2>
+
+<h3>Description</h3>
+
+<p>By-chain kernel densities of a whole <code>jagsUI</code> object, or optional subset of parameter nodes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">chaindens_jags(x, p = NULL, exact = FALSE, parmfrow = NULL, lwd = 1, ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Posterior <code>jagsUI</code> object</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Parameter name for subsetting: if this is specified, only parameters with names beginning with this string will be plotted.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether <code>p</code> should be an exact match (<code>TRUE</code>) or just match the
+beginning of the string (<code>FALSE</code>).  Defaults to <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>parmfrow</code></td>
+<td>
+<p>Optional call to <code>par(mfrow)</code> for the number of rows &amp; columns of plot window.  Returns the graphics device to previous state afterward.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>lwd</code></td>
+<td>
+<p>Line width for plotting.  Defaults to 1.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional plotting arguments</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p><code>NULL</code>
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>tracedens_jags, trace_jags, chaindens_line, chaindens_df
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">
+chaindens_jags(asdf_jags_out, parmfrow=c(4,2))
+chaindens_jags(x=asdf_jags_out, p="a", parmfrow=c(3,1))
+</code></pre>
+
+
+</div>

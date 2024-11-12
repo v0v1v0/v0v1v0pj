@@ -1,0 +1,69 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>cor_jags</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Correlation matrix from a JAGS object</h2>
+
+<h3>Description</h3>
+
+<p>Computes a correlation matrix of all MCMC samples from an object
+returned by 'jagsUI', or an optional subset of parameter nodes.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">cor_jags(x, p = NULL, exact = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>Output object returned from <code>jagsUI</code></p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>p</code></td>
+<td>
+<p>Optional string to begin posterior names.  If <code>NULL</code> is used, all parameters will be used</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>exact</code></td>
+<td>
+<p>Whether name must be an exact match (<code>TRUE</code>) or with initial sub-string matching only supplied characters (<code>FALSE</code>).
+Defaults to <code>FALSE.</code></p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A 2-dimensional correlation matrix (n X n, where n is the number of parameter nodes)
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Matt Tyers
+</p>
+
+
+<h3>See Also</h3>
+
+<p>plotcor_jags
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">cor_jags(asdf_jags_out)
+</code></pre>
+
+
+</div>

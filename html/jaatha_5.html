@@ -1,0 +1,56 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>create_jaatha_model</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Specify a Model for a Jaatha Analysis</h2>
+
+<h3>Description</h3>
+
+<p>This function can be used to create models for an analysis with Jaatha.
+Models can be created using simulation function  
+(see <code>create_jaatha_model.function</code>) or using a <span class="pkg">coala</span> 
+model (see <code>create_jaatha_model.coalmodel</code>).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">create_jaatha_model(x, ..., scaling_factor = 1, test = TRUE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>The primary argument. Can be a function used for simulations,
+or a coala model.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>Additional parameters passed on to the dispatch function.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>scaling_factor</code></td>
+<td>
+<p>If your model is a down-scaled version of your data,
+you can indicated this using this value. The estimated expectation values
+are multiplied with this factor before the likelihood is calculated.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>test</code></td>
+<td>
+<p>A logical indicating whether a simulation is performed to test
+the model.</p>
+</td>
+</tr>
+</table>
+</div>

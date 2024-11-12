@@ -1,0 +1,67 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>nfi</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>
+Sample plots of the Norwegian National Forest Inventory (NFI) with
+a variable  of interest and an auxiliary variable  
+</h2>
+
+<h3>Description</h3>
+
+
+<p>A total of 131 sample plots of the Norwegian National Forest Inventory (NFI) with
+timber volume interpolated and extrapolated to the year 2011 as the variable
+of interest and mean vegetation height derived from image matching  as
+the auxiliary variable. 
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">data(nfi)</code></pre>
+
+
+<h3>Format</h3>
+
+<p>A data frame with 131 observations on the following 2 variables.
+</p>
+
+<dl>
+<dt><code>vol.2011</code></dt>
+<dd>
+<p>numeric vector of the variable of interest</p>
+</dd>
+<dt><code>Elev.Mean</code></dt>
+<dd>
+<p>numeric vector of the auxiliary variable</p>
+</dd>
+</dl>
+<h3>Source</h3>
+
+
+
+<p>Breidenbach, J., Ronald E. McRoberts, Astrup, R. (2015), Empirical
+coverage of model-based variance estimators for 
+remote sensing assisted estimation of stand-level timber volume. Remote
+Sensing of Environment. In press. 
+</p>
+
+
+<h3>See Also</h3>
+
+
+<p><code>JoSAE-package</code> and Vignette for more examples
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">data(nfi)
+plot(vol.2011~Elev.Mean, nfi)
+</code></pre>
+
+
+</div>

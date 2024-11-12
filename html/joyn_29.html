@@ -1,0 +1,220 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>merge</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Merge two data frames</h2>
+
+<h3>Description</h3>
+
+<p>This is a joyn wrapper that works in a similar fashion to base::merge and
+data.table::merge, which is why merge masks the other two.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">merge(
+  x,
+  y,
+  by = NULL,
+  by.x = NULL,
+  by.y = NULL,
+  all = FALSE,
+  all.x = all,
+  all.y = all,
+  sort = TRUE,
+  suffixes = c(".x", ".y"),
+  no.dups = TRUE,
+  allow.cartesian = getOption("datatable.allow.cartesian"),
+  match_type = c("m:m", "m:1", "1:m", "1:1"),
+  keep_common_vars = TRUE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x, y</code></td>
+<td>
+<p><code>data table</code>s. <code>y</code> is coerced to a <code>data.table</code> if
+it isn't one already.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by</code></td>
+<td>
+<p>A vector of shared column names in <code>x</code> and <code>y</code> to merge on.
+This defaults to the shared key columns between the two tables.
+If <code>y</code> has no key columns, this defaults to the key of <code>x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>by.x, by.y</code></td>
+<td>
+<p>Vectors of column names in <code>x</code> and <code>y</code> to merge on.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>all</code></td>
+<td>
+<p>logical; <code>all = TRUE</code> is shorthand to save setting both
+<code>all.x = TRUE</code> and <code>all.y = TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>all.x</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, rows from <code>x</code> which have no matching row
+in <code>y</code> are included. These rows will have 'NA's in the columns that are usually
+filled with values from <code>y</code>. The default is <code>FALSE</code> so that only rows with
+data from both <code>x</code> and <code>y</code> are included in the output.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>all.y</code></td>
+<td>
+<p>logical; analogous to <code>all.x</code> above.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>sort</code></td>
+<td>
+<p>logical. If <code>TRUE</code> (default), the rows of the merged
+<code>data.table</code> are sorted by setting the key to the <code>by / by.x</code> columns. If
+<code>FALSE</code>, unlike base R's <code>merge</code> for which row order is unspecified, the
+row order in <code>x</code> is retained (including retaining the position of missings when
+<code>all.x=TRUE</code>), followed by <code>y</code> rows that don't match <code>x</code> (when <code>all.y=TRUE</code>)
+retaining the order those appear in <code>y</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>suffixes</code></td>
+<td>
+<p>A <code>character(2)</code> specifying the suffixes to be used for
+making non-<code>by</code> column names unique. The suffix behaviour works in a similar
+fashion as the <code>merge.data.frame</code> method does.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>no.dups</code></td>
+<td>
+<p>logical indicating that <code>suffixes</code> are also appended to
+non-<code>by.y</code> column names in <code>y</code> when they have the same column name
+as any <code>by.x</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>allow.cartesian</code></td>
+<td>
+<p>See <code>allow.cartesian</code> in <code>[.data.table</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>match_type</code></td>
+<td>
+<p>character: one of <em>"m:m"</em>, <em>"m:1"</em>, <em>"1:m"</em>, <em>"1:1"</em>.
+Default is <em>"1:1"</em> since this the most restrictive. However, following
+Stata's recommendation, it is better to be explicit and use any of the
+other three match types (See details in <em>match types sections</em>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>keep_common_vars</code></td>
+<td>
+<p>logical: If TRUE, it will keep the original variable
+from y when both tables have common variable names. Thus, the prefix "y."
+will be added to the original name to distinguish from the resulting
+variable in the joined table.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+
+<p>Arguments passed on to <code>joyn</code>
+</p>
+
+<dl>
+<dt><code>y_vars_to_keep</code></dt>
+<dd>
+<p>character: Vector of variable names in <code>y</code> that will be
+kept after the merge. If TRUE (the default), it keeps all the brings all
+the variables in y into x. If FALSE or NULL, it does not bring any variable
+into x, but a report will be generated.</p>
+</dd>
+<dt><code>reportvar</code></dt>
+<dd>
+<p>character: Name of reporting variable. Default is ".joyn".
+This is the same as variable "_merge" in Stata after performing a merge. If
+FALSE or NULL, the reporting variable will be excluded from the final
+table, though a summary of the join will be display after concluding.</p>
+</dd>
+<dt><code>update_NAs</code></dt>
+<dd>
+<p>logical: If TRUE, it will update NA values of all variables
+in x with actual values of variables in y that have the same name as the
+ones in x. If FALSE, NA values won't be updated, even if <code>update_values</code> is
+<code>TRUE</code></p>
+</dd>
+<dt><code>update_values</code></dt>
+<dd>
+<p>logical: If TRUE, it will update all values of variables
+in x with the actual of variables in y with the same name as the ones in x.
+<strong>NAs from y won't be used to update actual values in x</strong>. Yet, by default,
+NAs in x will be updated with values in y. To avoid this, make sure to set
+<code>update_NAs = FALSE</code></p>
+</dd>
+<dt><code>verbose</code></dt>
+<dd>
+<p>logical: if FALSE, it won't display any message (programmer's
+option). Default is TRUE.</p>
+</dd>
+</dl>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>data.table merging x and y
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">x1 = data.frame(id = c(1L, 1L, 2L, 3L, NA_integer_),
+                t  = c(1L, 2L, 1L, 2L, NA_integer_),
+                x  = 11:15)
+y1 = data.frame(id = c(1,2, 4),
+                y  = c(11L, 15L, 16))
+joyn::merge(x1, y1, by = "id")
+# example of using by.x and by.y
+x2 = data.frame(id1 = c(1, 1, 2, 3, 3),
+                id2 = c(1, 1, 2, 3, 4),
+                t   = c(1L, 2L, 1L, 2L, NA_integer_),
+                x   = c(16, 12, NA, NA, 15))
+y2 = data.frame(id  = c(1, 2, 5, 6, 3),
+                id2 = c(1, 1, 2, 3, 4),
+                y   = c(11L, 15L, 20L, 13L, 10L),
+                x   = c(16:20))
+jn &lt;- joyn::merge(x2,
+            y2,
+            match_type = "m:m",
+            all.x = TRUE,
+            by.x = "id1",
+            by.y = "id2")
+# example with all = TRUE
+jn &lt;- joyn::merge(x2,
+            y2,
+            match_type = "m:m",
+            by.x = "id1",
+            by.y = "id2",
+            all = TRUE)
+</code></pre>
+
+
+</div>

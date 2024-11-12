@@ -1,0 +1,81 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>mean_no</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Non-parametric estimation of mean number of events</h2>
+
+<h3>Description</h3>
+
+<p><a href="https://lifecycle.r-lib.org/articles/stages.html#experimental"><img src="../help/figures/lifecycle-experimental.svg" alt="[Experimental]"></a>
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">mean_no(
+  formula,
+  re_indicator,
+  ce_indicator,
+  data,
+  re_control = list(),
+  ce_control = list()
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>formula</code></td>
+<td>
+<p>A formula passed to <code>survfit</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>re_indicator</code></td>
+<td>
+<p>The name of a variable indicating that these rows in the dataset belong
+to the risksets of the recurrent event process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ce_indicator</code></td>
+<td>
+<p>The name of a variable indicating that these rows in the datasets belong
+to the riskset of the competing event process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>data</code></td>
+<td>
+<p>A <code>data.frame</code> in stacked format. The dataset needs to include one row
+for the competing event and one row for each risk episode of the
+recurrent event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>re_control</code></td>
+<td>
+<p>An optional <code>list</code> with arguments passed to <code>survfit</code> when computing
+risksets for the recurrent event.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ce_control</code></td>
+<td>
+<p>An optional <code>list</code> with arguments passed to <code>survfit</code> when computing
+risksets for the competing event.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>A <code>data.frame</code> including the estimated mean number of events <code>expn</code>
+at times <code>t</code> within strata <code>strata</code>.
+</p>
+
+
+</div>

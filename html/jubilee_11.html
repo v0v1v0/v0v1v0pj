@@ -1,0 +1,61 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>jubilee.fred_data</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Internal utility to download time series data from FRED</h2>
+
+<h3>Description</h3>
+
+<p>This utility downloads time series from FRED. Many time series that this package uses
+are available on FRED. Therefore, this utility is used to provide daily or monthly updates
+by concatenating live data to the internal static data.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">jubilee.fred_data(symbol, col_out = "Close", retry = 3)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>symbol</code></td>
+<td>
+<p>character, the name of the time series</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>col_out</code></td>
+<td>
+<p>character, the name of the output closing price column. Default is "Close"</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>retry</code></td>
+<td>
+<p>numeric, number of retries on the URL. Default is 3.</p>
+</td>
+</tr>
+</table>
+<h3>Value</h3>
+
+<p>The <code>xts</code> object for the time series
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+   jubilee.fred_data("VIXCLS") # VIX
+
+## End(Not run)
+
+</code></pre>
+
+
+</div>

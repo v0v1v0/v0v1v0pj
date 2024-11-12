@@ -1,0 +1,310 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>bootSE</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Standard errors via bootstrap for an <code>mjoint</code> object</h2>
+
+<h3>Description</h3>
+
+<p>This function takes a model fit from an <code>mjoint</code> object and
+calculates standard errors and confidence intervals for the main
+longitudinal and survival coefficient parameters, including the latent
+association parameters, using bootstrapping (Efron and Tibshirani, 2000).
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">bootSE(
+  object,
+  nboot = 100,
+  ci = 0.95,
+  use.mle = TRUE,
+  verbose = FALSE,
+  control = list(),
+  progress = TRUE,
+  ncores = 1,
+  safe.boot = FALSE,
+  ...
+)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>mjoint</code> for a joint model
+of time-to-event and multivariate longitudinal data.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nboot</code></td>
+<td>
+<p>the number of bootstrap samples. Default is <code>nboot=100</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ci</code></td>
+<td>
+<p>the confidence interval to be estimated using the
+percentile-method. Default is <code>ci=0.95</code> for a 95% confidence
+interval.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>use.mle</code></td>
+<td>
+<p>logical: should the algorithm use the maximizer from the
+converged model in <code>object</code> as initial values for coefficients in each
+bootstrap iteration. Default is <code>use.mle=TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>verbose</code></td>
+<td>
+<p>logical: if <code>TRUE</code>, the parameter estimates and other
+convergence statistics are value are printed at each iteration of the MCEM
+algorithm. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>control</code></td>
+<td>
+<p>a list of control values with components: </p>
+
+<dl>
+<dt><code>nMC</code></dt>
+<dd>
+<p>integer: the initial number of Monte Carlo samples to be
+used for integration in the burn-in phase of the MCEM. Default is
+<code>nMC=</code>100<em>K</em>.</p>
+</dd>
+<dt><code>nMCscale</code></dt>
+<dd>
+<p>integer: the scale factor for the increase in Monte
+Carlo size when Monte Carlo has not reduced from the previous iteration.
+Default is <code>nMCscale=5</code>.</p>
+</dd>
+<dt><code>nMCmax</code></dt>
+<dd>
+<p>integer: the maximum number of Monte Carlo samples
+that the algorithm is allowed to reach. Default is <code>nMCmax=20000</code>.</p>
+</dd>
+<dt><code>burnin</code></dt>
+<dd>
+<p>integer: the number of iterations for 'burn-in' phase
+of the optimization algorithm. It is computationally inefficient to use a
+large number of Monte Carlo samples early on until one is approximately
+near the maximum likelihood estimate. Default is <code>burnin=</code>100<em>K</em>
+for <code>type='antithetic'</code> or <code>type='montecarlo'</code> and
+<code>burnin=</code>5 for <code>type='sobol'</code> or <code>type='halton'</code>. For
+standard methods, such a large burn-in will generally be unnecessary and
+can be reduced on an application-specific basis.</p>
+</dd>
+<dt><code>mcmaxIter</code></dt>
+<dd>
+<p>integer: the maximum number of MCEM algorithm
+iterations allowed. Default is <code>mcmaxIter=burnin+200</code>.</p>
+</dd>
+<dt><code>convCrit</code></dt>
+<dd>
+<p>character string: the convergence criterion to be
+used. See <strong>Details</strong>.</p>
+</dd>
+<dt><code>gammaOpt</code></dt>
+<dd>
+<p>character string: by default (<code>gammaOpt='NR'</code>),
+<code class="reqn">\gamma</code> is updated using a one-step Newton-Raphson iteration, with the
+Hessian matrix calculated exactly. If <code>gammaOpt='GN'</code>, a Gauss-Newton
+algorithm-type iteration is implemented, where the Hessian matrix is
+approximated based on calculations similar to those used for calculating
+the empirical information matrix? If it is used, then the step-length is
+adjusted by a nominal scaling parameter of 0.5 in order to reduce the
+chance of over-shooting the maximizer.</p>
+</dd>
+<dt><code>tol0</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol0=1e-03</code>.</p>
+</dd>
+<dt><code>tol1</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol1=1e-03</code>.</p>
+</dd>
+<dt><code>tol2</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+parameters; see <strong>Details</strong>. Default is <code>tol2=5e-03</code> for
+<code>type='antithetic'</code> or <code>type='montecarlo'</code> and <code>tol2=1e-03</code>
+for <code>type='sobol'</code> or <code>type='halton'</code>.</p>
+</dd>
+<dt><code>tol.em</code></dt>
+<dd>
+<p>numeric: tolerance value for convergence in the
+multivariate linear mixed model (MV-LMM). When <code class="reqn">K &gt; 1</code>, the optimal
+initial parameters are those from the MV-LMM, which is estimated using a
+separate EM algorithm. Since both the E- and M-steps are available in
+closed-form, this algorithm convergences relatively rapidly with a high
+precision. Default is min(<code>1e-04</code>, <code>tol2</code>).</p>
+</dd>
+<dt><code>rav</code></dt>
+<dd>
+<p>numeric: threshold when using <code>convCrit='sas'</code> that
+applies absolute change (when <code class="reqn">&lt;</code><code>rav</code>) or relative change (when
+<code class="reqn">\ge</code><code>rav</code>) criterion; see <strong>Details</strong>. Default is
+<code>0.1</code>, which is an order of magnitude higher than the SAS
+implementation.</p>
+</dd>
+<dt><code>type</code></dt>
+<dd>
+<p>character: type of Monte Carlo integration method to
+use. Options are </p>
+
+<dl>
+<dt><code>type='montecarlo'</code></dt>
+<dd>
+<p>Vanilla Monte Carlo sampling.</p>
+</dd>
+<dt><code>type='antithetic'</code></dt>
+<dd>
+<p>Variance reduction method using antithetic
+simulation. This is the default option.</p>
+</dd>
+<dt><code>type='sobol'</code></dt>
+<dd>
+<p>Quasi-Monte Carlo with a low
+deterministic Sobol sequence with Owen-type scrambling.</p>
+</dd>
+<dt><code>type='halton'</code></dt>
+<dd>
+<p>Quasi-Monte Carlo with a low deterministic
+Halton sequence.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>progress</code></td>
+<td>
+<p>logical: should a progress bar be shown on the console to
+indicate the percentage of bootstrap iterations completed? Default is
+<code>progress=TRUE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ncores</code></td>
+<td>
+<p>integer: if more than one core is available, then the <code>bootSE</code>
+function can run in parallel via the <code>foreach</code>
+function. By default, <code>ncores=1</code>, which defaults to serial mode. Note
+that if <code>ncores</code>&gt;1, then <code>progress</code> is set to <code>FALSE</code> by
+default, as it is not possible to display progress bars for parallel
+processes at the current time.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>safe.boot</code></td>
+<td>
+<p>logical: should each bootstrap replication be wrapped in a
+<code>tryCatch</code> statement to catch errors (e.g. during the
+optimisation progress)? When model fitting throws errors, a new bootstrap
+sample is drawn for the current iteration and the model is re-fit; this
+process continuex until a model fits successfully. Default is <code>FALSE</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>options passed to the <code>control</code> argument.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Standard errors and confidence intervals are obtained by repeated
+fitting of the requisite joint model to bootstrap samples of the original
+longitudinal and time-to-event data. Note that bootstrap is done by
+sampling subjects, not individual records.
+</p>
+
+
+<h3>Value</h3>
+
+<p>An object of class <code>bootSE</code>.
+</p>
+
+
+<h3>Note</h3>
+
+<p>This function is computationally intensive. A dynamic progress bar is
+displayed showing the percentage of bootstrap models fitted. On computer
+systems with more than one core available, computational time can be
+reduced by passing the argument <code>ncores</code> (with integer value &gt;1) to
+<code>bootSE</code>, which implements parallel processing via the
+<code>foreach</code> package. <strong>Note:</strong> if parallel
+processing is implemented, then the progress bar is not displayed.
+</p>
+<p>Due to random sampling, an <code>mjoint</code> model fitted to some bootstrap
+samples may not converge within the specified control parameter settings.
+The <code>bootSE</code> code discards any models that failed to converge when
+calculating the standard errors and confidence intervals. If a large
+proportion of models have failed to converge, it is likely that it will
+need to be refitted with changes to the <code>control</code> arguments.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Graeme L. Hickey (<a href="mailto:graemeleehickey@gmail.com">graemeleehickey@gmail.com</a>)
+</p>
+
+
+<h3>References</h3>
+
+<p>Efron B, Tibshirani R. <em>An Introduction to the Bootstrap.</em> 2000; Boca
+Raton, FL: Chapman &amp; Hall/CRC.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>mjoint</code> for approximate standard errors.
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# Fit a joint model with bivariate longitudinal outcomes
+
+data(heart.valve)
+hvd &lt;- heart.valve[!is.na(heart.valve$log.grad) &amp; !is.na(heart.valve$log.lvmi), ]
+
+fit &lt;- mjoint(
+    formLongFixed = list("grad" = log.grad ~ time + sex + hs,
+                         "lvmi" = log.lvmi ~ time + sex),
+    formLongRandom = list("grad" = ~ 1 | num,
+                          "lvmi" = ~ time | num),
+    formSurv = Surv(fuyrs, status) ~ age,
+    data = list(hvd, hvd),
+    inits = list("gamma" = c(0.11, 1.51, 0.80)),
+    timeVar = "time",
+    verbose = TRUE)
+
+fit.boot &lt;- bootSE(fit, 50, use.mle = TRUE, control = list(
+    burnin = 25, convCrit = "either",
+    tol0 = 6e-03, tol2 = 6e-03, mcmaxIter = 60))
+
+## End(Not run)
+</code></pre>
+
+
+</div>

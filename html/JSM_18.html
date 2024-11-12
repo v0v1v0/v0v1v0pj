@@ -1,0 +1,103 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>residuals</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Extract Residuals for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p><code>residuals</code> is a generic function which extracts residuals from objects returned by <code>jmodelTM()</code> or <code>jmodelMult()</code>.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jmodelTM'
+residuals(object, process = c("Longitudinal", "Survival"), 
+            type = c("Marginal", "Conditional", "Standardized-Marginal", 
+            "Standardized-Conditional"), ...)
+## S3 method for class 'jmodelMult'
+residuals(object, process = c("Longitudinal", "Survival"), 
+            type = c("Marginal", "Conditional", "Standardized-Marginal", 
+            "Standardized-Conditional"), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>jmodelTM</code> or <code>jmodelMult</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>process</code></td>
+<td>
+<p>for which process the residuals are calculated, i.e. the longitudinal or the survival process.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>type</code></td>
+<td>
+<p>what type of residuals to calculate for each process. See <b>Details</b>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments required. None is used in this method.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>We have implemented the residual calculation for <code>process = "Longitudinal"</code> but not for <code>process = "Survival"</code> yet as they are not well defined under the joint modeling setting. There are four types of residuals depending on whether to compute the values conditional on the random effects and whether to standardize the residuals. Please refer to Nobre and Single (2007) for details. 
+</p>
+<p>With <code>type = "Marginal"</code>, the residuals are <code class="reqn">\varepsilon_{ij} = Y_{ij} - \mathbf{X}_{ij}^\top\boldsymbol\beta</code> for objects returned by <code>jmodelTM()</code> and <code class="reqn">\varepsilon_{ij} = Y_{ij} - \mathbf{B}^\top(t_{ij})\boldsymbol\gamma</code> for objects returned by <code>jmodelMult()</code>. With <code>type = "Conditional"</code>, the residuals are <code class="reqn">\varepsilon_{ij} = Y_{ij} - \mathbf{X}_{ij}^\top\boldsymbol\beta - \mathbf{Z}_{ij}^\top\mathbf{b}_i</code> for objects returned by <code>jmodelTM()</code> and <code class="reqn">\varepsilon_{ij} = Y_{ij} - b_i\times\mathbf{B}^\top(t_{ij})\boldsymbol\gamma</code> for objects returned by <code>jmodelMult()</code>. If <code>type = "Standardized-Marginal"</code> or <code>type = "Standardized-Conditional"</code>, the above defined residuals are divided by the estimated standard deviation of the corresponding error term.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A numerc vector of residual values.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Cong Xu <a href="mailto:helenxu1112@gmail.com">helenxu1112@gmail.com</a>
+</p>
+
+
+<h3>References</h3>
+
+<p>Nobre, J. S. and Singer, J. M. (2007) Residuals analysis for linear mixed models. <em>Biometrical Jounral</em> <b>49</b>(6), 863–875.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>fitted.jmodelTM</code>, 
+<code>fitted.jmodelMult</code>
+</p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+fitLME &lt;- lme(proth ~ Trt * obstime, random = ~ 1 | ID, data = liver)
+fitCOX &lt;- coxph(Surv(start, stop, event) ~ Trt, data = liver, x = TRUE)
+fitJT.ph &lt;- jmodelTM(fitLME, fitCOX, liver, timeVarY = 'obstime')
+
+# residuals for the longitudinal process
+residuals(fitJT.ph, type = "Standardized-Conditional")
+
+## End(Not run)
+</code></pre>
+
+
+</div>

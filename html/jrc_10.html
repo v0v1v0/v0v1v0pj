@@ -1,0 +1,32 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>getPage</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Get the currently running app</h2>
+
+<h3>Description</h3>
+
+<p><code>jrc</code> offers two ways to control an interactive app. One is by using methods of classes
+<code>App</code> and <code>Session</code>. This allows one to have any number of apps within one
+R session, but requires some understanding of object oriented programming. Another way is to use
+provided wrapper functions that are exported by the package. These functions internally work with 
+the <code>App</code> object, which is stored in the package namespace upon initialization with 
+<code>openPage</code> function. <code>getPage</code> returns this object if any.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">getPage()
+</code></pre>
+
+
+<h3>Value</h3>
+
+<p>Object of class <code>App</code> or <code>NULL</code> if there is no active app.
+</p>
+
+
+</div>

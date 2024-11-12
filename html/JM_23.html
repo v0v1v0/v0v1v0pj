@@ -1,0 +1,164 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>plot</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Plot Diagnostics for Joint Models</h2>
+
+<h3>Description</h3>
+
+<p>Produces a variety of plots for fitted joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">## S3 method for class 'jointModel'
+plot(x, which = 1:4, caption = c("Residuals vs Fitted", 
+  "Normal Q-Q", "Marginal Survival", "Marginal Cumulative Hazard", 
+  "Marginal log Cumulative Hazard", "Baseline Hazard", 
+  "Cumulative Baseline Hazard", "Subject-specific Survival", 
+  "Subject-specific Cumulative Hazard", 
+  "Subject-specific log Cumulative Hazard"), survTimes = NULL, 
+  main = "", 
+  ask = prod(par("mfcol")) &lt; length(which) &amp;&amp; dev.interactive(), 
+  ..., ids = NULL, add.smooth = getOption("add.smooth"), 
+  add.qqline = TRUE, add.KM = FALSE, cex.caption = 1, return = FALSE)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>x</code></td>
+<td>
+<p>an object inheriting from class <code>jointModel</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>which</code></td>
+<td>
+<p>which types of plots to produce, specify a subset of the numbers 1:10.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>caption</code></td>
+<td>
+<p>captions to appear above the plots defined by argument <code>which</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>survTimes</code></td>
+<td>
+<p>a vector of survival times for which the survival, cumulative hazard or 
+log cumulative hazard will be computed. Default is <code>seq(minT, maxT, length = 15)</code>, where <code>minT</code> and 
+<code>maxT</code> are the minimum and maximum observed survival times, respectively.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>main</code></td>
+<td>
+<p>a character string specifying the title in the plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ask</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, the user is asked before each plot, see <code>par(ask=.)</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>other parameters to be passed through to plotting functions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>ids</code></td>
+<td>
+<p>a numeric vector specifying which subjects, the subject-specific plots will include; 
+default is all subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.smooth</code></td>
+<td>
+<p>logical; if <code>TRUE</code> a smooth line is superimposed in the "Residuals vs Fitted" plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.qqline</code></td>
+<td>
+<p>logical; if <code>TRUE</code> a qq-line is superimposed in the "Normal Q-Q" plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>add.KM</code></td>
+<td>
+<p>logical; if <code>TRUE</code> the Kaplan-Meier estimate of the survival function is superimposed in the 
+"Marginal Survival" plot.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cex.caption</code></td>
+<td>
+<p>magnification of captions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>return</code></td>
+<td>
+<p>logical; if <code>TRUE</code> and <code>which</code> takes in values in <code>c(3:5, 8:10)</code>,
+then the values used to create the plot are returned.</p>
+</td>
+</tr>
+</table>
+<h3>Note</h3>
+
+<p>The plots of the baseline hazard and the cumulative baseline hazard are only produced when the joint model has
+been fitted using <code>method = "Cox-PH-GH"</code>.
+</p>
+
+
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2010) JM: An R package for the joint modelling of longitudinal and time-to-event data. 
+<em>Journal of Statistical Software</em> <b>35</b> (9), 1–33. <a href="https://doi.org/10.18637/jss.v035.i09">doi:10.18637/jss.v035.i09</a>
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>jointModel</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# linear mixed model fit
+fitLME &lt;- lme(log(serBilir) ~ drug * year, random = ~ 1 | id, data = pbc2)
+# survival regression fit
+fitSURV &lt;- survreg(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+# joint model fit, under the (default) Weibull model
+fitJOINT &lt;- jointModel(fitLME, fitSURV, timeVar = "year")
+
+plot(fitJOINT, 3, add.KM = TRUE, col = "red", lwd = 2)
+
+par(mfrow = c(2, 2))
+plot(fitJOINT)
+
+## End(Not run)
+</code></pre>
+
+
+</div>

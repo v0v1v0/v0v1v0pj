@@ -1,0 +1,268 @@
+<div class="container">
+
+<table style="width: 100%;"><tr>
+<td>aucJM</td>
+<td style="text-align: right;">R Documentation</td>
+</tr></table>
+<h2>Time-Dependent ROCs and AUCs for Joint Models</h2>
+
+<h3>Description</h3>
+
+ 
+<p>Using the available longitudinal information up to a starting time point, this function computes an estimate 
+of the ROC and the AUC at a horizon time point based on joint models.
+</p>
+
+
+<h3>Usage</h3>
+
+<pre><code class="language-R">aucJM(object, newdata, Tstart, ...)
+
+## S3 method for class 'JMbayes'
+aucJM(object, newdata, Tstart, Thoriz = NULL, 
+    Dt = NULL, idVar = "id", simulate = FALSE, M = 100, ...)
+
+## S3 method for class 'mvJMbayes'
+aucJM(object, newdata, Tstart, Thoriz = NULL, 
+    Dt = NULL, idVar = "id", M = 100, ...)
+
+rocJM(object, newdata, Tstart, ...)
+
+## S3 method for class 'JMbayes'
+rocJM(object, newdata, Tstart, Thoriz = NULL, 
+    Dt = NULL, idVar = "id", simulate = FALSE, M = 100, ...)
+
+## S3 method for class 'mvJMbayes'
+rocJM(object, newdata, Tstart, Thoriz = NULL, 
+    Dt = NULL, idVar = "id", M = 100, ...)
+    
+predict_eventTime(object, newdata, cut_points, ...)
+
+## S3 method for class 'mvJMbayes'
+predict_eventTime(object, newdata, cut_points, 
+    idVar = "id", M = 500L, low_percentile = 0.025, ...)
+
+find_thresholds(object, newdata, Dt, ...)
+
+## S3 method for class 'mvJMbayes'
+find_thresholds(object, newdata, Dt, idVar = "id", 
+    M = 200L, variability_threshold = NULL,
+    n_cores =  max(1, parallel::detectCores() - 2), ...)
+</code></pre>
+
+
+<h3>Arguments</h3>
+
+<table>
+<tr style="vertical-align: top;">
+<td><code>object</code></td>
+<td>
+<p>an object inheriting from class <code>JMbayes</code> or <code>mvJMbayes</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>newdata</code></td>
+<td>
+<p>a data frame that contains the longitudinal and covariate information for the subjects for which prediction 
+of survival probabilities is required. The names of the variables in this data frame must be the same as in the data frames that
+were used to fit the linear mixed effects model (using <code>lme()</code>) and the survival model (using <code>coxph()</code>)
+that were supplied as the two first argument of <code>jointModelBayes</code>. In addition, this data frame should contain a variable 
+that identifies the different subjects (see also argument <code>idVar</code>).</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>numeric scalar denoting the time point up to which longitudinal information is to be used to derive predictions.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>numeric scalar denoting the time point for which a prediction of the survival status is of interest; 
+<code>Thoriz</code> must be later than <code>Tstart</code> and either <code>Dt</code> or <code>Thoriz</code> must be specified. If <code>Thoriz</code> is <code>NULL</code>
+is set equal to <code>Tstart + Dt</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Dt</code></td>
+<td>
+<p>numeric scalar denoting the length of the time interval of prediction; either <code>Dt</code> or <code>Thoriz</code> must be specified.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>idVar</code></td>
+<td>
+<p>the name of the variable in <code>newdata</code> that identifies the different subjects.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>simulate</code></td>
+<td>
+<p>logical; if <code>TRUE</code>, a Monte Carlo approach is used to estimate survival probabilities. If <code>FALSE</code>,
+a first order estimator is used instead. See <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>M</code></td>
+<td>
+<p>a numeric scalar denoting the number of Monte Carlo samples; see <code>survfitJM</code> for mote details.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>cut_points</code></td>
+<td>
+<p>a numeric matrix with first column time-points followed by other columns of 
+optimal cut-points from an ROC curve.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>variability_threshold</code></td>
+<td>
+<p>numeric value denoting the treshold in the spread of the 
+posterior distribution calculated from the 2.5% percentile to the median. Default is
+the 25% percentile of the event times distribution.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>low_percentile</code></td>
+<td>
+<p>a numeric value indicating the percentile based on which it will
+be judged whether the spread of the posterior predictive distribution is too large.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>n_cores</code></td>
+<td>
+<p>an integer indicating the number of cores to use for parallel computing.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>...</code></td>
+<td>
+<p>additional arguments; currently none is used.</p>
+</td>
+</tr>
+</table>
+<h3>Details</h3>
+
+<p>Based on a fitted joint model (represented by <code>object</code>) and using the data supplied in argument <code>newdata</code>, this function
+computes the following estimate of the AUC: </p>
+<p style="text-align: center;"><code class="reqn">\mbox{AUC}(t, \Delta t) = \mbox{Pr} \bigl [ \pi_i(t + \Delta t \mid t) &lt; 
+\pi_j(t + \Delta t \mid t) \mid \{ T_i^* \in (t, t + \Delta t] \} \cap \{ T_j^* &gt; t + \Delta t \} \bigr ],</code>
+</p>
+
+<p>with <code class="reqn">i</code> and <code class="reqn">j</code> denote a randomly selected pair of subjects, and
+<code class="reqn">\pi_i(t + \Delta t \mid t)</code> and <code class="reqn">\pi_j(t + \Delta t \mid t)</code> denote the conditional survival probabilities calculated by
+<code>survfitJM</code> for these two subjects, for different time windows <code class="reqn">\Delta t</code> specified by argument <code>Dt</code> using
+the longitudinal information recorded up to time <code>t =</code> <code>Tstart</code>.
+</p>
+<p>The estimate of <code class="reqn">\mbox{AUC}(t, \Delta t)</code> provided by <code>aucJM()</code> is in the spirit of Harrell's 
+<code class="reqn">c</code>-index, that is for the comparable subjects (i.e., the ones whose observed event times can be ordered), we 
+compare their dynamic survival probabilities calculated by <code>survfitJM</code>. For the subjects who due to 
+censoring we do not know if they are comparable, they contribute in the AUC with the probability that they would
+have been comparable.
+</p>
+
+
+<h3>Value</h3>
+
+<p>A list of class <code>aucJM</code> with components:
+</p>
+<table>
+<tr style="vertical-align: top;">
+<td><code>auc</code></td>
+<td>
+<p>a numeric scalar denoting the estimated prediction error.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Tstart</code></td>
+<td>
+<p>a copy of the <code>Tstart</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>Thoriz</code></td>
+<td>
+<p>a copy of the <code>Thoriz</code> argument.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nr</code></td>
+<td>
+<p>a numeric scalar denoting the number of subjects at risk at time <code>Tstart</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>classObject</code></td>
+<td>
+<p>the class of <code>object</code>.</p>
+</td>
+</tr>
+<tr style="vertical-align: top;">
+<td><code>nameObject</code></td>
+<td>
+<p>the name of <code>object</code>.</p>
+</td>
+</tr>
+</table>
+<h3>Author(s)</h3>
+
+<p>Dimitris Rizopoulos <a href="mailto:d.rizopoulos@erasmusmc.nl">d.rizopoulos@erasmusmc.nl</a></p>
+
+
+<h3>References</h3>
+
+<p>Antolini, L., Boracchi, P., and Biganzoli, E. (2005). A time-dependent discrimination index
+for survival data. <em>Statistics in Medicine</em> <b>24</b>, 3927–3944.
+</p>
+<p>Harrell, F., Kerry, L. and Mark, D. (1996). Multivariable prognostic models: issues in 
+developing models, evaluating assumptions and adequacy, and measuring and reducing errors.
+<em>Statistics in Medicine</em> <b>15</b>, 361–387.
+</p>
+<p>Heagerty, P. and Zheng, Y. (2005). Survival model predictive accuracy and ROC curves. 
+<em>Biometrics</em> <b>61</b>, 92–105.
+</p>
+<p>Rizopoulos, D. (2016). The R package JMbayes for fitting joint models for longitudinal and
+time-to-event data using MCMC. <em>Journal of Statistical Software</em> <b>72(7)</b>, 1–45.
+doi:10.18637/jss.v072.i07.
+</p>
+<p>Rizopoulos, D. (2012) <em>Joint Models for Longitudinal and Time-to-Event Data: with 
+Applications in R</em>. Boca Raton: Chapman and Hall/CRC.
+</p>
+<p>Rizopoulos, D. (2011). Dynamic predictions and prospective accuracy in joint models for 
+longitudinal and time-to-event data. <em>Biometrics</em> <b>67</b>, 819–829.
+</p>
+
+
+<h3>See Also</h3>
+
+<p><code>survfitJM</code>, <code>dynCJM</code>, <code>jointModelBayes</code></p>
+
+
+<h3>Examples</h3>
+
+<pre><code class="language-R">## Not run: 
+# we construct the composite event indicator (transplantation or death)
+pbc2$status2 &lt;- as.numeric(pbc2$status != "alive")
+pbc2.id$status2 &lt;- as.numeric(pbc2.id$status != "alive")
+
+# we fit the joint model using splines for the subject-specific 
+# longitudinal trajectories and a spline-approximated baseline
+# risk function
+lmeFit &lt;- lme(log(serBilir) ~ ns(year, 3),
+    random = list(id = pdDiag(form = ~ ns(year, 3))), data = pbc2)
+survFit &lt;- coxph(Surv(years, status2) ~ drug, data = pbc2.id, x = TRUE)
+jointFit &lt;- jointModelBayes(lmeFit, survFit, timeVar = "year")
+
+# AUC using data up to year 5 with horizon at year 8 
+aucJM(jointFit, pbc2, Tstart = 5, Thoriz = 8)
+
+plot(rocJM(jointFit, pbc2, Tstart = 5, Thoriz = 8))
+
+## End(Not run)
+</code></pre>
+
+
+</div>
